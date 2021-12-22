@@ -6,6 +6,9 @@ name: Test & Deploy | CI
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - "**.md"
+      - "**.yml"
 
 jobs:
   deploy:
