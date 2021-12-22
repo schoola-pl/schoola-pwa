@@ -30,24 +30,6 @@ jobs:
       run: npm ci
     - name: Testing application...
       run: npm test
-
-  deploy:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-  
-    steps:
-    - uses: actions/checkout@v2
-    - name: Running Node.js in version ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Installing packages...
-      run: npm ci
     - name: Building application...
       run: npm run build --if-present
     - name: Publishing application...
@@ -58,4 +40,3 @@ jobs:
         build_dir: public
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
