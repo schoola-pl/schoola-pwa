@@ -11,7 +11,7 @@ on:
       - "**.yml"
 
 jobs:
-  deploy:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -28,11 +28,29 @@ jobs:
         cache: 'npm'
     - name: Installing packages...
       run: npm ci
-    - name: Building application...
-      run: npm run build --if-present
     - name: Testing application...
       run: npm test
-    - name: Publsihing application...
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+  
+    steps:
+    - uses: actions/checkout@v2
+    - name: Running Node.js in version ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Installing packages...
+      run: npm ci
+    - name: Building application...
+      run: npm run build --if-present
+    - name: Publishing application...
       if: success()
       uses: crazy-max/ghaction-github-pages@v2
       with:
@@ -40,3 +58,4 @@ jobs:
         build_dir: public
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
