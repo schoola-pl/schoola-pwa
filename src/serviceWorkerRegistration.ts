@@ -23,7 +23,7 @@ type Config = {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
 };
 
-export function register(config?: Config) {
+export function register(config?: Config): any {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
@@ -40,12 +40,6 @@ export function register(config?: Config) {
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
-
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log('This web app is being served cache-first by a service ' + 'worker. To learn more, visit https://cra.link/PWA');
-        });
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
@@ -76,12 +70,6 @@ function registerValidSW(swUrl: string, config?: Config) {
                 config.onUpdate(registration);
               }
             } else {
-              // At this point, everything has been precached.
-              // It's the perfect time to display a
-              // "Content is cached for offline use." message.
-              console.log('Content is cached for offline use.');
-
-              // Execute callback
               if (config && config.onSuccess) {
                 config.onSuccess(registration);
               }
@@ -120,7 +108,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
     });
 }
 
-export function unregister() {
+export function unregister(): any {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => {
