@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import App from 'views/App';
+import App from 'views/Root';
 
 it('Renders application', () => {
   render(<App />);
