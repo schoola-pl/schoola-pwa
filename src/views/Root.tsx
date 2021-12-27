@@ -1,14 +1,15 @@
 import StyleProvider from 'providers/StyleProvider';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import TestRoute from 'views/TestRoute';
 
-const Root = () => (
-  <Router>
+const Root = () => {
+  return (
     <StyleProvider>
       <Routes>
-        <h1>dupa</h1>
+        <Route path="/" element={<TestRoute />} />
       </Routes>
     </StyleProvider>
-  </Router>
-);
+  );
+};
 
 export default Root;
