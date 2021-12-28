@@ -4,13 +4,13 @@ import routes from 'routes';
 
 const Root = () => {
   return (
-    <StyleProvider>
+    <AppProviders>
       <Routes>
         {routes.map((route) => (
           <Route path={route.path} element={<route.Component />} />
         ))}
       </Routes>
-    </StyleProvider>
+    </AppProviders>
   );
 };
 
