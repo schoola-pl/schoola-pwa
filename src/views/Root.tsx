@@ -1,4 +1,4 @@
-import StyleProvider from 'providers/StyleProvider';
+import AppProviders from 'providers/AppProviders';
 import { Routes, Route } from 'react-router-dom';
 import routes from 'routes';
 
