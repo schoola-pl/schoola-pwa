@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 
 const Login: React.FC = () => {
+  const [isLoading, setLoadingState] = useState(false);
   const {
     register,
-    formState: { errors },
+    formState: { errors: formError },
     handleSubmit
   } = useForm();
 
   const handleLogin = ({ login, password }: { login: string; password: string }) => {
-    console.log(login, password);
+    setLoadingState(true);
+    setLoadingState(false);
   };
 
   return (
@@ -19,9 +21,25 @@ const Login: React.FC = () => {
       <AuthCard>
         <StyledLogo />
         <Form onSubmit={handleSubmit(handleLogin)}>
-          <StyledInput type="text" placeholder="Login" {...register('login', { required: true })} />
-          <StyledInput type="password" placeholder="Hasło" {...register('password', { required: true })} />
-          <StyledButton type="submit">Zaloguj się</StyledButton>
+          <StyledInput
+            type="text"
+            placeholder="Login"
+            error={!!formError.login}
+            {...register('login', {
+              required: true,
+              minLength: 2
+            })}
+          />
+          <StyledInput
+            type="password"
+            placeholder="Hasło"
+            error={!!formError.password}
+            {...register('password', {
+              required: true,
+              minLength: 6
+            })}
+          />
+          <StyledButton type="submit">{!isLoading ? 'Zaloguj się' : 'Sprawdzam dane...'}</StyledButton>
         </Form>
       </AuthCard>
     </Wrapper>
