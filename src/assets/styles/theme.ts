@@ -13,12 +13,13 @@ export const theme = {
     selectedItemBorderGrey: '#C5C5CF'
   },
   fontSize: {
-    xxs: '1.6rem',
-    xs: '2rem',
-    s: '2.6rem',
-    m: '3.4rem',
-    l: '3.9rem',
-    xl: '6.4rem'
+    xxs: '1rem',
+    xs: '1.2rem',
+    s: '1.6rem',
+    m: '2.1rem',
+    l: '2.4rem',
+    xl: '4rem',
+    xxl: '5.5rem'
   },
   fontWeight: {
     light: '300',

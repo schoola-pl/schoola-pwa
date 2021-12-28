@@ -2,7 +2,7 @@ import StyleProvider from 'providers/StyleProvider';
 import { Routes, Route } from 'react-router-dom';
 import { routes } from 'routes';
 import HomeView from 'views/HomeView';
-import AdminLogin from 'views/auth/Admin/AdminLogin';
+import AdminLogin from 'views/auth/Admin/AdminLogin/AdminLogin';
 
 const Root = () => {
   return (
