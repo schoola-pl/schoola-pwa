@@ -1,12 +1,15 @@
 import StyleProvider from 'providers/StyleProvider';
 import { Routes, Route } from 'react-router-dom';
-import TestRoute from 'views/TestRoute';
+import { routes } from 'routes';
+import HomeView from 'views/HomeView';
+import AdminLogin from 'views/auth/Admin/AdminLogin';
 
 const Root = () => {
   return (
     <StyleProvider>
       <Routes>
-        <Route path="/" element={<TestRoute />} />
+        <Route path={routes.home} element={<HomeView />} />
+        <Route path={routes.admLogin} element={<AdminLogin />} />
       </Routes>
     </StyleProvider>
   );
