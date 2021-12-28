@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Wrapper, StyledLogo, Form } from './AdminLogin.styles';
+import { Wrapper, StyledLogo, Form, StyledButton } from './AdminLogin.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import Input from 'components/atoms/Input/Input';
-import Button from 'components/atoms/Button/Button';
 
 const initialState = {
   username: '',
@@ -28,7 +27,7 @@ const AdminLogin: React.FC = () => {
         <Form onSubmit={handleSubmit}>
           <Input type="text" onChange={handleChange} placeholder="admin" name="username" />
           <Input type="password" onChange={handleChange} placeholder="hasło" name="password" />
-          <Button type="submit">login</Button>
+          <StyledButton type="submit">Zaloguj się</StyledButton>
         </Form>
       </AuthCard>
     </Wrapper>

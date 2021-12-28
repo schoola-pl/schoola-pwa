@@ -10,6 +10,7 @@ font-size: ${({ theme }) => theme.fontSize.s};
 text-transform: capitalize;
 resize: none;
 margin-bottom: 3rem;
+
 &:focus {
   outline: none;
   border: 2px solid ${({ theme }) => theme.colors.accentGreen};

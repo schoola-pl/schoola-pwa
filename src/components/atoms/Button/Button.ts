@@ -14,10 +14,10 @@ const Button = styled.button`
   border-radius: 50px;
   font-size: 16px;
   font-weight: 500;
-  text-transform: uppercase;
+  transition: all 0.3s;
 
   &:hover {
-    background-color: #33aa45;
+    background-color: ${({ theme }) => theme.colors.lightGreen};
     cursor: pointer;
   }
 `;
