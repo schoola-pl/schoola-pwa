@@ -1,14 +1,6 @@
-import styled from 'styled-components';
-import Logo from 'components/atoms/Logo/Logo';
 import { useState } from 'react';
-
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import styled from 'styled-components';
+import { Wrapper, StyledLogo, Form } from './AdminLogin.styles';
 
 const AuthCard = styled.div`
   width: 400px;
@@ -59,21 +51,10 @@ const Button = styled.button`
   }
 `;
 
-const StyledLogo = styled(Logo)`
-  margin-bottom: 30rem;
-`;
-
 const initialState = {
   username: '',
   password: ''
 };
-
-const Form = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
 
 const AdminLogin: React.FC = () => {
   const [formValues, setFormValues] = useState(initialState);
