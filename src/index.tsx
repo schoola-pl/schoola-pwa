@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from 'views/Root';
-import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import AppProviders from 'providers/AppProviders';
 
 Sentry.init({
   dsn: 'https://a76924e51a3940e399841d3c9895b1e1@o1079673.ingest.sentry.io/6124408',
@@ -18,9 +18,9 @@ Sentry.init({
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <AppProviders>
       <Root />
-    </BrowserRouter>
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById('root')
 );
