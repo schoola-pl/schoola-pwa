@@ -9,7 +9,6 @@ border-radius: 5rem;
 font-size: ${({ theme }) => theme.fontSize.s};
 text-transform: capitalize;
 resize: none;
-margin-bottom: 3rem;
 
 &:focus {
   outline: none;
