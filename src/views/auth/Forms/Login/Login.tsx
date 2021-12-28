@@ -1,31 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
-
-const initialState = {
-  username: '',
-  password: ''
-};
+import { useForm } from 'react-hook-form';
 
 const Login: React.FC = () => {
-  const [formValues, setFormValues] = useState(initialState);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm();
 
-  const handleChange = (e: any) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(formValues);
+  const handleLogin = ({ login, password }: { login: string; password: string }) => {
+    console.log(login, password);
   };
 
   return (
     <Wrapper>
       <AuthCard>
         <StyledLogo />
-        <Form onSubmit={handleSubmit}>
-          <StyledInput type="text" onChange={handleChange} placeholder="admin" name="username" />
-          <StyledInput type="password" onChange={handleChange} placeholder="hasło" name="password" />
+        <Form onSubmit={handleSubmit(handleLogin)}>
+          <StyledInput type="text" placeholder="Login" {...register('login', { required: true })} />
+          <StyledInput type="password" placeholder="Hasło" {...register('password', { required: true })} />
           <StyledButton type="submit">Zaloguj się</StyledButton>
         </Form>
       </AuthCard>
