@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Wrapper, StyledLogo, Form, StyledButton, StyledInput } from './AdminLogin.styles';
+import React, { useState } from 'react';
+import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   password: ''
 };
 
-const AdminLogin: React.FC = () => {
+const Login: React.FC = () => {
   const [formValues, setFormValues] = useState(initialState);
 
   const handleChange = (e: any) => {
@@ -33,4 +33,4 @@ const AdminLogin: React.FC = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;
