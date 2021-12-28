@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './views/App';
+import Root from 'views/Root';
+import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
@@ -17,7 +18,9 @@ Sentry.init({
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
