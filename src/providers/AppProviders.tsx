@@ -4,9 +4,9 @@ import StyleProvider from './StyleProvider';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
-    <Router>
-      <StyleProvider>{children}</StyleProvider>
-    </Router>
+    <StyleProvider>
+      <Router>{children}</Router>
+    </StyleProvider>
   );
 };
 
