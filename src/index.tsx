@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import AppProviders from 'providers/AppProviders';
-import worker from './MockedServiceWorkers/index';
+import Root from './views/Root';
 
 // Sentry.init({
 //   dsn: 'https://a76924e51a3940e399841d3c9895b1e1@o1079673.ingest.sentry.io/6124408',
@@ -10,16 +10,13 @@ import worker from './MockedServiceWorkers/index';
 //   tracesSampleRate: 1.0
 // });
 
-worker.start().then(() =>
-  ReactDOM.render(
-    <React.StrictMode>
-      <AppProviders>
-        {/*<Root />*/}
-        aaa
-      </AppProviders>
-    </React.StrictMode>,
-    document.getElementById('root')
-  )
+ReactDOM.render(
+  <React.StrictMode>
+    <AppProviders>
+      <Root />
+    </AppProviders>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
