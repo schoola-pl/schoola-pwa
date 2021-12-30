@@ -31,6 +31,7 @@ const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
   useEffect(() => {
     // Checks is user object exists
     if (user && isAuthenticated) {
+      // Checks is user blocked
       if (!user.blocked) {
         // Checks if user has permission to access route
         if (role === user.TextRole || role === roles.authenticated) {
