@@ -32,7 +32,7 @@ const RouteContext = createContext<RouteContextTypes>({
 export const RouteProvider: React.FC = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setAppLoading } = useAppLoading();
+  const { setAppLoading, updateLoadingText } = useAppLoading();
 
   // Get the User information from API by JWT token
   const getUserData = async (token: string) =>
@@ -46,11 +46,13 @@ export const RouteProvider: React.FC = ({ children }) => {
   const checkUser = async () => {
     try {
       // Token verification
+      updateLoadingText('Sprawdzanie twojej tożsamości...');
       const token = getJWT();
       if (!token) return false;
       // Token integrity verification
       const user = await getUserData(token);
       if (user.status !== 200) return false;
+      updateLoadingText('Kończymy...');
       // Adding user to store
       dispatch(addUser({ user: user.data }));
       return true;

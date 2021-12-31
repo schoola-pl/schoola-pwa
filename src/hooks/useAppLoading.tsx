@@ -21,7 +21,10 @@ export const AppLoadingProvider: React.FC = ({ children }) => {
   const [isLoading, setLoadingState] = React.useState(false);
   const [loadingText, setLoadingText] = React.useState('Poczekaj chwilkę...');
 
-  const setAppLoading = (state: boolean) => setLoadingState(state);
+  const setAppLoading = (state: boolean) => {
+    updateLoadingText('Poczekaj chwilkę...');
+    setLoadingState(state);
+  };
   const updateLoadingText = (text: string) => setLoadingText(text);
 
   const values = {
