@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot } from '../store';
-import { useRoutes } from '../hooks/useRoutes';
+import { useRoutesControl } from '../hooks/useRoutesControl';
 import { roles } from '../routes';
 
 interface props {
@@ -13,7 +13,7 @@ interface props {
 const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const { checkUser, blockRoutes } = useRoutes();
+  const { checkUser, blockRoutes } = useRoutesControl();
 
   useEffect(() => {
     (async () => {

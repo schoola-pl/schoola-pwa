@@ -90,7 +90,7 @@ export const RouteProvider: React.FC = ({ children }) => {
   return <RouteContext.Provider value={values}>{children}</RouteContext.Provider>;
 };
 
-export const useRoutes = (): RouteContextTypes => {
+export const useRoutesControl = (): RouteContextTypes => {
   const Route = useContext(RouteContext);
   if (!Route) {
     throw new Error('useRoutes must be used within an RouteProvider');

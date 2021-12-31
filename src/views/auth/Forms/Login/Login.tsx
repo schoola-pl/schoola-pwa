@@ -3,14 +3,14 @@ import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.st
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
-import { useRoutes } from '../../../../hooks/useRoutes';
+import { useRoutesControl } from '../../../../hooks/useRoutes';
 import { getJWT } from '../../../../helpers/jwt';
 import { dashboardRoute } from '../../../../routes';
 import { useNavigate } from 'react-router';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
-  const { unlockRoutes } = useRoutes();
+  const { unlockRoutes } = useRoutesControl();
   const navigate = useNavigate();
 
   const {
