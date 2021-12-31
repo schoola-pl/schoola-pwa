@@ -49,6 +49,7 @@ const Login: React.FC = () => {
               minLength: 2
             })}
           />
+          {formError.login && <p>Podaj poprawny login!</p>}
           <StyledInput
             type="password"
             placeholder="Hasło"
@@ -58,6 +59,7 @@ const Login: React.FC = () => {
               minLength: 6
             })}
           />
+          {formError.password && <p>Podaj poprawne hasło!</p>}
           <StyledButton type="submit">
             {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
           </StyledButton>
