@@ -6,6 +6,7 @@ import { addUser, removeUser } from '../store';
 import { authUser } from '../types/auth';
 import { useNavigate } from 'react-router';
 import { dashboardRoute, loginRoute } from '../routes';
+import { useAppLoading } from './useAppLoading';
 
 interface RouteContextTypes {
   getUserData: (token: string) => Promise<AxiosResponse<authUser | null> | AxiosError>;
@@ -31,6 +32,7 @@ const RouteContext = createContext<RouteContextTypes>({
 export const RouteProvider: React.FC = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { setAppLoading } = useAppLoading();
 
   // Get the User information from API by JWT token
   const getUserData = async (token: string) =>
@@ -79,6 +81,7 @@ export const RouteProvider: React.FC = ({ children }) => {
     removeJWT();
     dispatch(removeUser({}));
     navigate(redirectTo);
+    setAppLoading(false);
   };
 
   const values = {
