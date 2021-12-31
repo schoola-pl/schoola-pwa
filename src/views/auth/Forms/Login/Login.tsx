@@ -3,7 +3,7 @@ import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.st
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
-import { useRoutesControl } from '../../../../hooks/useRoutes';
+import { useRoutesControl } from '../../../../hooks/useRoutesControl';
 import { getJWT } from '../../../../helpers/jwt';
 import { dashboardRoute } from '../../../../routes';
 import { useNavigate } from 'react-router';
