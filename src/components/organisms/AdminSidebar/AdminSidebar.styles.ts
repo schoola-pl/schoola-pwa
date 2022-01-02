@@ -23,6 +23,7 @@ export const Wrapper = styled.nav`
   border-right: 5px solid ${({ theme }) => theme.colors.accentGreen};
   flex-direction: column;
   align-items: center;
+  z-index: 9999;
 `;
 
 export const StyledList = styled.ul`

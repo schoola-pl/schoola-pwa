@@ -10,19 +10,19 @@ const AdminSidebar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
     <StyledList>
-      <StyledListItem as={Link} to="/school-admin/manage-classes">
-        <SidebarLink icon={AddUserIcon} />
-        <StyledParagraph>Zarządzaj użytkownikami</StyledParagraph>
-      </StyledListItem>
       <StyledListItem as={Link} to="/school-admin/dashboard">
         <SidebarLink icon={DashboardIcon} />
         <StyledParagraph>Tablica</StyledParagraph>
+      </StyledListItem>
+      <StyledListItem as={Link} to="/school-admin/manage-classes">
+        <SidebarLink icon={AddUserIcon} />
+        <StyledParagraph>Zarządzaj użytkownikami</StyledParagraph>
       </StyledListItem>
       <StyledListItem as={Link} to="">
         <SidebarLink icon={SettingsIcon} />
         <StyledParagraph>Ustawienia</StyledParagraph>
       </StyledListItem>
-      <StyledListItem as={Link} to="">
+      <StyledListItem as={Link} to="/login">
         <SidebarLink icon={LogoutIcon} />
         <StyledParagraph>Wyloguj się</StyledParagraph>
       </StyledListItem>
