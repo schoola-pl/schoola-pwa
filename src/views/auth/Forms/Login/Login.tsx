@@ -7,6 +7,7 @@ import { useRoutesControl } from '../../../../hooks/useRoutesControl';
 import { getJWT } from '../../../../helpers/jwt';
 import { dashboardRoute } from '../../../../routes';
 import { useNavigate } from 'react-router';
+import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -49,7 +50,7 @@ const Login: React.FC = () => {
               minLength: 2
             })}
           />
-          {formError.login && <p>Podaj poprawny login!</p>}
+          {formError.login && <ErrorParagraph>Podaj poprawny login!</ErrorParagraph>}
           <StyledInput
             type="password"
             placeholder="Hasło"
@@ -59,7 +60,7 @@ const Login: React.FC = () => {
               minLength: 6
             })}
           />
-          {formError.password && <p>Podaj poprawne hasło!</p>}
+          {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
           <StyledButton type="submit">
             {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
           </StyledButton>
