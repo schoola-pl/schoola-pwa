@@ -12,7 +12,7 @@ const mockData = [
 const Dashboard: React.FC = () => (
   <AdminTemplate>
     {mockData.map((mock) => (
-      <h1>hello {mock.admin}</h1>
+      <h1>{mock.admin}</h1>
     ))}
   </AdminTemplate>
 );
