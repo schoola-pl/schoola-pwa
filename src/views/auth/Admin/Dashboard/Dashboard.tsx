@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AdminTemplate from 'components/templates/AdminTemplate';
 
 const mockData = [
   {
@@ -9,11 +10,11 @@ const mockData = [
 ];
 
 const Dashboard: React.FC = () => (
-  <div>
+  <AdminTemplate>
     {mockData.map((mock) => (
       <h1>hello {mock.admin}</h1>
     ))}
-  </div>
+  </AdminTemplate>
 );
 
 export default Dashboard;

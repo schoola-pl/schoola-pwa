@@ -1,3 +1,10 @@
-const AdminTemplate: React.FC = () => <div>admin Template</div>;
+import AdminSidebar from 'components/organisms/AdminSidebar/AdminSidebar';
+
+const AdminTemplate: React.FC = ({ children }) => (
+  <>
+    <AdminSidebar />
+    {children}
+  </>
+);
 
 export default AdminTemplate;
