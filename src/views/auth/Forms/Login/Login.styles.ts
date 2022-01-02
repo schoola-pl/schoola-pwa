@@ -28,5 +28,5 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledInput = styled(Input)`
-  margin-bottom: 2.5rem;
+  margin-block: 10px;
 `;
