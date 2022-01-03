@@ -11,8 +11,8 @@ export const Heading = styled.h1`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  grid-template-rows: auto;
   padding: 4rem;
   grid-gap: 4rem;
 
