@@ -15,7 +15,7 @@ export const Background = styled.div`
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.colors.accentGreen};
+  background-color: ${({ theme }) => theme.colors.accentBrown};
   display: flex;
   color: white;
   align-items: center;
@@ -27,7 +27,7 @@ export const Background = styled.div`
 export const Loader = styled.div`
   width: 110px;
   height: 110px;
-  background: ${({ theme }) => theme.colors.accentBlue};
+  background: ${({ theme }) => theme.colors.accentGreen};
   border-radius: 50%;
   position: relative;
   animation: ${rotate} 1s ease-in-out infinite;
@@ -41,7 +41,7 @@ export const Loader = styled.div`
     height: 65%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.accentGreen};
+    background-color: ${({ theme }) => theme.colors.accentBrown};
   }
 
   &::after {
@@ -52,11 +52,14 @@ export const Loader = styled.div`
     width: 30%;
     height: 30%;
     transform: translateX(-50%);
-    background-color: ${({ theme }) => theme.colors.accentGreen};
+    background-color: ${({ theme }) => theme.colors.accentBrown};
   }
 `;
 
 export const Text = styled.p`
   margin: 0;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 0.4px;
   font-size: ${({ theme }) => theme.fontSize.l};
 `;

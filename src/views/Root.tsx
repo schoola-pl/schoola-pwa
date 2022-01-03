@@ -10,7 +10,7 @@ const Root: React.FC = () => {
 
   return (
     <>
-      {!isAppLoading && <AppLoader loadingText={appLoadingText} />}
+      {isAppLoading && <AppLoader loadingText={appLoadingText} />}
       <Routes>
         {routes.map((route) => {
           return route.isProtected ? (
