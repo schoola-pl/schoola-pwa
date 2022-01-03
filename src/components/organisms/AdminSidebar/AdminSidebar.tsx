@@ -1,6 +1,6 @@
 import { Logo, StyledList, Wrapper, StyledListItem, StyledParagraph } from './AdminSidebar.styles';
 import { Link } from 'react-router-dom';
-import SidebarLink from 'components/molecules/SidebarLink/SidebarLink';
+import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
