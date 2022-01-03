@@ -1,5 +1,4 @@
-import { Logo, StyledList, Wrapper, StyledListItem, StyledParagraph } from './AdminSidebar.styles';
-import { Link } from 'react-router-dom';
+import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './AdminSidebar.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
@@ -10,19 +9,19 @@ const AdminSidebar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
     <StyledList>
-      <StyledListItem as={Link} to="/school-admin/dashboard">
+      <StyledListItem to="/school-admin/dashboard">
         <SidebarLink icon={DashboardIcon} />
         <StyledParagraph>Tablica</StyledParagraph>
       </StyledListItem>
-      <StyledListItem as={Link} to="/school-admin/manage-classes">
+      <StyledListItem to="/school-admin/manage-classes">
         <SidebarLink icon={AddUserIcon} />
         <StyledParagraph>Zarządzaj użytkownikami</StyledParagraph>
       </StyledListItem>
-      <StyledListItem as={Link} to="">
+      <StyledListItem to="">
         <SidebarLink icon={SettingsIcon} />
         <StyledParagraph>Ustawienia</StyledParagraph>
       </StyledListItem>
-      <StyledListItem as={Link} to="/login">
+      <StyledListItem to="/login" isDanger>
         <SidebarLink icon={LogoutIcon} />
         <StyledParagraph>Wyloguj się</StyledParagraph>
       </StyledListItem>

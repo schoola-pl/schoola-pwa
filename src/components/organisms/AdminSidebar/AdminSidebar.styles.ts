@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Logo = styled.h1`
   margin-top: 6.5rem;
@@ -37,7 +38,7 @@ export const StyledList = styled.ul`
   left: 0;
 `;
 
-export const StyledListItem = styled.li`
+export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
   display: flex;
   height: 8rem;
   width: 20rem;
@@ -55,7 +56,7 @@ export const StyledListItem = styled.li`
   }
 
   &:hover {
-    background-color: white;
+    background-color: ${({ isDanger, theme }) => (!isDanger ? 'white' : theme.colors.accentRed)};
   }
 `;
 
