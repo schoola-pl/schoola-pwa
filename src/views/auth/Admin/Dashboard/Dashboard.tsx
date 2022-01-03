@@ -11,7 +11,6 @@ const mockData = [
 ];
 
 const Wrapper = styled.div`
-  position: relative;
   padding-left: 25rem;
 `;
 
@@ -21,13 +20,11 @@ const Heading = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
 `;
 
-const TotalGrid = styled.div`
-  position: relative;
+const Grid = styled.div`
   display: grid;
   margin-top: 2rem;
   margin-left: 2rem;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 `;
 
 const ClassesWrapper = styled.div`
@@ -46,6 +43,7 @@ const TotalClassesWrapper = styled.div`
   grid-row: 1 / 2;
   border-radius: 2rem;
   background-color: white;
+  grid-row-end: 2;
 `;
 
 const TotalAccountsWrapper = styled.div`
@@ -59,12 +57,9 @@ const TotalAccountsWrapper = styled.div`
   background-color: white;
 `;
 
-const ClassesGrid = styled.div`
+const TotalsGrid = styled.div`
   display: grid;
-  position: relative;
-  grid-template-columns: repeat(1, 1fr);
-  bottom: 67.2rem;
-  right: 3.5rem;
+  grid-template-rows: 2;
 `;
 
 const Dashboard: React.FC = () => (
@@ -72,13 +67,13 @@ const Dashboard: React.FC = () => (
     {mockData.map((mock) => (
       <Wrapper>
         <Heading>Witaj {mock.admin}!</Heading>
-        <TotalGrid>
-          <TotalAccountsWrapper />
-          <TotalClassesWrapper />
-        </TotalGrid>
-        <ClassesGrid>
+        <Grid>
+          <TotalsGrid>
+            <TotalClassesWrapper />
+            <TotalAccountsWrapper />
+          </TotalsGrid>
           <ClassesWrapper />
-        </ClassesGrid>
+        </Grid>
       </Wrapper>
     ))}
   </AdminTemplate>
