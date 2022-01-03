@@ -38,6 +38,7 @@ export const StyledList = styled.ul`
   left: 0;
 `;
 
+const easing = 'cubic-bezier(0.645, 0.045, 0.355, 1)';
 export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
   display: flex;
   height: 8rem;
@@ -46,17 +47,44 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
   text-decoration: none;
   margin-top: 2rem;
   color: black;
-  border-radius: 2rem;
   position: relative;
   left: 0;
-  transition: all 0.3s;
+  opacity: 0.8;
+  transition: opacity 0.2s ${easing};
 
   &:last-child {
     margin-top: 20rem;
   }
 
-  &:hover {
+  &::after {
+    content: '';
+    opacity: 0;
     background-color: ${({ isDanger, theme }) => (!isDanger ? 'white' : theme.colors.accentRed)};
+    border-radius: 2rem;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: opacity 0.2s ${easing};
+  }
+
+  &:hover {
+    opacity: 1;
+
+    &::after {
+      opacity: 0.5;
+    }
+  }
+
+  &:hover,
+  &.active {
+    opacity: 1;
+
+    &::after {
+      opacity: 1;
+    }
   }
 `;
 

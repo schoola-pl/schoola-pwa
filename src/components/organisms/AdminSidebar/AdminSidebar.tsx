@@ -4,6 +4,7 @@ import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import LogoutIcon from 'assets/icons/LogoutIcon.png';
+import React from 'react';
 
 const AdminSidebar = () => (
   <Wrapper>
@@ -17,7 +18,7 @@ const AdminSidebar = () => (
         <SidebarLink icon={AddUserIcon} />
         <StyledParagraph>Zarządzaj użytkownikami</StyledParagraph>
       </StyledListItem>
-      <StyledListItem to="">
+      <StyledListItem to="/school-admin/settings">
         <SidebarLink icon={SettingsIcon} />
         <StyledParagraph>Ustawienia</StyledParagraph>
       </StyledListItem>
@@ -29,4 +30,4 @@ const AdminSidebar = () => (
   </Wrapper>
 );
 
-export default AdminSidebar;
+export default React.memo(AdminSidebar);
