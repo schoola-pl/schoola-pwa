@@ -13,9 +13,8 @@ export const Logo = styled.h1`
 `;
 
 export const Wrapper = styled.nav`
-  position: fixed;
   height: 100vh;
-  width: 22.5rem;
+  width: 100%;
   padding: 0;
   left: 0;
   top: 0;
