@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/molecules/SidebarLink/SidebarLink';
-import ClassIcon from 'assets/icons/ClassIcon.png';
 
 interface Props {
-  name?: string;
-  number?: number;
-  icon?: string;
+  name: string;
+  number: number;
+  icon: string;
 }
 
 const Wrapper = styled.div`
@@ -57,11 +56,11 @@ const Number = styled.h1`
 const InfoCard: React.FC<Props> = ({ name, icon, number }) => (
   <Wrapper>
     <TitleWrapper>
-      <Heading>Łączna liczba użytkowników</Heading>
+      <Heading>{name}</Heading>
     </TitleWrapper>
     <Grid>
-      <Icon icon={ClassIcon} />
-      <Number>320</Number>
+      <Icon icon={icon} />
+      <Number>{number}</Number>
     </Grid>
   </Wrapper>
 );

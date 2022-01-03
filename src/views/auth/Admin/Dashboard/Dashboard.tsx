@@ -1,8 +1,12 @@
 import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
 import { Wrapper, Heading, Grid, TotalsGrid, TotalAccounts, TotalClasses, ClassesWrapper } from './Dashboard.styles';
+import ClassIcon from 'assets/icons/ClassIcon.png';
+import StudentIcon from 'assets/icons/StudentIcon.png';
 
 const mockData = [
   {
+    name1: 'Łączna liczba użytkowników',
+    name2: 'Łączna ilość klas',
     admin: 'Tomasz Hajto',
     numberOfAccounts: 250,
     numberOfClasses: 15,
@@ -17,8 +21,8 @@ const Dashboard: React.FC = () => (
         <Heading>Witaj {mock.admin}!</Heading>
         <Grid>
           <TotalsGrid>
-            <TotalClasses />
-            <TotalAccounts />
+            <TotalClasses name={mock.name2} number={mock.numberOfClasses} icon={ClassIcon} />
+            <TotalAccounts name={mock.name1} number={mock.numberOfAccounts} icon={StudentIcon} />
           </TotalsGrid>
           <ClassesWrapper />
         </Grid>
