@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import App from 'views/Root';
+import HomeView from 'views/HomeView';
 
 it('Renders application', () => {
-  render(<App />);
-  expect(screen.getByText('Hello World')).toBeInTheDocument();
+  render(<HomeView />);
+  expect(screen.getByText('Hello World!')).toBeInTheDocument();
 });
