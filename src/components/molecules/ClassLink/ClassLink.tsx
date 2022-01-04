@@ -1,8 +1,8 @@
 import { Wrapper, InfoWrapper } from './ClassLink.styles';
 
 interface Props {
-  name?: string;
-  numberOfStudents?: number;
+  name: string;
+  numberOfStudents: number;
 }
 
 const ClassLink: React.FC<Props> = ({ name, numberOfStudents }) => (
