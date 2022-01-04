@@ -6,26 +6,23 @@ import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import LogoutIcon from 'assets/icons/LogoutIcon.png';
 import React from 'react';
 
+const links: { path: string; name: string; icon: string }[] = [
+  { path: '/school-admin/dashboard', icon: DashboardIcon, name: 'Tablica' },
+  { path: '/school-admin/manage-classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
+  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' },
+  { path: '/login', icon: LogoutIcon, name: 'Wyloguj się' }
+];
+
 const AdminSidebar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
     <StyledList>
-      <StyledListItem to="/school-admin/dashboard">
-        <SidebarLink icon={DashboardIcon} />
-        <StyledParagraph>Tablica</StyledParagraph>
-      </StyledListItem>
-      <StyledListItem to="/school-admin/manage-classes">
-        <SidebarLink icon={AddUserIcon} />
-        <StyledParagraph>Zarządzaj użytkownikami</StyledParagraph>
-      </StyledListItem>
-      <StyledListItem to="/school-admin/settings">
-        <SidebarLink icon={SettingsIcon} />
-        <StyledParagraph>Ustawienia</StyledParagraph>
-      </StyledListItem>
-      <StyledListItem to="/login" isDanger>
-        <SidebarLink icon={LogoutIcon} />
-        <StyledParagraph>Wyloguj się</StyledParagraph>
-      </StyledListItem>
+      {links.map(({ path, name, icon }) => (
+        <StyledListItem key={path} to={path}>
+          <SidebarLink tabIndex={-1} icon={icon} />
+          <StyledParagraph>{name}</StyledParagraph>
+        </StyledListItem>
+      ))}
     </StyledList>
   </Wrapper>
 );
