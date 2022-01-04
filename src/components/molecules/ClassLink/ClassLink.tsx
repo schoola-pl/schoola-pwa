@@ -1,4 +1,4 @@
-import { Wrapper, InfoWrapper } from './ClassLink.styles';
+import { InfoWrapper, Wrapper } from './ClassLink.styles';
 
 interface Props {
   name: string;
@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ClassLink: React.FC<Props> = ({ name, numberOfStudents }) => (
-  <Wrapper as="a" href="#">
+  <Wrapper to="#">
     <InfoWrapper>
       <h1>{name}</h1>
       <p>

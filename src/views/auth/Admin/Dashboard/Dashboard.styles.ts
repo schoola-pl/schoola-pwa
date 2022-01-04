@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 1rem;
+  overflow-y: auto;
 `;
 
 export const Heading = styled.h1`
@@ -20,4 +21,12 @@ export const Grid = styled.div`
     grid-row: 1/3;
     grid-column: 2/3;
   }
+
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    grid-template-columns: 1fr;
+    & > div:nth-child(3) {
+      grid-row: 3/4;
+      grid-column: 1;
+    }
+  } ;
 `;

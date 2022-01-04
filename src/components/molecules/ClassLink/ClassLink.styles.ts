@@ -1,19 +1,22 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(Link)`
   min-height: 12rem;
   width: 99%;
   background-color: white;
   border-radius: 2rem;
   margin-top: 1rem;
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.12);
+  box-shadow: -2px 4px 22px -14px rgba(115, 124, 142, 0.5);
   display: flex;
   text-decoration: none;
   color: black;
+  border: 3px solid white;
+  transition: border-color 0.1s cubic-bezier(0.52, 0.86, 0.55, 0.93);
 
   &:hover {
-    border: 3px solid ${({ theme }) => theme.colors.accentGreen};
-    box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.5);
+    border-color: ${({ theme }) => theme.colors.accentGreen};
+    box-shadow: -2px 4px 22px -8px rgba(115, 124, 142, 0.5);
     cursor: pointer;
   }
 `;

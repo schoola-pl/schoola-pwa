@@ -6,4 +6,7 @@ export const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: #f2f2f2 !important;
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    grid-template-columns: 25% 75%;
+  }
 `;

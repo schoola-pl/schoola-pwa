@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
-  width: 50rem;
+  max-height: 740px;
   overflow: hidden;
-  height: 67.2rem;
   background-color: white;
-  grid-column: 2 / 2;
   border-radius: 2rem;
-  margin-left: 4rem;
   display: flex;
   flex-direction: column;
+  @media (min-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    margin-inline: 6rem;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -28,8 +28,20 @@ export const Heading = styled.h1`
 `;
 
 export const ClassesWrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  padding: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.lightBrown};
   align-items: center;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+    border-radius: 10px;
+  }
 `;
