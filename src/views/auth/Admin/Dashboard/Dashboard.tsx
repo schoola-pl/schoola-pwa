@@ -10,14 +10,7 @@ const mockData = {
   name2: 'Łączna ilość klas',
   admin: 'Tomasz Hajto',
   numberOfAccounts: 250,
-  numberOfClasses: 15,
-  classes: [
-    { className: '1A', numberOfStudents: '30' },
-    { className: '1B', numberOfStudents: '35' },
-    { className: '1C', numberOfStudents: '30' },
-    { className: '1D', numberOfStudents: '30' },
-    { className: '1E', numberOfStudents: '30' }
-  ]
+  numberOfClasses: 15
 };
 
 const Dashboard: React.FC = () => (
