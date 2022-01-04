@@ -1,5 +1,6 @@
+import Loader from 'components/atoms/Loader/Loader';
 import React from 'react';
-import { Background, Loader, Text } from './AppLoader.styles';
+import { Background, Text } from './AppLoader.styles';
 
 interface props {
   loadingText: string;
