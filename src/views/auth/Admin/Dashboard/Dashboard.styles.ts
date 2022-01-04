@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 2rem;
+  padding: 1rem;
 `;
 
 export const Heading = styled.h1`
@@ -13,10 +13,10 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
   grid-template-rows: auto;
-  padding: 4rem;
+  padding: 3rem;
   grid-gap: 4rem;
 
-  & > div:nth-child(2) {
+  & > div:nth-child(3) {
     grid-row: 1/3;
     grid-column: 2/3;
   }
