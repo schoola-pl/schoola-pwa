@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from '../store';
 import { useRoutesControl } from '../hooks/useRoutesControl';
 import { roles } from '../routes';
+import { useAppLoading } from '../hooks/useAppLoading';
 
 interface props {
   Element: React.FC;
@@ -14,10 +15,12 @@ const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const { checkUser, blockRoutes } = useRoutesControl();
+  const { setAppLoading } = useAppLoading();
 
   useEffect(() => {
     (async () => {
       // Checks is user is logged in
+      setAppLoading(true);
       if (await checkUser()) {
         setAuthenticated(true);
       } else {
@@ -36,6 +39,8 @@ const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
         // Checks if user has permission to access route
         if (role !== user.TextRole && role !== roles.authenticated) {
           blockRoutes(redirectTo);
+        } else {
+          setAppLoading(false);
         }
       } else {
         blockRoutes(redirectTo);
