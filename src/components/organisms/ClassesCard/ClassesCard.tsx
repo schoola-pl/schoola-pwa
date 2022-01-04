@@ -1,4 +1,5 @@
-import { Wrapper, TitleWrapper, Heading, ClassLink, ClassesWrapper } from './ClassesCard.styles';
+import { Wrapper, TitleWrapper, Heading, ClassesWrapper } from './ClassesCard.styles';
+import ClassLink from 'components/molecules/ClassLink/ClassLink';
 
 const ClassesCard = () => (
   <Wrapper>

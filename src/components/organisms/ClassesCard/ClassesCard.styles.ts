@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   position: relative;
   width: 50rem;
-
+  overflow: hidden;
   height: 67.2rem;
   background-color: white;
   grid-column: 2 / 2;
@@ -13,25 +13,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-export const ClassLink = styled.div`
-  min-height: 12rem;
-  width: 100%;
-  background-color: white;
-  border-radius: 2rem;
-  margin-top: 1rem;
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.12);
-
-  &:hover {
-    border: 3px solid ${({ theme }) => theme.colors.accentGreen};
-    box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.29);
-    cursor: pointer;
-  }
-`;
 export const TitleWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  border-bottom: 5px solid ${({ theme }) => theme.colors.accentGreen};
+  background-color: ${({ theme }) => theme.colors.accentGreen};
 `;
 
 export const Heading = styled.h1`
