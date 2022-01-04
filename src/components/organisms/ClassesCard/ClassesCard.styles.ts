@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
-  max-height: 740px;
+  max-height: 745px;
   overflow: hidden;
   background-color: white;
   border-radius: 2rem;
