@@ -1,6 +1,9 @@
 import React from 'react';
 import Home from 'views/Home';
 import Login from 'views/auth/Forms/Login/Login';
+import Dashboard from 'views/auth/Admin/Dashboard/Dashboard';
+import ManageClasses from 'views/auth/Admin/ManageClasses/ManageClasses';
+
 
 interface routesInterface {
   // Path to component
