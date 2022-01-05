@@ -6,6 +6,9 @@ const mockClasses = [
   { name: '1B', numberOfStudents: 35 },
   { name: '1C', numberOfStudents: 31 },
   { name: '1D', numberOfStudents: 34 },
+  { name: '1E', numberOfStudents: 28 },
+  { name: '1E', numberOfStudents: 28 },
+  { name: '1E', numberOfStudents: 28 },
   { name: '1E', numberOfStudents: 28 }
 ];
 

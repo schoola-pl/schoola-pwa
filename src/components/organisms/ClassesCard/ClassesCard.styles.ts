@@ -41,7 +41,7 @@ export const ClassesWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.accentBlue};
+    background-color: ${({ theme }) => theme.colors.accentBrown};
     border-radius: 10px;
   }
 `;
