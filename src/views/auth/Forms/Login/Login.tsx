@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
+import { useLoginMutation } from 'store';
+import { useRoutesControl } from '../../../../hooks/useRoutesControl';
+import { getJWT } from '../../../../helpers/jwt';
+import { dashboardRoute } from '../../../../routes';
+import { useNavigate } from 'react-router';
+import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
 
 const Login: React.FC = () => {
-  const [isLoading, setLoadingState] = useState(false);
+  const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
+  const { unlockRoutes } = useRoutesControl();
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors: formError },
     handleSubmit
   } = useForm();
 
-  const handleLogin = ({ login, password }: { login: string; password: string }) => {
-    setLoadingState(true);
-    setLoadingState(false);
+  useEffect(() => {
+    if (getJWT()) {
+      navigate(dashboardRoute);
+    } else if (isSuccess) {
+      unlockRoutes(data.jwt, data.user);
+    }
+    // eslint-disable-next-line
+  }, [data]);
+
+  const handleLogin = async ({ login, password }: { login: string; password: string }) => {
+    loginProtocol({
+      identifier: login,
+      password
+    });
   };
 
   return (
@@ -30,6 +50,7 @@ const Login: React.FC = () => {
               minLength: 2
             })}
           />
+          {formError.login && <ErrorParagraph>Podaj poprawny login!</ErrorParagraph>}
           <StyledInput
             type="password"
             placeholder="Hasło"
@@ -39,7 +60,10 @@ const Login: React.FC = () => {
               minLength: 6
             })}
           />
-          <StyledButton type="submit">{!isLoading ? 'Zaloguj się' : 'Sprawdzam dane...'}</StyledButton>
+          {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
+          <StyledButton type="submit">
+            {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
+          </StyledButton>
         </Form>
       </AuthCard>
     </Wrapper>
