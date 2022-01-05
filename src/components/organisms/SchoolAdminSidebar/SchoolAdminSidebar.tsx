@@ -7,8 +7,8 @@ import LogoutIcon from 'assets/icons/LogoutIcon.png';
 import React from 'react';
 
 const links: { path: string; name: string; icon: string }[] = [
-  { path: '/school-admin/dashboard', icon: DashboardIcon, name: 'Tablica' },
-  { path: '/school-admin/manage-classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
+  { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
+  { path: '/school-admin/users', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
   { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' },
   { path: '/login', icon: LogoutIcon, name: 'Wyloguj się' }
 ];
