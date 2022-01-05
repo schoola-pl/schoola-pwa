@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
-import routes from '../routes';
-import ProtectedRoute from '../providers/ProtectedRoute';
 import { useAppLoading } from '../hooks/useAppLoading';
 import AppLoader from '../components/molecules/AppLoader/AppLoader';
+import routes from '../routes';
+import ProtectedRoute from '../providers/ProtectedRoute';
 
 const Root: React.FC = () => {
   const { isAppLoading, appLoadingText } = useAppLoading();
@@ -14,11 +14,7 @@ const Root: React.FC = () => {
       <Routes>
         {routes.map((route) => {
           return route.isProtected ? (
-            <Route
-              key={route.path}
-              element={<ProtectedRoute role={route.role} redirectTo={route.redirectTo} Element={route.Component} />}
-              path={route.path}
-            />
+            <Route key={route.path} element={<ProtectedRoute role={route.role} Element={route.Component} />} path={route.path} />
           ) : (
             <Route key={route.path} element={<route.Component />} path={route.path} />
           );
