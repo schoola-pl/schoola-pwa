@@ -1,4 +1,4 @@
-import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './AdminSidebar.styles';
+import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './SchoolAdminSidebar.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
@@ -13,7 +13,7 @@ const links: { path: string; name: string; icon: string }[] = [
   { path: '/login', icon: LogoutIcon, name: 'Wyloguj się' }
 ];
 
-const AdminSidebar = () => (
+const SchoolAdminSidebar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
     <StyledList>
@@ -27,4 +27,4 @@ const AdminSidebar = () => (
   </Wrapper>
 );
 
-export default React.memo(AdminSidebar);
+export default React.memo(SchoolAdminSidebar);

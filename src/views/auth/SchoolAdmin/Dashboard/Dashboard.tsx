@@ -1,4 +1,4 @@
-import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
+import SchoolAdminTemplate from 'components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
 import { Grid, Heading, Wrapper } from './Dashboard.styles';
 import ClassIcon from 'assets/icons/ClassIcon.png';
 import StudentIcon from 'assets/icons/StudentIcon.png';
@@ -14,7 +14,7 @@ const mockData = {
 };
 
 const Dashboard: React.FC = () => (
-  <AdminTemplate>
+  <SchoolAdminTemplate>
     <Wrapper>
       <Heading>Witaj {mockData.admin}!</Heading>
       <Grid>
@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => (
         <ClassesCard />
       </Grid>
     </Wrapper>
-  </AdminTemplate>
+  </SchoolAdminTemplate>
 );
 
 export default Dashboard;
