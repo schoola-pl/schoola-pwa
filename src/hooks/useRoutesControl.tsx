@@ -62,7 +62,7 @@ export const RouteProvider: React.FC = ({ children }) => {
     }
   };
 
-  // Unlock routes if JWT token appears
+  // Unlock routes if JWT token exists and user is authenticated
   const unlockRoutes = (jwt: string, userData: authUser) => {
     if (getJWT()) {
       navigate(dashboardRoute);
