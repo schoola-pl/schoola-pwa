@@ -15,7 +15,7 @@ interface routesInterface {
 }
 
 // Paths
-export const paths = {
+export const paths: { [key: string]: string } = {
   login: '/login',
   student: '/student/*',
   schoolAdmin: '/school-admin/*'
