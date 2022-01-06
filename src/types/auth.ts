@@ -10,6 +10,6 @@ export type authUser = {
   age: number;
   avatar: string;
   birthday: string;
-  schoolId: string;
+  schoolId: number;
   TextRole: string;
 };
