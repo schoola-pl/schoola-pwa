@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import { useAppLoading } from '../hooks/useAppLoading';
 import AppLoader from '../components/molecules/AppLoader/AppLoader';
@@ -12,6 +12,7 @@ const Root: React.FC = () => {
     <>
       {isAppLoading && <AppLoader loadingText={appLoadingText} />}
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
         {routes.map((route) => {
           return route.isProtected ? (
             <Route key={route.path} element={<ProtectedRoute role={route.role} Element={route.Component} />} path={route.path} />
