@@ -3,6 +3,7 @@ import Home from 'views/Home';
 import Login from 'views/auth/Forms/Login/Login';
 import Dashboard from 'views/auth/Admin/Dashboard/Dashboard';
 import ManageClasses from 'views/auth/Admin/ManageClasses/ManageClasses';
+import Loading from 'components/molecules/Loading/Loading';
 
 interface routesInterface {
   // Path to component
@@ -27,10 +28,12 @@ export const roles: { [key: string]: string } = {
 // Environment routes
 const dashboardRoute = '/dashboard';
 const loginRoute = '/login';
+const manageStudents = '/manage-classes';
 
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
+  { path: manageStudents, Component: ManageClasses, isProtected: false, role: roles.authenticated },
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public }
 ];
 

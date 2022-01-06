@@ -14,13 +14,12 @@ export const Logo = styled.h1`
 
 export const Wrapper = styled.nav`
   height: 100vh;
-  width: 100%;
+  width: 95%;
   padding: 0;
   left: 0;
   top: 0;
   display: flex;
   background-color: ${({ theme }) => theme.colors.lightBrown};
-  border-right: 5px solid ${({ theme }) => theme.colors.accentGreen};
   flex-direction: column;
   align-items: center;
   z-index: 9999;
@@ -41,7 +40,8 @@ const easing = 'cubic-bezier(0.645, 0.045, 0.355, 1)';
 export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
   display: flex;
   height: 8rem;
-  width: 20rem;
+  width: 18rem;
+
   align-items: center;
   text-decoration: none;
   margin-top: 2rem;

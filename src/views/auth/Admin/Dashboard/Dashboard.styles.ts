@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 export const Heading = styled.h1`
   margin: 3rem 3rem 0;
   font-size: 2.6rem;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
 `;
 
 export const Grid = styled.div`
