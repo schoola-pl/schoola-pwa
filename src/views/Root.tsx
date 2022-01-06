@@ -20,6 +20,7 @@ const Root: React.FC = () => {
             <Route key={route.path} element={<route.Component />} path={route.path} />
           );
         })}
+        <Route path="*" element={<p>Error 404</p>} />
       </Routes>
     </>
   );
