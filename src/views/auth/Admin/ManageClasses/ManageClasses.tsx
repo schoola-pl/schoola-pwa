@@ -4,8 +4,8 @@ import { AmountWrapper, ClassesWrapper, ContentWrapper, Heading, HeadingLink, Li
 import { data } from './data';
 
 interface Props {
-  classYear?: string;
-  classes: { name?: string; amountOfStudents?: number };
+  classYear: string;
+  classes: { name: string; amountOfStudents: number };
 }
 
 const ManageClasses: React.FC<Props> = () => {

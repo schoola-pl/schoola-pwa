@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import React from 'react';
+import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
+import EditIcon from 'assets/icons/EditIcon.png';
 
-const ClassWrapper = styled.div`
+const Wrapper = styled.div`
   background-color: white;
   margin-top: 3rem;
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  display: flex;
+  justify-content: space-between;
 
   p {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -52,7 +56,7 @@ const ClassDetails = styled.details`
   }
 `;
 
-const ClassCircle = styled.div`
+const Circle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,6 +64,14 @@ const ClassCircle = styled.div`
   height: 5rem;
   width: 5rem;
   background-color: #eceff7;
+`;
+
+const EditLink = styled(SidebarLink)`
+  background-color: #e8fcd9;
+  border-radius: 1rem;
+  height: 4rem;
+  width: 4rem;
+  padding: 1rem;
 `;
 
 interface Props {
@@ -76,12 +88,15 @@ const ClassCard: React.FC<Props> = ({ classYear, classes }) => (
       <summary>{classYear}</summary>
       <div>
         {classes.map(({ name, amountOfStudents }) => (
-          <ClassWrapper>
-            <ClassCircle>
+          <Wrapper>
+            <Circle>
               <h1>{name}</h1>
-            </ClassCircle>
-            <p>liczba uczniów: {amountOfStudents}</p>
-          </ClassWrapper>
+            </Circle>
+            <p>
+              liczba uczniów: <strong>{amountOfStudents}</strong>
+            </p>
+            <EditLink icon={EditIcon} />
+          </Wrapper>
         ))}
       </div>
     </ClassDetails>
