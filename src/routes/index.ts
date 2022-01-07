@@ -31,7 +31,7 @@ const loginRoute = '/login';
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
-  { path: '/manage', Component: ManageClasses, isProtected: false, role: roles.authenticated },
+  { path: '/manage/*', Component: ManageClasses, isProtected: false, role: roles.authenticated },
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public }
 ];
 
