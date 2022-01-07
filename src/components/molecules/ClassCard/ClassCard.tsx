@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 
 const ClassWrapper = styled.div`
   background-color: white;
@@ -63,20 +64,26 @@ const ClassCircle = styled.div`
 
 interface Props {
   classYear?: string;
-  amountOfStudents?: number;
-  name?: string;
+  classes: {
+    amountOfStudents?: number;
+    name?: string;
+  }[];
 }
 
-const ClassCard: React.FC<Props> = ({ classYear, amountOfStudents, name }) => (
+const ClassCard: React.FC<Props> = ({ classYear, classes }) => (
   <div>
     <ClassDetails>
       <summary>{classYear}</summary>
-      <ClassWrapper>
-        <ClassCircle>
-          <h1>{name}</h1>
-        </ClassCircle>
-        <p>liczba uczniów: {amountOfStudents}</p>
-      </ClassWrapper>
+      <div>
+        {classes.map(({ name, amountOfStudents }) => (
+          <ClassWrapper>
+            <ClassCircle>
+              <h1>{name}</h1>
+            </ClassCircle>
+            <p>liczba uczniów: {amountOfStudents}</p>
+          </ClassWrapper>
+        ))}
+      </div>
     </ClassDetails>
   </div>
 );

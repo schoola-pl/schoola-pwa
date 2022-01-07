@@ -27,12 +27,11 @@ export const roles: { [key: string]: string } = {
 // Environment routes
 const dashboardRoute = '/dashboard';
 const loginRoute = '/login';
-const manageStudents = '/manage-classes';
 
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
-  { path: manageStudents, Component: ManageClasses, isProtected: false, role: roles.authenticated },
+  { path: '/manage', Component: ManageClasses, isProtected: false, role: roles.authenticated },
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public }
 ];
 
