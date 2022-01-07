@@ -1,15 +1,14 @@
 import React from 'react';
-import Home from 'views/Home';
 import Login from 'views/auth/Forms/Login/Login';
 import Dashboard from 'views/auth/Admin/Dashboard/Dashboard';
 import ManageClasses from 'views/auth/Admin/ManageClasses/ManageClasses';
-import Loading from 'components/molecules/Loading/Loading';
 
 interface routesInterface {
   // Path to component
   path: string;
   // Just component
-  Component: React.FC;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Component: React.FC<any>;
   // Is route protected?
   isProtected: boolean;
   // Who can access this route?
