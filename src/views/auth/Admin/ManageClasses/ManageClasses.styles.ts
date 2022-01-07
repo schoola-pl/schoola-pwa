@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Heading = styled.h1`
   margin: 3rem 3rem 0;
@@ -33,25 +34,49 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-export const HeadingLink = styled.h1`
+export const HeadingLink = styled(NavLink)`
   position: relative;
   display: flex;
+  text-decoration: none;
+  font-size: ${({ theme }) => theme.fontSize.m};
   flex-direction: column;
   text-transform: uppercase;
   font-weight: ${({ theme }) => theme.fontWeight.semibold};
   margin-right: 15rem;
   padding-bottom: 0.75rem;
-  transition: all 0.1s linear;
+  margin-bottom: 1.1rem;
+  transition: color 0.1s linear;
   cursor: pointer;
+  color: black;
 
   &:hover {
     color: ${({ theme }) => theme.colors.lightGreen};
+  }
+
+  &::before {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.lightGreen};
+    height: 3px;
+    transition: opacity 0.2s linear;
+  }
+
+  &.active {
+    &::before {
+      opacity: 1;
+    }
   }
 `;
 
 export const AmountWrapper = styled.div`
   padding: 0.2rem 3rem 3rem 3rem;
   display: flex;
+
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
   }

@@ -15,9 +15,9 @@ const ManageClasses: React.FC<Props> = () => {
         <Heading>Zarządzaj użytkownikami</Heading>
         <ContentWrapper>
           <Links>
-            <HeadingLink>klasy</HeadingLink>
-            <HeadingLink>role</HeadingLink>
-            <HeadingLink>wszystkie konta</HeadingLink>
+            <HeadingLink to={'/manage'}>klasy</HeadingLink>
+            <HeadingLink to={'/manage'}>role</HeadingLink>
+            <HeadingLink to={'/manage'}>wszystkie konta</HeadingLink>
           </Links>
           <AmountWrapper>
             <h1>
