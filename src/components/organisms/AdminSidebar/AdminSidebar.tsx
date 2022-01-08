@@ -8,7 +8,7 @@ import React from 'react';
 
 const links: { path: string; name: string; icon: string }[] = [
   { path: '/dashboard', icon: DashboardIcon, name: 'Tablica' },
-  { path: '/manage-classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
+  { path: '/manage', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
   { path: '/settings', icon: SettingsIcon, name: 'Ustawienia' },
   { path: '/login', icon: LogoutIcon, name: 'Wyloguj się' }
 ];

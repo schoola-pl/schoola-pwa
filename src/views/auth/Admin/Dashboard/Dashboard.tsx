@@ -7,7 +7,7 @@ import ClassesCard from 'components/organisms/ClassesCard/ClassesCard';
 
 const mockData = {
   name1: 'Łączna liczba użytkowników',
-  name2: 'Łączna ilość klas',
+  name2: 'Łączna liczba klas',
   admin: 'Tomasz Hajto',
   numberOfAccounts: 250,
   numberOfClasses: 15

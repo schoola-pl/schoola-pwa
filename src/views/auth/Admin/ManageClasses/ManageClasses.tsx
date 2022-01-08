@@ -1,7 +1,8 @@
 import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
 import ClassCard from 'components/molecules/ClassCard/ClassCard';
-import { AmountWrapper, ClassesWrapper, ContentWrapper, Heading, HeadingLink, Links, Wrapper } from './ManageClasses.styles';
+import { AmountWrapper, ClassesWrapper, ContentWrapper, Heading, HeadingLink, Links, Wrapper, InnerWrapper, AddButton } from './ManageClasses.styles';
 import { data } from './data';
+import AddIcon from 'assets/icons/AddIcon.svg';
 
 interface Props {
   classYear: string;
@@ -12,16 +13,19 @@ const ManageClasses: React.FC<Props> = () => {
   return (
     <AdminTemplate>
       <Wrapper>
-        <Heading>Zarządzaj użytkownikami</Heading>
+        <InnerWrapper>
+          <Heading>Zarządzaj użytkownikami</Heading>
+          <AddButton as="a" icon={AddIcon} />
+        </InnerWrapper>
         <ContentWrapper>
           <Links>
-            <HeadingLink to={'/manage'}>klasy</HeadingLink>
-            <HeadingLink to={'/manage'}>role</HeadingLink>
-            <HeadingLink to={'/manage'}>wszystkie konta</HeadingLink>
+            <HeadingLink to={'/manage/classes'}>klasy</HeadingLink>
+            <HeadingLink to={'/manage/roles'}>role</HeadingLink>
+            <HeadingLink to={'/manage/all-accounts'}>wszystkie konta</HeadingLink>
           </Links>
           <AmountWrapper>
             <h1>
-              Łączna ilosć klas: <span>16</span>
+              Łączna liczba klas: <span>16</span>
             </h1>
           </AmountWrapper>
           <ClassesWrapper>
