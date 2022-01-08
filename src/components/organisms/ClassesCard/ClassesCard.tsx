@@ -32,11 +32,15 @@ const ClassesCard: React.FC = () => {
           classes.data.data.map(
             ({
               id,
-              attributes: { classLevel, className }
+              attributes: {
+                classLevel,
+                className,
+                users: { data: usersCount }
+              }
             }: {
               id: number;
-              attributes: { classLevel: schoolClass['classLevel']; className: schoolClass['className'] };
-            }) => <ClassLink key={id} name={`${classLevel}${className}`} numberOfStudents={2} />
+              attributes: { classLevel: schoolClass['classLevel']; className: schoolClass['className']; users: { data: { id: number }[] } };
+            }) => <ClassLink key={id} name={`${classLevel}${className}`} numberOfStudents={usersCount.length} />
           )}
         {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? <p onClick={fetchNextPage}>Więcej</p> : null}
         {currentPage > 1 ? <p onClick={fetchPrevPage}>Mniej</p> : null}
