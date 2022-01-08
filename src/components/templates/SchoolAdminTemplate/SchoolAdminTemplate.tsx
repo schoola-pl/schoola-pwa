@@ -11,7 +11,7 @@ const SchoolAdminTemplate: React.FC = () => (
     <AdminSidebar />
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/users" element={<ManageClasses />} />
+      <Route path="/manage" element={<ManageClasses />} />
     </Routes>
   </Wrapper>
 );
