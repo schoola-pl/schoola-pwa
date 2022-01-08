@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { storeRoot, useGetClassesQuery } from '../../../store';
 import { useSelector } from 'react-redux';
 import { schoolClass } from '../../../types/school';
+import Loading from '../../molecules/Loading/Loading';
 
 const ClassesCard: React.FC = () => {
   const [currentPage, setPage] = useState(1);
@@ -28,7 +29,9 @@ const ClassesCard: React.FC = () => {
         <Heading>Klasy</Heading>
       </TitleWrapper>
       <ClassesWrapper>
-        {classes.isSuccess &&
+        {classes.isLoading ? (
+          <Loading />
+        ) : (
           classes.data.data.map(
             ({
               id,
@@ -41,7 +44,8 @@ const ClassesCard: React.FC = () => {
               id: number;
               attributes: { classLevel: schoolClass['classLevel']; className: schoolClass['className']; users: { data: { id: number }[] } };
             }) => <ClassLink key={id} name={`${classLevel}${className}`} numberOfStudents={usersCount.length} />
-          )}
+          )
+        )}
         {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? <p onClick={fetchNextPage}>Więcej</p> : null}
         {currentPage > 1 ? <p onClick={fetchPrevPage}>Mniej</p> : null}
       </ClassesWrapper>

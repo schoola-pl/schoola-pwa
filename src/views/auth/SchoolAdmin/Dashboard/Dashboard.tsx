@@ -6,6 +6,7 @@ import ClassesCard from 'components/organisms/ClassesCard/ClassesCard';
 import React from 'react';
 import { storeRoot, useGetClassesCountQuery, useGetUsersCountQuery } from '../../../../store';
 import { useSelector } from 'react-redux';
+import Loading from '../../../../components/molecules/Loading/Loading';
 
 const Dashboard: React.FC = () => {
   const user = useSelector((store: storeRoot) => store.user);
@@ -16,11 +17,15 @@ const Dashboard: React.FC = () => {
     <Wrapper>
       <Heading>Witaj {user?.first_name || 'użytkowniku'}!</Heading>
       <Grid>
-        {usersCount.isSuccess && (
-          <InfoCard name="Łączna liczba użytkowników" number={usersCount.data.data[0].attributes.totalUsers} icon={StudentIcon} />
+        {classesCount.isLoading || usersCount.isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <InfoCard name="Łączna liczba użytkowników" number={usersCount.data.data[0].attributes.totalUsers} icon={StudentIcon} />
+            <InfoCard name="Łączna ilość klas" number={classesCount.data.data.length} icon={ClassIcon} />
+            <ClassesCard />
+          </>
         )}
-        {classesCount.isSuccess && <InfoCard name="Łączna ilość klas" number={classesCount.data.data.length} icon={ClassIcon} />}
-        <ClassesCard />
       </Grid>
     </Wrapper>
   );
