@@ -87,8 +87,8 @@ const ClassCard: React.FC<Props> = ({ classYear, classes }) => (
     <ClassDetails>
       <summary>{classYear}</summary>
       <div>
-        {classes.map(({ name, amountOfStudents }) => (
-          <Wrapper>
+        {classes.map(({ name, amountOfStudents }, index) => (
+          <Wrapper key={index}>
             <Circle>
               <h1>{name}</h1>
             </Circle>

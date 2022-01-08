@@ -8,6 +8,7 @@ import { getJWT } from '../../../../helpers/jwt';
 import { dashboardRoute } from '../../../../routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
+import { getPathForRole } from '../../../../helpers/roles';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -24,7 +25,7 @@ const Login: React.FC = () => {
     if (getJWT()) {
       navigate(dashboardRoute);
     } else if (isSuccess) {
-      unlockRoutes(data.jwt, data.user);
+      unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
     }
     // eslint-disable-next-line
   }, [data]);
