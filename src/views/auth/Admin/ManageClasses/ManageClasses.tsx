@@ -15,7 +15,7 @@ const ManageClasses: React.FC<Props> = () => {
       <Wrapper>
         <InnerWrapper>
           <Heading>Zarządzaj użytkownikami</Heading>
-          <AddButton as="a" icon={AddIcon} />
+          <AddButton as="a" href="/add-class" icon={AddIcon} />
         </InnerWrapper>
         <ContentWrapper>
           <Links>
