@@ -6,7 +6,7 @@ export const ClassAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['classes', 'users'],
+  tagTypes: ['classes'],
   endpoints: (builder) => ({
     getClassesCount: builder.query({
       providesTags: ['classes'],
