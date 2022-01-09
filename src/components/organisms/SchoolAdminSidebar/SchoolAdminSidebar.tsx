@@ -1,4 +1,4 @@
-import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './AdminSidebar.styles';
+import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './SchoolAdminSidebar.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
@@ -7,9 +7,9 @@ import LogoutIcon from 'assets/icons/LogoutIcon.png';
 import React from 'react';
 
 const links: { path: string; name: string; icon: string }[] = [
-  { path: '/dashboard', icon: DashboardIcon, name: 'Tablica' },
-  { path: '/manage', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
-  { path: '/settings', icon: SettingsIcon, name: 'Ustawienia' },
+  { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
+  { path: '/school-admin/manage', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
+  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' },
   { path: '/login', icon: LogoutIcon, name: 'Wyloguj się' }
 ];
 
