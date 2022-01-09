@@ -6,7 +6,7 @@ describe('Functions > redirectPaths', () => {
     expect(getPathForRole('School Admin')).toBe('/school-admin/');
     expect(getPathForRole('Incorrect role')).toBe('/student/');
   });
-  it('Checks if the redirectPaths function returns the correct path when input is incorrect', () => {
+  it('Checks if the redirectPaths function returns the correct path when input is wrong', () => {
     const correctResponse = '/student/';
     expect(getPathForRole(`${null}`)).toBe(correctResponse);
     expect(getPathForRole(`${undefined}`)).toBe(correctResponse);
