@@ -22,7 +22,9 @@ export const ClassAPI = createApi({
       query: (args) => ({
         url: `/classes?populate[users][fields][0]=id&pagination[page]=${
           args.page ? args.page : 1
-        }&pagination[pageSize]=4&fields[0]=classLevel&fields[1]=className&filters[schoolId][$eq]=${args.schoolId}`,
+        }&pagination[pageSize]=4&fields[0]=classLevel&fields[1]=className&filters[schoolId][$eq]=${args.schoolId}${
+          args.classLevel ? `&filters[classLevel][$eq]=${args.classLevel}` : ''
+        }`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
