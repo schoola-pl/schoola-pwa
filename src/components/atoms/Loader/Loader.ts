@@ -9,7 +9,9 @@ const rotate = keyframes`
   }
 `;
 
-const Loader = styled.div`
+const Loader = styled.div.attrs({
+  'data-testid': 'loader'
+})`
   width: 110px;
   height: 110px;
   background: ${({ theme }) => theme.colors.accentGreen};
