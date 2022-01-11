@@ -35,14 +35,13 @@ const Select = styled.select`
 `;
 
 const StyledForm = styled.form`
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border-right: 2px solid #eceff7;
   height: 100vh;
   width: 30rem;
+  margin-top: 3rem;
 `;
 
 const Label = styled.label`
@@ -59,27 +58,87 @@ const PeopleSelect = styled(Select)`
   transform: translateY(-20%);
 `;
 
+const PeopleCard = styled.div`
+  width: 79rem;
+  height: 80%;
+  background-color: white;
+  margin-right: 12rem;
+  border-radius: 1rem;
+  margin-left: 5rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+`;
+
+const InnerWrapper = styled.div`
+  margin-top: -2rem;
+  border-right: 2px solid #eceff7;
+`;
+
+const ClassHeading = styled.h1`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  border-bottom: 3px solid ${({ theme }) => theme.colors.accentGreen};
+  padding: 1rem;
+`;
+
+const PeopleForm = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const PeopleWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  max-height: 8rem;
+  align-items: center;
+  background-color: #f7f8fa;
+  border-radius: 1rem;
+  margin: 1rem;
+  width: 95%;
+`;
+
 const AddClass = () => {
   return (
     <AdminTemplate>
       <Wrapper>
         <Heading>Dodaj klasę</Heading>
         <Grid>
-          <StyledForm>
-            <Label htmlFor="name">Nazwa klasy</Label>
-            <Input type="text" name="name" placeholder="przykład: 1A" />
-            <Select name="" id="">
-              <option value="">Pierwsze klasy</option>
-              <option value="">Drugie klasy</option>
-              <option value="">Trzecie klasy</option>
-              <option value="">Czwarte klasy</option>
-            </Select>
-            <Label htmlFor="amountOfStudents">Ilość osób w klasie</Label>
-            <PeopleSelect name="amountOfStudents" id="">
-              <PeopleOptions />
-            </PeopleSelect>
-            <Button>Zatwierdź</Button>
-          </StyledForm>
+          <InnerWrapper>
+            <StyledForm>
+              <Label htmlFor="name">Nazwa klasy</Label>
+              <Input type="text" name="name" placeholder="przykład: 1A" />
+              <Select name="" id="">
+                <option value="">Pierwsze klasy</option>
+                <option value="">Drugie klasy</option>
+                <option value="">Trzecie klasy</option>
+                <option value="">Czwarte klasy</option>
+              </Select>
+              <Label htmlFor="amountOfStudents">Ilość osób w klasie</Label>
+              <PeopleSelect name="amountOfStudents" id="">
+                <PeopleOptions />
+              </PeopleSelect>
+              <Button>Zatwierdź</Button>
+            </StyledForm>
+          </InnerWrapper>
+          <PeopleCard>
+            <ClassHeading>Klasa 1A</ClassHeading>
+            <PeopleForm>
+              <PeopleWrapper>
+                <h1>1.</h1>
+                <Input type="text" name="name" placeholder="Imię i nazwisko" />
+                <Select>
+                  <option value="">Uczeń</option>
+                  <option value="">Samorząd uczniowski</option>
+                  <option value="">Administrator</option>
+                </Select>
+                <Input type="date" name="name" placeholder="urodziny" />
+              </PeopleWrapper>
+              <Button>Zatwierdź</Button>
+            </PeopleForm>
+          </PeopleCard>
         </Grid>
       </Wrapper>
     </AdminTemplate>
