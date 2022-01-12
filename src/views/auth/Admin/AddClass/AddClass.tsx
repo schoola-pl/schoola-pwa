@@ -13,7 +13,7 @@ import {
   PeopleWrapper,
   ClassHeading,
   PeopleForm
-} from './AddClass';
+} from './AddClass.styles';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
 
