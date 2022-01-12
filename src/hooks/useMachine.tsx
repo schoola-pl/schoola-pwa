@@ -7,13 +7,8 @@ interface MachineContextTypes {
   compareState: (state: string) => boolean;
 }
 
-interface transitionsType {
-  [key: string]: {
-    [key: string]: string;
-  };
-}
-
-const useMachine = (initial: string, transitions: transitionsType): MachineContextTypes => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useMachine = (initial: string, transitions: any): MachineContextTypes => {
   const [currentState, updateState] = useState<string>(initial);
 
   const transition = (currentState: string, action: string): string => {
