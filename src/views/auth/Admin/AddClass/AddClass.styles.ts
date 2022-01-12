@@ -24,6 +24,7 @@ export const Select = styled.select`
   border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   transition: border 0.3s linear;
   margin: 2rem 0 2rem 0;
+
   &:focus {
     outline: none;
     border: 2px solid ${({ theme }) => theme.colors.accentGreen};
@@ -90,8 +91,15 @@ export const PeopleWrapper = styled.div`
   justify-content: space-around;
   max-height: 8rem;
   align-items: center;
-  background-color: #f7f8fa;
   border-radius: 1rem;
-  margin: 1rem;
   width: 95%;
+  margin-bottom: 0.5rem;
+
+  &:first-child {
+    margin-top: 1rem;
+  }
+
+  & > * {
+    margin-inline: 0.8rem;
+  }
 `;

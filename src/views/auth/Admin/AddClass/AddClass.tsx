@@ -1,18 +1,18 @@
 import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
 import PeopleOptions from 'components/atoms/PeopleOptions/PeopleOptions';
 import {
-  Wrapper,
-  Heading,
+  ClassHeading,
   Grid,
+  Heading,
   InnerWrapper,
-  StyledForm,
-  Select,
-  PeopleSelect,
   Label,
   PeopleCard,
+  PeopleForm,
+  PeopleSelect,
   PeopleWrapper,
-  ClassHeading,
-  PeopleForm
+  Select,
+  StyledForm,
+  Wrapper
 } from './AddClass.styles';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
@@ -26,15 +26,15 @@ const AddClass = () => {
           <InnerWrapper>
             <StyledForm>
               <Label htmlFor="name">Nazwa klasy</Label>
-              <Input type="text" name="name" placeholder="przykład: 1A" />
-              <Select name="" id="">
-                <option value="">Pierwsze klasy</option>
-                <option value="">Drugie klasy</option>
-                <option value="">Trzecie klasy</option>
-                <option value="">Czwarte klasy</option>
+              <Input type="text" id="name" name="name" placeholder="Nazwa klasy (np. A)" />
+              <Select>
+                <option value="1">Pierwsze klasy</option>
+                <option value="2">Drugie klasy</option>
+                <option value="3">Trzecie klasy</option>
+                <option value="4">Czwarte klasy</option>
               </Select>
               <Label htmlFor="amountOfStudents">Ilość osób w klasie</Label>
-              <PeopleSelect name="amountOfStudents" id="">
+              <PeopleSelect id="amountOfStudents">
                 <PeopleOptions />
               </PeopleSelect>
               <Button>Zatwierdź</Button>
@@ -53,7 +53,17 @@ const AddClass = () => {
                 </Select>
                 <Input type="date" name="name" placeholder="urodziny" />
               </PeopleWrapper>
-              <Button>Zatwierdź</Button>
+              <PeopleWrapper>
+                <h1>1.</h1>
+                <Input type="text" name="name" placeholder="Imię i nazwisko" />
+                <Select>
+                  <option value="">Uczeń</option>
+                  <option value="">Samorząd uczniowski</option>
+                  <option value="">Administrator</option>
+                </Select>
+                <Input type="date" name="name" placeholder="urodziny" />
+              </PeopleWrapper>
+              <Button style={{ marginTop: '1.5rem' }}>Zatwierdź</Button>
             </PeopleForm>
           </PeopleCard>
         </Grid>
