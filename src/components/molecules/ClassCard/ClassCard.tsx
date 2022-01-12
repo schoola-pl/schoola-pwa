@@ -95,7 +95,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classes }) => (
             <p>
               liczba uczniów: <strong>{amountOfStudents}</strong>
             </p>
-            <EditLink icon={EditIcon} />
+            <EditLink as="a" href="/manage/classes/edit" icon={EditIcon} />
           </Wrapper>
         ))}
       </div>
