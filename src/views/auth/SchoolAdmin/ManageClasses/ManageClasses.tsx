@@ -3,16 +3,18 @@ import { AddButton, AmountWrapper, ClassesWrapper, ContentWrapper, Heading, Head
 import AddIcon from 'assets/icons/AddIcon.svg';
 import { storeRoot, useGetClassesCountQuery } from '../../../../store';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const ManageClasses = () => {
   const user = useSelector((store: storeRoot) => store.user);
   const classesCount = useGetClassesCountQuery({ schoolId: user?.schoolId || null });
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
       <InnerWrapper>
         <Heading>Zarządzaj użytkownikami</Heading>
-        <AddButton as="a" icon={AddIcon} />
+        <AddButton as="a" onClick={() => navigate('/school-admin/manage/add-class')} icon={AddIcon} />
       </InnerWrapper>
       <ContentWrapper>
         <Links>
@@ -26,9 +28,6 @@ const ManageClasses = () => {
           </h1>
         </AmountWrapper>
         <ClassesWrapper>
-          {/*{data.map(({ classYear, classes }: { classYear: string; classes: any }, index: number) => (*/}
-          {/*  <ClassCard key={index} classYear={classYear} classes={classes} />*/}
-          {/*))}*/}
           <ClassCard classYear="Klasy pierwsze" classLevel={1} />
           <ClassCard classYear="Klasy drugie" classLevel={2} />
           <ClassCard classYear="Klasy trzecie" classLevel={3} />
