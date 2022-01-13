@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   margin: 3rem 3rem 0;
   display: flex;
   flex-direction: column;
+  max-height: 100vh;
 `;
 
 export const Heading = styled.h1`
@@ -51,20 +52,18 @@ export const Grid = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-export const PeopleSelect = styled(Select)`
-  transform: translateY(-20%);
-`;
-
 export const PeopleCard = styled.div`
   width: 79rem;
-  height: 80%;
+  height: 800px;
   background-color: white;
   margin-right: 12rem;
   border-radius: 1rem;
   margin-left: 5rem;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
+  position: relative;
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
 
 export const InnerWrapper = styled.div`
@@ -76,7 +75,7 @@ export const ClassHeading = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   border-bottom: 3px solid ${({ theme }) => theme.colors.accentGreen};
-  padding: 1rem;
+  padding: 1.1rem 1.3rem;
 `;
 
 export const PeopleForm = styled.div`
@@ -84,6 +83,21 @@ export const PeopleForm = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+`;
+
+export const ScrollBar = styled.div`
+  max-height: 100%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.accentBrown};
+    border-radius: 10px;
+  }
 `;
 
 export const PeopleWrapper = styled.div`
