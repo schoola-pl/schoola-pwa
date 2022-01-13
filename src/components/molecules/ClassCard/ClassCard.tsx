@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
+import { storeRoot, useGetClassesQuery } from '../../../store';
 import EditIcon from 'assets/icons/EditIcon.png';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
   background-color: white;
@@ -75,32 +77,48 @@ const EditLink = styled(SidebarLink)`
 `;
 
 interface Props {
-  classYear?: string;
-  classes: {
-    amountOfStudents?: number;
-    name?: string;
-  }[];
+  classYear: string;
+  classLevel: number;
 }
 
-const ClassCard: React.FC<Props> = ({ classYear, classes }) => (
-  <div>
-    <ClassDetails>
-      <summary>{classYear}</summary>
-      <div>
-        {classes.map(({ name, amountOfStudents }) => (
-          <Wrapper>
-            <Circle>
-              <h1>{name}</h1>
-            </Circle>
-            <p>
-              liczba uczniów: <strong>{amountOfStudents}</strong>
-            </p>
-            <EditLink icon={EditIcon} />
-          </Wrapper>
-        ))}
-      </div>
-    </ClassDetails>
-  </div>
-);
+const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
+  const user = useSelector((state: storeRoot) => state.user);
+  const classes = useGetClassesQuery({ schoolId: user?.schoolId || null, classLevel });
+
+  return (
+    <div>
+      <ClassDetails>
+        <summary>{classYear}</summary>
+        <div>
+          {classes.isLoading
+            ? 'Loading...'
+            : classes.data.data.map(
+                (
+                  {
+                    attributes: {
+                      className,
+                      classLevel,
+                      users: { data: usersCount }
+                    }
+                  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  { attributes: { className: string; classLevel: number; users: { data: any[] } } },
+                  index: number
+                ) => (
+                  <Wrapper key={index}>
+                    <Circle>
+                      <h1>{`${classLevel}${className}`}</h1>
+                    </Circle>
+                    <p>
+                      Liczba uczniów: <strong>{usersCount.length}</strong>
+                    </p>
+                    <EditLink icon={EditIcon} />
+                  </Wrapper>
+                )
+              )}
+        </div>
+      </ClassDetails>
+    </div>
+  );
+};
 
 export default ClassCard;
