@@ -95,7 +95,7 @@ export const ScrollBar = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.accentBrown};
+    background-color: ${({ theme }) => theme.colors.accentBlue};
     border-radius: 10px;
   }
 `;
