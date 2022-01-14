@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
   margin: 1.5rem 3rem 0;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const Heading = styled.h1`
