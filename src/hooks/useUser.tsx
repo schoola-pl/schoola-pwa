@@ -8,6 +8,7 @@ import { addUser, removeUser } from '../store';
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
+  // updateSettings: (settings: settings) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -35,6 +36,9 @@ export const UserProvider: React.FC = ({ children }) => {
       dispatch(addUser({ user }));
     } else logout();
   };
+
+  // TODO: Add method for updating settings
+  // const updateSettings = (settings: settings) => {};
 
   const values = {
     logout,
