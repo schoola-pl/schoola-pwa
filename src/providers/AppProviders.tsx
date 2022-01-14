@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { RouteProvider } from '../hooks/useRoutesControl';
 import { AppLoadingProvider } from '../hooks/useAppLoading';
+import { UserProvider } from '../hooks/useUser';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
@@ -12,7 +13,9 @@ const AppProviders: React.FC = ({ children }) => {
       <Provider store={store}>
         <AppLoadingProvider>
           <RouteProvider>
-            <StyleProvider>{children}</StyleProvider>
+            <UserProvider>
+              <StyleProvider>{children}</StyleProvider>
+            </UserProvider>
           </RouteProvider>
         </AppLoadingProvider>
       </Provider>
