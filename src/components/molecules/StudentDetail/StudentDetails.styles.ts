@@ -7,9 +7,15 @@ export const Wrapper = styled.div`
   background-color: white;
   margin: 2rem 0rem 0 5rem;
   border-radius: 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 10% 17.9% 21% 20% 20% 10%;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   align-items: center;
+  justify-items: center;
+`;
+
+export const BoxWrapper = styled.div`
+  display: flex;
 `;
 
 export const StudentBox = styled(SidebarLink)`
@@ -18,7 +24,6 @@ export const StudentBox = styled(SidebarLink)`
   height: 4.75rem;
   width: 4.75rem;
   padding: 1rem;
-  margin-left: 2rem;
 `;
 
 export const DeleteBox = styled(SidebarLink)`
@@ -40,23 +45,18 @@ export const EditBox = styled(SidebarLink)`
 export const Name = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
   font-weight: ${({ theme }) => theme.fontWeight.medium};
-  margin-left: 7.5rem;
-  margin-right: 14rem;
 `;
 
 export const Role = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
-  margin-right: 16.5rem;
 `;
 
 export const Number = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
   text-align: center;
-  margin-right: 10rem;
 `;
 
 export const Date = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
   text-align: center;
-  margin-right: 20rem;
 `;
