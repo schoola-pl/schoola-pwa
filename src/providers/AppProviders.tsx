@@ -6,6 +6,7 @@ import store from '../store';
 import { RouteProvider } from '../hooks/useRoutesControl';
 import { AppLoadingProvider } from '../hooks/useAppLoading';
 import { UserProvider } from '../hooks/useUser';
+import { ClassProvider } from '../hooks/useClass';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
@@ -14,7 +15,9 @@ const AppProviders: React.FC = ({ children }) => {
         <AppLoadingProvider>
           <RouteProvider>
             <UserProvider>
-              <StyleProvider>{children}</StyleProvider>
+              <ClassProvider>
+                <StyleProvider>{children}</StyleProvider>
+              </ClassProvider>
             </UserProvider>
           </RouteProvider>
         </AppLoadingProvider>
