@@ -17,6 +17,10 @@ import Button from 'components/atoms/Button/Button';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
+import { storeRoot, useAddClassMutation } from '../../../../store';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { getJWT } from '../../../../helpers/jwt';
 
 const AddClass = () => {
   const [users, setUsers] = useState<unknown[]>([]);
@@ -27,13 +31,38 @@ const AddClass = () => {
     handleSubmit,
     formState: { errors }
   } = useForm();
+  const user = useSelector((state: storeRoot) => state.user);
+  const [addClass, rest] = useAddClassMutation();
 
-  const addClassProtocol = ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
-    const name = `Klasa ${classLevel}${className}`;
-    setClassName(name);
-    const emptyUsers = new Array(parseInt(usersCount)).fill({});
-    setUsers(emptyUsers);
-    setIsCreated(true);
+  const checkDoesClassExist = async (className: string, classLevel: number) => {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/classes?filters[className][$eq]=${className}&filters[classLevel][$eq]=${classLevel}&fields[0]=classLevel&fields[1]=className`,
+      {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      }
+    );
+    return res.data.data.length > 0;
+  };
+
+  const addClassProtocol = async ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
+    const decision = await checkDoesClassExist(className, classLevel);
+    if (!decision) {
+      addClass({
+        classLevel,
+        className,
+        schoolId: user?.schoolId || null
+      });
+      const name = `Klasa ${classLevel}${className}`;
+      setClassName(name);
+      const emptyUsers = new Array(parseInt(usersCount)).fill({});
+      setUsers(emptyUsers);
+      setIsCreated(true);
+    } else {
+      setClassName('Taka klasa już istnieje!');
+      setIsCreated(false);
+    }
   };
 
   const restoreClass = () => {
