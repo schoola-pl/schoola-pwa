@@ -48,5 +48,5 @@ export const UserAPI = createApi({
   })
 });
 
-export const { useGetUsersCountQuery } = UserAPI;
+export const { useGetUsersCountQuery, useAddUserToClassMutation } = UserAPI;
 export default UserAPI;
