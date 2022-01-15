@@ -17,7 +17,7 @@ import Button from 'components/atoms/Button/Button';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
-import { storeRoot, useAddClassMutation } from '../../../../store';
+import { storeRoot, useAddClassMutation, useRemoveClassMutation } from '../../../../store';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { getJWT } from '../../../../helpers/jwt';
@@ -26,13 +26,15 @@ const AddClass = () => {
   const [users, setUsers] = useState<unknown[]>([]);
   const [className, setClassName] = useState('Nie utworzono klasy.');
   const [isCreated, setIsCreated] = useState(false);
+  const [classId, setClassId] = useState<number | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
-  const [addClass, rest] = useAddClassMutation();
+  const [addClass] = useAddClassMutation();
+  const [removeClass] = useRemoveClassMutation();
 
   const checkDoesClassExist = async (className: string, classLevel: number) => {
     const res = await axios.get(
@@ -49,11 +51,13 @@ const AddClass = () => {
   const addClassProtocol = async ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
     const decision = await checkDoesClassExist(className, classLevel);
     if (!decision) {
-      addClass({
+      const res = await addClass({
         classLevel,
         className,
         schoolId: user?.schoolId || null
       });
+      const data = res as { data: { data: { id: number } } };
+      setClassId(data.data.data.id);
       const name = `Klasa ${classLevel}${className}`;
       setClassName(name);
       const emptyUsers = new Array(parseInt(usersCount)).fill({});
@@ -66,6 +70,9 @@ const AddClass = () => {
   };
 
   const restoreClass = () => {
+    removeClass({
+      classId
+    });
     setClassName('Nie utworzono klasy.');
     setUsers([]);
     setIsCreated(false);
