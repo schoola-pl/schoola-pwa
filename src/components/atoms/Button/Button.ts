@@ -25,6 +25,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean }>`
     isDisabled &&
     `
   background: ${theme.colors.lightGrey};
+  pointer-events: none;
   &:hover {
   cursor: not-allowed;
     background: ${theme.colors.selectedItemGrey};
