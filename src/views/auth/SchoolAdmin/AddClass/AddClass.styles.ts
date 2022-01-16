@@ -49,16 +49,15 @@ export const Label = styled.label`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 35% 65%;
+  grid-gap: 2rem;
 `;
 
 export const PeopleCard = styled.div`
-  width: 79rem;
+  width: 100%;
   height: 800px;
   background-color: white;
-  margin-right: 12rem;
   border-radius: 1rem;
-  margin-left: 5rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;

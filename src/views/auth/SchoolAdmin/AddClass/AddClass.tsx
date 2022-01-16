@@ -1,82 +1,18 @@
-import {
-  ClassHeading,
-  Grid,
-  Heading,
-  InnerWrapper,
-  Label,
-  PeopleCard,
-  PeopleForm,
-  PeopleWrapper,
-  ScrollBar,
-  Select,
-  StyledForm,
-  Wrapper
-} from './AddClass.styles';
+import { ClassHeading, Grid, Heading, InnerWrapper, Label, PeopleCard, PeopleForm, ScrollBar, Select, StyledForm, Wrapper } from './AddClass.styles';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
-import { storeRoot, useAddClassMutation, useRemoveClassMutation } from '../../../../store';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { getJWT } from '../../../../helpers/jwt';
+import { useClass } from '../../../../hooks/useClass';
+import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
 
 const AddClass = () => {
-  const [users, setUsers] = useState<unknown[]>([]);
-  const [className, setClassName] = useState('Nie utworzono klasy.');
-  const [isCreated, setIsCreated] = useState(false);
-  const [classId, setClassId] = useState<number | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
-  const user = useSelector((state: storeRoot) => state.user);
-  const [addClass] = useAddClassMutation();
-  const [removeClass] = useRemoveClassMutation();
-
-  const checkDoesClassExist = async (className: string, classLevel: number) => {
-    const res = await axios.get(
-      `${process.env.REACT_APP_BACKEND_BASE_URL}/classes?filters[className][$eq]=${className}&filters[classLevel][$eq]=${classLevel}&fields[0]=classLevel&fields[1]=className`,
-      {
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        }
-      }
-    );
-    return res.data.data.length > 0;
-  };
-
-  const addClassProtocol = async ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
-    const decision = await checkDoesClassExist(className, classLevel);
-    if (!decision) {
-      const res = await addClass({
-        classLevel,
-        className,
-        schoolId: user?.schoolId || null
-      });
-      const data = res as { data: { data: { id: number } } };
-      setClassId(data.data.data.id);
-      const name = `Klasa ${classLevel}${className}`;
-      setClassName(name);
-      const emptyUsers = new Array(parseInt(usersCount)).fill({});
-      setUsers(emptyUsers);
-      setIsCreated(true);
-    } else {
-      setClassName('Taka klasa już istnieje!');
-      setIsCreated(false);
-    }
-  };
-
-  const restoreClass = () => {
-    removeClass({
-      classId
-    });
-    setClassName('Nie utworzono klasy.');
-    setUsers([]);
-    setIsCreated(false);
-  };
+  const { addClassProtocol, restoreClass, isCreated, className, users } = useClass();
 
   return (
     <Wrapper>
@@ -125,18 +61,8 @@ const AddClass = () => {
             {users.length > 0 ? (
               <PeopleForm>
                 {users.map((user, i) => (
-                  <PeopleWrapper>
-                    <h1>{i + 1}.</h1>
-                    <Input type="text" name="name" placeholder="Imię i nazwisko" />
-                    <Select>
-                      <option value="">Uczeń</option>
-                      <option value="">Samorząd uczniowski</option>
-                      <option value="">Administrator</option>
-                    </Select>
-                    <Input type="date" name="name" placeholder="urodziny" />
-                  </PeopleWrapper>
+                  <UserRecord key={i} index={i} />
                 ))}
-                <Button style={{ marginTop: '1.5rem' }}>Zatwierdź</Button>
               </PeopleForm>
             ) : (
               <p style={{ fontSize: '1.2rem', textAlign: 'center' }}>Aby zarządzać użytkownikami, utwórz najpierw klasę po lewej stronie.</p>
