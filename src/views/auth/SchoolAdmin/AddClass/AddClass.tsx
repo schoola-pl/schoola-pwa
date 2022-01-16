@@ -27,7 +27,7 @@ const AddClass = () => {
               id="name"
               placeholder="Nazwa klasy (np. A)"
               disabled={isCreated}
-              {...register('className', { required: true, maxLength: 3 })}
+              {...register('className', { required: true, maxLength: 3, pattern: /[A-Z]+/g })}
               error={errors.className}
             />
             <Select disabled={isCreated} {...register('classLevel', { required: true })}>

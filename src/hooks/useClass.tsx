@@ -62,16 +62,17 @@ export const ClassProvider: React.FC = ({ children }) => {
 
   const addClassProtocol = async ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
     setLoadingState(true);
-    const decision = await checkDoesClassExist(className, classLevel);
+    const prepared = { className: className.toUpperCase(), classLevel };
+    const decision = await checkDoesClassExist(prepared.className, prepared.classLevel);
     if (!decision) {
       const res = await addClass({
-        classLevel,
-        className,
+        className: prepared.classLevel,
+        classLevel: prepared.className,
         schoolId: user?.schoolId || null
       });
       const data = res as { data: { data: { id: number } } };
       setClassId(data.data.data.id);
-      const name = `Klasa ${classLevel}${className}`;
+      const name = `Klasa ${prepared.classLevel}${prepared.className}`;
       setClassName(name);
       const emptyUsers = new Array(parseInt(usersCount)).fill({});
       setUsers(emptyUsers);
