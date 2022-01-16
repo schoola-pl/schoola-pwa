@@ -71,6 +71,13 @@ const SubmitButton = styled(Button)`
   transform: translateY(-30%);
 `;
 
+const EditProfileForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5.5rem;
+`;
+
 const Settings = () => (
   <AdminTemplate>
     <Wrapper>
@@ -78,7 +85,19 @@ const Settings = () => (
       <CardWrapper>
         <div>
           <CardHeading>Edytuj profil</CardHeading>
-          <PasswordCard></PasswordCard>
+          <PasswordCard>
+            <EditProfileForm>
+              <Label>E-mail</Label>
+              <StyledInput />
+              <Label>Imię</Label>
+              <StyledInput />
+              <Label>Nazwisko</Label>
+              <StyledInput />
+              <Label>Data urodzenia</Label>
+              <StyledInput type="date" />
+            </EditProfileForm>
+            <SubmitButton>Zatwierdź</SubmitButton>
+          </PasswordCard>
         </div>
         <div>
           <CardHeading>Zmień hasło</CardHeading>
