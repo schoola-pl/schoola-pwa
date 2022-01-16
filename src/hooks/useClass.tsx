@@ -42,6 +42,7 @@ export const ClassProvider: React.FC = ({ children }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [addClass, { isLoading: isLoadingAdding, isError: isErrorAdding }] = useAddClassMutation();
   const [removeClass, { isLoading: isLoadingRemoving, isError: isErrorRemoving }] = useRemoveClassMutation();
+  const [isLoading, setLoadingState] = useState(false);
 
   const checkDoesClassExist = async (className: string, classLevel: number) => {
     try {
@@ -60,6 +61,7 @@ export const ClassProvider: React.FC = ({ children }) => {
   };
 
   const addClassProtocol = async ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
+    setLoadingState(true);
     const decision = await checkDoesClassExist(className, classLevel);
     if (!decision) {
       const res = await addClass({
@@ -78,6 +80,7 @@ export const ClassProvider: React.FC = ({ children }) => {
       setClassName('Taka klasa już istnieje!');
       setIsCreated(false);
     }
+    setLoadingState(false);
   };
 
   const restoreClass = () => {
@@ -94,7 +97,7 @@ export const ClassProvider: React.FC = ({ children }) => {
     restoreClass,
     users,
     isError: isErrorAdding || isErrorRemoving,
-    isLoading: isLoadingAdding || isLoadingRemoving,
+    isLoading: isLoadingAdding || isLoadingRemoving || isLoading,
     isCreated,
     className,
     classId

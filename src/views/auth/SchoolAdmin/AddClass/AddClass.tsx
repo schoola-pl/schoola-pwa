@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
 import { useClass } from '../../../../hooks/useClass';
 import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
+import Loader from 'components/atoms/Loader/Loader';
 
 const AddClass = () => {
   const {
@@ -12,7 +13,7 @@ const AddClass = () => {
     handleSubmit,
     formState: { errors }
   } = useForm();
-  const { addClassProtocol, restoreClass, isCreated, className, users } = useClass();
+  const { addClassProtocol, restoreClass, isCreated, className, users, isLoading } = useClass();
 
   return (
     <Wrapper>
@@ -46,7 +47,18 @@ const AddClass = () => {
               error={errors.usersCount}
             />
             <div style={{ display: 'flex' }}>
-              <Button isDisabled={isCreated}>{!isCreated ? 'Zatwierdź' : 'Utworzono!'}</Button>
+              <Button isDisabled={isCreated}>
+                {!isCreated && !isLoading ? (
+                  'Zatwierdź'
+                ) : isLoading ? (
+                  <>
+                    Tworzenie...
+                    <Loader style={{ marginLeft: '1rem' }} fitContent />
+                  </>
+                ) : (
+                  'Utworzono!'
+                )}
+              </Button>
               {isCreated && (
                 <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon>
                   <img src={restore} alt={'Restore arrows'} />

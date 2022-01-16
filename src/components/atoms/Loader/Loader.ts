@@ -23,8 +23,8 @@ const Loader = styled.div.attrs({
     fitContent &&
     `
     --loadingColor: ${theme.colors.accentGreen};
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     background: ${theme.colors.accentBlue};
   `}
   &::before {
