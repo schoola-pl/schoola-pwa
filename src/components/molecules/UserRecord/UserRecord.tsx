@@ -24,16 +24,16 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const { classId } = useClass();
 
-  const saveUser = (tempUser: any) => {
+  const saveUser = (tempUser: { name: string; birthday: string; TextRole: string; first_name?: string; last_name?: string }) => {
     if (isLoading) return;
     const dividedName = tempUser.name.split(' ');
     tempUser.first_name = dividedName[0];
     tempUser.last_name = dividedName[1];
     const preparedUser = {
-      username: `${tempUser.first_name.toLowerCase()}_${tempUser.last_name.toLowerCase()}`,
+      username: `${tempUser.name.toLowerCase().split(' ').join('_')}`,
       email: `${nanoid()}@email.com`,
-      first_name: tempUser.first_name,
-      last_name: tempUser.last_name,
+      first_name: tempUser.first_name.charAt(0).toUpperCase() + tempUser.first_name.slice(1),
+      last_name: tempUser.last_name.charAt(0).toUpperCase() + tempUser.last_name.slice(1),
       confirmed: true,
       blocked: false,
       birthday: tempUser.birthday,
@@ -51,7 +51,16 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
     <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
       <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
       <>
-        <Input type="text" placeholder="Imię i nazwisko" error={errors.name} {...registerUser('name', { required: true })} disabled={isSuccess} />
+        <Input
+          type="text"
+          placeholder="Imię i nazwisko"
+          error={errors.name}
+          {...registerUser('name', {
+            required: true,
+            pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
+          })}
+          disabled={isSuccess}
+        />
         <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
           <option value="Student">Uczeń</option>
           <option value="Moderator">Samorząd Uczniowski</option>

@@ -66,8 +66,8 @@ export const ClassProvider: React.FC = ({ children }) => {
     const decision = await checkDoesClassExist(prepared.className, prepared.classLevel);
     if (!decision) {
       const res = await addClass({
-        className: prepared.classLevel,
-        classLevel: prepared.className,
+        className: prepared.className,
+        classLevel: prepared.classLevel,
         schoolId: user?.schoolId || null
       });
       const data = res as { data: { data: { id: number } } };
