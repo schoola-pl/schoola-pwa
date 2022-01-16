@@ -26,8 +26,6 @@ const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-  // align-items: center;
-  // justify-items: center;
 `;
 
 const Settings = () => (
