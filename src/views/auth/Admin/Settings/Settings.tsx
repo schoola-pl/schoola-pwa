@@ -2,6 +2,7 @@ import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
+import GoodPasswordRules from 'components/molecules/GoodPasswordRules/GoodPasswordRules';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -70,31 +71,6 @@ const SubmitButton = styled(Button)`
   transform: translateY(-30%);
 `;
 
-const PasswordInfoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 0rem;
-`;
-
-const Signature = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeight.medium};
-  font-size: ${({ theme }) => theme.fontSize.s};
-`;
-
-const SignatureWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 1.2rem;
-  justify-content: center;
-  align-items: center;
-`;
-
-const PasswordInfoHeading = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.m};
-  transform: translateY(25%);
-  font-weight: ${({ theme }) => theme.fontWeight.semibold};
-`;
-
 const Settings = () => (
   <AdminTemplate>
     <Wrapper>
@@ -107,29 +83,7 @@ const Settings = () => (
         <div>
           <CardHeading>Zmień hasło</CardHeading>
           <PasswordCard>
-            <PasswordInfoHeading>Dobre hasło składa się z</PasswordInfoHeading>
-            <PasswordInfoWrapper>
-              <SignatureWrapper>
-                <Signature>8+</Signature>
-                <div>Znaków</div>
-              </SignatureWrapper>
-              <SignatureWrapper>
-                <Signature>AA</Signature>
-                <div>Dużych liter</div>
-              </SignatureWrapper>
-              <SignatureWrapper>
-                <Signature>aa</Signature>
-                <div>Małych liter</div>
-              </SignatureWrapper>
-              <SignatureWrapper>
-                <Signature>123</Signature>
-                <div>Numerów</div>
-              </SignatureWrapper>
-              <SignatureWrapper>
-                <Signature>@$#</Signature>
-                <div>Symboli</div>
-              </SignatureWrapper>
-            </PasswordInfoWrapper>
+            <GoodPasswordRules />
             <PasswordForm>
               <Label htmlFor="">Obecne hasło</Label>
               <StyledInput />
