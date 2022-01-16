@@ -36,7 +36,7 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       last_name: tempUser.last_name.charAt(0).toUpperCase() + tempUser.last_name.slice(1),
       confirmed: true,
       blocked: false,
-      birthday: tempUser.birthday,
+      Birthday: new Date(tempUser.birthday).toISOString(),
       avatar: null,
       schoolId: user?.schoolId || null,
       textRole: tempUser.TextRole,
