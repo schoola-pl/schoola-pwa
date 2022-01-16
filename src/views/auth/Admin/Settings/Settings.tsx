@@ -2,7 +2,7 @@ import AdminTemplate from 'components/templates/AdminTemplate/AdminTemplate';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
-import GoodPasswordRules from 'components/molecules/GoodPasswordRules/GoodPasswordRules';
+import ChangePassword from 'views/auth/Forms/ChangePassword/ChangePassword';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -31,7 +31,7 @@ const CardWrapper = styled.div`
   // justify-items: center;
 `;
 
-const PasswordCard = styled.div`
+const Card = styled.div`
   display: flex;
   border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   border-radius: 2rem;
@@ -48,13 +48,6 @@ const CardHeading = styled.h1`
   padding: 0 0 0 3rem;
   transform: translateY(30%);
   font-weight: ${({ theme }) => theme.fontWeight.medium};
-`;
-
-const PasswordForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 1rem;
 `;
 
 const StyledInput = styled(Input)`
@@ -85,7 +78,7 @@ const Settings = () => (
       <CardWrapper>
         <div>
           <CardHeading>Edytuj profil</CardHeading>
-          <PasswordCard>
+          <Card>
             <EditProfileForm>
               <Label>E-mail</Label>
               <StyledInput />
@@ -97,23 +90,9 @@ const Settings = () => (
               <StyledInput type="date" />
             </EditProfileForm>
             <SubmitButton>Zatwierdź</SubmitButton>
-          </PasswordCard>
+          </Card>
         </div>
-        <div>
-          <CardHeading>Zmień hasło</CardHeading>
-          <PasswordCard>
-            <GoodPasswordRules />
-            <PasswordForm>
-              <Label htmlFor="">Obecne hasło</Label>
-              <StyledInput />
-              <Label htmlFor="">Nowe hasło</Label>
-              <StyledInput />
-              <Label htmlFor="">Stare hasło</Label>
-              <StyledInput />
-            </PasswordForm>
-            <SubmitButton>Zatwierdź</SubmitButton>
-          </PasswordCard>
-        </div>
+        <ChangePassword />
       </CardWrapper>
     </Wrapper>
   </AdminTemplate>
