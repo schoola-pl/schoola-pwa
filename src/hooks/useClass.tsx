@@ -68,7 +68,8 @@ export const ClassProvider: React.FC = ({ children }) => {
       const res = await addClass({
         className: prepared.className,
         classLevel: prepared.classLevel,
-        schoolId: user?.schoolId || null
+        schoolId: user?.schoolId || null,
+        school: user?.schoolId || null
       });
       const data = res as { data: { data: { id: number } } };
       setClassId(data.data.data.id);
