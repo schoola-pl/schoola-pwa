@@ -44,9 +44,24 @@ export const UserAPI = createApi({
         },
         body
       })
+    }),
+    addToSchoolCount: builder.mutation({
+      invalidatesTags: ['users'],
+      query: (body) => ({
+        method: 'PUT',
+        url: `/schools/${body.schoolId}`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            totalUsers: body.totalUsers
+          }
+        }
+      })
     })
   })
 });
 
-export const { useGetUsersCountQuery, useAddUserToClassMutation } = UserAPI;
+export const { useGetUsersCountQuery, useAddUserToClassMutation, useAddToSchoolCountMutation } = UserAPI;
 export default UserAPI;
