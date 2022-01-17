@@ -2,7 +2,7 @@ import Input from '../../atoms/Input/Input';
 import { PeopleWrapper, Select } from './UserRecord.styles';
 import Button from '../../atoms/Button/Button';
 import { useForm } from 'react-hook-form';
-import { storeRoot, useAddUserToClassMutation } from '../../../store';
+import { storeRoot, useAddToSchoolCountMutation, useAddUserToClassMutation, useGetUsersCountQuery } from '../../../store';
 import { getRoleFromText } from '../../../helpers/roles';
 import { useSelector } from 'react-redux';
 import React from 'react';
@@ -20,8 +20,10 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
     formState: { errors },
     handleSubmit: handleSaveUser
   } = useForm();
-  const [addUser, { isLoading, isSuccess }] = useAddUserToClassMutation();
   const user = useSelector((state: storeRoot) => state.user);
+  const [addUser, { isLoading, isSuccess }] = useAddUserToClassMutation();
+  const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
+  const [addToSchoolCount] = useAddToSchoolCountMutation();
   const { classId } = useClass();
 
   const saveUser = (tempUser: { name: string; birthday: string; TextRole: string; first_name?: string; last_name?: string }) => {
@@ -45,32 +47,34 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       password: nanoid()
     };
     addUser({ ...preparedUser });
+    addToSchoolCount({
+      schoolId: user?.schoolId || null,
+      totalUsers: usersCount.data.data[0].attributes.totalUsers + 1
+    });
   };
 
   return (
     <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
       <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
-      <>
-        <Input
-          type="text"
-          placeholder="Imię i nazwisko"
-          error={errors.name}
-          {...registerUser('name', {
-            required: true,
-            pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
-          })}
-          disabled={isSuccess}
-        />
-        <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
-          <option value="Student">Uczeń</option>
-          <option value="Moderator">Samorząd Uczniowski</option>
-          <option value="School Admin">Administrator</option>
-        </Select>
-        <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
-        <Button isIcon isDisabled={isSuccess}>
-          {!isLoading ? '+' : <Loader fitContent />}
-        </Button>
-      </>
+      <Input
+        type="text"
+        placeholder="Imię i nazwisko"
+        error={errors.name}
+        {...registerUser('name', {
+          required: true,
+          pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
+        })}
+        disabled={isSuccess}
+      />
+      <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
+        <option value="Student">Uczeń</option>
+        <option value="Moderator">Samorząd Uczniowski</option>
+        <option value="School Admin">Administrator</option>
+      </Select>
+      <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
+      <Button isIcon isDisabled={isSuccess}>
+        {!isLoading ? '+' : <Loader fitContent />}
+      </Button>
     </PeopleWrapper>
   );
 };
