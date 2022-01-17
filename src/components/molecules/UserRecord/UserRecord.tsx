@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { storeRoot, useAddToSchoolCountMutation, useAddUserToClassMutation, useGetUsersCountQuery } from '../../../store';
 import { getRoleFromText } from '../../../helpers/roles';
 import { useSelector } from 'react-redux';
-import React from 'react';
+import React, { useState } from 'react';
 import { useClass } from '../../../hooks/useClass';
 import { nanoid } from '@reduxjs/toolkit';
 import Loader from 'components/atoms/Loader/Loader';
@@ -24,6 +24,7 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
   const [addUser, { isLoading, isSuccess }] = useAddUserToClassMutation();
   const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
   const [addToSchoolCount] = useAddToSchoolCountMutation();
+  const [createdUser, setNewUser] = useState<Partial<{ login: string; name: string; password: string }>>({});
   const { classId } = useClass();
 
   const saveUser = (tempUser: { name: string; birthday: string; TextRole: string; first_name?: string; last_name?: string }) => {
@@ -47,10 +48,25 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       password: nanoid()
     };
     addUser({ ...preparedUser });
+    setNewUser({
+      name: `${preparedUser.first_name} ${preparedUser.last_name}`,
+      login: preparedUser.username,
+      password: preparedUser.password
+    });
     addToSchoolCount({
       schoolId: user?.schoolId || null,
       totalUsers: usersCount.data.data[0].attributes.totalUsers + 1
     });
+  };
+
+  const copyUserPasses = () => {
+    if (createdUser) {
+      const cb = navigator.clipboard;
+      const { login, password, name } = createdUser;
+      cb.writeText(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`).then(() => {
+        alert('Dane zostały skopiowane do schowka!');
+      });
+    }
   };
 
   return (
@@ -74,6 +90,9 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
       <Button isIcon isDisabled={isSuccess}>
         {!isLoading ? '+' : <Loader fitContent />}
+      </Button>
+      <Button isIcon onClick={copyUserPasses} isDisabled={!isSuccess}>
+        Kopiuj
       </Button>
     </PeopleWrapper>
   );
