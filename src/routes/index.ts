@@ -1,8 +1,8 @@
 import React from 'react';
 import Login from 'views/auth/Forms/Login/Login';
-import Dashboard from 'views/auth/Admin/Dashboard/Dashboard';
-import ManageClasses from 'views/auth/Admin/ManageClasses/ManageClasses';
-import ClassDetails from 'views/auth/Admin/ClassDetails/ClassDetails';
+import Home from '../views/Home';
+import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
+
 interface routesInterface {
   // Path to component
   path: string;
@@ -17,23 +17,30 @@ interface routesInterface {
   redirectTo?: string;
 }
 
+// Paths
+export const paths: { [key: string]: string } = {
+  login: '/login',
+  student: '/student/*',
+  schoolAdmin: '/school-admin/*'
+};
+
 // Roles
 export const roles: { [key: string]: string } = {
   public: 'none',
   authenticated: 'any',
-  student: 'Student'
+  student: 'Student',
+  schoolAdmin: 'School Admin'
 };
 
 // Environment routes
-const dashboardRoute = '/dashboard';
-const loginRoute = '/login';
+const dashboardRoute = paths.student;
+const loginRoute = paths.login;
 
 // Array with routes in application;
 const routes: routesInterface[] = [
-  { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
-  { path: '/manage/*', Component: ManageClasses, isProtected: false, role: roles.authenticated },
-  { path: '/manage/classes/edit', Component: ClassDetails, isProtected: false, role: roles.authenticated },
-  { path: loginRoute, Component: Login, isProtected: false, role: roles.public }
+  { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
+  { path: paths.student, Component: Home, isProtected: true, role: roles.student },
+  { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 
 // Exports

@@ -8,10 +8,9 @@ import { useAppLoading } from '../hooks/useAppLoading';
 interface props {
   Element: React.FC;
   role: string;
-  redirectTo?: string;
 }
 
-const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
+const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const { checkUser, blockRoutes } = useRoutesControl();
@@ -25,7 +24,7 @@ const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
         setAuthenticated(true);
       } else {
         setAuthenticated(false);
-        blockRoutes(redirectTo);
+        blockRoutes();
       }
     })();
     // eslint-disable-next-line
@@ -38,12 +37,15 @@ const ProtectedRoute: React.FC<props> = ({ Element, role, redirectTo }) => {
       if (!user.blocked) {
         // Checks if user has permission to access route
         if (role !== user.TextRole && role !== roles.authenticated) {
-          blockRoutes(redirectTo);
+          blockRoutes();
+          console.log("You can't go here!");
         } else {
+          console.log('Congatulations!');
           setAppLoading(false);
         }
       } else {
-        blockRoutes(redirectTo);
+        blockRoutes();
+        console.log('Blocked!');
       }
     }
     // eslint-disable-next-line
