@@ -14,7 +14,7 @@ describe('Components > Molecules > ClassLink', () => {
     const randomName = `ui-test-name-${Math.floor(Math.random() * 100)}`;
     const randomNumber = Math.round(Math.random() * 1000);
     rerender(<ClassLink classLevel={randomNumber} classLetter={randomName} numberOfStudents={randomNumber} />);
-    expect(screen.getByText(randomName)).toBeInTheDocument();
-    expect(screen.getByText(randomNumber)).toBeInTheDocument();
+    expect(screen.getAllByText(randomName)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(randomNumber)[0]).toBeInTheDocument();
   });
 });
