@@ -52,9 +52,19 @@ export const ClassAPI = createApi({
           }
         }
       })
+    }),
+    removeClass: builder.mutation({
+      invalidatesTags: ['classes'],
+      query: (args) => ({
+        url: `/classes/${args.classId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
     })
   })
 });
 
-export const { useGetClassesQuery, useGetClassesCountQuery, useGetClassQuery, useAddClassMutation } = ClassAPI;
+export const { useGetClassesQuery, useGetClassesCountQuery, useGetClassQuery, useAddClassMutation, useRemoveClassMutation } = ClassAPI;
 export default ClassAPI;
