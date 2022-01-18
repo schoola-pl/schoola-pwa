@@ -1,8 +1,7 @@
 import AdminSidebar from 'components/organisms/SchoolAdminSidebar/SchoolAdminSidebar';
 import { Wrapper } from './SchoolAdminTemplate.styles';
 import React from 'react';
-import { Routes } from 'react-router-dom';
-import { Route } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ManageClasses from '../../../views/auth/SchoolAdmin/ManageClasses/ManageClasses';
 import Dashboard from '../../../views/auth/SchoolAdmin/Dashboard/Dashboard';
 import AddClass from '../../../views/auth/SchoolAdmin/AddClass/AddClass';
@@ -14,6 +13,7 @@ const SchoolAdminTemplate: React.FC = () => (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/manage" element={<ManageClasses />} />
+      <Route path="/manage/classes" element={<Navigate to="/school-admin/manage" />} />
       <Route path="/manage/classes/:id" element={<ClassDetails />} />
       <Route path="/manage/add-class" element={<AddClass />} />
     </Routes>
