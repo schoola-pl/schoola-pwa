@@ -44,7 +44,8 @@ const AddClass = () => {
               id="amountOfStudents"
               placeholder="Podaj liczbę"
               disabled={isCreated}
-              {...register('usersCount', { required: true })}
+              min={0}
+              {...register('usersCount', { required: true, min: 1 })}
               error={errors.usersCount}
             />
             <div style={{ display: 'flex' }}>
