@@ -4,6 +4,7 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import { storeRoot, useGetClassesQuery } from '../../../store';
 import EditIcon from 'assets/icons/EditIcon.png';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const Wrapper = styled.div`
   background-color: white;
@@ -84,6 +85,7 @@ interface Props {
 const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const classes = useGetClassesQuery({ schoolId: user?.schoolId || null, classLevel });
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -104,7 +106,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
                   { attributes: { className: string; classLevel: number; users: { data: any[] } } },
                   index: number
                 ) => (
-                  <Wrapper key={index}>
+                  <Wrapper onClick={() => navigate(`classes/${classLevel}${className}`)} key={index}>
                     <Circle>
                       <h1>{`${classLevel}${className}`}</h1>
                     </Circle>
