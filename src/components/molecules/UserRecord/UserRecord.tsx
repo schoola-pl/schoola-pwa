@@ -26,6 +26,7 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
   const [addToSchoolCount] = useAddToSchoolCountMutation();
   const [createdUser, setNewUser] = useState<Partial<{ login: string; name: string; password: string }>>({});
   const { classId } = useClass();
+  const [isCopied, setIsCopied] = useState(false);
 
   const saveUser = (tempUser: { name: string; birthday: string; TextRole: string; first_name?: string; last_name?: string }) => {
     if (isLoading) return;
@@ -64,7 +65,10 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       const cb = navigator.clipboard;
       const { login, password, name } = createdUser;
       cb.writeText(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`).then(() => {
-        alert('Dane zostały skopiowane do schowka!');
+        setIsCopied(true);
+        setInterval(() => {
+          setIsCopied(false);
+        }, 5000);
       });
     }
   };
@@ -92,10 +96,10 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
         {!isLoading ? '+' : <Loader fitContent />}
       </Button>
       <Button isIcon onClick={copyUserPasses} isDisabled={!isSuccess}>
-        Kopiuj
+        {!isCopied ? 'Kopiuj' : 'Gotowe!'}
       </Button>
     </PeopleWrapper>
   );
 };
 
-export default UserRecord;
+export default React.memo(UserRecord);
