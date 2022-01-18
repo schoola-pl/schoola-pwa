@@ -5,13 +5,14 @@ export const Wrapper = styled.div`
   width: 95.8%;
   height: 8.5rem;
   background-color: white;
-  margin: 2rem 0rem 0 5rem;
+  margin: 2rem 0 0 5rem;
   border-radius: 1rem;
   display: grid;
-  grid-template-columns: 10% 17.9% 21% 20% 20% 10%;
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  grid-template-columns: 7% 17.9% 21% 20% 20% 10%;
   align-items: center;
-  justify-items: center;
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  justify-items: left;
+  padding-left: 3rem;
 `;
 
 export const BoxWrapper = styled.div`
