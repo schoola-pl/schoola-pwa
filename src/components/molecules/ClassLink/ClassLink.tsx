@@ -7,7 +7,7 @@ interface Props {
 }
 
 const ClassLink: React.FC<Props> = ({ classLevel, classLetter, numberOfStudents }) => (
-  <Wrapper to="#">
+  <Wrapper to={`manage/classes/${classLevel}${classLetter}`}>
     <InfoWrapper>
       <div>
         <h1>{classLevel}</h1>
