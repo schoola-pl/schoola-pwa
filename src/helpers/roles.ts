@@ -14,3 +14,12 @@ export const getPathForRole = (role: string) => {
       return pathsPrepared.student;
   }
 };
+
+export const getRoleFromText = (textRole: string) => {
+  switch (textRole) {
+    case roles.schoolAdmin:
+      return 2;
+    default:
+      return 0;
+  }
+};

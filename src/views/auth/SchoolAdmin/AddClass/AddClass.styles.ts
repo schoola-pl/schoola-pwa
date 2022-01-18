@@ -40,6 +40,10 @@ export const StyledForm = styled.form`
   height: 100vh;
   width: 30rem;
   margin-top: 3rem;
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    height: fit-content;
+    margin-bottom: 5rem;
+  }
 `;
 
 export const Label = styled.label`
@@ -49,26 +53,50 @@ export const Label = styled.label`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 35% 65%;
+  grid-gap: 2rem;
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    overflow: auto;
+    grid-gap: 0;
+    padding-bottom: 5rem;
+
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.colors.accentBlue};
+      border-radius: 10px;
+    }
+  }
 `;
 
 export const PeopleCard = styled.div`
-  width: 79rem;
+  width: 100%;
   height: 800px;
   background-color: white;
-  margin-right: 12rem;
   border-radius: 1rem;
-  margin-left: 5rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    width: 95%;
+    margin: 0 auto;
+  }
 `;
 
 export const InnerWrapper = styled.div`
   margin-top: -2rem;
   border-right: 2px solid #eceff7;
+  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
+    border: none;
+    padding-inline: 1rem;
+  }
 `;
 
 export const ClassHeading = styled.h1`

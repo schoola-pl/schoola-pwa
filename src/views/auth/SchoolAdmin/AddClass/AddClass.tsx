@@ -1,46 +1,20 @@
-import {
-  ClassHeading,
-  Grid,
-  Heading,
-  InnerWrapper,
-  Label,
-  PeopleCard,
-  PeopleForm,
-  PeopleWrapper,
-  ScrollBar,
-  Select,
-  StyledForm,
-  Wrapper
-} from './AddClass.styles';
+import { ClassHeading, Grid, Heading, InnerWrapper, Label, PeopleCard, PeopleForm, ScrollBar, Select, StyledForm, Wrapper } from './AddClass.styles';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
+import { useClass } from '../../../../hooks/useClass';
+import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
+import Loader from 'components/atoms/Loader/Loader';
 
 const AddClass = () => {
-  const [users, setUsers] = useState<unknown[]>([]);
-  const [className, setClassName] = useState('Nie utworzono klasy.');
-  const [isCreated, setIsCreated] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm();
-
-  const addClassProtocol = ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => {
-    const name = `Klasa ${classLevel}${className}`;
-    setClassName(name);
-    const emptyUsers = new Array(parseInt(usersCount)).fill({});
-    setUsers(emptyUsers);
-    setIsCreated(true);
-  };
-
-  const restoreClass = () => {
-    setClassName('Nie utworzono klasy.');
-    setUsers([]);
-    setIsCreated(false);
-  };
+  const { addClassProtocol, restoreClass, clearStates, isCreated, className, users, isLoading } = useClass();
 
   return (
     <Wrapper>
@@ -54,7 +28,7 @@ const AddClass = () => {
               id="name"
               placeholder="Nazwa klasy (np. A)"
               disabled={isCreated}
-              {...register('className', { required: true, maxLength: 3 })}
+              {...register('className', { required: true, maxLength: 3, pattern: /[A-Z]+/g })}
               error={errors.className}
             />
             <Select disabled={isCreated} {...register('classLevel', { required: true })}>
@@ -70,17 +44,34 @@ const AddClass = () => {
               id="amountOfStudents"
               placeholder="Podaj liczbę"
               disabled={isCreated}
-              {...register('usersCount', { required: true })}
+              min={0}
+              {...register('usersCount', { required: true, min: 1 })}
               error={errors.usersCount}
             />
             <div style={{ display: 'flex' }}>
-              <Button isDisabled={isCreated}>{!isCreated ? 'Zatwierdź' : 'Utworzono!'}</Button>
+              <Button isDisabled={isCreated}>
+                {!isCreated && !isLoading ? (
+                  'Zatwierdź'
+                ) : isLoading ? (
+                  <>
+                    Tworzenie...
+                    <Loader style={{ marginLeft: '1rem' }} fitContent />
+                  </>
+                ) : (
+                  'Utworzono!'
+                )}
+              </Button>
               {isCreated && (
-                <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon>
+                <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon isDanger>
                   <img src={restore} alt={'Restore arrows'} />
                 </Button>
               )}
             </div>
+            {isCreated && (
+              <Button style={{ marginTop: '1rem' }} onClick={() => clearStates(reset)}>
+                Dodaj kolejną klasę
+              </Button>
+            )}
           </StyledForm>
         </InnerWrapper>
         <PeopleCard>
@@ -89,18 +80,8 @@ const AddClass = () => {
             {users.length > 0 ? (
               <PeopleForm>
                 {users.map((user, i) => (
-                  <PeopleWrapper>
-                    <h1>{i + 1}.</h1>
-                    <Input type="text" name="name" placeholder="Imię i nazwisko" />
-                    <Select>
-                      <option value="">Uczeń</option>
-                      <option value="">Samorząd uczniowski</option>
-                      <option value="">Administrator</option>
-                    </Select>
-                    <Input type="date" name="name" placeholder="urodziny" />
-                  </PeopleWrapper>
+                  <UserRecord key={i} index={i} />
                 ))}
-                <Button style={{ marginTop: '1.5rem' }}>Zatwierdź</Button>
               </PeopleForm>
             ) : (
               <p style={{ fontSize: '1.2rem', textAlign: 'center' }}>Aby zarządzać użytkownikami, utwórz najpierw klasę po lewej stronie.</p>
