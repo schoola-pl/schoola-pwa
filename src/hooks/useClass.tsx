@@ -18,6 +18,7 @@ interface ClassContextTypes {
   // Functions
   addClassProtocol: ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => Promise<void>;
   restoreClass: () => void;
+  clearStates: (reset: () => void) => void;
 }
 
 const ClassContext = createContext<ClassContextTypes>({
@@ -32,6 +33,9 @@ const ClassContext = createContext<ClassContextTypes>({
   },
   restoreClass: async () => {
     throw new Error('ClassContext: restoreClass is not implemented');
+  },
+  clearStates: () => {
+    throw new Error('ClassContext: clearStates is not implemented');
   }
 });
 export const ClassProvider: React.FC = ({ children }) => {
@@ -94,9 +98,17 @@ export const ClassProvider: React.FC = ({ children }) => {
     setIsCreated(false);
   };
 
+  const clearStates = (reset: () => void) => {
+    setClassName('Nie utworzono klasy.');
+    setUsers([]);
+    setIsCreated(false);
+    reset();
+  };
+
   const values = {
     addClassProtocol,
     restoreClass,
+    clearStates,
     users,
     isError: isErrorAdding || isErrorRemoving,
     isLoading: isLoadingAdding || isLoadingRemoving || isLoading,

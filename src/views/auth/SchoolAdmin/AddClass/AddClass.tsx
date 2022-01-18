@@ -11,9 +11,10 @@ const AddClass = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm();
-  const { addClassProtocol, restoreClass, isCreated, className, users, isLoading } = useClass();
+  const { addClassProtocol, restoreClass, clearStates, isCreated, className, users, isLoading } = useClass();
 
   return (
     <Wrapper>
@@ -65,6 +66,11 @@ const AddClass = () => {
                 </Button>
               )}
             </div>
+            {isCreated && (
+              <Button style={{ marginTop: '1rem' }} onClick={() => clearStates(reset)}>
+                Dodaj kolejną klasę
+              </Button>
+            )}
           </StyledForm>
         </InnerWrapper>
         <PeopleCard>
