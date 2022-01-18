@@ -60,7 +60,7 @@ const AddClass = () => {
                 )}
               </Button>
               {isCreated && (
-                <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon>
+                <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon isDanger>
                   <img src={restore} alt={'Restore arrows'} />
                 </Button>
               )}
