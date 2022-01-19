@@ -13,6 +13,10 @@ export const Wrapper = styled.div`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   justify-items: left;
   padding-left: 3rem;
+
+  input {
+    width: 70%;
+  }
 `;
 
 export const BoxWrapper = styled.div`
