@@ -8,6 +8,7 @@ import { Select } from '../../../views/auth/SchoolAdmin/AddClass/AddClass.styles
 import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from '../../../helpers/roles';
+import { useUpdateUserMutation } from '../../../store';
 
 interface props {
   info: {
@@ -30,6 +31,7 @@ const StudentInfoRecord: React.FC<props> = ({
 }) => {
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
+  const [updateUser] = useUpdateUserMutation();
 
   const handleEditUser = (data: { name: string; Birthday: string; TextRole: string }) => {
     const dividedName = data.name.split(' ');
@@ -44,6 +46,7 @@ const StudentInfoRecord: React.FC<props> = ({
       TextRole: data.TextRole,
       role: getRoleFromText(data?.TextRole || 'Student')
     };
+    updateUser({ data: preparedUser, id });
     setEditState(false);
   };
 
