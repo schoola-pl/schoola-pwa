@@ -15,7 +15,7 @@ export const Heading = styled.h1`
   padding-bottom: 1rem;
 `;
 
-export const Select = styled.select`
+export const Select = styled.select<{ small?: boolean }>`
   padding: 1.5rem 2rem;
   box-sizing: border-box;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
@@ -30,6 +30,20 @@ export const Select = styled.select`
     outline: none;
     border: 2px solid ${({ theme }) => theme.colors.accentGreen};
   }
+
+  ${({ small, theme }) =>
+    small &&
+    `
+    border: none;
+    border-bottom: 2px solid ${theme.colors.selectedItemGrey};
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.2rem 1.7rem;
+    &:focus {
+      border: 0;
+      border-bottom: 2px solid ${theme.colors.selectedItemBorderGrey};
+    }
+  `}
 `;
 
 export const StyledForm = styled.form`

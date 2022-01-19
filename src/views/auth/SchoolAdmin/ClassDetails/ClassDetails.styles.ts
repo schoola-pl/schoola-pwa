@@ -26,10 +26,15 @@ export const Heading = styled.h1`
 
 export const InnerWrapper = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   margin-left: -5rem;
+
+  & > * {
+    height: 50vh;
+  }
 `;
 
 export const InfoWrapper = styled.div`
