@@ -43,7 +43,7 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       Birthday: new Date(tempUser.birthday).toISOString(),
       avatar: null,
       schoolId: user?.schoolId || null,
-      textRole: tempUser.TextRole,
+      TextRole: tempUser.TextRole,
       role: getRoleFromText(tempUser?.TextRole || 'Student'),
       class: classId,
       password: nanoid()
