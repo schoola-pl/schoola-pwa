@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import UserIcon from 'assets/icons/UserIcon.png';
-import AppointmentIcon from 'assets/icons/AppointmentIcon.png';
-import FeedIcon from 'assets/icons/FeedIcon.png';
-import SpottedIcon from 'assets/icons/SpottedIcon.png';
+import SpottedIcon from 'assets/icons/SpottedIcon.svg';
+import AppointmentIcon from 'assets/icons/AppointmentIcon.svg';
+import FeedIcon from 'assets/icons/FeedIcon.svg';
+import HomeIcon from 'assets/icons/HomeIcon.svg';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import { NavLink } from 'react-router-dom';
 
@@ -10,37 +10,66 @@ const Wrapper = styled.div`
   display: flex;
   position: fixed;
   border-radius: 3rem;
-  width: 36rem;
+  width: 37rem;
   height: 9rem;
   background-color: ${({ theme }) => theme.colors.accentGreen};
-  left: 4%;
+  left: 3%;
   bottom: 2.5%;
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
 
 const StyledList = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-size: ${({ theme }) => theme.fontSize.s};
+      color: white;
+    }
+  }
 `;
 
-const StyledListItem = styled(NavLink)``;
+// const StyledListItem = styled(NavLink)``;
 
-const links: { path: string; name: string; icon: string }[] = [
-  { path: '/appointment', icon: AppointmentIcon, name: '' },
-  { path: '/spotted', icon: SpottedIcon, name: '' },
-  { path: '/feed', icon: FeedIcon, name: '' },
-  { path: '/profile', icon: UserIcon, name: '' }
-];
+// const links: { path: string; name: string; icon: string }[] = [
+//   { path: '/appointment', icon: '', name: '' },
+//   { path: '/spotted', icon: '', name: '' },
+//   { path: '/feed', icon: '', name: '' },
+//   { path: '/profile', icon: '', name: '' }
+// ];
+// {links.map(({ path, name, icon }) => (
+//   <StyledList key={path}>
+//     <StyledListItem as={NavLink} to={path}>
+//       <SidebarLink icon={icon} />
+//     </StyledListItem>
+//   </StyledList>
+// ))}
 
 const UserSidebar = () => (
   <Wrapper>
-    {links.map(({ path, name, icon }) => (
-      <StyledList key={path}>
-        <StyledListItem as={NavLink} to={path}>
-          <SidebarLink icon={icon} />
-        </StyledListItem>
-      </StyledList>
-    ))}
+    <StyledList>
+      <li>
+        <SidebarLink icon={AppointmentIcon} />
+      </li>
+      <li>
+        <SidebarLink icon={SpottedIcon} />
+      </li>
+      <li>
+        <SidebarLink icon={FeedIcon} />
+      </li>
+      <li>
+        <SidebarLink icon={HomeIcon} />
+        <p>Home</p>
+      </li>
+    </StyledList>
   </Wrapper>
 );
 
