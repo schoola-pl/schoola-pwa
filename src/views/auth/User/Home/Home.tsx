@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 
-const Home = () => (
-  <UserTemplate>
-    <h1>Hello User!</h1>
-  </UserTemplate>
-);
+const Home = () => <UserTemplate />;
 
 export default Home;

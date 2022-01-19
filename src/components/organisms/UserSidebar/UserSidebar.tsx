@@ -10,10 +10,10 @@ const Wrapper = styled.div`
   display: flex;
   position: fixed;
   border-radius: 3rem;
-  width: 37rem;
+  width: 95%;
   height: 9rem;
   background-color: ${({ theme }) => theme.colors.accentGreen};
-  left: 3%;
+  left: 2.6%;
   bottom: 2.5%;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
