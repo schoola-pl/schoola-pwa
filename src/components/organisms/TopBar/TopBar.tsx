@@ -15,6 +15,7 @@ const Logo = styled.h1`
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
+  width: 100vw;
   padding: 1rem;
   display: flex;
   align-items: center;
