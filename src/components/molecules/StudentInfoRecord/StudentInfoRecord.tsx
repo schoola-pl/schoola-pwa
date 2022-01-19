@@ -28,7 +28,7 @@ const StudentInfoRecord: React.FC<props> = ({
   const [isEdit, setEditState] = useState(false);
 
   return (
-    <Wrapper>
+    <Wrapper isBlocked={blocked}>
       <StudentBox icon={blueStudent} />
       {!isEdit ? <Name>{`${first_name} ${last_name}`}</Name> : <Input placeholder={`${first_name} ${last_name}`} small />}
       {!isEdit ? (
@@ -42,7 +42,7 @@ const StudentInfoRecord: React.FC<props> = ({
       {!isEdit ? <Date>{Birthday}</Date> : <Input type="date" small />}
       <Number>{id}</Number>
       <BoxWrapper>
-        <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />
+        {!blocked && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
         <DeleteBox icon={DeleteIcon} />
       </BoxWrapper>
     </Wrapper>

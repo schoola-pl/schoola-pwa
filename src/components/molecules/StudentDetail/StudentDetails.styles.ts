@@ -1,7 +1,7 @@
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isBlocked?: boolean }>`
   width: 95.8%;
   height: 8.5rem;
   background-color: white;
@@ -14,6 +14,12 @@ export const Wrapper = styled.div`
   justify-items: left;
   padding-left: 3rem;
 
+  ${({ isBlocked }) =>
+    isBlocked &&
+    `
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+  `}
   input {
     width: 70%;
   }
