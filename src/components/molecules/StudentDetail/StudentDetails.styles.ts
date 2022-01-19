@@ -29,28 +29,29 @@ export const BoxWrapper = styled.div`
   display: flex;
 `;
 
-export const StudentBox = styled(SidebarLink)`
+const Box = styled(SidebarLink)`
+  border-radius: 1rem;
+  height: 4.75rem;
+  width: 4.75rem;
+  padding: 1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const StudentBox = styled(Box)`
   background-color: #b8d0fc;
-  border-radius: 1rem;
-  height: 4.75rem;
-  width: 4.75rem;
-  padding: 1rem;
 `;
 
-export const DeleteBox = styled(SidebarLink)`
+export const DeleteBox = styled(Box)`
   background-color: #fcb3b0;
-  border-radius: 1rem;
-  height: 4.75rem;
-  width: 4.75rem;
-  padding: 1rem;
 `;
 
-export const EditBox = styled(SidebarLink)`
+export const EditBox = styled(Box)`
   background-color: #e8fcd9;
-  border-radius: 1rem;
-  height: 4.75rem;
-  width: 4.75rem;
-  padding: 1rem;
 `;
 
 export const Name = styled.p`
