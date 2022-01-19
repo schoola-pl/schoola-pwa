@@ -3,6 +3,7 @@ import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassQuery } from '../../../../store';
+import Loading from '../../../../components/molecules/Loading/Loading';
 import { useEffect } from 'react';
 
 const ClassDetails = () => {
@@ -34,7 +35,7 @@ const ClassDetails = () => {
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>
-        <StudentDetail students={students.data?.data[0].attributes?.users?.data || []} />
+        {!students.isLoading ? <StudentDetail students={students.data?.data[0].attributes?.users?.data || []} /> : <Loading />}
       </InnerWrapper>
     </Wrapper>
   );
