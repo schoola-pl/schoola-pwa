@@ -37,7 +37,28 @@ const StyledList = styled.ul`
   }
 `;
 
-// const StyledListItem = styled(NavLink)``;
+const StyledListItem = styled(NavLink)``;
+
+const UserSidebar = () => (
+  <Wrapper>
+    <StyledList>
+      <StyledListItem to="/appointment">
+        <SidebarLink icon={AppointmentIcon} />
+      </StyledListItem>
+      <StyledListItem to="/spotted">
+        <SidebarLink icon={SpottedIcon} />
+      </StyledListItem>
+      <StyledListItem to="/feed">
+        <SidebarLink icon={FeedIcon} />
+      </StyledListItem>
+      <StyledListItem to="/home">
+        <SidebarLink icon={HomeIcon} />
+      </StyledListItem>
+    </StyledList>
+  </Wrapper>
+);
+
+export default UserSidebar;
 
 // const links: { path: string; name: string; icon: string }[] = [
 //   { path: '/appointment', icon: '', name: '' },
@@ -52,25 +73,3 @@ const StyledList = styled.ul`
 //     </StyledListItem>
 //   </StyledList>
 // ))}
-
-const UserSidebar = () => (
-  <Wrapper>
-    <StyledList>
-      <li>
-        <SidebarLink icon={AppointmentIcon} />
-      </li>
-      <li>
-        <SidebarLink icon={SpottedIcon} />
-      </li>
-      <li>
-        <SidebarLink icon={FeedIcon} />
-      </li>
-      <li>
-        <SidebarLink icon={HomeIcon} />
-        <p>Home</p>
-      </li>
-    </StyledList>
-  </Wrapper>
-);
-
-export default UserSidebar;

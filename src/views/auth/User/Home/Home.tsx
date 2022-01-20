@@ -18,29 +18,6 @@ const StyledList = styled.ul`
   flex-direction: column;
 `;
 
-const Home = () => (
-  <UserTemplate>
-    <StyledList>
-      <li>
-        <Post />
-      </li>
-      <li>
-        <Post />
-      </li>
-      <li>
-        <Post />
-      </li>
-      <li>
-        <Post />
-      </li>
-      <li>
-        <Post />
-      </li>
-      <li>
-        <Post />
-      </li>
-    </StyledList>
-  </UserTemplate>
-);
+const Home = () => <UserTemplate>Home View</UserTemplate>;
 
 export default Home;

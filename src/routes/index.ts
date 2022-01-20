@@ -4,6 +4,9 @@ import Dashboard from 'views/auth/Admin/Dashboard/Dashboard';
 import ManageClasses from 'views/auth/Admin/ManageClasses/ManageClasses';
 import AddClass from 'views/auth/Admin/AddClass/AddClass';
 import Home from 'views/auth/User/Home/Home';
+import Appointment from 'views/auth/User/Appointment/Appointment';
+import Spotted from 'views/auth/User/Spotted/Spotted';
+import Feed from 'views/auth/User/Feed/Feed';
 
 interface routesInterface {
   // Path to component
@@ -34,8 +37,11 @@ const homeRoute = '/home';
 
 // Array with routes in application;
 const routes: routesInterface[] = [
-  { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
+  { path: '/feed', Component: Feed, isProtected: false, role: roles.authenticated },
+  { path: '/spotted', Component: Spotted, isProtected: false, role: roles.authenticated },
+  { path: '/appointment', Component: Appointment, isProtected: false, role: roles.authenticated },
   { path: homeRoute, Component: Home, isProtected: false, role: roles.authenticated },
+  { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
   { path: addClassRoute, Component: AddClass, isProtected: false, role: roles.authenticated },
   { path: '/manage/*', Component: ManageClasses, isProtected: false, role: roles.authenticated },
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public }
