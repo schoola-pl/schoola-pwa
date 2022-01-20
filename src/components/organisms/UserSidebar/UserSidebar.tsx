@@ -15,7 +15,6 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.accentGreen};
   left: 2.6%;
   bottom: 2.5%;
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
 
 const StyledList = styled.ul`
@@ -25,51 +24,45 @@ const StyledList = styled.ul`
   align-items: center;
   position: relative;
   padding: 1rem;
+
   li {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+`;
 
-    p {
-      font-size: ${({ theme }) => theme.fontSize.s};
+interface Props {
+  name?: string;
+}
+
+const StyledListItem = styled(NavLink)<Props>`
+  &.active {
+    &::after {
+      content: ${({ name }) => name};
       color: white;
+      font-size: ${({ theme }) => theme.fontSize.l};
     }
   }
 `;
 
-const StyledListItem = styled(NavLink)``;
+const links: { path: string; name: string; icon: string }[] = [
+  { path: '/appointment', icon: AppointmentIcon, name: 'Wizyta' },
+  { path: '/spotted', icon: SpottedIcon, name: 'Spotted' },
+  { path: '/feed', icon: FeedIcon, name: 'Tablica' },
+  { path: '/home', icon: HomeIcon, name: 'Home' }
+];
 
 const UserSidebar = () => (
   <Wrapper>
-    <StyledList>
-      <StyledListItem to="/appointment">
-        <SidebarLink icon={AppointmentIcon} />
-      </StyledListItem>
-      <StyledListItem to="/spotted">
-        <SidebarLink icon={SpottedIcon} />
-      </StyledListItem>
-      <StyledListItem to="/feed">
-        <SidebarLink icon={FeedIcon} />
-      </StyledListItem>
-      <StyledListItem to="/home">
-        <SidebarLink icon={HomeIcon} />
-      </StyledListItem>
-    </StyledList>
+    {links.map(({ path, name, icon }) => (
+      <StyledList key={path}>
+        <StyledListItem name={name} to={path}>
+          <SidebarLink icon={icon} />
+        </StyledListItem>
+      </StyledList>
+    ))}
   </Wrapper>
 );
 
 export default UserSidebar;
-
-// const links: { path: string; name: string; icon: string }[] = [
-//   { path: '/appointment', icon: '', name: '' },
-//   { path: '/spotted', icon: '', name: '' },
-//   { path: '/feed', icon: '', name: '' },
-//   { path: '/profile', icon: '', name: '' }
-// ];
-// {links.map(({ path, name, icon }) => (
-//   <StyledList key={path}>
-//     <StyledListItem as={NavLink} to={path}>
-//       <SidebarLink icon={icon} />
-//     </StyledListItem>
-//   </StyledList>
-// ))}
