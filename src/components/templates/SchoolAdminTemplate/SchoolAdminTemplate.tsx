@@ -6,6 +6,7 @@ import ManageClasses from '../../../views/auth/SchoolAdmin/ManageClasses/ManageC
 import Dashboard from '../../../views/auth/SchoolAdmin/Dashboard/Dashboard';
 import AddClass from '../../../views/auth/SchoolAdmin/AddClass/AddClass';
 import ClassDetails from '../../../views/auth/SchoolAdmin/ClassDetails/ClassDetails';
+import Error404 from '../../../views/Error404/Error404';
 
 const SchoolAdminTemplate: React.FC = () => (
   <Wrapper>
@@ -16,6 +17,7 @@ const SchoolAdminTemplate: React.FC = () => (
       <Route path="/manage/classes" element={<Navigate to="/school-admin/manage" />} />
       <Route path="/manage/classes/:id" element={<ClassDetails />} />
       <Route path="/manage/add-class" element={<AddClass />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   </Wrapper>
 );
