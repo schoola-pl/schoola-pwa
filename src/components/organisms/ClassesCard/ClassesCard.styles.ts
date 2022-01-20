@@ -4,10 +4,10 @@ export const Wrapper = styled.div`
   position: relative;
   max-height: 745px;
   overflow: hidden;
-  background-color: white;
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.lightBrown};
   @media (min-width: ${({ theme }) => theme.screenSize.tabletMD}) {
     margin-inline: 6rem;
   }
@@ -32,7 +32,6 @@ export const ClassesWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  background-color: ${({ theme }) => theme.colors.lightBrown};
   align-items: center;
 
   &::-webkit-scrollbar {
@@ -41,7 +40,7 @@ export const ClassesWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.accentBlue};
+    background-color: ${({ theme }) => theme.colors.accentBrown};
     border-radius: 10px;
   }
 `;

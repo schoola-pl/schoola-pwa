@@ -17,7 +17,7 @@ const Input = styled.input<{ error?: boolean }>`
   `}
   &:focus {
     outline: none;
-    border: 2px solid ${({ theme }) => theme.colors.accentGreen};
+    border: 2px solid ${({ theme, error }) => (error ? theme.colors.accentRed : theme.colors.accentGreen)};
 `;
 
 export default Input;

@@ -27,12 +27,23 @@ export const InfoWrapper = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: relative;
+
+  div {
+    display: flex;
+    margin-right: 1rem;
+    align-items: center;
+    transform: translateX(-100%);
+
+    @media (min-width: 1281px) {
+      transform: translateX(-0%);
+    }
+  }
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.xl};
     color: black;
     margin-right: 1rem;
-    transform: translateX(-100%);
   }
 
   p {

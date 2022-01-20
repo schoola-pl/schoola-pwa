@@ -1,21 +1,24 @@
 import React from 'react';
-import Home from 'views/Home';
 import Login from 'views/auth/Forms/Login/Login';
+import Home from '../views/Home';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
 
 interface routesInterface {
   // Path to component
   path: string;
   // Just component
-  Component: React.FC;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Component: React.FC<any>;
   // Is route protected?
   isProtected: boolean;
   // Who can access this route?
   role: string;
+  // Where to redirect if user is not authenticated?
+  redirectTo?: string;
 }
 
 // Paths
-export const paths = {
+export const paths: { [key: string]: string } = {
   login: '/login',
   student: '/student/*',
   schoolAdmin: '/school-admin/*'

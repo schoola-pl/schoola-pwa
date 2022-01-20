@@ -8,13 +8,17 @@ export const Wrapper = styled.div`
 export const Heading = styled.h1`
   margin: 3rem 3rem 0;
   font-size: 2.6rem;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
 `;
 
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
   grid-template-rows: auto;
-  padding: 3rem;
+  position: relative;
+  margin: 1rem;
+  min-height: 50vh;
+  padding: 2rem;
   grid-gap: 4rem;
 
   & > div:nth-child(3) {

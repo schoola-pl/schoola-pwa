@@ -4,24 +4,31 @@ import StudentIcon from 'assets/icons/StudentIcon.png';
 import InfoCard from 'components/molecules/InfoCard/InfoCard';
 import ClassesCard from 'components/organisms/ClassesCard/ClassesCard';
 import React from 'react';
+import { storeRoot, useGetClassesCountQuery, useGetUsersCountQuery } from '../../../../store';
+import { useSelector } from 'react-redux';
+import Loading from '../../../../components/molecules/Loading/Loading';
 
-const mockData = {
-  name1: 'Łączna liczba użytkowników',
-  name2: 'Łączna ilość klas',
-  admin: 'Tomasz Hajto',
-  numberOfAccounts: 250,
-  numberOfClasses: 15
+const Dashboard: React.FC = () => {
+  const user = useSelector((store: storeRoot) => store.user);
+  const classesCount = useGetClassesCountQuery({ schoolId: user?.schoolId || null });
+  const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
+
+  return (
+    <Wrapper>
+      <Heading>Witaj {user?.first_name || 'użytkowniku'}!</Heading>
+      <Grid>
+        {classesCount.isLoading || usersCount.isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <InfoCard name="Łączna liczba użytkowników" number={usersCount.data.data[0].attributes.totalUsers} icon={StudentIcon} />
+            <InfoCard name="Łączna ilość klas" number={classesCount.data.data.length} icon={ClassIcon} />
+            <ClassesCard />
+          </>
+        )}
+      </Grid>
+    </Wrapper>
+  );
 };
-
-const Dashboard: React.FC = () => (
-  <Wrapper>
-    <Heading>Witaj {mockData.admin}!</Heading>
-    <Grid>
-      <InfoCard name={mockData.name1} number={mockData.numberOfAccounts} icon={StudentIcon} />
-      <InfoCard name={mockData.name2} number={mockData.numberOfClasses} icon={ClassIcon} />
-      <ClassesCard />
-    </Grid>
-  </Wrapper>
-);
 
 export default Dashboard;

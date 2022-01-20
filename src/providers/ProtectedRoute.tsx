@@ -38,11 +38,14 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
         // Checks if user has permission to access route
         if (role !== user.TextRole && role !== roles.authenticated) {
           blockRoutes();
+          console.log("You can't go here!");
         } else {
+          console.log('Congatulations!');
           setAppLoading(false);
         }
       } else {
         blockRoutes();
+        console.log('Blocked!');
       }
     }
     // eslint-disable-next-line
