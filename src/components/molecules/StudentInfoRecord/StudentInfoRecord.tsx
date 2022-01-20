@@ -83,7 +83,7 @@ const StudentInfoRecord: React.FC<props> = ({
           <option value="Moderator">Samorząd Uczniowski</option>
         </Select>
       )}
-      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" value={Birthday} small {...register('Birthday', { required: true })} />}
+      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" small {...register('Birthday', { required: true })} />}
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
