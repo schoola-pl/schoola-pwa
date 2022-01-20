@@ -4,6 +4,7 @@ import { useAppLoading } from '../hooks/useAppLoading';
 import AppLoader from '../components/molecules/AppLoader/AppLoader';
 import routes from '../routes';
 import ProtectedRoute from '../providers/ProtectedRoute';
+import Error404 from 'views/Error404/Error404';
 
 const Root: React.FC = () => {
   const { isAppLoading, appLoadingText } = useAppLoading();
@@ -20,7 +21,7 @@ const Root: React.FC = () => {
             <Route key={route.path} element={<route.Component />} path={route.path} />
           );
         })}
-        <Route path="*" element={<p>Error 404</p>} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </>
   );
