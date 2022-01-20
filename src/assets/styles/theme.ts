@@ -29,11 +29,11 @@ export const theme = {
     bold: '700'
   },
   screenSize: {
-    phoneSM: '32rem',
-    phoneMD: '48rem',
-    tabletSM: '65rem',
-    tabletMD: '85rem',
-    pc: '100.25rem',
-    pcLG: '120.75rem'
+    phoneSM: '320px',
+    phoneMD: '480px',
+    tabletSM: '650px',
+    tabletMD: '850px',
+    pc: '1025px',
+    pcLG: '1275px'
   }
 };
