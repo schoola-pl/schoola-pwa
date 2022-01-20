@@ -9,7 +9,7 @@ import Loading from '../../molecules/Loading/Loading';
 const ClassesCard: React.FC = () => {
   const [currentPage, setPage] = useState(1);
   const user = useSelector((store: storeRoot) => store.user);
-  const classes = useGetClassesQuery({ page: currentPage, schoolId: user?.schoolId || null });
+  const classes = useGetClassesQuery({ pagination: true, page: currentPage, schoolId: user?.schoolId || null });
 
   const fetchNextPage = () => {
     if (classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1) {
