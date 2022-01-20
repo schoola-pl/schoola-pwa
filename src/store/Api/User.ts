@@ -45,7 +45,7 @@ export const UserAPI = createApi({
         body
       })
     }),
-    addToSchoolCount: builder.mutation({
+    updateSchoolCount: builder.mutation({
       invalidatesTags: ['users'],
       query: (body) => ({
         method: 'PUT',
@@ -84,6 +84,6 @@ export const UserAPI = createApi({
   })
 });
 
-export const { useGetUsersCountQuery, useAddUserToClassMutation, useAddToSchoolCountMutation, useUpdateUserMutation, useRemoveUserMutation } =
+export const { useGetUsersCountQuery, useAddUserToClassMutation, useUpdateSchoolCountMutation, useUpdateUserMutation, useRemoveUserMutation } =
   UserAPI;
 export default UserAPI;
