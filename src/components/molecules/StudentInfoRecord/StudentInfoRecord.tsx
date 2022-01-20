@@ -8,9 +8,12 @@ import { Select } from '../../../views/auth/SchoolAdmin/AddClass/AddClass.styles
 import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from '../../../helpers/roles';
+import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation, useUpdateUserMutation } from '../../../store';
+import { useSelector } from 'react-redux';
 import { useUpdateUserMutation } from '../../../store';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
+
 interface props {
   info: {
     id: string;
@@ -32,7 +35,13 @@ const StudentInfoRecord: React.FC<props> = ({
 }) => {
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
+  const user = useSelector((state: storeRoot) => state.user);
   const [updateUser] = useUpdateUserMutation();
+  const [deleteUser] = useRemoveUserMutation();
+  const [updateCount] = useUpdateSchoolCountMutation();
+  const actualCount = useGetUsersCountQuery({
+    schoolId: user?.schoolId || null
+  });
 
   const handleEditUser = (data: { name: string; Birthday: string; TextRole: string }) => {
     const dividedName = data.name.split(' ');
@@ -51,6 +60,16 @@ const StudentInfoRecord: React.FC<props> = ({
     setEditState(false);
   };
 
+  const handleDeleteUser = () => {
+    deleteUser({
+      id
+    });
+    updateCount({
+      schoolId: user?.schoolId || null,
+      totalUsers: actualCount.data.data[0].attributes.totalUsers - 1
+    });
+  };
+
   return (
     <Wrapper as={'form'} onSubmit={handleSubmit(handleEditUser)} isBlocked={blocked}>
       <StudentBox icon={blueStudent} />
@@ -67,7 +86,7 @@ const StudentInfoRecord: React.FC<props> = ({
           <option value="Moderator">Samorząd Uczniowski</option>
         </Select>
       )}
-      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" value={Birthday} small {...register('Birthday', { required: true })} />}
+      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" small {...register('Birthday', { required: true })} />}
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
