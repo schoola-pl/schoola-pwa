@@ -9,7 +9,8 @@ import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from '../../../helpers/roles';
 import { useUpdateUserMutation } from '../../../store';
-
+import AcceptIcon from 'assets/icons/AcceptIcon.png';
+import CancelIcon from 'assets/icons/CancelIcon.png';
 interface props {
   info: {
     id: string;
@@ -71,8 +72,8 @@ const StudentInfoRecord: React.FC<props> = ({
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
         {!isEdit && <DeleteBox icon={DeleteIcon} />}
-        {isEdit && <button>Accept</button>}
-        {isEdit && <button onClick={() => setEditState(false)}>Cancel</button>}
+        {isEdit && <EditBox icon={AcceptIcon} />}
+        {isEdit && <DeleteBox icon={CancelIcon} onClick={() => setEditState(false)} />}
       </BoxWrapper>
     </Wrapper>
   );
