@@ -8,7 +8,7 @@ import { Select } from '../../../views/auth/SchoolAdmin/AddClass/AddClass.styles
 import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from '../../../helpers/roles';
-import { useUpdateUserMutation } from '../../../store';
+import { useRemoveUserMutation, useUpdateUserMutation } from '../../../store';
 
 interface props {
   info: {
@@ -32,6 +32,7 @@ const StudentInfoRecord: React.FC<props> = ({
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
   const [updateUser] = useUpdateUserMutation();
+  const [deleteUser] = useRemoveUserMutation();
 
   const handleEditUser = (data: { name: string; Birthday: string; TextRole: string }) => {
     const dividedName = data.name.split(' ');
@@ -48,6 +49,12 @@ const StudentInfoRecord: React.FC<props> = ({
     };
     updateUser({ data: preparedUser, id });
     setEditState(false);
+  };
+
+  const handleDeleteUser = () => {
+    deleteUser({
+      id
+    });
   };
 
   return (
@@ -70,7 +77,7 @@ const StudentInfoRecord: React.FC<props> = ({
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
-        {!isEdit && <DeleteBox icon={DeleteIcon} />}
+        {!isEdit && <DeleteBox icon={DeleteIcon} onClick={handleDeleteUser} />}
         {isEdit && <button>Accept</button>}
         {isEdit && <button onClick={() => setEditState(false)}>Cancel</button>}
       </BoxWrapper>
