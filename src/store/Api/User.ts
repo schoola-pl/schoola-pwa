@@ -70,9 +70,20 @@ export const UserAPI = createApi({
         },
         body: body.data
       })
+    }),
+    removeUser: builder.mutation({
+      invalidatesTags: ['users'],
+      query: (body) => ({
+        method: 'DELETE',
+        url: `/users/${body.id}`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
     })
   })
 });
 
-export const { useGetUsersCountQuery, useAddUserToClassMutation, useAddToSchoolCountMutation, useUpdateUserMutation } = UserAPI;
+export const { useGetUsersCountQuery, useAddUserToClassMutation, useAddToSchoolCountMutation, useUpdateUserMutation, useRemoveUserMutation } =
+  UserAPI;
 export default UserAPI;
