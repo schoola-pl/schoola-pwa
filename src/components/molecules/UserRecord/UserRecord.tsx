@@ -2,7 +2,7 @@ import Input from '../../atoms/Input/Input';
 import { PeopleWrapper, Select } from './UserRecord.styles';
 import Button from '../../atoms/Button/Button';
 import { useForm } from 'react-hook-form';
-import { storeRoot, useAddToSchoolCountMutation, useAddUserToClassMutation, useGetUsersCountQuery } from '../../../store';
+import { storeRoot, useAddUserToClassMutation, useGetUsersCountQuery, useUpdateSchoolCountMutation } from '../../../store';
 import { getRoleFromText } from '../../../helpers/roles';
 import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
@@ -23,7 +23,7 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [addUser, { isLoading, isSuccess }] = useAddUserToClassMutation();
   const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
-  const [addToSchoolCount] = useAddToSchoolCountMutation();
+  const [addToSchoolCount] = useUpdateSchoolCountMutation();
   const [createdUser, setNewUser] = useState<Partial<{ login: string; name: string; password: string }>>({});
   const { classId } = useClass();
   const [isCopied, setIsCopied] = useState(false);
