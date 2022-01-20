@@ -31,8 +31,8 @@ export const theme = {
   screenSize: {
     phoneSM: '32rem',
     phoneMD: '48rem',
-    tabletSM: '60rem',
-    tabletMD: '80rem',
+    tabletSM: '65rem',
+    tabletMD: '85rem',
     pc: '100.25rem',
     pcLG: '120.75rem'
   }

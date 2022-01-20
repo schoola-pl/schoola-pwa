@@ -21,18 +21,27 @@ export const Wrapper = styled.div`
     font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     margin-top: 7.5rem;
+    text-align: center;
   }
 `;
 
 export const ErrorDiv = styled.div<Props>`
-  height: 75rem;
-  width: 75rem;
   background-size: 75%;
   background-position: center;
   background-image: url(${({ icon }) => icon});
   background-repeat: no-repeat;
   background-color: transparent;
   margin-bottom: 8rem;
+
+  @media (min-width: 320px) {
+    height: 35rem;
+    width: 35rem;
+  }
+
+  @media (min-width: 650px) {
+    height: 75rem;
+    width: 75rem;
+  }
 `;
 
 export const StyledButton = styled(Button)`
