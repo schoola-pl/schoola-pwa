@@ -1,30 +1,17 @@
-import EditIcon from 'assets/icons/EditIcon.png';
-import blueStudent from 'assets/icons/BlueStudent.svg';
-import DeleteIcon from 'assets/icons/DeleteIcon.svg';
-import { Wrapper, StudentBox, Name, Role, Number, EditBox, DeleteBox, Date, BoxWrapper } from './StudentDetails.styles';
+import React from 'react';
+import StudentInfoRecord from '../StudentInfoRecord/StudentInfoRecord';
 
-const mockData = [
-  { name: 'Marcin Najman', role: 'Uczeń', date: '12.12.2012', number: 1 },
-  { name: 'Marcin Tomaszewski', role: 'Samorząd uczniowski', date: '12.12.2012', number: 1 },
-  { name: 'Kaburnikow miner', role: 'Samorząd uczniowski', date: '12.12.2012', number: 1 },
-  { name: 'Tomasz Rasputin', role: 'Uczeń', date: '12.12.2012', number: 1 },
-  { name: 'Twoj stary', role: 'Samorząd uczniowski', date: '12.12.2012', number: 1 }
-];
+interface props {
+  students: {
+    id: string;
+    attributes: { first_name: string; last_name: string; blocked: boolean; avatar: string; Birthday: string; TextRole: string };
+  }[];
+}
 
-const StudentDetail: React.FC = () => (
+const StudentDetail: React.FC<props> = ({ students }) => (
   <>
-    {mockData.map(({ name, role, date, number }) => (
-      <Wrapper>
-        <StudentBox icon={blueStudent} />
-        <Name>{name}</Name>
-        <Role>{role}</Role>
-        <Date>{date}</Date>
-        <Number>{number}</Number>
-        <BoxWrapper>
-          <EditBox icon={EditIcon} />
-          <DeleteBox icon={DeleteIcon} />
-        </BoxWrapper>
-      </Wrapper>
+    {students.map((info) => (
+      <StudentInfoRecord key={info.id} info={info} />
     ))}
   </>
 );

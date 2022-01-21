@@ -13,6 +13,7 @@ export const Heading = styled.h1`
   font-size: 2.6rem;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   margin-bottom: 0.5rem;
+
   span {
     border-radius: 0.5rem;
     margin-left: 0.5rem;
@@ -25,10 +26,15 @@ export const Heading = styled.h1`
 
 export const InnerWrapper = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   margin-left: -5rem;
+
+  & > * {
+    height: 50vh;
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -41,11 +47,15 @@ export const InfoWrapper = styled.div`
 export const Paragraph = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
   margin-right: 15rem;
+
+  &:first-child {
+    grid-column: 2;
+    padding-left: 3rem;
+  }
 `;
 
 export const ParagraphsWrapper = styled.div`
   width: 100%;
-  display: flex;
-  align-items: center;
-  margin-left: 15rem;
+  display: grid;
+  grid-template-columns: 7% 17.9% 21% 20% 20% 10%;
 `;

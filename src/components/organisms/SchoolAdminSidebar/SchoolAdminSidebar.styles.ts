@@ -34,6 +34,10 @@ export const StyledList = styled.ul`
   justify-content: space-around;
   position: relative;
   left: 0;
+
+  @media (min-width: 1300px) {
+    margin-top: 5rem;
+  }
 `;
 
 const easing = 'cubic-bezier(0.645, 0.045, 0.355, 1)';
@@ -53,6 +57,10 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
 
   &:last-child {
     margin-top: 20rem;
+
+    @media (min-width: 1300px) {
+      margin-top: 25rem;
+    }
   }
 
   &::after {
