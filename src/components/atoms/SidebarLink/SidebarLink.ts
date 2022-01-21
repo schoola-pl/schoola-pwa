@@ -1,11 +1,6 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-type Props = {
-  icon: string;
-};
-
-const SidebarLink = styled.button<Props>`
+const SidebarLink = styled.button<{ icon: string }>`
   height: 5rem;
   width: 5rem;
   background-image: url(${({ icon }) => icon});
