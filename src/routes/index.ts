@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from 'views/auth/Forms/Login/Login';
+import Login from '../views/auth/Forms/Login/Login';
 import Home from '../views/Home';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
 
