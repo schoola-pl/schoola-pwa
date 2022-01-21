@@ -5,6 +5,7 @@ import { storeRoot, useGetClassesQuery } from '../../../store';
 import { useSelector } from 'react-redux';
 import { schoolClass } from '../../../types/school';
 import Loading from '../../molecules/Loading/Loading';
+import { NavLink } from 'react-router-dom';
 
 const ClassesCard: React.FC = () => {
   const [currentPage, setPage] = useState(1);
@@ -31,7 +32,7 @@ const ClassesCard: React.FC = () => {
       <ClassesWrapper>
         {classes.isLoading ? (
           <Loading />
-        ) : (
+        ) : classes.data.data.length > 0 ? (
           classes.data.data.map(
             ({
               id,
@@ -45,6 +46,13 @@ const ClassesCard: React.FC = () => {
               attributes: { classLevel: schoolClass['classLevel']; className: schoolClass['className']; users: { data: { id: number }[] } };
             }) => <ClassLink key={id} classLevel={classLevel} classLetter={className} numberOfStudents={usersCount.length} />
           )
+        ) : (
+          <>
+            <p style={{ margin: '10px 0 5px 0', fontSize: '1.8rem' }}>Ależ tu świeci pustkami!</p>
+            <NavLink style={{ margin: 0, fontSize: '1.3rem', color: 'black', textDecoration: 'underline' }} to="manage/add-class">
+              Dodaj klasę tutaj!
+            </NavLink>
+          </>
         )}
         {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? <p onClick={fetchNextPage}>Więcej</p> : null}
         {currentPage > 1 ? <p onClick={fetchPrevPage}>Mniej</p> : null}

@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   left: 0;
   z-index: 999999999;
   display: flex;
+  background-color: ${({ theme }) => theme.colors.lightGrey};
   flex-direction: column;
   justify-content: center;
   align-items: center;
