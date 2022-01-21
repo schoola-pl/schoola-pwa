@@ -19,8 +19,8 @@ const ManageClasses = () => {
       <ContentWrapper>
         <Links>
           <HeadingLink to={'/school-admin/manage'}>klasy</HeadingLink>
-          <HeadingLink to={'/school-admin/manage/add-roles'}>role</HeadingLink>
-          <HeadingLink to={'/school-admin/manage/all-accounts'}>wszystkie konta</HeadingLink>
+          {/*<HeadingLink to={'/school-admin/manage/add-roles'}>role</HeadingLink>*/}
+          {/*<HeadingLink to={'/school-admin/manage/all-accounts'}>wszystkie konta</HeadingLink>*/}
         </Links>
         <AmountWrapper>
           <h1>
