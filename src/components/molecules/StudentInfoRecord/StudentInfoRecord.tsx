@@ -10,7 +10,6 @@ import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from '../../../helpers/roles';
 import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation, useUpdateUserMutation } from '../../../store';
 import { useSelector } from 'react-redux';
-import { useUpdateUserMutation } from '../../../store';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
 
@@ -90,7 +89,7 @@ const StudentInfoRecord: React.FC<props> = ({
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
-        {!isEdit && <DeleteBox icon={DeleteIcon} />}
+        {!isEdit && <DeleteBox icon={DeleteIcon} onClick={handleDeleteUser} />}
         {isEdit && <EditBox icon={AcceptIcon} />}
         {isEdit && <DeleteBox icon={CancelIcon} onClick={() => setEditState(false)} />}
       </BoxWrapper>
