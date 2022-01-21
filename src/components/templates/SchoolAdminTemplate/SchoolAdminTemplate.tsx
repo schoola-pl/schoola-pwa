@@ -18,7 +18,8 @@ const SchoolAdminTemplate: React.FC = () => (
       <Route path="/manage" element={<ManageClasses />} />
       <Route path="/manage/classes" element={<Navigate to="/school-admin/manage" />} />
       <Route path="/manage/classes/:id" element={<ClassDetails />} />
-      <Route path="/manage/add-class" element={<AddClass />} />
+      <Route path="/manage/add-class/" element={<AddClass />} />
+      <Route path="/manage/add-class/:level" element={<AddClass />} />
       <Route path="*" element={<Error404 />} />
     </Routes>
   </Wrapper>
