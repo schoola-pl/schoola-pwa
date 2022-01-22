@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassQuery } from '../../../../store';
 import Loading from '../../../../components/molecules/Loading/Loading';
-import { useEffect } from 'react';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -16,10 +15,6 @@ const ClassDetails = () => {
     classLevel,
     className
   });
-
-  useEffect(() => {
-    console.log(students);
-  }, [students]);
 
   return (
     <Wrapper>

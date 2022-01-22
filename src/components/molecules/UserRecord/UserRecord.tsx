@@ -89,7 +89,6 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
       <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
         <option value="Student">Uczeń</option>
         <option value="Moderator">Samorząd Uczniowski</option>
-        <option value="School Admin">Administrator</option>
       </Select>
       <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
       <Button isIcon isDisabled={isSuccess}>
