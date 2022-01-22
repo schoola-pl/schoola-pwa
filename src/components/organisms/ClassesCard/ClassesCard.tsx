@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { schoolClass } from '../../../types/school';
 import Loading from '../../molecules/Loading/Loading';
 import { NavLink } from 'react-router-dom';
+import SmallButton from 'components/atoms/SmallButton/SmallButton';
 
 const ClassesCard: React.FC = () => {
   const [currentPage, setPage] = useState(1);
@@ -54,8 +55,10 @@ const ClassesCard: React.FC = () => {
             </NavLink>
           </>
         )}
-        {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? <p onClick={fetchNextPage}>Więcej</p> : null}
-        {currentPage > 1 ? <p onClick={fetchPrevPage}>Mniej</p> : null}
+        {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? (
+          <SmallButton onClick={fetchNextPage}>Więcej</SmallButton>
+        ) : null}
+        {currentPage > 1 ? <SmallButton onClick={fetchPrevPage}>Mniej</SmallButton> : null}
       </ClassesWrapper>
     </Wrapper>
   );
