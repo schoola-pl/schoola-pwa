@@ -6,6 +6,7 @@ import restore from 'assets/icons/restore.png';
 import { useClass } from '../../../../hooks/useClass';
 import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
 import Loader from 'components/atoms/Loader/Loader';
+import { useParams } from 'react-router';
 
 const AddClass = () => {
   const {
@@ -15,6 +16,7 @@ const AddClass = () => {
     reset
   } = useForm();
   const { addClassProtocol, restoreClass, clearStates, isCreated, className, users, isLoading } = useClass();
+  const { level } = useParams();
 
   return (
     <Wrapper>
@@ -28,14 +30,25 @@ const AddClass = () => {
               id="name"
               placeholder="Nazwa klasy (np. A)"
               disabled={isCreated}
-              {...register('className', { required: true, maxLength: 3, pattern: /[A-Z]+/g })}
+              {...register('className', { required: true, maxLength: 2, pattern: /^[A-Z]+$/g })}
               error={errors.className}
             />
             <Select disabled={isCreated} {...register('classLevel', { required: true })}>
-              <option value="1">Pierwsze klasy</option>
-              <option value="2">Drugie klasy</option>
-              <option value="3">Trzecie klasy</option>
-              <option value="4">Czwarte klasy</option>
+              <option value="" selected={!level || (level !== '1' && level !== '2' && level !== '3' && level !== '4')} disabled hidden>
+                Wybierz rok klasy
+              </option>
+              <option value="1" selected={level === '1'}>
+                Pierwsze klasy
+              </option>
+              <option value="2" selected={level === '2'}>
+                Drugie klasy
+              </option>
+              <option value="3" selected={level === '3'}>
+                Trzecie klasy
+              </option>
+              <option value="4" selected={level === '4'}>
+                Czwarte klasy
+              </option>
             </Select>
             <Label htmlFor="amountOfStudents">Ilość osób w klasie</Label>
             <Input

@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassQuery } from '../../../../store';
 import Loading from '../../../../components/molecules/Loading/Loading';
-import { useEffect } from 'react';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -16,10 +15,6 @@ const ClassDetails = () => {
     classLevel,
     className
   });
-
-  useEffect(() => {
-    console.log(students);
-  }, [students]);
 
   return (
     <Wrapper>
@@ -35,7 +30,15 @@ const ClassDetails = () => {
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>
-        {!students.isLoading ? <StudentDetail students={students.data?.data[0].attributes?.users?.data || []} /> : <Loading />}
+        {!students.isLoading ? (
+          students.data?.data[0].attributes?.users.data.length > 0 ? (
+            <StudentDetail students={students.data?.data[0].attributes?.users?.data || []} />
+          ) : (
+            <p style={{ width: 'fit-content', margin: '20px auto', textAlign: 'center', fontSize: '1.5rem' }}>Brak uczniów w klasie!</p>
+          )
+        ) : (
+          <Loading />
+        )}
       </InnerWrapper>
     </Wrapper>
   );

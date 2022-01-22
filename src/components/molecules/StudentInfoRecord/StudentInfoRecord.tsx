@@ -88,8 +88,8 @@ const StudentInfoRecord: React.FC<props> = ({
       {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" small {...register('Birthday', { required: true })} />}
       <Number>{id}</Number>
       <BoxWrapper>
-        {!blocked && !isEdit && <EditBox onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
-        {!isEdit && <DeleteBox icon={DeleteIcon} onClick={handleDeleteUser} />}
+        {!blocked && !isEdit && <EditBox data-testid="edition-button" onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
+        {!isEdit && <DeleteBox data-testid="delete-button" icon={DeleteIcon} onClick={handleDeleteUser} />}
         {isEdit && <EditBox icon={AcceptIcon} />}
         {isEdit && <DeleteBox icon={CancelIcon} onClick={() => setEditState(false)} />}
       </BoxWrapper>

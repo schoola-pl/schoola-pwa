@@ -68,37 +68,38 @@ const UserRecord: React.FC<props> = ({ index: i }) => {
         setIsCopied(true);
         setInterval(() => {
           setIsCopied(false);
-        }, 5000);
+        }, 3000);
       });
     }
   };
 
   return (
-    <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
-      <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
-      <Input
-        type="text"
-        placeholder="Imię i nazwisko"
-        error={errors.name}
-        {...registerUser('name', {
-          required: true,
-          pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
-        })}
-        disabled={isSuccess}
-      />
-      <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
-        <option value="Student">Uczeń</option>
-        <option value="Moderator">Samorząd Uczniowski</option>
-        <option value="School Admin">Administrator</option>
-      </Select>
-      <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
-      <Button isIcon isDisabled={isSuccess}>
-        {!isLoading ? '+' : <Loader fitContent />}
-      </Button>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
+        <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
+        <Input
+          type="text"
+          placeholder="Imię i nazwisko"
+          error={errors.name}
+          {...registerUser('name', {
+            required: true,
+            pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
+          })}
+          disabled={isSuccess}
+        />
+        <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
+          <option value="Student">Uczeń</option>
+          <option value="Moderator">Samorząd Uczniowski</option>
+        </Select>
+        <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
+        <Button isIcon isDisabled={isSuccess}>
+          {!isLoading ? '+' : <Loader fitContent />}
+        </Button>
+      </PeopleWrapper>
       <Button isIcon onClick={copyUserPasses} isDisabled={!isSuccess}>
         {!isCopied ? 'Kopiuj' : 'Gotowe!'}
       </Button>
-    </PeopleWrapper>
+    </div>
   );
 };
 
