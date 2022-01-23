@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassQuery } from '../../../../store';
 import Loading from '../../../../components/molecules/Loading/Loading';
+import { ButtonWrapper, AddStudentButton, DeleteClassButton } from './ClassDetails.styles';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -27,6 +28,10 @@ const ClassDetails = () => {
           <Paragraph>Rola</Paragraph>
           <Paragraph>Data urodzenia</Paragraph>
           <Paragraph>Numer</Paragraph>
+          <ButtonWrapper>
+            <AddStudentButton>Dodaj ucznia</AddStudentButton>
+            <DeleteClassButton>Usuń klasę</DeleteClassButton>
+          </ButtonWrapper>
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>

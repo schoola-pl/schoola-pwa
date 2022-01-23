@@ -31,10 +31,6 @@ export const InnerWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-left: -5rem;
-
-  & > * {
-    height: 50vh;
-  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -58,4 +54,44 @@ export const ParagraphsWrapper = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 7% 17.9% 21% 20% 20% 10%;
+  justify-items: center;
+  align-content: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+`;
+
+const ManageButton = styled.button`
+  margin-right: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  width: 11.5rem;
+  height: 5rem;
+  text-align: center;
+
+  transition: 0.1s all ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: ${({ theme }) => theme.colors.accentGreen};
+  }
+`;
+
+export const AddStudentButton = styled(ManageButton)`
+  border: 2px solid ${({ theme }) => theme.colors.accentGreen};
+  color: ${({ theme }) => theme.colors.accentGreen};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentGreen};
+  }
+`;
+export const DeleteClassButton = styled(ManageButton)`
+  border: 2px solid ${({ theme }) => theme.colors.accentRed};
+  color: ${({ theme }) => theme.colors.accentRed};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentRed};
+  }
 `;

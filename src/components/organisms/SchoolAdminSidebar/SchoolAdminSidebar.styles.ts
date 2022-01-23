@@ -57,10 +57,6 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
 
   &:last-child {
     margin-top: 20rem;
-
-    @media (min-width: 1300px) {
-      margin-top: 25rem;
-    }
   }
 
   &::after {
