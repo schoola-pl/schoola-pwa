@@ -77,7 +77,6 @@ const ManageButton = styled.button`
   &:hover {
     cursor: pointer;
     color: white;
-    background-color: ${({ theme }) => theme.colors.accentGreen};
   }
 `;
 
@@ -89,9 +88,11 @@ export const AddStudentButton = styled(ManageButton)`
   }
 `;
 export const DeleteClassButton = styled(ManageButton)`
-  border: 2px solid ${({ theme }) => theme.colors.accentRed};
-  color: ${({ theme }) => theme.colors.accentRed};
+  border: none;
+  background-color: ${({ theme }) => theme.colors.accentRed};
+  color: white;
+
   &:hover {
-    background-color: ${({ theme }) => theme.colors.accentRed};
+    opacity: 0.9;
   }
 `;

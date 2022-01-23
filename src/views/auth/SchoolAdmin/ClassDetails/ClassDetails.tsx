@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useParams } from 'react-router';
@@ -5,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassQuery } from '../../../../store';
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { ButtonWrapper, AddStudentButton, DeleteClassButton } from './ClassDetails.styles';
+import DeleteClassModal from 'components/molecules/DeleteClassModal/DeleteClassModal';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -16,6 +18,11 @@ const ClassDetails = () => {
     classLevel,
     className
   });
+  const [isOpen, setVisibility] = useState(false);
+
+  const handleDeleteAlert = () => {
+    setVisibility(!isOpen);
+  };
 
   return (
     <Wrapper>
@@ -30,7 +37,7 @@ const ClassDetails = () => {
           <Paragraph>Numer</Paragraph>
           <ButtonWrapper>
             <AddStudentButton>Dodaj ucznia</AddStudentButton>
-            <DeleteClassButton>Usuń klasę</DeleteClassButton>
+            <DeleteClassButton onClick={handleDeleteAlert}>Usuń klasę</DeleteClassButton>
           </ButtonWrapper>
         </ParagraphsWrapper>
       </InfoWrapper>
@@ -45,6 +52,7 @@ const ClassDetails = () => {
           <Loading />
         )}
       </InnerWrapper>
+      <DeleteClassModal isOpen={isOpen} />
     </Wrapper>
   );
 };
