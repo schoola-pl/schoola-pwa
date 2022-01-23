@@ -10,6 +10,7 @@ interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
   updateSettings: (settings: settingsType) => void;
+  resetPassword: (newPassword: string) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -20,6 +21,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   updateSettings: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  resetPassword: () => {
     throw new Error('UserContext is not initialized');
   }
 });
@@ -59,8 +63,16 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method resets the user password in the database
+  const resetPassword = (newPassword: string) => {
+    if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
+      addUserToDatabase({ id: user?.id || null, data: { password: newPassword } });
+    }
+  };
+
   const values = {
     logout,
+    resetPassword,
     updateUserState,
     updateSettings
   };
