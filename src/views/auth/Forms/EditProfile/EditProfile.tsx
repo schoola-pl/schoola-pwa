@@ -3,17 +3,21 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useForm } from 'react-hook-form';
 import { settingsType } from 'types/school';
+import { useUser } from 'hooks/useUser';
 
 const EditProfile = () => {
   const user = useSelector((state: storeRoot) => state.user);
+  const { updateSettings } = useUser();
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm();
 
   const handleChangeSettings = (settings: settingsType) => {
-    console.log(settings);
+    updateSettings(settings);
+    reset();
   };
 
   return (
