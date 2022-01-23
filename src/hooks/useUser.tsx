@@ -50,6 +50,7 @@ export const UserProvider: React.FC = ({ children }) => {
       const settingsArray = Object.entries(settings);
       settingsArray.forEach(([key, value]) => {
         if (value !== '') {
+          if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
