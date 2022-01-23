@@ -4,8 +4,10 @@ import { storeRoot } from 'store';
 import { useForm } from 'react-hook-form';
 import { settingsType } from 'types/school';
 import { useUser } from 'hooks/useUser';
+import { useState } from 'react';
 
 const EditProfile = () => {
+  const [isSuccess, setIsSuccess] = useState(false);
   const user = useSelector((state: storeRoot) => state.user);
   const { updateSettings } = useUser();
   const {
@@ -17,6 +19,7 @@ const EditProfile = () => {
 
   const handleChangeSettings = (settings: settingsType) => {
     updateSettings(settings);
+    setIsSuccess(true);
     reset();
   };
 
@@ -43,7 +46,7 @@ const EditProfile = () => {
           </Label>
           <StyledInput type="date" {...register('Birthday')} />
         </EditProfileForm>
-        <SubmitButton>Zatwierdź</SubmitButton>
+        <SubmitButton>{!isSuccess ? 'Zmień dane' : 'Zmieniono dane!'}</SubmitButton>
       </Card>
     </div>
   );
