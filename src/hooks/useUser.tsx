@@ -45,7 +45,6 @@ export const UserProvider: React.FC = ({ children }) => {
 
   // This method updates the user settings in the redux store & database
   const updateSettings = (settings: settingsType) => {
-    console.log('wywołano');
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '') {
       const tempObj: { [key: string]: string } = {};
       const settingsArray = Object.entries(settings);
