@@ -1,14 +1,15 @@
 import React, { createContext, useContext } from 'react';
-import { authUser } from '../types/auth';
-import { getJWT, removeJWT } from '../helpers/jwt';
+import { authUser } from 'types/auth';
+import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { addUser, removeUser } from '../store';
+import { addUser, removeUser, updateUser } from 'store';
+import { settingsType } from 'types/school';
 
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
-  // updateSettings: (settings: settings) => void;
+  updateSettings: (settings: settingsType) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -16,6 +17,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  updateSettings: () => {
     throw new Error('UserContext is not initialized');
   }
 });
@@ -37,12 +41,25 @@ export const UserProvider: React.FC = ({ children }) => {
     } else logout();
   };
 
-  // TODO: Add method for updating settings
-  // const updateSettings = (settings: settings) => {};
+  // This method updates the user settings in the redux store & database
+  const updateSettings = (settings: settingsType) => {
+    console.log('wywołano');
+    if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '') {
+      const tempObj: { [key: string]: string } = {};
+      const settingsArray = Object.entries(settings);
+      settingsArray.forEach(([key, value]) => {
+        if (value !== '') {
+          tempObj[key] = value;
+        }
+      });
+      dispatch(updateUser({ updated: tempObj }));
+    }
+  };
 
   const values = {
     logout,
-    updateUserState
+    updateUserState,
+    updateSettings
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
