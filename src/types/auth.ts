@@ -9,7 +9,7 @@ export type authUser = {
   blocked: boolean;
   age: number;
   avatar: string;
-  birthday: string;
+  Birthday: string;
   schoolId: number;
   TextRole: string;
 };
