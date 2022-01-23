@@ -6,7 +6,11 @@ import { settingsType } from 'types/school';
 
 const EditProfile = () => {
   const user = useSelector((state: storeRoot) => state.user);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
 
   const handleChangeSettings = (settings: settingsType) => {
     console.log(settings);
@@ -18,7 +22,14 @@ const EditProfile = () => {
       <Card as="form" onSubmit={handleSubmit(handleChangeSettings)}>
         <EditProfileForm>
           <Label>E-mail</Label>
-          <StyledInput placeholder={user?.email || 'Wczytywanie...'} {...register('email')} />
+          <StyledInput
+            placeholder={user?.email || 'Wczytywanie...'}
+            error={errors.email}
+            {...register('email', {
+              pattern:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+            })}
+          />
           <Label>Imię</Label>
           <StyledInput placeholder={user?.first_name || 'Wczytywanie...'} {...register('first_name')} />
           <Label>Nazwisko</Label>
