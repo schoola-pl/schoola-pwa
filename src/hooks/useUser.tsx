@@ -2,8 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { addUser, removeUser, updateUser } from 'store';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser, storeRoot, updateUser, useUpdateUserMutation } from 'store';
 import { settingsType } from 'types/school';
 
 interface UserContextTypes {
@@ -26,6 +26,8 @@ const UserContext = createContext<UserContextTypes>({
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state: storeRoot) => state.user);
+  const [addUserToDatabase] = useUpdateUserMutation();
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -53,6 +55,7 @@ export const UserProvider: React.FC = ({ children }) => {
         }
       });
       dispatch(updateUser({ updated: tempObj }));
+      addUserToDatabase({ id: user?.id || null, data: tempObj });
     }
   };
 
