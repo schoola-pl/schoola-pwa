@@ -24,12 +24,14 @@ export const ModalProvider: React.FC = ({ children }) => {
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState(<></>);
 
+  // This method will open modal and set the content and title
   const openModal = (modalContent: JSX.Element, title?: string) => {
     setModalTitle(title || '');
     setModalContent(modalContent);
     setIsOpen(true);
   };
 
+  // This method will close modal and reset modal state
   const closeModal = () => {
     setIsOpen(false);
     setModalContent(<></>);
