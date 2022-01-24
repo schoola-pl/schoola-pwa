@@ -3,7 +3,8 @@ import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUser, storeRoot, useAddUserToClassMutation, useGetUsersCountQuery, useUpdateSchoolCountMutation } from 'store';
+import { settingsType } from 'types/school';
+import { removeUser, storeRoot, useAddUserToClassMutation, useGetUsersCountQuery, useUpdateSchoolCountMutation, addUser, updateUser  } from 'store';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
@@ -11,6 +12,8 @@ import { useClass } from 'hooks/useClass';
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
+  updateSettings: (settings: settingsType) => void;
+  resetPassword: (newPassword: string) => void;
   addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) =>
     | {
         name: string;
@@ -27,6 +30,10 @@ const UserContext = createContext<UserContextTypes>({
   logout: () => {
     throw new Error('UserContext is not initialized');
   },
+  updateSettings: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  resetPassword: () => {
   addNewUser: () => {
     throw new Error('UserContext is not initialized');
   }
@@ -34,6 +41,8 @@ const UserContext = createContext<UserContextTypes>({
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state: storeRoot) => state.user);
+  const [addUserToDatabase] = useUpdateUserMutation();
   const { classId } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
   const [addUser, { isLoading }] = useAddUserToClassMutation();
@@ -47,6 +56,7 @@ export const UserProvider: React.FC = ({ children }) => {
     navigate('/login');
   };
 
+  // This method adds new user
   const addNewUser = (userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
     if (isLoading) return;
     const dividedName = userData.name.split(' ');
@@ -86,12 +96,34 @@ export const UserProvider: React.FC = ({ children }) => {
     } else logout();
   };
 
-  // TODO: Add method for updating settings
-  // const updateSettings = (settings: settings) => {};
+  // This method updates the user settings in the redux store & database
+  const updateSettings = (settings: settingsType) => {
+    if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '') {
+      const tempObj: { [key: string]: string } = {};
+      const settingsArray = Object.entries(settings);
+      settingsArray.forEach(([key, value]) => {
+        if (value !== '') {
+          if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
+          tempObj[key] = value;
+        }
+      });
+      dispatch(updateUser({ updated: tempObj }));
+      addUserToDatabase({ id: user?.id || null, data: tempObj });
+    }
+  };
+
+  // This method resets the user password in the database
+  const resetPassword = (newPassword: string) => {
+    if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
+      addUserToDatabase({ id: user?.id || null, data: { password: newPassword } });
+    }
+  };
 
   const values = {
     logout,
+    resetPassword,
     updateUserState,
+    updateSettings
     addNewUser
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
