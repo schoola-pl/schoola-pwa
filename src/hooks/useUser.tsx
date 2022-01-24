@@ -4,7 +4,15 @@ import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsType } from 'types/school';
-import { removeUser, storeRoot, useAddUserToClassMutation, useGetUsersCountQuery, useUpdateSchoolCountMutation, addUser, updateUser  } from 'store';
+import {
+  removeUser,
+  storeRoot,
+  updateUser,
+  useAddUserToClassMutation,
+  useGetUsersCountQuery,
+  useUpdateSchoolCountMutation,
+  useUpdateUserMutation
+} from 'store';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
@@ -34,6 +42,8 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   resetPassword: () => {
+    throw new Error('UserContext is not initialized');
+  },
   addNewUser: () => {
     throw new Error('UserContext is not initialized');
   }
@@ -41,7 +51,6 @@ const UserContext = createContext<UserContextTypes>({
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state: storeRoot) => state.user);
   const [addUserToDatabase] = useUpdateUserMutation();
   const { classId } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
@@ -123,7 +132,7 @@ export const UserProvider: React.FC = ({ children }) => {
     logout,
     resetPassword,
     updateUserState,
-    updateSettings
+    updateSettings,
     addNewUser
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
