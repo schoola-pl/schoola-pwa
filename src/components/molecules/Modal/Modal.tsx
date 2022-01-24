@@ -1,4 +1,4 @@
-import { Backdrop, Wrapper } from './Modal.styles';
+import { Backdrop, Title, Wrapper } from './Modal.styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,7 +7,7 @@ const Modal: React.FC<{ title?: string }> = ({ children, title }) => {
     <>
       <Backdrop />
       <Wrapper>
-        {title && <h1>{title}</h1>}
+        {title && <Title>{title}</Title>}
         {children}
       </Wrapper>
     </>,

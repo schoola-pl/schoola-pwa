@@ -30,3 +30,10 @@ export const Backdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999999999999999;
 `;
+
+export const Title = styled.h1`
+  font-size: 2.2rem;
+  border-bottom: 3px solid black;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+`;
