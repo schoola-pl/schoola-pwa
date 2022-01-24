@@ -4,11 +4,11 @@ import blueStudent from '../../../assets/icons/BlueStudent.svg';
 import EditIcon from '../../../assets/icons/EditIcon.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.svg';
 import Input from '../../atoms/Input/Input';
-import { Select } from '../../../views/auth/SchoolAdmin/AddClass/AddClass.styles';
+import { Select } from 'views/auth/SchoolAdmin/AddClass/AddClass.styles';
 import { useForm } from 'react-hook-form';
 import { nanoid } from '@reduxjs/toolkit';
-import { getRoleFromText } from '../../../helpers/roles';
-import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation, useUpdateUserMutation } from '../../../store';
+import { getRoleFromText } from 'helpers/roles';
+import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation, useUpdateUserMutation } from 'store';
 import { useSelector } from 'react-redux';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
@@ -53,7 +53,7 @@ const StudentInfoRecord: React.FC<props> = ({
       last_name: last_name.charAt(0).toUpperCase() + last_name.slice(1),
       Birthday: new Date(data.Birthday).toISOString(),
       TextRole: data.TextRole,
-      role: getRoleFromText(data?.TextRole || 'Student')
+      Role: getRoleFromText(data?.TextRole || 'Student')
     };
     updateUser({ data: preparedUser, id });
     setEditState(false);
