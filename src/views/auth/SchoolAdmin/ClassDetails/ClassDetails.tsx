@@ -21,7 +21,7 @@ const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const user = useSelector((state: storeRoot) => state.user);
   const students = useGetClassQuery({
     schoolId: user?.schoolId || null,
@@ -48,7 +48,7 @@ const ClassDetails = () => {
                   <>
                     <h1>Czy chcesz usunąć klasę 1E?</h1>
                     <div>
-                      <CancelButton>Anuluj</CancelButton>
+                      <CancelButton onClick={closeModal}>Anuluj</CancelButton>
                       <DeleteClassButton>Usuń klasę 1E</DeleteClassButton>
                     </div>
                   </>,
