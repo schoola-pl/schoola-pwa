@@ -18,8 +18,6 @@ interface UserContextTypes {
         password: string;
       }
     | undefined;
-  isUserLoading: boolean;
-  isUserSuccess: boolean;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -31,16 +29,14 @@ const UserContext = createContext<UserContextTypes>({
   },
   addNewUser: () => {
     throw new Error('UserContext is not initialized');
-  },
-  isUserLoading: true,
-  isUserSuccess: false
+  }
 });
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { classId } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
-  const [addUser, { isLoading, isSuccess }] = useAddUserToClassMutation();
+  const [addUser, { isLoading }] = useAddUserToClassMutation();
   const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
   const [addToSchoolCount] = useUpdateSchoolCountMutation();
 
@@ -96,8 +92,6 @@ export const UserProvider: React.FC = ({ children }) => {
   const values = {
     logout,
     updateUserState,
-    isUserLoading: isLoading,
-    isUserSuccess: isSuccess,
     addNewUser
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
