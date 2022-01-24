@@ -1,28 +1,33 @@
-import { useState } from 'react';
-import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
+import {
+  AddStudentButton,
+  ButtonWrapper,
+  CancelButton,
+  DeleteClassButton,
+  Heading,
+  InfoWrapper,
+  InnerWrapper,
+  Paragraph,
+  ParagraphsWrapper,
+  Wrapper
+} from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetClassQuery } from '../../../../store';
+import { storeRoot, useGetClassQuery } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
-import { ButtonWrapper, AddStudentButton, DeleteClassButton } from './ClassDetails.styles';
-import DeleteClassModal from 'components/molecules/DeleteClassModal/DeleteClassModal';
+import { useModal } from 'hooks/useModal';
 
 const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
+  const { openModal } = useModal();
   const user = useSelector((state: storeRoot) => state.user);
   const students = useGetClassQuery({
     schoolId: user?.schoolId || null,
     classLevel,
     className
   });
-  const [isOpen, setVisibility] = useState(false);
-
-  const handleDeleteAlert = () => {
-    setVisibility(!isOpen);
-  };
 
   return (
     <Wrapper>
@@ -37,7 +42,22 @@ const ClassDetails = () => {
           <Paragraph>Numer</Paragraph>
           <ButtonWrapper>
             <AddStudentButton>Dodaj ucznia</AddStudentButton>
-            <DeleteClassButton onClick={handleDeleteAlert}>Usuń klasę</DeleteClassButton>
+            <DeleteClassButton
+              onClick={() =>
+                openModal(
+                  <>
+                    <h1>Czy chcesz usunąć klasę 1E?</h1>
+                    <div>
+                      <CancelButton>Anuluj</CancelButton>
+                      <DeleteClassButton>Usuń klasę 1E</DeleteClassButton>
+                    </div>
+                  </>,
+                  'Usuń klasę'
+                )
+              }
+            >
+              Usuń klasę
+            </DeleteClassButton>
           </ButtonWrapper>
         </ParagraphsWrapper>
       </InfoWrapper>
@@ -52,7 +72,6 @@ const ClassDetails = () => {
           <Loading />
         )}
       </InnerWrapper>
-      <DeleteClassModal isOpen={isOpen} />
     </Wrapper>
   );
 };

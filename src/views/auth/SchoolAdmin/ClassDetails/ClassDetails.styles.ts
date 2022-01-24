@@ -83,6 +83,7 @@ const ManageButton = styled.button`
 export const AddStudentButton = styled(ManageButton)`
   border: 2px solid ${({ theme }) => theme.colors.accentGreen};
   color: ${({ theme }) => theme.colors.accentGreen};
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.accentGreen};
   }
@@ -93,6 +94,23 @@ export const DeleteClassButton = styled(ManageButton)`
   color: white;
 
   &:hover {
+    opacity: 0.9;
+  }
+`;
+
+export const CancelButton = styled.button`
+  border-radius: 1rem;
+  width: 11.5rem;
+  height: 4rem;
+  text-align: center;
+  border: none;
+  background-color: ${({ theme }) => theme.colors.accentGreen};
+  color: white;
+  transition: 0.1s all ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: white;
     opacity: 0.9;
   }
 `;
