@@ -3,12 +3,12 @@ import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.st
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
-import { useRoutesControl } from '../../../../hooks/useRoutesControl';
-import { getJWT } from '../../../../helpers/jwt';
-import { dashboardRoute } from '../../../../routes';
+import { useRoutesControl } from 'hooks/useRoutesControl';
+import { getJWT } from 'helpers/jwt';
+import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
-import { getPathForRole } from '../../../../helpers/roles';
+import { getPathForRole } from 'helpers/roles';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (getJWT()) {
-      navigate(dashboardRoute);
+      navigate(dashboardRoute.replaceAll('*', ''));
     } else if (isSuccess) {
       unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
     }

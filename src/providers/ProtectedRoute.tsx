@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { storeRoot } from '../store';
-import { useRoutesControl } from '../hooks/useRoutesControl';
-import { roles } from '../routes';
-import { useAppLoading } from '../hooks/useAppLoading';
+import { storeRoot } from 'store';
+import { useRoutesControl } from 'hooks/useRoutesControl';
+import { roles } from 'routes';
+import { useAppLoading } from 'hooks/useAppLoading';
 
 interface props {
   Element: React.FC;
@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
 
   useEffect(() => {
     (async () => {
-      // Checks is user is logged in
+      // Checks is user logged in
       setAppLoading(true);
       if (await checkUser()) {
         setAuthenticated(true);
