@@ -8,7 +8,8 @@ import {
   InnerWrapper,
   Paragraph,
   ParagraphsWrapper,
-  Wrapper
+  Wrapper,
+  ModalInfoWrapper
 } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useParams } from 'react-router';
@@ -45,13 +46,13 @@ const ClassDetails = () => {
             <DeleteClassButton
               onClick={() =>
                 openModal(
-                  <>
+                  <ModalInfoWrapper>
                     <h1>Czy chcesz usunąć klasę 1E?</h1>
                     <div>
                       <CancelButton onClick={closeModal}>Anuluj</CancelButton>
                       <DeleteClassButton>Usuń klasę 1E</DeleteClassButton>
                     </div>
-                  </>,
+                  </ModalInfoWrapper>,
                   'Usuń klasę'
                 )
               }

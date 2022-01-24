@@ -80,14 +80,6 @@ const ManageButton = styled.button`
   }
 `;
 
-export const AddStudentButton = styled(ManageButton)`
-  border: 2px solid ${({ theme }) => theme.colors.accentGreen};
-  color: ${({ theme }) => theme.colors.accentGreen};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.accentGreen};
-  }
-`;
 export const DeleteClassButton = styled(ManageButton)`
   border: none;
   background-color: ${({ theme }) => theme.colors.accentRed};
@@ -98,15 +90,33 @@ export const DeleteClassButton = styled(ManageButton)`
   }
 `;
 
-export const CancelButton = styled.button`
-  border-radius: 1rem;
-  width: 11.5rem;
-  height: 4rem;
-  text-align: center;
+export const AddStudentButton = styled(ManageButton)`
+  border: 2px solid ${({ theme }) => theme.colors.accentGreen};
+  color: ${({ theme }) => theme.colors.accentGreen};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentGreen};
+  }
+`;
+
+export const ModalInfoWrapper = styled.div`
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 {
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+    margin-bottom: 2rem;
+  }
+`;
+
+export const CancelButton = styled(ManageButton)`
+  margin-right: 1rem;
   border: none;
   background-color: ${({ theme }) => theme.colors.accentGreen};
   color: white;
-  transition: 0.1s all ease-in-out;
 
   &:hover {
     cursor: pointer;
