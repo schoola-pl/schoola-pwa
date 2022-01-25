@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
-const SmallButton = styled.button`
+const SmallButton = styled.button<{ isGood?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
   text-decoration: none;
-  margin-top: 1rem;
   padding: 0;
   background: ${({ theme }) => theme.colors.accentGreen};
   width: 110px;
@@ -15,12 +14,20 @@ const SmallButton = styled.button`
   border-radius: 50px;
   font-size: 12px;
   font-weight: 500;
-  transition: background-color 0.3s;
+  opacity: 0.8;
+  pointer-events: none;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightGreen};
-    cursor: pointer;
-  }
+  ${({ isGood, theme }) =>
+    isGood &&
+    `
+    opacity: 1;
+    transition: background-color 0.3s;
+    pointer-events: all;
+    &:hover {
+      background-color: ${theme.colors.lightGreen};
+      cursor: pointer;
+    }
+  `}
 `;
 
 export default SmallButton;

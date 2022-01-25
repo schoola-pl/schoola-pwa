@@ -12,23 +12,41 @@ import {
   Wrapper
 } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetClassQuery } from 'store';
+import { storeRoot, useGetClassQuery, useGetUsersCountQuery, useRemoveClassMutation } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { useModal } from 'hooks/useModal';
+import { useUser } from 'hooks/useUser';
 
 const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
   const { openModal, closeModal } = useModal();
+  const { deleteUsers } = useUser();
   const user = useSelector((state: storeRoot) => state.user);
+  const [removeClassRecord] = useRemoveClassMutation();
+  const navigate = useNavigate();
+  const totalUsers = useGetUsersCountQuery({
+    schoolId: user?.schoolId || null
+  });
   const students = useGetClassQuery({
     schoolId: user?.schoolId || null,
     classLevel,
     className
   });
+
+  const deleteClass = () => {
+    closeModal();
+    const users = students.data?.data[0].attributes?.users?.data || [];
+    deleteUsers(users, totalUsers.data.data[0].attributes.totalUsers);
+    const id = students.data.data[0].id;
+    removeClassRecord({
+      classId: id
+    });
+    navigate('/school-admin/manage');
+  };
 
   return (
     <Wrapper>
@@ -47,10 +65,12 @@ const ClassDetails = () => {
               onClick={() =>
                 openModal(
                   <ModalInfoWrapper>
-                    <h1>Czy chcesz usunąć klasę 1E?</h1>
+                    <h1>
+                      Czy chcesz usunąć klasę {id} ({students.data?.data[0].attributes?.users.data.length} uczniów)?
+                    </h1>
                     <div>
                       <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                      <DeleteClassButton>Usuń klasę 1E</DeleteClassButton>
+                      <DeleteClassButton onClick={deleteClass}>Usuń klasę {id}</DeleteClassButton>
                     </div>
                   </ModalInfoWrapper>,
                   'Usuń klasę'

@@ -6,3 +6,12 @@ export type schoolClass = {
 };
 
 export type schoolUser = authUser;
+
+export type settingsType = {
+  email?: schoolUser['email'];
+  first_name?: schoolUser['first_name'];
+  last_name?: schoolUser['last_name'];
+  Birthday?: schoolUser['Birthday'];
+  username?: schoolUser['username'];
+  TextRole?: schoolUser['TextRole'];
+};

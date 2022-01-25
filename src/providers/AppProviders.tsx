@@ -14,15 +14,15 @@ const AppProviders: React.FC = ({ children }) => {
     <Router>
       <Provider store={store}>
         <AppLoadingProvider>
-          <RouteProvider>
-            <ModalProvider>
-              <UserProvider>
-                <ClassProvider>
+          <ModalProvider>
+            <RouteProvider>
+              <ClassProvider>
+                <UserProvider>
                   <StyleProvider>{children}</StyleProvider>
-                </ClassProvider>
-              </UserProvider>
-            </ModalProvider>
-          </RouteProvider>
+                </UserProvider>
+              </ClassProvider>
+            </RouteProvider>
+          </ModalProvider>
         </AppLoadingProvider>
       </Provider>
     </Router>

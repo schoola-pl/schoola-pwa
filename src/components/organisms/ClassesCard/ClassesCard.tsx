@@ -1,9 +1,9 @@
 import { ClassesWrapper, Heading, TitleWrapper, Wrapper } from './ClassesCard.styles';
 import ClassLink from 'components/molecules/ClassLink/ClassLink';
 import React, { useState } from 'react';
-import { storeRoot, useGetClassesQuery } from '../../../store';
+import { storeRoot, useGetClassesQuery } from 'store';
 import { useSelector } from 'react-redux';
-import { schoolClass } from '../../../types/school';
+import { schoolClass } from 'types/school';
 import Loading from '../../molecules/Loading/Loading';
 import { NavLink } from 'react-router-dom';
 import SmallButton from 'components/atoms/SmallButton/SmallButton';
@@ -55,10 +55,18 @@ const ClassesCard: React.FC = () => {
             </NavLink>
           </>
         )}
-        {classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1 ? (
-          <SmallButton onClick={fetchNextPage}>Więcej</SmallButton>
-        ) : null}
-        {currentPage > 1 ? <SmallButton onClick={fetchPrevPage}>Mniej</SmallButton> : null}
+        <div style={{ display: 'flex', marginTop: '2rem' }}>
+          <SmallButton isGood={currentPage > 1} onClick={fetchPrevPage}>
+            Mniej
+          </SmallButton>
+          <SmallButton
+            isGood={classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1}
+            style={{ marginLeft: '2rem' }}
+            onClick={fetchNextPage}
+          >
+            Więcej
+          </SmallButton>
+        </div>
       </ClassesWrapper>
     </Wrapper>
   );

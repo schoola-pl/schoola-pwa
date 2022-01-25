@@ -3,13 +3,14 @@
 export type authUser = {
   id: string;
   username: string;
+  email: string;
   first_name: string;
   last_name: string;
   password: string;
   blocked: boolean;
   age: number;
   avatar: string;
-  birthday: string;
+  Birthday: string;
   schoolId: number;
   TextRole: string;
 };
