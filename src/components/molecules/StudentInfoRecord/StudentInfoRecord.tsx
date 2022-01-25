@@ -6,12 +6,11 @@ import DeleteIcon from '../../../assets/icons/DeleteIcon.svg';
 import Input from '../../atoms/Input/Input';
 import { Select } from 'views/auth/SchoolAdmin/AddClass/AddClass.styles';
 import { useForm } from 'react-hook-form';
-import { nanoid } from '@reduxjs/toolkit';
-import { getRoleFromText } from 'helpers/roles';
-import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation, useUpdateUserMutation } from 'store';
+import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation } from 'store';
 import { useSelector } from 'react-redux';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
+import { useUser } from 'hooks/useUser';
 
 interface props {
   info: {
@@ -35,7 +34,7 @@ const StudentInfoRecord: React.FC<props> = ({
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
-  const [updateUser] = useUpdateUserMutation();
+  const { updateSettings } = useUser();
   const [deleteUser] = useRemoveUserMutation();
   const [updateCount] = useUpdateSchoolCountMutation();
   const actualCount = useGetUsersCountQuery({
@@ -43,19 +42,18 @@ const StudentInfoRecord: React.FC<props> = ({
   });
 
   const handleEditUser = (data: { name: string; Birthday: string; TextRole: string }) => {
-    const dividedName = data.name.split(' ');
-    const first_name = dividedName[0];
-    const last_name = dividedName[1];
-    const preparedUser = {
-      username: `${data.name.toLowerCase().split(' ').join('_')}`,
-      email: `${nanoid()}@email.com`,
-      first_name: first_name.charAt(0).toUpperCase() + first_name.slice(1),
-      last_name: last_name.charAt(0).toUpperCase() + last_name.slice(1),
-      Birthday: new Date(data.Birthday).toISOString(),
-      TextRole: data.TextRole,
-      Role: getRoleFromText(data?.TextRole || 'Student')
-    };
-    updateUser({ data: preparedUser, id });
+    const first_name = data.name.split(' ')[0] || '';
+    const last_name = data.name.split(' ')[1] || '';
+    updateSettings(
+      {
+        first_name: first_name.charAt(0).toUpperCase() + first_name.slice(1),
+        last_name: last_name.charAt(0).toUpperCase() + last_name.slice(1),
+        Birthday: data.Birthday,
+        TextRole: data.TextRole,
+        username: data.name.toLowerCase().split(' ').join('_')
+      },
+      parseInt(id)
+    );
     setEditState(false);
   };
 
@@ -72,20 +70,20 @@ const StudentInfoRecord: React.FC<props> = ({
   return (
     <Wrapper as={'form'} onSubmit={handleSubmit(handleEditUser)} isBlocked={blocked}>
       <StudentBox icon={blueStudent} />
-      {!isEdit ? (
-        <Name>{`${first_name} ${last_name}`}</Name>
-      ) : (
-        <Input placeholder={`${first_name} ${last_name}`} small {...register('name', { required: true })} />
-      )}
+      {!isEdit ? <Name>{`${first_name} ${last_name}`}</Name> : <Input placeholder={`${first_name} ${last_name}`} small {...register('name')} />}
       {!isEdit ? (
         <Role>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</Role>
       ) : (
-        <Select small {...register('TextRole', { required: true })}>
-          <option value="Student">Uczeń</option>
-          <option value="Moderator">Samorząd Uczniowski</option>
+        <Select small {...register('TextRole')}>
+          <option value="Student" selected={TextRole === 'Student'}>
+            Uczeń
+          </option>
+          <option value="Moderator" selected={TextRole !== 'Student'}>
+            Samorząd Uczniowski
+          </option>
         </Select>
       )}
-      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" small {...register('Birthday', { required: true })} />}
+      {!isEdit ? <DateRecord>{Birthday}</DateRecord> : <Input type="date" small {...register('Birthday')} />}
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox data-testid="edition-button" onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
