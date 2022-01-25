@@ -6,7 +6,7 @@ import DeleteIcon from '../../../assets/icons/DeleteIcon.svg';
 import Input from '../../atoms/Input/Input';
 import { Select } from 'views/auth/SchoolAdmin/AddClass/AddClass.styles';
 import { useForm } from 'react-hook-form';
-import { storeRoot, useGetUsersCountQuery, useRemoveUserMutation, useUpdateSchoolCountMutation } from 'store';
+import { storeRoot, useGetUsersCountQuery } from 'store';
 import { useSelector } from 'react-redux';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
@@ -34,9 +34,7 @@ const StudentInfoRecord: React.FC<props> = ({
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
-  const { updateSettings } = useUser();
-  const [deleteUser] = useRemoveUserMutation();
-  const [updateCount] = useUpdateSchoolCountMutation();
+  const { updateSettings, deleteUser } = useUser();
   const actualCount = useGetUsersCountQuery({
     schoolId: user?.schoolId || null
   });
@@ -55,16 +53,6 @@ const StudentInfoRecord: React.FC<props> = ({
       parseInt(id)
     );
     setEditState(false);
-  };
-
-  const handleDeleteUser = () => {
-    deleteUser({
-      id
-    });
-    updateCount({
-      schoolId: user?.schoolId || null,
-      totalUsers: actualCount.data.data[0].attributes.totalUsers - 1
-    });
   };
 
   return (
@@ -87,7 +75,13 @@ const StudentInfoRecord: React.FC<props> = ({
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox data-testid="edition-button" onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
-        {!isEdit && <DeleteBox data-testid="delete-button" icon={DeleteIcon} onClick={handleDeleteUser} />}
+        {!isEdit && (
+          <DeleteBox
+            data-testid="delete-button"
+            icon={DeleteIcon}
+            onClick={() => deleteUser(parseInt(id), actualCount.data.data[0].attributes.totalUsers)}
+          />
+        )}
         {isEdit && <EditBox icon={AcceptIcon} />}
         {isEdit && <DeleteBox icon={CancelIcon} onClick={() => setEditState(false)} />}
       </BoxWrapper>
