@@ -1,4 +1,4 @@
-import { getPathForRole, getRoleFromText } from '../../../helpers/roles';
+import { getPathForRole, getRoleFromText } from 'helpers/roles';
 
 describe('Functions > roles', () => {
   it('Checks if the redirectPaths function returns the correct path for a given role', () => {
@@ -18,7 +18,7 @@ describe('Functions > roles', () => {
     expect(getRoleFromText('School Admin')).toBe(2);
   });
   it('Checks if the getRoleFromText function returns the correct role when input is wrong', () => {
-    const correctResponse = 0;
+    const correctResponse = 3;
     expect(getRoleFromText(`${null}`)).toBe(correctResponse);
     expect(getRoleFromText(`${undefined}`)).toBe(correctResponse);
     expect(getRoleFromText(`${Math.random()}`)).toBe(correctResponse);
