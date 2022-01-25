@@ -29,7 +29,8 @@ export const roles: { [key: string]: string } = {
   public: 'none',
   authenticated: 'any',
   student: 'Student',
-  schoolAdmin: 'School Admin'
+  schoolAdmin: 'School Admin',
+  moderator: 'Moderator'
 };
 
 // Environment routes

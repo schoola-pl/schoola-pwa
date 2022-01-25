@@ -1,4 +1,4 @@
-import { paths, roles } from '../routes';
+import { paths, roles } from 'routes';
 
 export const getPathForRole = (role: string) => {
   const pathsPrepared = { ...paths };
@@ -18,8 +18,10 @@ export const getPathForRole = (role: string) => {
 export const getRoleFromText = (textRole: string) => {
   switch (textRole) {
     case roles.schoolAdmin:
-      return 2;
+      return 1;
+    case roles.moderator:
+      return 4;
     default:
-      return 0;
+      return 3;
   }
 };
