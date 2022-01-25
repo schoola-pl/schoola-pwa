@@ -31,6 +31,7 @@ interface UserContextTypes {
       }
     | undefined;
   deleteUser: (userId: number, userCount: number) => void;
+  deleteUsers: (users: Partial<authUser>[], actualCount: number) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -50,6 +51,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   deleteUser: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  deleteUsers: () => {
     throw new Error('UserContext is not initialized');
   }
 });
@@ -147,13 +151,22 @@ export const UserProvider: React.FC = ({ children }) => {
     });
   };
 
+  // This method deletes the array of users from the database
+  const deleteUsers = (users: Partial<authUser>[], actualCount: number) => {
+    let localCounter: number = actualCount;
+    for (const user of users) {
+      deleteUser(parseInt(user.id || ''), localCounter--);
+    }
+  };
+
   const values = {
     logout,
     resetPassword,
     updateUserState,
     updateSettings,
     addNewUser,
-    deleteUser
+    deleteUser,
+    deleteUsers
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
