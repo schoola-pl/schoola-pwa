@@ -110,7 +110,7 @@ export const UserProvider: React.FC = ({ children }) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
       const tempObj: { [key: string]: string } = {};
       const settingsArray = Object.entries(settings);
-      const role = getRoleFromText(settings.TextRole || '');
+      const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
         if (value !== '') {
           if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
