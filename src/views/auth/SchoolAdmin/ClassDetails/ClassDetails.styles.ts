@@ -104,11 +104,16 @@ export const ModalInfoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 3rem 0;
   flex-direction: column;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     margin-bottom: 2rem;
+  }
+
+  button {
+    margin: 0 1rem;
   }
 `;
 

@@ -6,10 +6,10 @@ import {
   Heading,
   InfoWrapper,
   InnerWrapper,
+  ModalInfoWrapper,
   Paragraph,
   ParagraphsWrapper,
-  Wrapper,
-  ModalInfoWrapper
+  Wrapper
 } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useParams } from 'react-router';
