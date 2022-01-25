@@ -20,7 +20,7 @@ import { useClass } from 'hooks/useClass';
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
-  updateSettings: (settings: settingsType) => void;
+  updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
   addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) =>
     | {
@@ -106,18 +106,19 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method updates the user settings in the redux store & database
-  const updateSettings = (settings: settingsType) => {
-    if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '') {
+  const updateSettings = (settings: settingsType, userId?: number) => {
+    if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
       const tempObj: { [key: string]: string } = {};
       const settingsArray = Object.entries(settings);
+      const role = getRoleFromText(settings.TextRole || '');
       settingsArray.forEach(([key, value]) => {
         if (value !== '') {
           if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
-      dispatch(updateUser({ updated: tempObj }));
-      addUserToDatabase({ id: user?.id || null, data: tempObj });
+      if (!userId) dispatch(updateUser({ updated: tempObj }));
+      addUserToDatabase({ id: userId || user?.id || null, data: { ...tempObj, role } });
     }
   };
 
