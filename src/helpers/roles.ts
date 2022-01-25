@@ -18,7 +18,7 @@ export const getPathForRole = (role: string) => {
 export const getRoleFromText = (textRole: string) => {
   switch (textRole) {
     case roles.schoolAdmin:
-      return 2;
+      return 1;
     case roles.moderator:
       return 4;
     default:
