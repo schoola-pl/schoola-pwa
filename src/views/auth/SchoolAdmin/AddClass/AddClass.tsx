@@ -3,10 +3,11 @@ import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
 import { useForm } from 'react-hook-form';
 import restore from 'assets/icons/restore.png';
-import { useClass } from '../../../../hooks/useClass';
+import { useClass } from 'hooks/useClass';
 import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
 import Loader from 'components/atoms/Loader/Loader';
 import { useParams } from 'react-router';
+import { useState } from 'react';
 
 const AddClass = () => {
   const {
@@ -15,8 +16,16 @@ const AddClass = () => {
     formState: { errors },
     reset
   } = useForm();
-  const { addClassProtocol, restoreClass, clearStates, isCreated, className, users, isLoading } = useClass();
+  const { addClassProtocol, clearStates, isCreated, restoreClass, className, users, isLoading } = useClass();
+  // const { deleteUsers } = useUser();
   const { level } = useParams();
+  const [addedUsers, setAddedUser] = useState<number[]>([]);
+
+  const extendedRestoreClass = () => {
+    restoreClass();
+    console.log(addedUsers);
+    // deleteUsers(addedUsers);
+  };
 
   return (
     <Wrapper>
@@ -75,7 +84,7 @@ const AddClass = () => {
                 )}
               </Button>
               {isCreated && (
-                <Button style={{ marginLeft: '1rem' }} onClick={restoreClass} isIcon isDanger>
+                <Button style={{ marginLeft: '1rem' }} onClick={extendedRestoreClass} isIcon isDanger>
                   <img src={restore} alt={'Restore arrows'} />
                 </Button>
               )}
@@ -93,7 +102,7 @@ const AddClass = () => {
             {users.length > 0 ? (
               <PeopleForm>
                 {users.map((user, i) => (
-                  <UserRecord key={i} index={i} />
+                  <UserRecord key={i} index={i} setAddedUser={setAddedUser} />
                 ))}
               </PeopleForm>
             ) : (

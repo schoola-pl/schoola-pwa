@@ -8,26 +8,29 @@ import { useUser } from 'hooks/useUser';
 
 interface props {
   index: number;
+  // eslint-ignore-next-line @typescript-eslint/no-explicit-any
+  setAddedUser: any;
 }
 
-const UserRecord: React.FC<props> = ({ index: i }) => {
+const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
   const {
     register: registerUser,
     formState: { errors },
     handleSubmit: handleSaveUser
   } = useForm();
-  const [createdUser, setNewUser] = useState<Partial<{ login: string; name: string; password: string }>>({});
+  const [createdUser, setNewUser] = useState<Partial<{ id: number; login: string; name: string; password: string }>>({});
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { addNewUser } = useUser();
 
-  const saveUser = (tempUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+  const saveUser = async (tempUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
     setIsLoading(true);
-    const newUser = addNewUser(tempUser);
+    const newUser = await addNewUser(tempUser);
     if (newUser) {
       setIsSuccess(true);
       setNewUser(newUser);
+      setAddedUser((prev: number[]) => [...prev, newUser.id]);
     }
     setIsLoading(false);
   };
