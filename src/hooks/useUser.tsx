@@ -23,13 +23,15 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) =>
+  addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => Promise<
     | {
+        id: number;
         name: string;
         login: string;
         password: string;
       }
-    | undefined;
+    | undefined
+  >;
   deleteUser: (userId: number, userCount: number) => void;
 }
 
@@ -73,7 +75,7 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds new user
-  const addNewUser = (userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+  const addNewUser = async (userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
     if (isLoading) return;
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
@@ -93,12 +95,16 @@ export const UserProvider: React.FC = ({ children }) => {
       class: classId,
       password: nanoid()
     };
-    addUser({ ...preparedUser });
+    const response = await addUser({ ...preparedUser });
+    const {
+      data: { id }
+    } = response as { data: { id: string } };
     addToSchoolCount({
       schoolId: user?.schoolId || null,
       totalUsers: usersCount.data.data[0].attributes.totalUsers + 1
     });
     return {
+      id: parseInt(id),
       name: `${preparedUser.first_name} ${preparedUser.last_name}`,
       login: preparedUser.username,
       password: preparedUser.password
