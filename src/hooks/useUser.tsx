@@ -10,6 +10,7 @@ import {
   updateUser,
   useAddUserToClassMutation,
   useGetUsersCountQuery,
+  useRemoveUserMutation,
   useUpdateSchoolCountMutation,
   useUpdateUserMutation
 } from 'store';
@@ -29,6 +30,7 @@ interface UserContextTypes {
         password: string;
       }
     | undefined;
+  deleteUser: (userId: number, userCount: number) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -46,6 +48,9 @@ const UserContext = createContext<UserContextTypes>({
   },
   addNewUser: () => {
     throw new Error('UserContext is not initialized');
+  },
+  deleteUser: () => {
+    throw new Error('UserContext is not initialized');
   }
 });
 export const UserProvider: React.FC = ({ children }) => {
@@ -57,6 +62,8 @@ export const UserProvider: React.FC = ({ children }) => {
   const [addUser, { isLoading }] = useAddUserToClassMutation();
   const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
   const [addToSchoolCount] = useUpdateSchoolCountMutation();
+  const [deleteUserMethod] = useRemoveUserMutation();
+  const [updateCount] = useUpdateSchoolCountMutation();
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -129,12 +136,23 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  const deleteUser = (userId: number, actualCount: number) => {
+    deleteUserMethod({
+      id: userId
+    });
+    updateCount({
+      schoolId: user?.schoolId || null,
+      totalUsers: actualCount - 1
+    });
+  };
+
   const values = {
     logout,
     resetPassword,
     updateUserState,
     updateSettings,
-    addNewUser
+    addNewUser,
+    deleteUser
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
