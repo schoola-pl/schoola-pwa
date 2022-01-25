@@ -136,6 +136,7 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method deletes the user from the database
   const deleteUser = (userId: number, actualCount: number) => {
     deleteUserMethod({
       id: userId
