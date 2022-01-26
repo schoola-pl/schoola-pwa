@@ -30,8 +30,8 @@ interface UserContextTypes {
         password: string;
       }
     | undefined;
-  deleteUser: (userId: number, userCount: number) => void;
-  deleteUsers: (users: Partial<authUser>[], actualCount: number) => void;
+  deleteUser: (userId: number, count?: number) => void;
+  deleteUsers: (users: Partial<authUser>[]) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -141,19 +141,19 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method deletes the user from the database
-  const deleteUser = (userId: number, actualCount: number) => {
+  const deleteUser = (userId: number, count?: number) => {
     deleteUserMethod({
       id: userId
     });
     updateCount({
       schoolId: user?.schoolId || null,
-      totalUsers: actualCount - 1
+      totalUsers: count || usersCount.data.data[0].attributes.totalUsers - 1
     });
   };
 
   // This method deletes the array of users from the database
-  const deleteUsers = (users: Partial<authUser>[], actualCount: number) => {
-    let localCounter: number = actualCount;
+  const deleteUsers = (users: Partial<authUser>[]) => {
+    let localCounter: number = usersCount.data.data[0].attributes.totalUsers;
     for (const user of users) {
       deleteUser(parseInt(user.id || ''), localCounter--);
     }
