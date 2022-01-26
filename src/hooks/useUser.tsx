@@ -23,7 +23,10 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) =>
+  addNewUser: (
+    newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
+    customClassId?: number
+  ) =>
     | {
         name: string;
         login: string;
@@ -77,7 +80,10 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds new user
-  const addNewUser = (userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+  const addNewUser = (
+    userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
+    customClassId?: number
+  ) => {
     if (isLoading) return;
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
@@ -94,7 +100,7 @@ export const UserProvider: React.FC = ({ children }) => {
       schoolId: user?.schoolId || null,
       TextRole: userData.TextRole,
       role: getRoleFromText(userData?.TextRole || 'Student'),
-      class: classId,
+      class: customClassId || classId,
       password: nanoid()
     };
     addUser({ ...preparedUser });
