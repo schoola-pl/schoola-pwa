@@ -2,7 +2,7 @@ import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapp
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetClassQuery, useRemoveClassMutation } from 'store';
+import { storeRoot, useGetClassQuery, useGetUsersCountQuery, useRemoveClassMutation } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { useModal } from 'hooks/useModal';
 import { useUser } from 'hooks/useUser';
@@ -22,11 +22,14 @@ const ClassDetails = () => {
     classLevel,
     className
   });
+  const usersCount = useGetUsersCountQuery({
+    schoolId: user?.schoolId || null
+  });
 
   const deleteClass = () => {
     closeModal();
     const users = students.data?.data[0].attributes?.users?.data || [];
-    deleteUsers(users);
+    deleteUsers(users, usersCount.data.data[0].attributes.totalUsers);
     const id = students.data.data[0].id;
     removeClassRecord({
       classId: id

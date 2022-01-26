@@ -8,6 +8,9 @@ import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
 import Loader from 'components/atoms/Loader/Loader';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useUser } from 'hooks/useUser';
+import { storeRoot, useGetUsersCountQuery } from 'store';
+import { useSelector } from 'react-redux';
 
 const AddClass = () => {
   const {
@@ -17,14 +20,17 @@ const AddClass = () => {
     reset
   } = useForm();
   const { addClassProtocol, clearStates, isCreated, restoreClass, className, users, isLoading } = useClass();
-  // const { deleteUsers } = useUser();
+  const { deleteUsers } = useUser();
   const { level } = useParams();
   const [addedUsers, setAddedUser] = useState<number[]>([]);
+  const user = useSelector((store: storeRoot) => store.user);
+  const usersCount = useGetUsersCountQuery({
+    schoolId: user?.schoolId
+  });
 
   const extendedRestoreClass = () => {
     restoreClass();
-    console.log(addedUsers);
-    // deleteUsers(addedUsers);
+    deleteUsers(addedUsers, usersCount.data.data[0].attributes.totalUsers);
   };
 
   return (
