@@ -34,7 +34,7 @@ const ClassDetails = () => {
     removeClassRecord({
       classId: id
     });
-    navigate('/school-admin/manage');
+    navigate(-1);
   };
 
   return (
