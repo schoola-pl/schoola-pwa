@@ -45,7 +45,7 @@ const ClassDetails = () => {
           <Paragraph>Rola</Paragraph>
           <Paragraph>Data urodzenia</Paragraph>
           <Paragraph>Numer</Paragraph>
-          <ManageButtons deleteClass={deleteClass} className={id || ''} />
+          <ManageButtons deleteClass={deleteClass} className={id || ''} classId={students?.data?.data[0]?.id || 0} />
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>

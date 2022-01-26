@@ -14,15 +14,25 @@ import {
 import Button from 'components/atoms/Button/Button';
 import { useModal } from 'hooks/useModal';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useUser } from 'hooks/useUser';
 
 interface props {
   className: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deleteClass: any;
+  classId: number;
 }
 
-const ManageButtons: React.FC<props> = ({ className, deleteClass }) => {
+const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => {
   const { openModal, closeModal } = useModal();
+  const { register, handleSubmit } = useForm();
+  const { addNewUser } = useUser();
+
+  const handleAddUser = (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+    addNewUser(data, classId);
+    closeModal();
+  };
 
   return (
     <ButtonWrapper>
@@ -30,16 +40,16 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass }) => {
         onClick={() =>
           openModal(
             <ModalInfoWrapper>
-              <StyledForm>
+              <StyledForm onSubmit={handleSubmit(handleAddUser)}>
                 <Label htmlFor="name">Imię i nazwisko</Label>
-                <StyledInput name="name" />
+                <StyledInput {...register('name', { required: true })} />
                 <Label htmlFor="role">Rola</Label>
-                <Select name="role">
+                <Select {...register('TextRole', { required: true })}>
                   <option value="Student">Uczeń</option>
                   <option value="Moderator">Samorząd Uczniowski</option>
                 </Select>
                 <Label htmlFor="date">Data urodzenia</Label>
-                <StyledInput name="date" type="date" />
+                <StyledInput type="date" {...register('birthday', { required: true })} />
                 <ModalButtonsWrapper>
                   <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
                   <Button style={{ marginLeft: '1rem' }}>Dodaj ucznia</Button>
