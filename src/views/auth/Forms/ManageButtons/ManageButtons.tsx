@@ -13,8 +13,15 @@ import {
 } from './ManageButtons.styles';
 import Button from 'components/atoms/Button/Button';
 import { useModal } from 'hooks/useModal';
+import React from 'react';
 
-const ManageButtons = () => {
+interface props {
+  className: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  deleteClass: any;
+}
+
+const ManageButtons: React.FC<props> = ({ className, deleteClass }) => {
   const { openModal, closeModal } = useModal();
 
   return (
@@ -28,9 +35,8 @@ const ManageButtons = () => {
                 <StyledInput name="name" />
                 <Label htmlFor="role">Rola</Label>
                 <Select name="role">
-                  <option value="">Wybierz rolę użytkownika</option>
-                  <option value="1">Uczeń</option>
-                  <option value="2">Samorząd Uczniowski</option>
+                  <option value="Student">Uczeń</option>
+                  <option value="Moderator">Samorząd Uczniowski</option>
                 </Select>
                 <Label htmlFor="date">Data urodzenia</Label>
                 <StyledInput name="date" type="date" />
@@ -50,10 +56,12 @@ const ManageButtons = () => {
         onClick={() =>
           openModal(
             <ModalInfoWrapper>
-              <h1>Czy chcesz usunąć klasę 1E?</h1>
+              <h1>Czy chcesz usunąć klasę {className}?</h1>
               <div>
-                <DeleteClassButton onClick={closeModal}>Anuluj</DeleteClassButton>
-                <CancelButton>Usuń klasę 1E</CancelButton>
+                <DeleteClassButton style={{ marginRight: '1rem' }} onClick={closeModal}>
+                  Anuluj
+                </DeleteClassButton>
+                <CancelButton onClick={deleteClass}>Usuń klasę {className}</CancelButton>
               </div>
             </ModalInfoWrapper>,
             'Usuń klasę'

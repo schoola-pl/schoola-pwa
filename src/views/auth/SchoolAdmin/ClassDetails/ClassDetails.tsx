@@ -12,7 +12,7 @@ const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
-  const { openModal, closeModal } = useModal();
+  const { closeModal } = useModal();
   const { deleteUsers } = useUser();
   const user = useSelector((state: storeRoot) => state.user);
   const [removeClassRecord] = useRemoveClassMutation();
@@ -48,7 +48,7 @@ const ClassDetails = () => {
           <Paragraph>Rola</Paragraph>
           <Paragraph>Data urodzenia</Paragraph>
           <Paragraph>Numer</Paragraph>
-          <ManageButtons />
+          <ManageButtons deleteClass={deleteClass} className={id || ''} />
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>
