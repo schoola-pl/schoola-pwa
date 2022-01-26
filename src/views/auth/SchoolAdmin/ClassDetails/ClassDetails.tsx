@@ -7,6 +7,7 @@ import Loading from '../../../../components/molecules/Loading/Loading';
 import { useModal } from 'hooks/useModal';
 import { useUser } from 'hooks/useUser';
 import ManageButtons from 'views/auth/Forms/ManageButtons/ManageButtons';
+import { useEffect } from 'react';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -37,6 +38,12 @@ const ClassDetails = () => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    if (students.isSuccess && !students.data.data[0]?.attributes) {
+      navigate(-1);
+    }
+  }, [students.data, students.isSuccess]);
+
   return (
     <Wrapper>
       <InfoWrapper>
@@ -53,8 +60,8 @@ const ClassDetails = () => {
       </InfoWrapper>
       <InnerWrapper>
         {!students.isLoading ? (
-          students.data?.data[0].attributes?.users.data.length > 0 ? (
-            <StudentDetail students={students.data?.data[0].attributes?.users?.data || []} />
+          students.data?.data[0]?.attributes?.users.data.length > 0 ? (
+            <StudentDetail students={students.data?.data[0]?.attributes?.users?.data || []} />
           ) : (
             <p style={{ width: 'fit-content', margin: '20px auto', textAlign: 'center', fontSize: '1.5rem' }}>Brak uczniów w klasie!</p>
           )
