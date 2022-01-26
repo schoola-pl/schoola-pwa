@@ -62,7 +62,7 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
           })}
           disabled={isSuccess}
         />
-        <Select {...registerUser('role', { required: true })} disabled={isSuccess}>
+        <Select {...registerUser('TextRole', { required: true })} disabled={isSuccess}>
           <option value="Student">Uczeń</option>
           <option value="Moderator">Samorząd Uczniowski</option>
         </Select>
