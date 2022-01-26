@@ -26,15 +26,17 @@ interface UserContextTypes {
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number
-  ) =>
+  ) => Promise<
     | {
+        id: number;
         name: string;
         login: string;
         password: string;
       }
-    | undefined;
+    | undefined
+  >;
   deleteUser: (userId: number, count?: number) => void;
-  deleteUsers: (users: Partial<authUser>[]) => void;
+  deleteUsers: (users: Partial<authUser>[] | number[], actualCount: number) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -80,7 +82,7 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds new user
-  const addNewUser = (
+  const addNewUser = async (
     userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number
   ) => {
@@ -103,12 +105,16 @@ export const UserProvider: React.FC = ({ children }) => {
       class: customClassId || classId,
       password: nanoid()
     };
-    addUser({ ...preparedUser });
+    const response = await addUser({ ...preparedUser });
+    const {
+      data: { id }
+    } = response as { data: { id: string } };
     addToSchoolCount({
       schoolId: user?.schoolId || null,
       totalUsers: usersCount.data.data[0].attributes.totalUsers + 1
     });
     return {
+      id: parseInt(id),
       name: `${preparedUser.first_name} ${preparedUser.last_name}`,
       login: preparedUser.username,
       password: preparedUser.password
@@ -153,15 +159,16 @@ export const UserProvider: React.FC = ({ children }) => {
     });
     updateCount({
       schoolId: user?.schoolId || null,
-      totalUsers: count || usersCount.data.data[0].attributes.totalUsers - 1
+      totalUsers: (count || usersCount.data.data[0].attributes.totalUsers) - 1
     });
   };
 
   // This method deletes the array of users from the database
-  const deleteUsers = (users: Partial<authUser>[]) => {
-    let localCounter: number = usersCount.data.data[0].attributes.totalUsers;
+  const deleteUsers = (users: Partial<authUser>[] | number[], actualCount: number) => {
+    let localCounter: number = actualCount;
     for (const user of users) {
-      deleteUser(parseInt(user.id || ''), localCounter--);
+      if (typeof user === 'number') deleteUser(user, localCounter--);
+      else deleteUser(parseInt(user.id || ''), localCounter--);
     }
   };
 
