@@ -13,9 +13,11 @@ describe('Functions > roles', () => {
     expect(getPathForRole(`${Math.random()}`)).toBe(correctResponse);
   });
   it('Checks if the getRoleFromText function returns the correct role for a given text', () => {
-    expect(getRoleFromText('Student')).toBe(0);
-    expect(getRoleFromText('School Admin')).not.toBe(0);
-    expect(getRoleFromText('School Admin')).toBe(2);
+    expect(getRoleFromText('Student')).toBe(3);
+    expect(getRoleFromText('School Admin')).not.toBe(3);
+    expect(getRoleFromText('School Admin')).toBe(1);
+    expect(getRoleFromText('Moderator')).toBe(4);
+    expect(getRoleFromText('Incorrect role')).toBe(3);
   });
   it('Checks if the getRoleFromText function returns the correct role when input is wrong', () => {
     const correctResponse = 3;

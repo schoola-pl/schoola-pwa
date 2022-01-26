@@ -45,7 +45,6 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
   display: flex;
   height: 8rem;
   width: 18rem;
-
   align-items: center;
   text-decoration: none;
   margin-top: 2rem;
@@ -57,10 +56,6 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
 
   &:last-child {
     margin-top: 20rem;
-
-    @media (min-width: 1300px) {
-      margin-top: 25rem;
-    }
   }
 
   &::after {
@@ -91,6 +86,15 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
 
     &::after {
       opacity: 1;
+    }
+  }
+
+  @media (min-width: 1750px) {
+    width: 22rem;
+    margin-top: 3.5rem;
+
+    &:last-child {
+      margin-top: 32rem;
     }
   }
 `;

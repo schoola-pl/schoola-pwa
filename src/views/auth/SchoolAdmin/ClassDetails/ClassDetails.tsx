@@ -1,20 +1,38 @@
 import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetClassQuery } from '../../../../store';
+import { storeRoot, useGetClassQuery, useRemoveClassMutation } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
+import { useModal } from 'hooks/useModal';
+import { useUser } from 'hooks/useUser';
+import ManageButtons from 'views/auth/Forms/ManageButtons/ManageButtons';
 
 const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
+  const { closeModal } = useModal();
+  const { deleteUsers } = useUser();
   const user = useSelector((state: storeRoot) => state.user);
+  const [removeClassRecord] = useRemoveClassMutation();
+  const navigate = useNavigate();
   const students = useGetClassQuery({
     schoolId: user?.schoolId || null,
     classLevel,
     className
   });
+
+  const deleteClass = () => {
+    closeModal();
+    const users = students.data?.data[0].attributes?.users?.data || [];
+    deleteUsers(users);
+    const id = students.data.data[0].id;
+    removeClassRecord({
+      classId: id
+    });
+    navigate('/school-admin/manage');
+  };
 
   return (
     <Wrapper>
@@ -27,6 +45,7 @@ const ClassDetails = () => {
           <Paragraph>Rola</Paragraph>
           <Paragraph>Data urodzenia</Paragraph>
           <Paragraph>Numer</Paragraph>
+          <ManageButtons deleteClass={deleteClass} className={id || ''} classId={students?.data?.data[0]?.id || 0} />
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>

@@ -23,7 +23,10 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addNewUser: (newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => Promise<
+  addNewUser: (
+    newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
+    customClassId?: number
+  ) => Promise<
     | {
         id: number;
         name: string;
@@ -32,7 +35,8 @@ interface UserContextTypes {
       }
     | undefined
   >;
-  deleteUser: (userId: number, userCount: number) => void;
+  deleteUser: (userId: number, count?: number) => void;
+  deleteUsers: (users: Partial<authUser>[]) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -52,6 +56,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   deleteUser: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  deleteUsers: () => {
     throw new Error('UserContext is not initialized');
   }
 });
@@ -75,7 +82,10 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds new user
-  const addNewUser = async (userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+  const addNewUser = async (
+    userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
+    customClassId?: number
+  ) => {
     if (isLoading) return;
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
@@ -92,7 +102,7 @@ export const UserProvider: React.FC = ({ children }) => {
       schoolId: user?.schoolId || null,
       TextRole: userData.TextRole,
       role: getRoleFromText(userData?.TextRole || 'Student'),
-      class: classId,
+      class: customClassId || classId,
       password: nanoid()
     };
     const response = await addUser({ ...preparedUser });
@@ -143,14 +153,22 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method deletes the user from the database
-  const deleteUser = (userId: number, actualCount: number) => {
+  const deleteUser = (userId: number, count?: number) => {
     deleteUserMethod({
       id: userId
     });
     updateCount({
       schoolId: user?.schoolId || null,
-      totalUsers: actualCount - 1
+      totalUsers: count || usersCount.data.data[0].attributes.totalUsers - 1
     });
+  };
+
+  // This method deletes the array of users from the database
+  const deleteUsers = (users: Partial<authUser>[]) => {
+    let localCounter: number = usersCount.data.data[0].attributes.totalUsers;
+    for (const user of users) {
+      deleteUser(parseInt(user.id || ''), localCounter--);
+    }
   };
 
   const values = {
@@ -159,7 +177,8 @@ export const UserProvider: React.FC = ({ children }) => {
     updateUserState,
     updateSettings,
     addNewUser,
-    deleteUser
+    deleteUser,
+    deleteUsers
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

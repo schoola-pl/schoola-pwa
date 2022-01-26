@@ -1,62 +1,6 @@
 import styled from 'styled-components';
-
-export const Wrapper = styled.div`
-  padding: 1rem;
-  margin: 1.5rem 3rem 0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
-
-export const Heading = styled.h1`
-  font-size: 2.6rem;
-  font-weight: ${({ theme }) => theme.fontWeight.regular};
-  margin-bottom: 0.5rem;
-
-  span {
-    border-radius: 0.5rem;
-    margin-left: 0.5rem;
-    padding: 0.2rem 0.4rem;
-    color: white;
-    font-size: 2.2rem;
-    background-color: ${({ theme }) => theme.colors.accentBlue};
-  }
-`;
-
-export const InnerWrapper = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-left: -5rem;
-`;
-
-export const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-bottom: 3px solid #eceff7;
-  align-items: flex-start;
-`;
-
-export const Paragraph = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.s};
-  margin-right: 15rem;
-
-  &:first-child {
-    grid-column: 2;
-    padding-left: 3rem;
-  }
-`;
-
-export const ParagraphsWrapper = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 7% 17.9% 21% 20% 20% 10%;
-  justify-items: center;
-  align-content: center;
-`;
+import Button from 'components/atoms/Button/Button';
+import Input from 'components/atoms/Input/Input';
 
 export const ButtonWrapper = styled.div`
   display: flex;
@@ -64,7 +8,7 @@ export const ButtonWrapper = styled.div`
   margin-right: 1.5rem;
 `;
 
-const ManageButton = styled.button`
+export const ManageButton = styled.button`
   margin-right: 2rem;
   background-color: white;
   border-radius: 1rem;
@@ -104,16 +48,11 @@ export const ModalInfoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 0;
   flex-direction: column;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     margin-bottom: 2rem;
-  }
-
-  button {
-    margin: 0 1rem;
   }
 `;
 
@@ -128,4 +67,49 @@ export const CancelButton = styled(ManageButton)`
     color: white;
     opacity: 0.9;
   }
+`;
+
+export const Label = styled.label`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  padding: 1.5rem 0 1rem 0.5rem;
+`;
+
+export const StyledInput = styled(Input)`
+  width: 45rem;
+`;
+
+export const Select = styled.select`
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  border-radius: 5rem;
+  font-size: ${({ theme }) => theme.fontSize.s};
+  resize: none;
+  border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
+  transition: border 0.3s linear;
+
+  &:focus {
+    outline: none;
+    border: 2px solid ${({ theme }) => theme.colors.accentGreen};
+  }
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const CancelAddingStudent = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.accentRed};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentRed};
+    opacity: 0.9;
+  }
+`;
+
+export const ModalButtonsWrapper = styled(ButtonWrapper)`
+  margin-right: 0;
+  padding-top: 3rem;
 `;
