@@ -71,7 +71,7 @@ export const CancelButton = styled(ManageButton)`
 
 export const Label = styled.label`
   font-size: ${({ theme }) => theme.fontSize.s};
-  margin: 1.5rem 0 1rem 0.5rem;
+  padding: 1.5rem 0 1rem 0.5rem;
 `;
 
 export const StyledInput = styled(Input)`
@@ -101,7 +101,6 @@ export const StyledForm = styled.form`
 `;
 
 export const CancelAddingStudent = styled(Button)`
-  margin-left: 1rem;
   background-color: ${({ theme }) => theme.colors.accentRed};
 
   &:hover {
@@ -112,5 +111,5 @@ export const CancelAddingStudent = styled(Button)`
 
 export const ModalButtonsWrapper = styled(ButtonWrapper)`
   margin-right: 0;
-  margin-top: 3rem;
+  padding-top: 3rem;
 `;

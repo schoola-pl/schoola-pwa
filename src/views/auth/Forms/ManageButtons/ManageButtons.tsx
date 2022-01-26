@@ -1,15 +1,15 @@
 import {
-  ButtonWrapper,
   AddStudentButton,
-  ModalInfoWrapper,
-  StyledInput,
+  ButtonWrapper,
+  CancelAddingStudent,
+  CancelButton,
+  DeleteClassButton,
   Label,
   ModalButtonsWrapper,
-  CancelAddingStudent,
-  StyledForm,
+  ModalInfoWrapper,
   Select,
-  DeleteClassButton,
-  CancelButton
+  StyledForm,
+  StyledInput
 } from './ManageButtons.styles';
 import Button from 'components/atoms/Button/Button';
 import { useModal } from 'hooks/useModal';
@@ -35,8 +35,8 @@ const ManageButtons = () => {
                 <Label htmlFor="date">Data urodzenia</Label>
                 <StyledInput name="date" type="date" />
                 <ModalButtonsWrapper>
-                  <Button>Dodaj ucznia</Button>
                   <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
+                  <Button style={{ marginLeft: '1rem' }}>Dodaj ucznia</Button>
                 </ModalButtonsWrapper>
               </StyledForm>
             </ModalInfoWrapper>,
@@ -52,8 +52,8 @@ const ManageButtons = () => {
             <ModalInfoWrapper>
               <h1>Czy chcesz usunąć klasę 1E?</h1>
               <div>
-                <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                <DeleteClassButton>Usuń klasę 1E</DeleteClassButton>
+                <DeleteClassButton onClick={closeModal}>Anuluj</DeleteClassButton>
+                <CancelButton>Usuń klasę 1E</CancelButton>
               </div>
             </ModalInfoWrapper>,
             'Usuń klasę'

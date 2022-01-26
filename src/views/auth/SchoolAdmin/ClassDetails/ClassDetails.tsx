@@ -1,16 +1,4 @@
-import {
-  AddStudentButton,
-  ButtonWrapper,
-  CancelButton,
-  DeleteClassButton,
-  Heading,
-  InfoWrapper,
-  InnerWrapper,
-  ModalInfoWrapper,
-  Paragraph,
-  ParagraphsWrapper,
-  Wrapper
-} from './ClassDetails.styles';
+import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -18,6 +6,7 @@ import { storeRoot, useGetClassQuery, useGetUsersCountQuery, useRemoveClassMutat
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { useModal } from 'hooks/useModal';
 import { useUser } from 'hooks/useUser';
+import ManageButtons from 'views/auth/Forms/ManageButtons/ManageButtons';
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -59,27 +48,7 @@ const ClassDetails = () => {
           <Paragraph>Rola</Paragraph>
           <Paragraph>Data urodzenia</Paragraph>
           <Paragraph>Numer</Paragraph>
-          <ButtonWrapper>
-            <AddStudentButton>Dodaj ucznia</AddStudentButton>
-            <DeleteClassButton
-              onClick={() =>
-                openModal(
-                  <ModalInfoWrapper>
-                    <h1>
-                      Czy chcesz usunąć klasę {id} ({students.data?.data[0].attributes?.users.data.length} uczniów)?
-                    </h1>
-                    <div>
-                      <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                      <DeleteClassButton onClick={deleteClass}>Usuń klasę {id}</DeleteClassButton>
-                    </div>
-                  </ModalInfoWrapper>,
-                  'Usuń klasę'
-                )
-              }
-            >
-              Usuń klasę
-            </DeleteClassButton>
-          </ButtonWrapper>
+          <ManageButtons />
         </ParagraphsWrapper>
       </InfoWrapper>
       <InnerWrapper>
