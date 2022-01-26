@@ -29,9 +29,15 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
   const { register, handleSubmit } = useForm();
   const { addNewUser } = useUser();
 
-  const handleAddUser = (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
-    addNewUser(data, classId);
+  const handleAddUser = async (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+    const createdUser = await addNewUser(data, classId);
+    const cb = navigator.clipboard;
+    const { login, password, name } = createdUser as { login: string; password: string; name: string };
+    cb.writeText(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`).then(() =>
+      alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!')
+    );
     closeModal();
+    window.location.reload();
   };
 
   return (
