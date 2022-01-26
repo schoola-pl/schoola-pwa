@@ -21,7 +21,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-around;
   border-bottom: px solid ${({ theme }) => theme.colors.selectedItemBorderGrey};
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
 
 type Props = {

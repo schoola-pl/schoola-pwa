@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import SpottedIcon from 'assets/icons/SpottedIcon.svg';
-import AppointmentIcon from 'assets/icons/AppointmentIcon.svg';
-import FeedIcon from 'assets/icons/FeedIcon.svg';
-import HomeIcon from 'assets/icons/HomeIcon.svg';
+import SpottedIcon from 'assets/IconComponents/SpottedIcon';
+import AppointmentIcon from 'assets/IconComponents/AppointmentIcon';
+import FeedIcon from 'assets/IconComponents/FeedIcon';
+import HomeIcon from 'assets/IconComponents/HomeIcon';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import { NavLink } from 'react-router-dom';
 
@@ -37,16 +37,20 @@ interface Props {
 }
 
 const StyledListItem = styled(NavLink)<Props>`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
   &.active {
     &::after {
-      content: ${({ name }) => name};
+      content: '${({ name }) => name}';
       color: white;
-      font-size: ${({ theme }) => theme.fontSize.l};
+      font-size: ${({ theme }) => theme.fontSize.s};
     }
   }
 `;
 
-const links: { path: string; name: string; icon: string }[] = [
+const links: { path: string; name: string; icon?: string | any }[] = [
   { path: '/appointment', icon: AppointmentIcon, name: 'Wizyta' },
   { path: '/spotted', icon: SpottedIcon, name: 'Spotted' },
   { path: '/feed', icon: FeedIcon, name: 'Tablica' },
@@ -55,13 +59,28 @@ const links: { path: string; name: string; icon: string }[] = [
 
 const UserSidebar = () => (
   <Wrapper>
-    {links.map(({ path, name, icon }) => (
-      <StyledList key={path}>
-        <StyledListItem name={name} to={path}>
-          <SidebarLink icon={icon} />
-        </StyledListItem>
-      </StyledList>
-    ))}
+    <StyledList key="">
+      <StyledListItem name="Wizyta" to="/appointment">
+        <SidebarLink>
+          <AppointmentIcon />
+        </SidebarLink>
+      </StyledListItem>
+      <StyledListItem name="Spotted" to="/spotted">
+        <SidebarLink>
+          <SpottedIcon />
+        </SidebarLink>
+      </StyledListItem>
+      <StyledListItem name="Tablica" to="/feed">
+        <SidebarLink>
+          <FeedIcon />
+        </SidebarLink>
+      </StyledListItem>
+      <StyledListItem name="Home" to="/home">
+        <SidebarLink>
+          <HomeIcon />
+        </SidebarLink>
+      </StyledListItem>
+    </StyledList>
   </Wrapper>
 );
 

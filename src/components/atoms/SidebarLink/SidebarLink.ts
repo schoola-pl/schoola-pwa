@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  icon: string;
+  icon?: any;
 };
 
 const SidebarLink = styled.button<Props>`
