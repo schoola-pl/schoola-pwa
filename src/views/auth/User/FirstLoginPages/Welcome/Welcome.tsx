@@ -1,6 +1,7 @@
-import { Wrapper, Greetings, IconDiv, WelcomeButton, Circle, StepCircleWrapper } from './Welcome.styles';
+import { Wrapper, Greetings, IconDiv, WelcomeButton } from './Welcome.styles';
 import WelcomeIcon from 'assets/icons/WelcomeIcon.svg';
 import ArrowIcon from 'assets/icons/ArrowIcon.svg';
+import StepCircles from 'components/molecules/StepCircles/StepCircles';
 
 const Welcome = () => {
   return (
@@ -11,11 +12,7 @@ const Welcome = () => {
       </Greetings>
       <IconDiv icon={WelcomeIcon} />
       <WelcomeButton icon={ArrowIcon} />
-      <StepCircleWrapper>
-        <Circle />
-        <Circle />
-        <Circle />
-      </StepCircleWrapper>
+      <StepCircles />
     </Wrapper>
   );
 };
