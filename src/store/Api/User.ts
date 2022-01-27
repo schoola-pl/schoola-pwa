@@ -6,10 +6,10 @@ export const UserAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['users', 'update'],
+  tagTypes: ['removeUser', 'addUser', 'update', 'updateCount'],
   endpoints: (builder) => ({
     getUsersCount: builder.query({
-      providesTags: ['users'],
+      providesTags: ['removeUser', 'addUser', 'updateCount'],
       query: (args) => ({
         url: `/schools?fields[0]=totalUsers&filters[id][$eq]=${args.schoolId}`,
         headers: {
@@ -18,7 +18,7 @@ export const UserAPI = createApi({
       })
     }),
     getUsersByClass: builder.query({
-      providesTags: ['users', 'update'],
+      providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
         url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&populate[users][fields][3]=avatar&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
         headers: {
@@ -35,7 +35,7 @@ export const UserAPI = createApi({
       })
     }),
     addUserToClass: builder.mutation({
-      invalidatesTags: ['users'],
+      invalidatesTags: ['addUser'],
       query: (body) => ({
         method: 'POST',
         url: `/users`,
@@ -46,7 +46,7 @@ export const UserAPI = createApi({
       })
     }),
     updateSchoolCount: builder.mutation({
-      invalidatesTags: ['users'],
+      invalidatesTags: ['updateCount'],
       query: (body) => ({
         method: 'PUT',
         url: `/schools/${body.schoolId}`,
@@ -61,7 +61,7 @@ export const UserAPI = createApi({
       })
     }),
     updateUser: builder.mutation({
-      invalidatesTags: ['users', 'update'],
+      invalidatesTags: ['update'],
       query: (body) => ({
         method: 'PUT',
         url: `/users/${body.id}`,
@@ -72,7 +72,7 @@ export const UserAPI = createApi({
       })
     }),
     removeUser: builder.mutation({
-      invalidatesTags: ['users'],
+      invalidatesTags: ['removeUser'],
       query: (body) => ({
         method: 'DELETE',
         url: `/users/${body.id}`,
