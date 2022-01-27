@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getJWT } from '../../helpers/jwt';
+import { getJWT } from 'helpers/jwt';
 
 export const UserAPI = createApi({
   reducerPath: 'UserAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['users'],
+  tagTypes: ['users', 'update'],
   endpoints: (builder) => ({
     getUsersCount: builder.query({
       providesTags: ['users'],
@@ -18,9 +18,9 @@ export const UserAPI = createApi({
       })
     }),
     getUsersByClass: builder.query({
-      providesTags: ['users'],
+      providesTags: ['users', 'update'],
       query: (args) => ({
-        url: `classes/${args.classId}?fields[0]=id&populate[users][fields][0]=first_name&populate[users][fields][1]=last_name`,
+        url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&populate[users][fields][3]=avatar&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
@@ -61,7 +61,7 @@ export const UserAPI = createApi({
       })
     }),
     updateUser: builder.mutation({
-      invalidatesTags: ['users'],
+      invalidatesTags: ['users', 'update'],
       query: (body) => ({
         method: 'PUT',
         url: `/users/${body.id}`,
@@ -84,6 +84,12 @@ export const UserAPI = createApi({
   })
 });
 
-export const { useGetUsersCountQuery, useAddUserToClassMutation, useUpdateSchoolCountMutation, useUpdateUserMutation, useRemoveUserMutation } =
-  UserAPI;
+export const {
+  useGetUsersCountQuery,
+  useAddUserToClassMutation,
+  useGetUsersByClassQuery,
+  useUpdateSchoolCountMutation,
+  useUpdateUserMutation,
+  useRemoveUserMutation
+} = UserAPI;
 export default UserAPI;
