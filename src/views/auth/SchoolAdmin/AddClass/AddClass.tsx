@@ -30,6 +30,7 @@ const AddClass = () => {
 
   const extendedRestoreClass = () => {
     restoreClass();
+    setAddedUser([]);
     deleteUsers(addedUsers, usersCount.data.data[0].attributes.totalUsers);
   };
 
