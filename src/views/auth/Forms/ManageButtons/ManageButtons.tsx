@@ -37,7 +37,6 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
       alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!')
     );
     closeModal();
-    window.location.reload();
   };
 
   return (
