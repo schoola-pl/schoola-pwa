@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetClassQuery, useGetUsersCountQuery, useRemoveClassMutation } from 'store';
+import { storeRoot, useGetUsersByClassQuery, useGetUsersCountQuery, useRemoveClassMutation } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { useModal } from 'hooks/useModal';
 import { useUser } from 'hooks/useUser';
@@ -18,7 +19,7 @@ const ClassDetails = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const [removeClassRecord] = useRemoveClassMutation();
   const navigate = useNavigate();
-  const students = useGetClassQuery({
+  const students = useGetUsersByClassQuery({
     schoolId: user?.schoolId || null,
     classLevel,
     className
