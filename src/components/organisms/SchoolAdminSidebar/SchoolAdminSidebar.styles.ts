@@ -94,7 +94,7 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
     margin-top: 3.5rem;
 
     &:last-child {
-      margin-top: 32rem;
+      margin-top: 30rem;
     }
   }
 `;
