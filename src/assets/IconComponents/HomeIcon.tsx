@@ -1,8 +1,12 @@
 import React from 'react';
 
-const HomeIcon = () => {
+interface Props {
+  isActive: boolean;
+}
+
+const HomeIcon: React.FC<Props> = ({ isActive }) => {
   return (
-    <svg fill="#72db88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <svg fill={isActive ? '#FFFFFF' : '#72db88'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g data-name="Layer 2">
         <g data-name="home">
           <rect width="24" height="24" opacity="0" />

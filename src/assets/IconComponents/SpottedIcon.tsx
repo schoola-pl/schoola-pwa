@@ -1,6 +1,10 @@
-const SpottedIcon = () => {
+interface Props {
+  isActive: boolean;
+}
+
+const SpottedIcon: React.FC<Props> = ({ isActive }) => {
   return (
-    <svg fill="#72db88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <svg fill={isActive ? '#FFFFFF' : '#72db88'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g data-name="Layer 2">
         <g data-name="people">
           <rect width="24" height="24" opacity="0" />
