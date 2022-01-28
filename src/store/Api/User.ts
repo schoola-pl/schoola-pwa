@@ -8,6 +8,19 @@ export const UserAPI = createApi({
   }),
   tagTypes: ['removeUser', 'addUser', 'update', 'updateCount'],
   endpoints: (builder) => ({
+    getUsers: builder.query({
+      providesTags: ['removeUser', 'update', 'addUser'],
+      query: (args) => ({
+        url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${
+          args.schoolId
+        }&fields[0]=id&fields[1]=first_name&fields[2]=last_name${
+          args.pagination ? `&pagination[page]=${args.pagination?.start || 1}&pagination[pageSize]=${args.pagination?.pageSize || 5}` : ''
+        }`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
     getUsersCount: builder.query({
       providesTags: ['removeUser', 'addUser', 'updateCount'],
       query: (args) => ({
@@ -85,6 +98,7 @@ export const UserAPI = createApi({
 });
 
 export const {
+  useGetUsersQuery,
   useGetUsersCountQuery,
   useAddUserToClassMutation,
   useGetUsersByClassQuery,
