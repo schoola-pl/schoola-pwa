@@ -1,6 +1,6 @@
 import React from 'react';
 import { Circle, ClassDetails, EditLink, Wrapper } from './ClassCard.styles';
-import { storeRoot, useGetClassesQuery } from '../../../store';
+import { storeRoot, useGetClassesQuery } from 'store';
 import EditIcon from 'assets/icons/EditIcon.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -36,7 +36,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
                 { attributes: { className: string; classLevel: number; users: { data: any[] } } },
                 index: number
               ) => (
-                <Wrapper onClick={() => navigate(`classes/${classLevel}${className}`)} key={index}>
+                <Wrapper onClick={() => navigate(`${classLevel}${className}`)} key={index}>
                   <Circle>
                     <h1>{`${classLevel}${className}`}</h1>
                   </Circle>
