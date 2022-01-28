@@ -23,8 +23,18 @@ export const Form = styled.form`
   flex-direction: column;
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)<{ error?: boolean }>`
   margin-top: 2rem;
+
+  ${({ error, theme }) =>
+    error &&
+    `
+    background-color: ${theme.colors.accentRed};
+    color: ${theme.colors.lightBrown};
+    &:hover {
+      background-color: ${theme.colors.accentRedDark};
+    }
+  `}
 `;
 
 export const StyledInput = styled(Input)`

@@ -45,7 +45,7 @@ const Login: React.FC = () => {
           <StyledInput
             type="text"
             placeholder="Login"
-            error={!!formError.login}
+            error={!!formError.login || isError}
             {...register('login', {
               required: true,
               minLength: 2
@@ -55,14 +55,14 @@ const Login: React.FC = () => {
           <StyledInput
             type="password"
             placeholder="Hasło"
-            error={!!formError.password}
+            error={!!formError.password || isError}
             {...register('password', {
               required: true,
               minLength: 6
             })}
           />
           {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
-          <StyledButton type="submit">
+          <StyledButton error={isError} type="submit">
             {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
           </StyledButton>
         </Form>
