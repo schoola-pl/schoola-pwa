@@ -1,5 +1,5 @@
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 const FeedIcon: React.FC<Props> = ({ isActive }) => {

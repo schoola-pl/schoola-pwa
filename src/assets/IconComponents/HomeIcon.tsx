@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 const HomeIcon: React.FC<Props> = ({ isActive }) => {

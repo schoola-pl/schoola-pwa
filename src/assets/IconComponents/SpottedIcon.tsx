@@ -1,5 +1,5 @@
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 const SpottedIcon: React.FC<Props> = ({ isActive }) => {
