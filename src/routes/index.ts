@@ -9,6 +9,8 @@ import Spotted from 'views/auth/User/Spotted/Spotted';
 import Feed from 'views/auth/User/Feed/Feed';
 import Welcome from 'views/auth/User/FirstLoginPages/Welcome/Welcome';
 import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
+import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
+import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
 interface routesInterface {
   // Path to component
   path: string;
@@ -40,6 +42,8 @@ const homeRoute = '/home';
 const routes: routesInterface[] = [
   { path: '/feed', Component: Feed, isProtected: false, role: roles.authenticated },
   { path: '/welcome', Component: Welcome, isProtected: false, role: roles.authenticated },
+  { path: '/finish', Component: FinishPage, isProtected: false, role: roles.authenticated },
+  { path: '/hobbies', Component: Hobbies, isProtected: false, role: roles.authenticated },
   { path: '/complete-info', Component: DataPage, isProtected: false, role: roles.authenticated },
   { path: '/spotted', Component: Spotted, isProtected: false, role: roles.authenticated },
   { path: '/appointment', Component: Appointment, isProtected: false, role: roles.authenticated },
