@@ -8,6 +8,7 @@ export const theme = {
     accentGreen: '#55AB67',
     accentBrown: '#E6E2D6',
     accentBlue: '#5B75A6',
+    accentBlueLight: '#7993c1',
     accentGrey: '#807970',
     darkBrown: '#918E81',
     selectedItemGrey: '#CCCFDC',
