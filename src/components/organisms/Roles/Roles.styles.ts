@@ -31,3 +31,9 @@ export const RoleRecord = styled.div`
     background-color: ${({ theme }) => theme.colors.accentGreen};
   }
 `;
+
+export const EmptyParagraph = styled.p`
+  font-size: 1.4rem;
+  text-align: center;
+  margin-top: 1.6rem;
+`;

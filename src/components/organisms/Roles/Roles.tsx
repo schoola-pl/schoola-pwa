@@ -2,7 +2,7 @@ import { ClassDetails } from 'components/molecules/ClassCard/ClassCard.styles';
 import { ClassesWrapper } from 'views/auth/SchoolAdmin/ManageClasses/ManageClasses.styles';
 import { storeRoot, useGetUsersQuery } from 'store';
 import { useSelector } from 'react-redux';
-import { RoleRecord } from './Roles.styles';
+import { EmptyParagraph, RoleRecord } from './Roles.styles';
 import { useEffect, useState } from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -73,7 +73,7 @@ const Roles = () => {
                 );
               })
             ) : (
-              <p>Brak uczniów o tej roli!</p>
+              <EmptyParagraph>Brak uczniów o tej roli!</EmptyParagraph>
             )
           ) : (
             <p>Loading...</p>
@@ -98,7 +98,7 @@ const Roles = () => {
                 );
               })
             ) : (
-              <p>Brak uczniów o tej roli!</p>
+              <EmptyParagraph>Brak uczniów o tej roli!</EmptyParagraph>
             )
           ) : (
             <p>Loading...</p>
