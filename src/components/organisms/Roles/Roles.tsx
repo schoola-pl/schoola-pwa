@@ -63,7 +63,7 @@ const Roles = () => {
       <ClassDetails>
         <summary>Samorząd Uczniowski</summary>
         <div>
-          {moderatorsArray ? (
+          {!moderators.isLoading ? (
             moderatorsArray.length > 0 ? (
               moderatorsArray.map(({ first_name, last_name }) => {
                 return (
@@ -76,7 +76,7 @@ const Roles = () => {
               <EmptyParagraph>Brak uczniów o tej roli!</EmptyParagraph>
             )
           ) : (
-            <p>Loading...</p>
+            <EmptyParagraph>Wczytywanie...</EmptyParagraph>
           )}
           {(currentModeratorsPage?.current || 1) !== (currentModeratorsPage?.last || 1) ? (
             <Button id="more" onClick={() => nextPage('moderators')}>
@@ -88,7 +88,7 @@ const Roles = () => {
       <ClassDetails>
         <summary>Uczniowie</summary>
         <div>
-          {studentsArray ? (
+          {!students.isLoading ? (
             studentsArray.length > 0 ? (
               studentsArray.map(({ first_name, last_name }) => {
                 return (
@@ -101,7 +101,7 @@ const Roles = () => {
               <EmptyParagraph>Brak uczniów o tej roli!</EmptyParagraph>
             )
           ) : (
-            <p>Loading...</p>
+            <EmptyParagraph>Wczytywanie...</EmptyParagraph>
           )}
           {(currentStudentsPage?.current || 1) !== (currentStudentsPage?.last || 1) ? (
             <Button id="more" onClick={() => nextPage('students')}>
