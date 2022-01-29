@@ -13,9 +13,7 @@ export const UserAPI = createApi({
       query: (args) => ({
         url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${
           args.schoolId
-        }&fields[0]=id&fields[1]=first_name&fields[2]=last_name${
-          args.pagination ? `&pagination[page]=${args.pagination?.start || 1}&pagination[pageSize]=${args.pagination?.pageSize || 5}` : ''
-        }`,
+        }&fields[0]=id&fields[1]=first_name&fields[2]=last_name`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
