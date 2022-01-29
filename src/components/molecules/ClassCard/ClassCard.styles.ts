@@ -47,6 +47,20 @@ export const ClassDetails = styled.details`
     transform: rotate(90deg);
   }
 
+  button#more {
+    width: 60%;
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+    font-size: 1.2rem;
+    height: auto;
+    padding: 1rem 0;
+    margin: 0 auto;
+    border-radius: 1.3rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.accentBlueLight};
+    }
+  }
+
   &[open] {
     summary::after {
       transform: rotate(-90deg);

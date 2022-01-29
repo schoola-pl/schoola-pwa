@@ -82,10 +82,16 @@ export const AmountWrapper = styled.div`
   }
 `;
 
-export const ClassesWrapper = styled.div`
+export const ClassesWrapper = styled.div<{ columns?: number; isCenter?: boolean }>`
   padding-left: 3rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(${({ columns }) => columns || '3'}, 1fr);
+  ${({ isCenter }) =>
+    isCenter &&
+    `
+    padding: 2rem;
+    justify-items: center;
+    `}
 `;
 
 export const InnerWrapper = styled.div`

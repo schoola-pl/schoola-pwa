@@ -5,11 +5,11 @@ import DashboardIcon from 'assets/icons/DashboardIcon.png';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import LogoutIcon from 'assets/icons/LogoutIcon.png';
 import React from 'react';
-import { useUser } from '../../../hooks/useUser';
+import { useUser } from 'hooks/useUser';
 
 const links: { path: string; name: string; icon: string }[] = [
   { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
-  { path: '/school-admin/manage', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
+  { path: '/school-admin/manage/classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
   { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' }
 ];
 
