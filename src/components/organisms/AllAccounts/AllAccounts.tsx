@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Input from 'components/atoms/Input/Input';
 import styled from 'styled-components';
+import { storeRoot, useGetUsersQuery } from 'store';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,10 +96,22 @@ export const SearchRecord = styled.div`
   }
 `;
 
+interface resultType {
+  id: string;
+  first_name: string;
+  last_name: string;
+  TextRole: string;
+}
+
 const defaultPhrase = 'Tutaj się pojawi twoja fraza...';
 
 const AllAccounts: React.FC = () => {
   const [phrase, setPhrase] = useState(defaultPhrase);
+  const [results, setResults] = useState<resultType[] | []>([]);
+  const user = useSelector((state: storeRoot) => state.user);
+  const users = useGetUsersQuery({
+    schoolId: user?.schoolId
+  });
   const searchInput = useRef<HTMLInputElement | null>(null);
 
   const handleSearch = (ev: KeyboardEvent) => {
@@ -107,8 +121,12 @@ const AllAccounts: React.FC = () => {
       const preparedValue = value.toLowerCase().trim();
       setPhrase(value ? value.trim() : defaultPhrase);
       if (preparedValue) {
-        // Rest of code
-      }
+        const destructuredUsers = users.data as resultType[];
+        const founded = destructuredUsers.filter(
+          ({ first_name, last_name }) => first_name.toLowerCase().includes(preparedValue) || last_name.toLowerCase().includes(preparedValue)
+        );
+        setResults(founded);
+      } else setResults([]);
     }
   };
 
@@ -121,8 +139,11 @@ const AllAccounts: React.FC = () => {
     return () => {
       if (input) {
         input.removeEventListener('keyup', handleSearch);
+        setResults([]);
+        setPhrase(defaultPhrase);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput]);
 
   return (
@@ -131,38 +152,23 @@ const AllAccounts: React.FC = () => {
         <h1>
           Wyszukaj <span>konto ucznia</span>
         </h1>
-        <Input ref={searchInput} type="search" placeholder="Np. Jan Kowalski 1D" />
+        <Input ref={searchInput} type="search" placeholder="Imię Nazwisko" />
       </div>
       <div>
         <h1>
           Wyniki wyszukiwania frazy: <span id="cut">{phrase}</span>
         </h1>
         <SearchRecords>
-          <SearchRecord>
-            <h1>Jan Kowalski</h1>
-            <p>Samorząd Uczniowski</p>
-            <span>1D</span>
-          </SearchRecord>
-          <SearchRecord>
-            <h1>Jan Kowalski</h1>
-            <p>Samorząd Uczniowski</p>
-            <span>1D</span>
-          </SearchRecord>
-          <SearchRecord>
-            <h1>Jan Kowalski</h1>
-            <p>Samorząd Uczniowski</p>
-            <span>1D</span>
-          </SearchRecord>
-          <SearchRecord>
-            <h1>Jan Kowalski</h1>
-            <p>Samorząd Uczniowski</p>
-            <span>1D</span>
-          </SearchRecord>
-          <SearchRecord>
-            <h1>Jan Kowalski</h1>
-            <p>Uczeń</p>
-            <span>1D</span>
-          </SearchRecord>
+          {results.length > 0 ? (
+            results.map(({ id, first_name, last_name, TextRole }) => (
+              <SearchRecord key={id}>
+                <h1>{`${first_name} ${last_name}`}</h1>
+                <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
+              </SearchRecord>
+            ))
+          ) : (
+            <p>Ni ma!</p>
+          )}
         </SearchRecords>
       </div>
     </Wrapper>
