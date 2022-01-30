@@ -37,9 +37,10 @@ const AllAccounts: React.FC = () => {
       setPhrase(value ? value.trim() : defaultPhrase);
       if (preparedValue) {
         const destructuredUsers = users.data as resultType[];
-        const founded = destructuredUsers.filter(
-          ({ first_name, last_name }) => first_name.toLowerCase().includes(preparedValue) || last_name.toLowerCase().includes(preparedValue)
-        );
+        const founded = destructuredUsers.filter(({ first_name, last_name }) => {
+          const username = `${first_name} ${last_name}`;
+          return username.toLowerCase().includes(preparedValue);
+        });
         setResults(founded);
       } else setResults([]);
     }
@@ -68,9 +69,10 @@ const AllAccounts: React.FC = () => {
     if (!users.isLoading && query && searchInput.current) {
       setPhrase(query);
       const destructuredUsers = users.data as resultType[];
-      const founded = destructuredUsers.filter(
-        ({ first_name, last_name }) => first_name.toLowerCase().includes(query) || last_name.toLowerCase().includes(query)
-      );
+      const founded = destructuredUsers.filter(({ first_name, last_name }) => {
+        const username = `${first_name} ${last_name}`;
+        return username.toLowerCase().includes(query);
+      });
       setResults(founded);
       searchInput.current.value = query;
     }
