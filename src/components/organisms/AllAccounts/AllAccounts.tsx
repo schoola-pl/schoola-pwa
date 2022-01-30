@@ -22,6 +22,13 @@ const AllAccounts: React.FC = () => {
   });
   const searchInput = useRef<HTMLInputElement | null>(null);
 
+  const copyURL = () => {
+    const cb = navigator.clipboard;
+    cb.writeText(window.location.href + '?q=' + phrase).then(() => {
+      alert('Skopiowano URL do schowka!');
+    });
+  };
+
   const handleSearch = (ev: KeyboardEvent) => {
     if (ev.target && ev.key !== 'Shift' && ev.key !== 'Enter' && ev.key !== 'Tab' && ev.key !== 'Ctrl') {
       const target = ev.target;
@@ -40,7 +47,7 @@ const AllAccounts: React.FC = () => {
 
   useEffect(() => {
     const input = searchInput.current;
-    if (input) {
+    if (input && !users.isLoading) {
       input.focus();
       input.addEventListener('keyup', handleSearch);
     }
@@ -52,7 +59,7 @@ const AllAccounts: React.FC = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput]);
+  }, [searchInput, users.isLoading]);
 
   return (
     <Wrapper>
@@ -65,6 +72,7 @@ const AllAccounts: React.FC = () => {
               Wyszukaj <span>konto ucznia</span>
             </h1>
             <Input ref={searchInput} type="search" placeholder="Imię Nazwisko" />
+            {phrase !== defaultPhrase ? <u onClick={copyURL}>Skopiuj URL do błyskawicznego wyszukania podanej frazy</u> : null}
           </div>
           <div>
             <h1

@@ -42,6 +42,14 @@ export const Wrapper = styled.div`
       width: 70%;
       font-size: 1.8rem;
     }
+
+    & > u {
+      font-size: 1.3rem;
+      padding-left: 2.5rem;
+      margin-top: 0.8rem;
+      color: ${({ theme }) => theme.colors.accentBlue};
+      cursor: pointer;
+    }
   }
 `;
 
