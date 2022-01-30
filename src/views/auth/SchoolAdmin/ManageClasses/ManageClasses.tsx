@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router';
 import Classes from 'components/organisms/Classes/Classes';
 import Roles from 'components/organisms/Roles/Roles';
 import Error404 from 'views/Error404/Error404';
+import AllAccounts from 'components/organisms/AllAccounts/AllAccounts';
 
 const ManageClasses = () => {
   const navigate = useNavigate();
@@ -18,11 +19,12 @@ const ManageClasses = () => {
         <Links>
           <HeadingLink to={'/school-admin/manage/classes'}>klasy</HeadingLink>
           <HeadingLink to={'/school-admin/manage/roles'}>role</HeadingLink>
-          {/*<HeadingLink to={'/school-admin/manage/all-accounts'}>wszystkie konta</HeadingLink>*/}
+          <HeadingLink to={'/school-admin/manage/all-accounts'}>wszystkie konta</HeadingLink>
         </Links>
         <Routes>
           <Route path={'/classes'} element={<Classes />} />
           <Route path={'/roles'} element={<Roles />} />
+          <Route path={'/all-accounts'} element={<AllAccounts />} />
           <Route path={'*'} element={<Error404 />} />
         </Routes>
       </ContentWrapper>
