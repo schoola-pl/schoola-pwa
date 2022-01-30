@@ -167,7 +167,7 @@ const AllAccounts: React.FC = () => {
               </SearchRecord>
             ))
           ) : (
-            <p>Ni ma!</p>
+            <p style={{ textAlign: 'center', fontSize: '2.5rem', marginTop: '15rem' }}>Brak wyników</p>
           )}
         </SearchRecords>
       </div>
