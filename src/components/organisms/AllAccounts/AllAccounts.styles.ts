@@ -41,6 +41,12 @@ export const Wrapper = styled.div`
     & > input {
       width: 70%;
       font-size: 1.8rem;
+
+      &::-webkit-search-cancel-button {
+        position: relative;
+        right: 20px;
+        -webkit-appearance: none;
+      }
     }
 
     & > u {
