@@ -15,6 +15,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 
+    &:last-child {
+      padding-left: 7rem;
+    }
+
     span {
       color: ${({ theme }) => theme.colors.accentGreen};
     }
@@ -104,7 +108,6 @@ interface resultType {
 }
 
 const defaultPhrase = 'Tutaj się pojawi twoja fraza...';
-
 const AllAccounts: React.FC = () => {
   const [phrase, setPhrase] = useState(defaultPhrase);
   const [results, setResults] = useState<resultType[] | []>([]);
@@ -148,14 +151,14 @@ const AllAccounts: React.FC = () => {
 
   return (
     <Wrapper>
-      <div>
+      <div style={{ borderRight: '2px solid #eceff7' }}>
         <h1>
           Wyszukaj <span>konto ucznia</span>
         </h1>
         <Input ref={searchInput} type="search" placeholder="Imię Nazwisko" />
       </div>
       <div>
-        <h1>
+        <h1 style={{ display: 'block', paddingLeft: '3rem', paddingBottom: '1rem', borderBottom: '2px solid #eceff7' }}>
           Wyniki wyszukiwania frazy: <span id="cut">{phrase}</span>
         </h1>
         <SearchRecords>
