@@ -118,7 +118,7 @@ const AllAccounts: React.FC = () => {
   const searchInput = useRef<HTMLInputElement | null>(null);
 
   const handleSearch = (ev: KeyboardEvent) => {
-    if (ev.target) {
+    if (ev.target && ev.key !== 'Shift' && ev.key !== 'Enter' && ev.key !== 'Tab' && ev.key !== 'Ctrl') {
       const target = ev.target;
       const { value } = target as HTMLInputElement;
       const preparedValue = value.toLowerCase().trim();
