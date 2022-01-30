@@ -30,6 +30,7 @@ export const ClassDetails = styled.details`
   text-decoration: none;
   position: relative;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  cursor: pointer;
 
   summary {
     list-style: none;
