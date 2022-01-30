@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 
 const Loading: React.FC = () => {
   return (
-    <Wrapper>
+    <Wrapper id="loader">
       <Loader />
     </Wrapper>
   );
