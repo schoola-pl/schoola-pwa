@@ -19,7 +19,7 @@ const ManageClasses = () => {
         <Links>
           <HeadingLink to={'/school-admin/manage/classes'}>klasy</HeadingLink>
           <HeadingLink to={'/school-admin/manage/roles'}>role</HeadingLink>
-          <HeadingLink to={'/school-admin/manage/all-accounts'}>wszystkie konta</HeadingLink>
+          <HeadingLink to={'/school-admin/manage/all-accounts'}>Szukaj ucznia</HeadingLink>
         </Links>
         <Routes>
           <Route path={'/classes'} element={<Classes />} />
