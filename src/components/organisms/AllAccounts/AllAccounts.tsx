@@ -92,8 +92,9 @@ const AllAccounts: React.FC = () => {
     if (ev.target) {
       const target = ev.target;
       const { value } = target as HTMLInputElement;
-      setPhrase(value ? value : '...');
-      if (value) {
+      const preparedValue = value.toLowerCase().trim();
+      setPhrase(value ? value.trim() : '...');
+      if (preparedValue) {
         // Rest of code
       }
     }
