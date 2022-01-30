@@ -22,7 +22,9 @@ const Wrapper = styled.div`
       white-space: nowrap;
       overflow: hidden;
       display: block;
+      font-size: 1.7rem;
       max-width: 80%;
+      margin-bottom: 1.2rem;
     }
 
     & > h1 {
@@ -92,8 +94,10 @@ export const SearchRecord = styled.div`
   }
 `;
 
+const defaultPhrase = 'Tutaj się pojawi twoja fraza...';
+
 const AllAccounts: React.FC = () => {
-  const [phrase, setPhrase] = useState('...');
+  const [phrase, setPhrase] = useState(defaultPhrase);
   const searchInput = useRef<HTMLInputElement | null>(null);
 
   const handleSearch = (ev: KeyboardEvent) => {
@@ -101,7 +105,7 @@ const AllAccounts: React.FC = () => {
       const target = ev.target;
       const { value } = target as HTMLInputElement;
       const preparedValue = value.toLowerCase().trim();
-      setPhrase(value ? value.trim() : '...');
+      setPhrase(value ? value.trim() : defaultPhrase);
       if (preparedValue) {
         // Rest of code
       }
