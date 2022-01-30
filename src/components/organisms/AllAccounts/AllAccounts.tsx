@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Input from 'components/atoms/Input/Input';
 import styled from 'styled-components';
 
@@ -85,17 +85,44 @@ export const SearchRecord = styled.div`
 `;
 
 const AllAccounts: React.FC = () => {
+  const [phrase, setPhrase] = useState('...');
+  const searchInput = useRef<HTMLInputElement | null>(null);
+
+  const handleSearch = (ev: KeyboardEvent) => {
+    if (ev.target) {
+      const target = ev.target;
+      const { value } = target as HTMLInputElement;
+      setPhrase(value ? value : '...');
+      if (value) {
+        // Rest of code
+      }
+    }
+  };
+
+  useEffect(() => {
+    const input = searchInput.current;
+    if (input) {
+      input.focus();
+      input.addEventListener('keyup', handleSearch);
+    }
+    return () => {
+      if (input) {
+        input.removeEventListener('keyup', handleSearch);
+      }
+    };
+  }, [searchInput]);
+
   return (
     <Wrapper>
       <div>
         <h1>
           Wyszukaj <span>konto ucznia</span>
         </h1>
-        <Input type="search" placeholder="Np. Jan Kowalski 1D" />
+        <Input ref={searchInput} type="search" placeholder="Np. Jan Kowalski 1D" />
       </div>
       <div>
         <h1>
-          Wyniki wyszukiwania frazy: <span>dsalsda</span>
+          Wyniki wyszukiwania frazy: <span>{phrase}</span>
         </h1>
         <SearchRecords>
           <SearchRecord>
