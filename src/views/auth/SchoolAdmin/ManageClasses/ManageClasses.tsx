@@ -12,7 +12,17 @@ const ManageClasses = () => {
     <Wrapper>
       <InnerWrapper>
         <Heading>Zarządzaj użytkownikami</Heading>
-        <AddButton as="a" onClick={() => navigate('/school-admin/manage/add-class')} icon={AddIcon} />
+        <span
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '1rem',
+            fontSize: '1.4rem'
+          }}
+        >
+          Dodaj nową klasę <AddButton as="a" onClick={() => navigate('/school-admin/manage/add-class')} icon={AddIcon} />
+        </span>
       </InnerWrapper>
       <ContentWrapper>
         <Links>
