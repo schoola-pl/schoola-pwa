@@ -17,6 +17,14 @@ const Wrapper = styled.div`
       color: ${({ theme }) => theme.colors.accentGreen};
     }
 
+    span#cut {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      max-width: 80%;
+    }
+
     & > h1 {
       font-size: 2.2rem;
     }
@@ -123,7 +131,7 @@ const AllAccounts: React.FC = () => {
       </div>
       <div>
         <h1>
-          Wyniki wyszukiwania frazy: <span>{phrase}</span>
+          Wyniki wyszukiwania frazy: <span id="cut">{phrase}</span>
         </h1>
         <SearchRecords>
           <SearchRecord>
