@@ -24,7 +24,7 @@ const AllAccounts: React.FC = () => {
 
   const copyURL = () => {
     const cb = navigator.clipboard;
-    cb.writeText(window.location.href + '?q=' + phrase).then(() => {
+    cb.writeText(encodeURI(window.location.href.split('?', 1) + '?q=' + phrase)).then(() => {
       alert('Skopiowano URL do schowka!');
     });
   };
@@ -60,6 +60,22 @@ const AllAccounts: React.FC = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput, users.isLoading]);
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const query = urlParams.get('q');
+    if (!users.isLoading && query && searchInput.current) {
+      setPhrase(query);
+      const destructuredUsers = users.data as resultType[];
+      const founded = destructuredUsers.filter(
+        ({ first_name, last_name }) => first_name.toLowerCase().includes(query) || last_name.toLowerCase().includes(query)
+      );
+      setResults(founded);
+      searchInput.current.value = query;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users.isLoading, searchInput]);
 
   return (
     <Wrapper>
