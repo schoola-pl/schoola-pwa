@@ -22,7 +22,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
         <summary>{classYear}</summary>
         <div>
           {classes.isLoading ? (
-            'Loading...'
+            <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '1.4rem' }}>Wczytywanie klas...</p>
           ) : classes.data.data.length > 0 ? (
             classes.data.data.map(
               (
