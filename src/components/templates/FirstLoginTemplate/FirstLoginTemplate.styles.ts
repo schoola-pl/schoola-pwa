@@ -6,6 +6,7 @@ interface Props {
 
 export const Wrapper = styled.div`
   overflow-x: hidden;
+  position: fixed;
   height: 100vh;
   width: 100vw;
   display: flex;
