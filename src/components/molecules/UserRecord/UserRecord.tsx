@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import Loader from 'components/atoms/Loader/Loader';
 import { useUser } from 'hooks/useUser';
+import { copy } from 'helpers/copy';
 
 interface props {
   index: number;
@@ -37,9 +38,8 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
 
   const copyUserPasses = () => {
     if (createdUser) {
-      const cb = navigator.clipboard;
       const { login, password, name } = createdUser;
-      cb.writeText(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`).then(() => {
+      copy(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`, () => {
         setIsCopied(true);
         setInterval(() => {
           setIsCopied(false);

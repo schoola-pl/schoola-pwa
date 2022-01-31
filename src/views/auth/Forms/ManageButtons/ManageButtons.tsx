@@ -16,6 +16,7 @@ import { useModal } from 'hooks/useModal';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUser } from 'hooks/useUser';
+import { copy } from 'helpers/copy';
 
 interface props {
   className: string;
@@ -31,11 +32,10 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
 
   const handleAddUser = async (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
     const createdUser = await addNewUser(data, classId);
-    const cb = navigator.clipboard;
     const { login, password, name } = createdUser as { login: string; password: string; name: string };
-    cb.writeText(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`).then(() =>
-      alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!')
-    );
+    copy(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`, () => {
+      alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!');
+    });
     closeModal();
   };
 

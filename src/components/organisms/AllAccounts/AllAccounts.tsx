@@ -4,6 +4,7 @@ import { storeRoot, useGetUsersQuery } from 'store';
 import { useSelector } from 'react-redux';
 import { SearchRecord, SearchRecords, Wrapper } from './AllAccounts.styles';
 import Loading from 'components/molecules/Loading/Loading';
+import { copy } from 'helpers/copy';
 
 interface resultType {
   id: string;
@@ -23,8 +24,8 @@ const AllAccounts: React.FC = () => {
   const searchInput = useRef<HTMLInputElement | null>(null);
 
   const copyURL = () => {
-    const cb = navigator.clipboard;
-    cb.writeText(encodeURI(window.location.href.split('?', 1) + '?q=' + phrase)).then(() => {
+    const preparedURL = encodeURI(window.location.href.split('?', 1) + '?q=' + phrase);
+    copy(preparedURL, () => {
       alert('Skopiowano URL do schowka!');
     });
   };
