@@ -3,7 +3,7 @@ import Input from 'components/atoms/Input/Input';
 
 export const FormWrapper = styled.div`
   height: 75%;
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,8 +18,8 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   margin-top: 1rem;
-  width: 80%;
-  margin-left: 5rem;
+  width: 100%;
+  margin-left: 3.5rem;
   align-items: center;
 
   div {
@@ -35,19 +35,16 @@ export const Label = styled.label`
 
 export const StyledInput = styled(Input)`
   width: 90%;
-  max-width: 40rem;
 `;
 export const LawWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-row: repeat(1, 1fr);
-  justify-items: center;
+  display: flex;
+  flex-direction: row !important;
+  justify-content: flex-start;
+  align-items: center;
   margin-top: 2rem;
   width: 90%;
 `;
 export const LawLabel = styled(Label)`
-  grid-row: 1 / 1;
-  grid-column: 2 /2;
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 export const Statute = styled.a`

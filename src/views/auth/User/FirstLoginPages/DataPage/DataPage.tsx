@@ -19,12 +19,14 @@ const DataPage = () => (
           <Label htmlFor="password">Potwierdz hasło</Label>
           <StyledInput placeholder="hasło" type="password" />
         </div>
-        <LawWrapper>
-          <LawCheckbox name="law-stuff" type="checkbox" />
-          <LawLabel htmlFor="law-stuff">
-            Akceptuję <Statute href="#" /> i <PrivacyPolicy href="#" />
-          </LawLabel>
-        </LawWrapper>
+        <div>
+          <LawWrapper>
+            <LawCheckbox name="law-stuff" type="checkbox" />
+            <LawLabel htmlFor="law-stuff">
+              Akceptuję <Statute href="#" /> i <PrivacyPolicy href="#" />
+            </LawLabel>
+          </LawWrapper>
+        </div>
       </Form>
     </FormWrapper>
   </FirstLoginTemplate>

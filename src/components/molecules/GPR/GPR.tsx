@@ -1,7 +1,7 @@
-import { SignatureWrapper, PasswordInfoHeading, PasswordInfoWrapper, Signature } from './GPR.styles';
+import { Wrapper, SignatureWrapper, PasswordInfoHeading, PasswordInfoWrapper, Signature } from './GPR.styles';
 
 const GoodPasswordRules = () => (
-  <>
+  <Wrapper>
     <PasswordInfoHeading>Dobre hasło składa się z</PasswordInfoHeading>
     <PasswordInfoWrapper>
       <SignatureWrapper>
@@ -25,7 +25,7 @@ const GoodPasswordRules = () => (
         <div>Symboli</div>
       </SignatureWrapper>
     </PasswordInfoWrapper>
-  </>
+  </Wrapper>
 );
 
 export default GoodPasswordRules;
