@@ -6,7 +6,7 @@ interface Props {
 
 export const Wrapper = styled.div`
   overflow-x: hidden;
-  position: fixed;
+  position: relative;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -18,6 +18,8 @@ export const Wrapper = styled.div`
 export const WelcomeButton = styled.button<Props>`
   height: 6rem;
   width: 6rem;
+  bottom: 8%;
+  position: fixed;
   background-image: url(${({ icon }) => icon});
   background-repeat: no-repeat;
   background-color: ${({ theme }) => theme.colors.accentGreen};

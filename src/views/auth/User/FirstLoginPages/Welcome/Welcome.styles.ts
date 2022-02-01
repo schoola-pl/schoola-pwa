@@ -11,6 +11,7 @@ export const IconDiv = styled.div<Props>`
   background-position: center;
   height: 35rem;
   width: 35rem;
+  transform: translateY(-20%);
 `;
 
 export const Greetings = styled.div`
