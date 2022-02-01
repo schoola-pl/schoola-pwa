@@ -19,7 +19,6 @@ export const StyledInputWrapper = styled.div`
   width: 100%;
   backgroud-color: white;
   border: white;
-  overflow: scroll;
   border-radius: 2.5rem;
   padding: 1px;
 
@@ -63,7 +62,8 @@ export const StyledList = styled.ul`
   list-style: none;
   background-color: white;
   border-radius: 2rem;
-  overflow: scroll;
+  overflow-y: scroll;
+  max-height: 30rem;
   padding: 0px;
   li {
     font-size: ${({ theme }) => theme.fontSize.l}

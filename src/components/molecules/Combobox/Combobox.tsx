@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Wrapper, StyledCombobox, StyledHeading, StyledInputWrapper, StyledSelectedItem, StyledList, StyledDropdownToggle } from './Combobox.styles';
 import { useCombobox, useMultipleSelection } from 'downshift';
-
-const items = ['sport ⚽️', 'muzyka 🎧', 'gry 🎮', 'fotografia 📸', 'sztuka 🎭', 'książki📕', 'biznes 📈', 'netflix 🎥', 'imprezy 🎉', 'języki 🌎'];
+import { items } from './items';
 
 const Combobox = () => {
   const [inputValue, setInputValue] = useState<any>('');
@@ -10,7 +9,6 @@ const Combobox = () => {
   const getFilteredItems = () => items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue.toLowerCase()));
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
     inputValue,
-    defaultHighlightedIndex: 0, // after selection, highlight the first item.
     selectedItem: null,
     items: getFilteredItems(),
     stateReducer: (state, actionAndChanges) => {
