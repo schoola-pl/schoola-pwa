@@ -45,6 +45,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test ./tests",
     "test:e2e": "cypress open --project ./src/e2e",
+    "test:e2e:cmd": "cypress run --browser chrome --project ./src/e2e",
     "eject": "react-scripts eject"
   },
   "browserslist": {
