@@ -1,5 +1,5 @@
 import { StyledSidebarLink, Wrapper, StyledListItem, StyledList } from './UserSidebar.styles';
-import ProfileIcon from 'assets/icons/UserSidebarIcons/ProfileIcon.svg';
+import UserIcon from 'assets/icons/UserSidebarIcons/UserIcon.svg';
 import AppointmentIcon from 'assets/icons/UserSidebarIcons/AppointmentIcon.svg';
 import SpottedIcon from 'assets/icons/UserSidebarIcons/SpottedIcon.svg';
 import FeedIcon from 'assets/icons/UserSidebarIcons/FeedIcon.svg';
@@ -8,8 +8,8 @@ const UserSidebar = () => {
   return (
     <Wrapper>
       <StyledList key="808879786">
-        <StyledListItem name="Profile" to="/profile">
-          <StyledSidebarLink icon={ProfileIcon} />
+        <StyledListItem name="Profil" to="/profile">
+          <StyledSidebarLink icon={UserIcon} />
         </StyledListItem>
         <StyledListItem name="Wizyta" to="/appointment">
           <StyledSidebarLink icon={AppointmentIcon} />
