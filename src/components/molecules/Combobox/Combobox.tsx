@@ -62,9 +62,9 @@ const Combobox = () => {
             </StyledSelectedItem>
           ))}
 
-          <input {...getInputProps(getDropdownProps({ preventKeyAction: isOpen }))} />
+          <input placeholder="twoje zainteresowania" {...getInputProps(getDropdownProps({ preventKeyAction: isOpen }))} />
           <StyledDropdownToggle {...getToggleButtonProps()} aria-label={'toggle menu'}>
-            &#9660;
+            👇
           </StyledDropdownToggle>
         </StyledInputWrapper>
         <StyledList {...getMenuProps()}>
