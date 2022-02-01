@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const Wrapper = styled.div`
   position: fixed;
   border-radius: 3rem;
   width: 95%;
-  height: 9rem;
+  height: 8rem;
   background-color: ${({ theme }) => theme.colors.accentGreen};
   left: 2.6%;
   bottom: 2.5%;
@@ -20,7 +21,7 @@ export const StyledList = styled.ul`
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 1rem;
+  padding-left: 2rem;
 
   li {
     display: flex;
@@ -48,4 +49,9 @@ export const StyledListItem = styled(NavLink)<Props>`
       font-size: ${({ theme }) => theme.fontSize.s};
     }
   }
+`;
+
+export const StyledSidebarLink = styled(SidebarLink)`
+  padding-right: 1rem;
+  margin-right: 0rem;
 `;

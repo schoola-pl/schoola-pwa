@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import Home from 'views/auth/User/Home/Home';
+import Profile from 'views/auth/User/Profile/Profile';
 
 it('Renders application', () => {
-  render(<Home />);
+  render(<Profile />);
   expect(screen.getByText('Hello World!')).toBeInTheDocument();
 });

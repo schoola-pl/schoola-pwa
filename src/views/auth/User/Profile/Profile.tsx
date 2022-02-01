@@ -18,6 +18,6 @@ const StyledList = styled.ul`
   flex-direction: column;
 `;
 
-const Home = () => <UserTemplate>Home View</UserTemplate>;
+const Profile = () => <UserTemplate>Profile View</UserTemplate>;
 
-export default Home;
+export default Profile;
