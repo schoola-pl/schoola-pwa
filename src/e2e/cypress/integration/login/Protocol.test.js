@@ -13,7 +13,7 @@ const schoolAdmin = {
 
 const student = {
   login: 'test_student',
-  password: 'Student321!'
+  password: 'pChQEjGmkYelXZ9omE4HA'
 };
 
 describe('Login protocols | Schoola App', () => {
@@ -46,13 +46,22 @@ describe('Login protocols | Schoola App', () => {
     cy.findByText(/spróbuj ponownie/i).should('exist');
   });
 
-  it('Should give access to the valid user', () => {
+  it('Should give access to the valid user (School Admin)', () => {
     cy.get(`[data-cy=admin-view]`).should('not.exist');
     cy.findByText(/zaloguj się/i).should('exist');
     cy.findByPlaceholderText(/login/i).should('exist').type(schoolAdmin.login);
     cy.findByPlaceholderText(/hasło/i).should('exist').type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
     cy.get(`[data-cy=admin-view]`).should('exist');
+  });
+
+  it('Should give access to the valid user (Student)', () => {
+    cy.get(`[data-cy=student-view]`).should('not.exist');
+    cy.findByText(/zaloguj się/i).should('exist');
+    cy.findByPlaceholderText(/login/i).should('exist').type(student.login);
+    cy.findByPlaceholderText(/hasło/i).should('exist').type(student.password);
+    cy.findByText(/zaloguj się/i).click();
+    cy.get(`[data-cy=student-view]`).should('exist');
   });
 });
 
