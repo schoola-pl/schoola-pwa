@@ -10,7 +10,7 @@ import Error404 from '../../../views/Error404/Error404';
 import Settings from '../../../views/auth/SchoolAdmin/Settings/Settings';
 
 const SchoolAdminTemplate: React.FC = () => (
-  <Wrapper>
+  <Wrapper data-cy="admin-view">
     <AdminSidebar />
     <Routes>
       <Route path="/" element={<Dashboard />} />
