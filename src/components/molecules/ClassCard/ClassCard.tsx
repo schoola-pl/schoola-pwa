@@ -5,6 +5,7 @@ import EditIcon from 'assets/icons/EditIcon.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { theme } from 'assets/styles/theme';
 
 interface Props {
   classYear: string;
@@ -19,7 +20,20 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
   return (
     <div>
       <ClassDetails>
-        <summary>{classYear}</summary>
+        <summary>
+          {classYear}{' '}
+          <span
+            style={{
+              borderRadius: '0.6rem',
+              marginLeft: '0.6rem',
+              padding: '0.2rem 0.65rem',
+              color: 'white',
+              backgroundColor: theme.colors.accentBlue
+            }}
+          >
+            {!classes.isLoading && classes.data.data.length}
+          </span>
+        </summary>
         <div>
           {classes.isLoading ? (
             <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '1.4rem' }}>Wczytywanie klas...</p>
