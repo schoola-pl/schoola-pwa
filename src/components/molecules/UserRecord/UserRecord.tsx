@@ -9,7 +9,7 @@ import { copy } from 'helpers/copy';
 
 interface props {
   index: number;
-  // eslint-ignore-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setAddedUser: any;
 }
 
@@ -58,6 +58,7 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
           error={errors.name}
           {...registerUser('name', {
             required: true,
+            // eslint-disable-next-line
             pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
           })}
           disabled={isSuccess}
