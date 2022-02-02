@@ -25,3 +25,10 @@ jobs:
       run: npm ci
     - name: Testing application...
       run: npm test
+    - name: Testing (e2e) application...
+      uses: cypress-io/github-action@v2
+      with:
+        build: npm run build
+        start: npm start
+        browser: chrome
+        project: ./src/e2e/
