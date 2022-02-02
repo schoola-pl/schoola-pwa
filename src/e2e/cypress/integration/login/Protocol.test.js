@@ -42,7 +42,7 @@ describe('Login protocols | Schoola App', () => {
   });
 
   it('Checks does form send request to the API', () => {
-    cy.intercept('POST', 'https://schoola-strapi.herokuapp.com/api/auth/local', { user: { TextRole: 'School Admin' } }).as('login');
+    cy.intercept(`${Cypress.env('API_URL')}/auth/local`, { user: { TextRole: 'School Admin' } }).as('login');
     cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
     cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
@@ -52,7 +52,7 @@ describe('Login protocols | Schoola App', () => {
   });
 
   it('Checks does form request to the API is valid', () => {
-    cy.intercept('https://schoola-strapi.herokuapp.com/api/auth/local', { user: { TextRole: 'School Admin' } }).as('login');
+    cy.intercept(`${Cypress.env('API_URL')}/auth/local`, { user: { TextRole: 'School Admin' } }).as('login');
     cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
     cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
