@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
+import NotificationIcon from 'assets/icons/NotificationIcon.svg';
+import { Link } from 'react-router-dom';
 
 const Logo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
@@ -27,13 +29,13 @@ type Props = {
   icon?: string;
 };
 
-const UserPicture = styled.div<Props>`
+const UserPicture = styled(Link)<Props>`
   background-color: white;
   border-radius: 25rem;
-  height: 6rem;
-  width: 6rem;
+  height: 5rem;
+  width: 5rem;
   background-image: url(https://avatars.dicebear.com/api/miniavs/:teodor-wolski.svg);
-  border: 3px solid ${({ theme }) => theme.colors.accentBlue};
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.19);
   background-repeat: no-repeat;
   background-color: white;
   background-size: 100%;
@@ -41,18 +43,28 @@ const UserPicture = styled.div<Props>`
 `;
 
 const InnerWrapper = styled.div`
-  margin-left: 13rem;
+  margin-left: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledSidebarLink = styled(SidebarLink)`
+  margin: 1rem;
+  padding: 2rem;
+`;
+
+const Notification = styled(StyledSidebarLink)`
+  transform: translateX(25%);
 `;
 
 const TopBar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
     <InnerWrapper>
-      <SidebarLink icon={SettingsIcon} />
-      <UserPicture />
+      <Notification icon={NotificationIcon} />
+      <StyledSidebarLink icon={SettingsIcon} />
+      <UserPicture to="/profile" />
     </InnerWrapper>
   </Wrapper>
 );
