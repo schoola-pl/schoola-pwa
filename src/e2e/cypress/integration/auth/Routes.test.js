@@ -3,7 +3,6 @@
 
 describe('Auth routes | Schoola App', () => {
   beforeEach(() => {
-    cy.intercept(`${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.visit('/');
   });
 
@@ -12,6 +11,7 @@ describe('Auth routes | Schoola App', () => {
   });
 
   it("Should redirect to '/school-admin' if School Admin is authenticated", () => {
+    cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
@@ -21,6 +21,7 @@ describe('Auth routes | Schoola App', () => {
   });
 
   it("Should redirect to '/login' if role hasn't permissions to visit a path", () => {
+    cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
