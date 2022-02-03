@@ -16,11 +16,10 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  border-bottom: px solid ${({ theme }) => theme.colors.selectedItemBorderGrey};
+  justify-content: space-between;
 `;
 
 type Props = {
@@ -35,13 +34,11 @@ const UserPicture = styled.div<Props>`
   background-image: url(https://avatars.dicebear.com/api/miniavs/:teodor-wolski.svg);
   border: 3px solid ${({ theme }) => theme.colors.accentBlue};
   background-repeat: no-repeat;
-  background-color: white;
   background-size: 100%;
   background-position: center;
 `;
 
 const InnerWrapper = styled.div`
-  margin-left: 13rem;
   display: flex;
   justify-content: center;
   align-items: center;
