@@ -95,7 +95,7 @@ export const UserProvider: React.FC = ({ children }) => {
       email: `${nanoid()}@email.com`,
       first_name: userData.first_name.charAt(0).toUpperCase() + userData.first_name.slice(1),
       last_name: userData.last_name.charAt(0).toUpperCase() + userData.last_name.slice(1),
-      confirmed: true,
+      confirmed: false,
       blocked: false,
       Birthday: new Date(userData.birthday).toISOString(),
       avatar: null,
