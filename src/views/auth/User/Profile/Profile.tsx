@@ -8,13 +8,14 @@ import Error404 from 'views/Error404/Error404';
 import Home from 'views/auth/User/Home/Home';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
+import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 
 const Profile = () => {
   const user = useSelector((state: storeRoot) => state.user);
 
   return (
     <>
-      {!user.confirmed && <p>Niepotwierdzony!</p>}
+      {!user?.confirmed && <FirstLoginTemplate />}
       <UserTemplate>
         <Routes>
           <Route path="/" element={<Navigate to="home" />} />

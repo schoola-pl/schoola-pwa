@@ -6,7 +6,11 @@ interface Props {
 
 export const Wrapper = styled.div`
   overflow-x: hidden;
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999999999;
+  background-color: ${({ theme }) => theme.colors.accentBrown};
   height: 100vh;
   width: 100vw;
   display: flex;
