@@ -11,11 +11,6 @@ const schoolAdmin = {
   password: 'Admin321!'
 };
 
-const student = {
-  login: 'test_student',
-  password: 'pChQEjGmkYelXZ9omE4HA'
-};
-
 describe('Login protocols | Schoola App', () => {
   beforeEach(() => {
     localStorage.removeItem('jwt');
@@ -46,22 +41,27 @@ describe('Login protocols | Schoola App', () => {
     cy.findByText(/spróbuj ponownie/i).should('exist');
   });
 
-  it('Should give access to the valid user (School Admin)', () => {
-    cy.get(`[data-cy=admin-view]`).should('not.exist');
-    cy.findByText(/zaloguj się/i).should('exist');
-    cy.findByPlaceholderText(/login/i).should('exist').type(schoolAdmin.login);
-    cy.findByPlaceholderText(/hasło/i).should('exist').type(schoolAdmin.password);
+  it('Checks does form send request to the API', () => {
+    cy.intercept(`${Cypress.env('API_URL')}/auth/local`, { user: { TextRole: 'School Admin' } }).as('login');
+    cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
+    cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
-    cy.get(`[data-cy=admin-view]`).should('exist');
+    cy.wait('@login').then((interception) => {
+      assert.isNotNull(interception.response.body);
+    });
   });
 
-  it('Should give access to the valid user (Student)', () => {
-    cy.get(`[data-cy=student-view]`).should('not.exist');
-    cy.findByText(/zaloguj się/i).should('exist');
-    cy.findByPlaceholderText(/login/i).should('exist').type(student.login);
-    cy.findByPlaceholderText(/hasło/i).should('exist').type(student.password);
+  it('Checks does form request to the API is valid', () => {
+    cy.intercept(`${Cypress.env('API_URL')}/auth/local`, { user: { TextRole: 'School Admin' } }).as('login');
+    cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
+    cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
-    cy.get(`[data-cy=student-view]`).should('exist');
+    cy.wait('@login').then((interception) => {
+      assert.deepEqual(interception.request.body, {
+        identifier: schoolAdmin.login,
+        password: schoolAdmin.password
+      });
+    });
   });
 });
 
