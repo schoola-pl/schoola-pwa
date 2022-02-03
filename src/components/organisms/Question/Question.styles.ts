@@ -92,13 +92,14 @@ export const ActionsWrapper = styled.div`
   display: flex;
   transform: translateY(-30%);
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-around;
   margin-right: 0.75rem;
 `;
 
 export const StyledComments = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 9rem;
   height: 4rem;
   width: 12rem;
   border-radius: 1rem;
@@ -112,4 +113,9 @@ export const StyledComments = styled.div`
       margin-right: 0.5rem;
     }
   }
+`;
+
+export const LikeWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;

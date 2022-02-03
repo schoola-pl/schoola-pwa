@@ -7,13 +7,14 @@ import {
   ProfilePicture,
   QuestionInfo,
   QuestionInnerWrapper,
-  ToggleMenu
+  ToggleMenu,
+  LikeWrapper
 } from './Question.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
-
 import CommentIcon from 'assets/icons/CommentIcon.svg';
+import Heart from 'components/atoms/Heart/Heart';
 
 const Question = () => {
   return (
@@ -32,6 +33,9 @@ const Question = () => {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing?</p>
       </QuestionInnerWrapper>
       <ActionsWrapper>
+        <LikeWrapper>
+          <Heart />
+        </LikeWrapper>
         <StyledComments>
           <SidebarLink icon={CommentIcon} />
           <p>
