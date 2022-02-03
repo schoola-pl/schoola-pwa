@@ -46,7 +46,7 @@ describe('Login protocols | Schoola App', () => {
     cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
     cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
-    cy.wait('@login', { timeout: 15000 }).then((interception) => {
+    cy.wait('@login').then((interception) => {
       assert.isNotNull(interception.response.body);
     });
   });
@@ -56,7 +56,7 @@ describe('Login protocols | Schoola App', () => {
     cy.findByPlaceholderText(/login/i).type(schoolAdmin.login);
     cy.findByPlaceholderText(/hasło/i).type(schoolAdmin.password);
     cy.findByText(/zaloguj się/i).click();
-    cy.wait('@login', { timeout: 15000 }).then((interception) => {
+    cy.wait('@login').then((interception) => {
       assert.deepEqual(interception.request.body, {
         identifier: schoolAdmin.login,
         password: schoolAdmin.password

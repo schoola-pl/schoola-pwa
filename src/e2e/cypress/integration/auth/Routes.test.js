@@ -15,7 +15,7 @@ describe('Auth routes | Schoola App', () => {
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
-    cy.wait('@login', { timeout: 15000 }).then(() => {
+    cy.wait('@login').then(() => {
       cy.url().should('include', '/school-admin');
     });
   });
@@ -24,7 +24,7 @@ describe('Auth routes | Schoola App', () => {
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
-    cy.wait('@login', { timeout: 15000 }).then(() => {
+    cy.wait('@login').then(() => {
       cy.url().should('include', '/school-admin');
       cy.visit('/student');
       cy.url().should('include', '/login');
