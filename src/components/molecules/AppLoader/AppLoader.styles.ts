@@ -14,6 +14,7 @@ export const Background = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 25px;
+  z-index: 9999999999999999;
 `;
 
 export const Text = styled.p`

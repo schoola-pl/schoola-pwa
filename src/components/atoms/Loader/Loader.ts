@@ -9,7 +9,9 @@ const rotate = keyframes`
   }
 `;
 
-const Loader = styled.div`
+const Loader = styled.div.attrs({
+  'data-testid': 'loader'
+})<{ fitContent?: boolean }>`
   width: 110px;
   height: 110px;
   background: ${({ theme }) => theme.colors.accentGreen};
@@ -17,6 +19,14 @@ const Loader = styled.div`
   position: relative;
   animation: ${rotate} 1s ease-in-out infinite;
 
+  ${({ fitContent, theme }) =>
+    fitContent &&
+    `
+    --loadingColor: ${theme.colors.accentGreen};
+    height: 25px;
+    width: 25px;
+    background: ${theme.colors.accentBlue};
+  `}
   &::before {
     content: '';
     position: absolute;

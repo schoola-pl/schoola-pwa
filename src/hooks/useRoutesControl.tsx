@@ -11,7 +11,7 @@ import { useAppLoading } from './useAppLoading';
 interface RouteContextTypes {
   getUserData: (token: string) => Promise<AxiosResponse<authUser | null> | AxiosError>;
   checkUser: () => Promise<boolean>;
-  unlockRoutes: (jwt: string, userData: authUser) => void;
+  unlockRoutes: (jwt: string, userData: authUser, redirectTo?: string) => void;
   blockRoutes: (redirectTo?: string) => void;
 }
 
@@ -63,26 +63,27 @@ export const RouteProvider: React.FC = ({ children }) => {
   };
 
   // Unlock routes if JWT token exists and user is authenticated
-  const unlockRoutes = (jwt: string, userData: authUser) => {
+  const unlockRoutes = (jwt: string, userData: authUser, redirectTo = dashboardRoute) => {
     if (getJWT()) {
-      navigate(dashboardRoute);
+      navigate(redirectTo);
     } else {
       try {
         dispatch(addUser({ user: userData }));
         setJWT(jwt);
-        navigate(dashboardRoute);
+        navigate(redirectTo);
       } catch (err) {
         removeJWT();
+        dispatch(removeUser({}));
         navigate(loginRoute);
       }
     }
   };
 
   // Block routes
-  const blockRoutes = (redirectTo = loginRoute) => {
+  const blockRoutes = () => {
     removeJWT();
     dispatch(removeUser({}));
-    navigate(redirectTo);
+    navigate(loginRoute);
     setAppLoading(false);
   };
 

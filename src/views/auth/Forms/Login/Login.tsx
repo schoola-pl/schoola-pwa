@@ -3,11 +3,12 @@ import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.st
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
-import { useRoutesControl } from '../../../../hooks/useRoutesControl';
-import { getJWT } from '../../../../helpers/jwt';
-import { dashboardRoute } from '../../../../routes';
+import { useRoutesControl } from 'hooks/useRoutesControl';
+import { getJWT } from 'helpers/jwt';
+import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
+import { getPathForRole } from 'helpers/roles';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -22,9 +23,9 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (getJWT()) {
-      navigate(dashboardRoute);
+      navigate(dashboardRoute.replaceAll('*', ''));
     } else if (isSuccess) {
-      unlockRoutes(data.jwt, data.user);
+      unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
     }
     // eslint-disable-next-line
   }, [data]);
@@ -44,7 +45,8 @@ const Login: React.FC = () => {
           <StyledInput
             type="text"
             placeholder="Login"
-            error={!!formError.login}
+            data-cy="login-username"
+            error={!!formError.login || isError}
             {...register('login', {
               required: true,
               minLength: 2
@@ -54,14 +56,15 @@ const Login: React.FC = () => {
           <StyledInput
             type="password"
             placeholder="Hasło"
-            error={!!formError.password}
+            data-cy="login-password"
+            error={!!formError.password || isError}
             {...register('password', {
               required: true,
               minLength: 6
             })}
           />
           {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
-          <StyledButton type="submit">
+          <StyledButton error={isError} type="submit" data-cy="login-button">
             {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
           </StyledButton>
         </Form>
