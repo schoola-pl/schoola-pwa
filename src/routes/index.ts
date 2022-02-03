@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '../views/auth/Forms/Login/Login';
-import Home from '../views/Home';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
+import Profile from 'views/auth/User/Profile/Profile';
 
 interface routesInterface {
   // Path to component
@@ -40,7 +40,7 @@ const loginRoute = paths.login;
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Home, isProtected: true, role: roles.student },
+  { path: paths.student, Component: Profile, isProtected: true, role: roles.student },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 
