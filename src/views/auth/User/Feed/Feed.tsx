@@ -1,9 +1,3 @@
-import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
-
-const Feed = () => (
-  <UserTemplate>
-    <h1>Feed View</h1>
-  </UserTemplate>
-);
+const Feed = () => <h1>Feed View</h1>;
 
 export default Feed;
