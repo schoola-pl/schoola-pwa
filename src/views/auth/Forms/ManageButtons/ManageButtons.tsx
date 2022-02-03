@@ -27,7 +27,7 @@ interface props {
 
 const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => {
   const { openModal, closeModal } = useModal();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { addNewUser } = useUser();
 
   const handleAddUser = async (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
@@ -37,6 +37,7 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
       alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!');
     });
     closeModal();
+    reset();
   };
 
   return (
