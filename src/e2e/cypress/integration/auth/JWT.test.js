@@ -6,6 +6,7 @@ const token = 'jwt';
 describe('Auth JWT | Schoola App', () => {
   beforeEach(() => {
     cy.intercept(`${Cypress.env('API_URL')}/auth/local`).as('login');
+    cy.intercept(`${Cypress.env('API_URL')}/users/me`).as('get-me');
     cy.visit('/');
     localStorage.removeItem(token);
     assert.isNull(localStorage.getItem(token));
@@ -15,13 +16,13 @@ describe('Auth JWT | Schoola App', () => {
   });
 
   it('Checks is JWT correctly created', () => {
-    cy.wait('@login').then(() => {
+    cy.wait(['@login', '@get-me'], { timeout: 15000 }).then(() => {
       assert.isNotNull(localStorage.getItem(token));
     });
   });
 
   it('Checks does JWT is valid', () => {
-    cy.wait('@login').then(() => {
+    cy.wait(['@login', '@get-me'], { timeout: 15000 }).then(() => {
       const jwt = localStorage.getItem(token);
       cy.request({
         url: `${Cypress.env('API_URL')}/users/me`,
@@ -37,7 +38,7 @@ describe('Auth JWT | Schoola App', () => {
   });
 
   it('Checks will API throw new error when JWT is wrong', () => {
-    cy.wait('@login').then(() => {
+    cy.wait(['@login', '@get-me'], { timeout: 15000 }).then(() => {
       const invalidJWT = `TestJWTTokenForCypressTestNumber${Math.random() * 1000}`;
       cy.request({
         url: `${Cypress.env('API_URL')}/users/me`,
