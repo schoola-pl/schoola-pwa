@@ -1,8 +1,4 @@
-import styled from 'styled-components';
-
-interface Props {
-  icon: string;
-}
+import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled.div`
   overflow-x: hidden;
@@ -13,16 +9,16 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.accentBrown};
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
 `;
 
-export const WelcomeButton = styled.button<Props>`
+export const WelcomeButton = styled.button<{
+  icon: string;
+}>`
   height: 6rem;
   width: 6rem;
-  bottom: 8%;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
   position: fixed;
   background-image: url(${({ icon }) => icon});
   background-repeat: no-repeat;
@@ -31,7 +27,25 @@ export const WelcomeButton = styled.button<Props>`
   background-size: 75%;
   background-position: center;
   cursor: pointer;
-  margin-bottom: 5rem;
   border: none;
-  transform: translateY(50%);
+`;
+
+const fadeInOut = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+export const Animated = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & > div {
+    animation: ${fadeInOut} 0.5s ease-in-out;
+  }
 `;
