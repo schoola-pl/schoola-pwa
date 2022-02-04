@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 import Combobox from 'components/molecules/Combobox/Combobox';
 
 const Wrapper = styled.div`
@@ -9,11 +8,9 @@ const Wrapper = styled.div`
 
 const Hobbies = () => {
   return (
-    <FirstLoginTemplate>
-      <Wrapper>
-        <Combobox />
-      </Wrapper>
-    </FirstLoginTemplate>
+    <Wrapper>
+      <Combobox />
+    </Wrapper>
   );
 };
 
