@@ -5,8 +5,12 @@ const Welcome = () => {
   return (
     <>
       <Greetings>
-        <h1>Witamy w aplikacji schoola!</h1>
-        <p>Zanim przejdziemy do korzystania z aplikacji, musisz skonfigurować swoje konto</p>
+        <h1>
+          Witamy w aplikacji <span>schoola</span>!
+        </h1>
+        <p>
+          Zanim przejdziemy do korzystania z aplikacji, musisz skonfigurować <span>swoje konto</span>.
+        </p>
       </Greetings>
       <IconDiv icon={WelcomeIcon} />
     </>

@@ -8,6 +8,9 @@ export const Wrapper = styled.div`
   z-index: 9999999999;
   background-color: ${({ theme }) => theme.colors.accentBrown};
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
 `;
 
