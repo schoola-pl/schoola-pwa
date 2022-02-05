@@ -10,6 +10,7 @@ import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
 const FirstLoginTemplate: React.FC = () => {
   const [counter, setCounter] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [isReady, setReadyState] = useState(true);
 
   const nextStep = () => {
     if (counter < 2) {
@@ -25,9 +26,9 @@ const FirstLoginTemplate: React.FC = () => {
       case 0:
         return <Welcome />;
       case 1:
-        return <DataPage />;
+        return <DataPage setReadyState={setReadyState} />;
       case 2:
-        return <Hobbies />;
+        return <Hobbies setReadyState={setReadyState} />;
       case 3:
         return <FinishPage />;
       default:
@@ -38,7 +39,7 @@ const FirstLoginTemplate: React.FC = () => {
   return (
     <Wrapper>
       <Animated>{decideStep(counter)}</Animated>
-      {!isFinished && <WelcomeButton onClick={nextStep} icon={ArrowIcon} />}
+      {!isFinished && <WelcomeButton isDisabled={!isReady} onClick={nextStep} icon={ArrowIcon} />}
       {!isFinished && <StepCircles step={counter} />}
     </Wrapper>
   );

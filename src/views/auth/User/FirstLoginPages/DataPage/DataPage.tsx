@@ -1,11 +1,15 @@
 import { Form, FormWrapper, Label, LawCheckbox, LawLabel, LawWrapper, PrivacyPolicy, Statute, StyledInput } from './DataPage.styles';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUser } from 'hooks/useUser';
 import Button from 'components/atoms/Button/Button';
 
-const DataPage = () => {
+interface props {
+  setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DataPage: React.FC<props> = ({ setReadyState }) => {
   const {
     register,
     handleSubmit,
@@ -15,6 +19,10 @@ const DataPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { resetPassword, updateSettings } = useUser();
 
+  useEffect(() => {
+    setReadyState(false);
+  }, []);
+
   const handleChangeData = ({ newEmail, newPassword, newPasswordVerify }: { [key: string]: string }) => {
     if (isSuccess) return;
     if (newPassword !== newPasswordVerify) return setIsSame(true);
@@ -22,6 +30,7 @@ const DataPage = () => {
     resetPassword(newPassword);
     updateSettings({ email: newEmail });
     setIsSuccess(true);
+    setReadyState(true);
   };
 
   return (

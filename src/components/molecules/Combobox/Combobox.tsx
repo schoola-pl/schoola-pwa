@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StyledCombobox, StyledDropdownToggle, StyledHeading, StyledInputWrapper, StyledList, StyledSelectedItem, Wrapper } from './Combobox.styles';
 import { useCombobox, useMultipleSelection } from 'downshift';
 import { items } from './items';
 import { theme } from 'assets/styles/theme';
 
-const Combobox = () => {
+interface props {
+  setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Combobox: React.FC<props> = ({ setReadyState }) => {
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () =>
@@ -36,8 +40,10 @@ const Combobox = () => {
           if (selectedItem && selectedItems.length <= 2) {
             setInputValue('');
             // TODO: Add selected item to user in database
+            if (selectedItems.length === 2) setReadyState(true);
             addSelectedItem(selectedItem);
           }
+
           break;
         default:
           break;
@@ -56,10 +62,12 @@ const Combobox = () => {
             {selectedItems.map((selectedItem, index) => (
               <StyledSelectedItem key={`selected-item-${index}`} {...getSelectedItemProps({ selectedItem, index })}>
                 {selectedItem}
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     // TODO: Remove selected item from user in database
+                    setReadyState(false);
                     removeSelectedItem(selectedItem);
                   }}
                 >

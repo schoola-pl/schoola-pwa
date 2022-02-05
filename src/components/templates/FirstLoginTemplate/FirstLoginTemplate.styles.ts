@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
 
 export const WelcomeButton = styled.button<{
   icon: string;
+  isDisabled: boolean;
 }>`
   height: 6rem;
   width: 6rem;
@@ -31,6 +32,16 @@ export const WelcomeButton = styled.button<{
   background-position: center;
   cursor: pointer;
   border: none;
+  opacity: 1;
+  transition: opacity 0.15s ease-in-out;
+
+  ${({ isDisabled }) =>
+    isDisabled &&
+    `
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+     `}
 `;
 
 const fadeInOut = keyframes`
