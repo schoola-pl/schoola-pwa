@@ -14,4 +14,5 @@ export type settingsType = {
   Birthday?: schoolUser['Birthday'];
   username?: schoolUser['username'];
   TextRole?: schoolUser['TextRole'];
+  confirmed?: schoolUser['confirmed'];
 };

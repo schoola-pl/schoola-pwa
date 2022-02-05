@@ -131,12 +131,12 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method updates the user settings in the redux store & database
   const updateSettings = (settings: settingsType, userId?: number) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
-      const tempObj: { [key: string]: string } = {};
+      const tempObj: { [key: string]: string | boolean } = {};
       const settingsArray = Object.entries(settings);
       const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
         if (value !== '') {
-          if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
+          if (typeof value !== 'boolean' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
