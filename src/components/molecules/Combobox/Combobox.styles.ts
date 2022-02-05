@@ -45,6 +45,7 @@ export const StyledDropdownToggle = styled.button`
   font-size: 25px;
   background-color: transparent;
   border: none;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
 `;
 
 export const StyledSelectedItem = styled.span`
