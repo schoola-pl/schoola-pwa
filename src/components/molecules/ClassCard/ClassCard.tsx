@@ -64,7 +64,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
           ) : (
             <p style={{ fontSize: '1.3rem', textAlign: 'center', margin: '20px 0' }}>
               Pusto jak na pustyni!{' '}
-              <NavLink style={{ color: 'black' }} to={`add-class/${classLevel}`}>
+              <NavLink style={{ color: 'black' }} to={`/school-admin/manage/add-class/${classLevel}`}>
                 Dodaj
               </NavLink>
             </p>
