@@ -50,14 +50,14 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
                 { attributes: { className: string; classLevel: number; users: { data: any[] } } },
                 index: number
               ) => (
-                <Wrapper onClick={() => navigate(`${classLevel}${className}`)} key={index}>
+                <Wrapper key={index}>
                   <Circle>
                     <h1>{`${classLevel}${className}`}</h1>
                   </Circle>
                   <p>
                     Liczba uczniów: <strong>{usersCount.length}</strong>
                   </p>
-                  <EditLink icon={EditIcon} />
+                  <EditLink onClick={() => navigate(`${classLevel}${className}`)} icon={EditIcon} />
                 </Wrapper>
               )
             )
