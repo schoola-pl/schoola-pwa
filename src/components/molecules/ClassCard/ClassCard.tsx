@@ -31,7 +31,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
               backgroundColor: theme.colors.accentBlue
             }}
           >
-            {!classes.isLoading && classes.data.data.length}
+            {!classes.isLoading ? classes.data.data.length : '...'}
           </span>
         </summary>
         <div>
