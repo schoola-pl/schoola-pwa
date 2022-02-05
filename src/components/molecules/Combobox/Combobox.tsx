@@ -35,6 +35,7 @@ const Combobox = () => {
         case useCombobox.stateChangeTypes.InputBlur:
           if (selectedItem && selectedItems.length <= 2) {
             setInputValue('');
+            // TODO: Add selected item to user in database
             addSelectedItem(selectedItem);
           }
           break;
@@ -58,6 +59,7 @@ const Combobox = () => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    // TODO: Remove selected item from user in database
                     removeSelectedItem(selectedItem);
                   }}
                 >
