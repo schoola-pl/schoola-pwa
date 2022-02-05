@@ -28,7 +28,7 @@ export const StyledInputWrapper = styled.div`
     font-size: 1.5rem;
     border-radius: 2rem;
 
-    &::placeholder {
+    &:placeholder {
       font-size: 1rem;
     }
 
