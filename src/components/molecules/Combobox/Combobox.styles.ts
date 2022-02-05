@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-top: 18rem;
-  padding-bottom: 7rem;
   width: 100%;
   height: 100%;
   display: flex;
@@ -17,7 +15,6 @@ export const StyledInputWrapper = styled.div`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   position: relative;
   width: 100%;
-  backgroud-color: white;
   border: white;
   border-radius: 2.5rem;
   padding: 1px;
@@ -31,7 +28,7 @@ export const StyledInputWrapper = styled.div`
     font-size: 1.5rem;
     border-radius: 2rem;
 
-    &:placeholder {
+    &::placeholder {
       font-size: 1rem;
     }
 
@@ -52,25 +49,31 @@ export const StyledDropdownToggle = styled.button`
 
 export const StyledSelectedItem = styled.span`
   display: inline-block;
-  background-color: white;
-  padding: 2px 4px;
-  border-radius: 2rem;
-  margin: 2px;
+  background-color: ${({ theme }) => theme.colors.accentBlue};
+  opacity: 0.8;
+  padding: 2px 5px 2px 8px;
+  color: white;
+  border-radius: 1rem;
+  margin: 0.4rem;
 
   button {
+    color: currentColor;
+    cursor: pointer;
     border: none;
-    background-color: white;
+    background-color: transparent;
   }
 `;
 
 export const StyledList = styled.ul`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   list-style: none;
+  width: 300px;
+  position: absolute;
   background-color: white;
   border-radius: 2rem;
   overflow-y: scroll;
-  max-height: 30rem;
-  padding: 0px;
+  max-height: 25rem;
+  padding: 0;
 
   li {
     border: 1px solid #f7f8fa;
