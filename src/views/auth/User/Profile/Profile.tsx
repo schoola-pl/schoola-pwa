@@ -15,17 +15,20 @@ const Profile = () => {
 
   return (
     <>
-      {!user?.confirmed && <FirstLoginTemplate />}
-      <UserTemplate>
-        <Routes>
-          <Route path="/" element={<Navigate to="home" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/appointment" element={<Appointment />} />
-          <Route path="/spotted" element={<Spotted />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </UserTemplate>
+      {user && !user.confirmed ? (
+        <FirstLoginTemplate />
+      ) : (
+        <UserTemplate>
+          <Routes>
+            <Route path="/" element={<Navigate to="home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/appointment" element={<Appointment />} />
+            <Route path="/spotted" element={<Spotted />} />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="*" element={<Error404 />} />
+          </Routes>
+        </UserTemplate>
+      )}
     </>
   );
 };
