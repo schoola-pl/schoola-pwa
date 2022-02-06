@@ -25,7 +25,8 @@ interface UserContextTypes {
   resetPassword: (newPassword: string) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
-    customClassId?: number
+    customClassId?: number,
+    customClassName?: string
   ) => Promise<
     | {
         id: number;
@@ -66,7 +67,7 @@ export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [addUserToDatabase] = useUpdateUserMutation();
-  const { classId } = useClass();
+  const { classId, className } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
   const [addUser, { isLoading }] = useAddUserToClassMutation();
   const usersCount = useGetUsersCountQuery({ schoolId: user?.schoolId || null });
@@ -84,7 +85,8 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method adds new user
   const addNewUser = async (
     userData: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
-    customClassId?: number
+    customClassId?: number,
+    customClassName?: string
   ) => {
     if (isLoading) return;
     const dividedName = userData.name.split(' ');
@@ -101,6 +103,7 @@ export const UserProvider: React.FC = ({ children }) => {
       avatar: null,
       schoolId: user?.schoolId || null,
       TextRole: userData.TextRole,
+      TextClassName: customClassName || className.split(' ')[1],
       role: getRoleFromText(userData?.TextRole || 'Student'),
       class: customClassId || classId,
       password: nanoid()

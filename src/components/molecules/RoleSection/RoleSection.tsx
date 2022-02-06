@@ -8,6 +8,7 @@ import { storeRoot, useGetUsersQuery } from 'store';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import paginate from 'paginatejson';
+import { useNavigate } from 'react-router';
 
 interface props {
   role: string;
@@ -18,6 +19,7 @@ interface roleUser {
   id: string;
   first_name: string;
   last_name: string;
+  TextClassName: string;
 }
 
 const RoleSection: React.FC<props> = ({ role, title }) => {
@@ -28,6 +30,7 @@ const RoleSection: React.FC<props> = ({ role, title }) => {
   });
   const [currentPage, setCurrentPage] = useState<paginatedOptions<roleUser> | null>(null);
   const [data, setData] = useState<roleUser[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!roles.isLoading) {
@@ -50,9 +53,9 @@ const RoleSection: React.FC<props> = ({ role, title }) => {
       <div>
         {!roles.isLoading ? (
           data.length > 0 ? (
-            data.map(({ first_name, last_name }) => {
+            data.map(({ first_name, last_name, TextClassName }) => {
               return (
-                <RoleRecord>
+                <RoleRecord onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
                   {first_name} {last_name}
                 </RoleRecord>
               );
