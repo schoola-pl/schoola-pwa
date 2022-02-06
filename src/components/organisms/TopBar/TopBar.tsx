@@ -16,13 +16,13 @@ const Logo = styled.h1`
 
 const Wrapper = styled.div`
   position: fixed;
+  z-index: 999999;
   top: 0;
   width: 100vw;
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border-bottom: px solid ${({ theme }) => theme.colors.selectedItemBorderGrey};
 `;
 
 type Props = {

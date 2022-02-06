@@ -4,12 +4,65 @@ import { PageWrapper } from './Spotted.styles';
 import Question from 'components/organisms/Question/Question';
 import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
 
+const mockData = [
+  {
+    date: '24.04.2022',
+    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
+    numberOfComments: 4,
+    numberOfHearts: 8
+  },
+  {
+    date: '04.06.2022',
+    content: 'Przyniesie ktoś papier do kibla?',
+    numberOfComments: 3,
+    numberOfHearts: 12
+  },
+  {
+    date: '24.04.2022',
+    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
+    numberOfComments: 4,
+    numberOfHearts: 8
+  },
+  {
+    date: '04.06.2022',
+    content: 'Przyniesie ktoś papier do kibla?',
+    numberOfComments: 3,
+    numberOfHearts: 12
+  },
+  {
+    date: '24.04.2022',
+    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
+    numberOfComments: 4,
+    numberOfHearts: 8
+  },
+  {
+    date: '04.06.2022',
+    content: 'Przyniesie ktoś papier do kibla?',
+    numberOfComments: 3,
+    numberOfHearts: 12
+  },
+  {
+    date: '24.04.2022',
+    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
+    numberOfComments: 4,
+    numberOfHearts: 8
+  },
+  {
+    date: '04.06.2022',
+    content: 'Przyniesie ktoś papier do kibla?',
+    numberOfComments: 3,
+    numberOfHearts: 12
+  }
+];
+
 const Spotted = () => {
   return (
     <UserTemplate>
       <PageWrapper>
         <AskQuestionInput />
-        <Question />
+        {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
+          <Question date={date} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
+        ))}
       </PageWrapper>
     </UserTemplate>
   );

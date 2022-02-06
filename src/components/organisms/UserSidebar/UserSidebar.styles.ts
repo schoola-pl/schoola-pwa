@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.div`
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;

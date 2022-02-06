@@ -3,9 +3,10 @@ import { Wrapper } from './Heart.styles';
 
 interface Props {
   isLiked?: boolean;
+  numberOfHearts: number;
 }
 
-const Heart: React.FC<Props> = () => {
+const Heart: React.FC<Props> = ({ numberOfHearts }) => {
   const [isLiked, setLike] = useState(false);
 
   return (
@@ -21,7 +22,7 @@ const Heart: React.FC<Props> = () => {
           />
         </svg>
       </button>
-      <p>13</p>
+      <p>{numberOfHearts}</p>
     </Wrapper>
   );
 };

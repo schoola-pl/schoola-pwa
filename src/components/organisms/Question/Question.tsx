@@ -16,7 +16,14 @@ import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
 
-const Question = () => {
+interface Props {
+  date: string;
+  content: string;
+  numberOfComments: number;
+  numberOfHearts: number;
+}
+
+const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHearts }) => {
   return (
     <QuestionWrapper>
       <InfoWrapper>
@@ -25,21 +32,21 @@ const Question = () => {
         </StyledPicture>
         <QuestionInfo>
           <h1>Ktoś zadał pytanie:</h1>
-          <p>02.02.2022</p>
+          <p>{date}</p>
         </QuestionInfo>
         <ToggleMenu icon={DotsMenuIcon} />
       </InfoWrapper>
       <QuestionInnerWrapper>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing?</p>
+        <p>{content}</p>
       </QuestionInnerWrapper>
       <ActionsWrapper>
         <LikeWrapper>
-          <Heart />
+          <Heart numberOfHearts={numberOfHearts} />
         </LikeWrapper>
-        <StyledComments>
+        <StyledComments as="a" href="/comments">
           <SidebarLink icon={CommentIcon} />
           <p>
-            <strong>12</strong> komentarzy
+            <strong>{numberOfComments}</strong> komentarzy
           </p>
         </StyledComments>
       </ActionsWrapper>

@@ -97,6 +97,8 @@ export const ActionsWrapper = styled.div`
 `;
 
 export const StyledComments = styled.div`
+  color: black;
+  text-decoration: none;
   display: flex;
   align-items: center;
   margin-left: 9rem;

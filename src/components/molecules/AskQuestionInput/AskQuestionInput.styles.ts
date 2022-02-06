@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.form`
+  margin-top: 2.56rem;
   height: 12rem;
   border-radius: 2rem;
   width: 90%;
