@@ -55,7 +55,9 @@ const ClassesCard: React.FC = () => {
             </NavLink>
           </>
         )}
-        {classes.data?.meta.pagination.pageCount > 1 && (
+        {currentPage !== classes.data?.meta.pagination.page ? (
+          <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginTop: '2rem' }}>Pobieram dalsze klasy...</p>
+        ) : classes.data?.meta.pagination.pageCount > 1 ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
             <SmallButton isGood={currentPage > 1} onClick={fetchPrevPage}>
               Poprzednia
@@ -75,7 +77,7 @@ const ClassesCard: React.FC = () => {
               Następna
             </SmallButton>
           </div>
-        )}
+        ) : null}
       </ClassesWrapper>
     </Wrapper>
   );
