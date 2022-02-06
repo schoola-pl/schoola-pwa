@@ -37,7 +37,7 @@ const AllAccounts: React.FC = () => {
     const typedArray = array as resultType[];
     return typedArray.filter(({ first_name, last_name }) => {
       const username = `${first_name} ${last_name}`;
-      return username.toLowerCase().includes(query.toLowerCase()) && username !== `${user?.first_name} ${user?.last_name}`;
+      return username.toLowerCase().includes(query.toLowerCase());
     });
   };
 
@@ -109,13 +109,16 @@ const AllAccounts: React.FC = () => {
             </h1>
             <SearchRecords>
               {results.length > 0 ? (
-                results.map(({ id, first_name, last_name, TextRole, TextClassName }) => (
-                  <SearchRecord key={id} onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
-                    <h1>{`${first_name} ${last_name}`}</h1>
-                    <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
-                    <span>{TextClassName}</span>
-                  </SearchRecord>
-                ))
+                results.map(({ id, first_name, last_name, TextRole, TextClassName }) => {
+                  if (TextRole === 'School Admin') return null;
+                  return (
+                    <SearchRecord key={id} onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
+                      <h1>{`${first_name} ${last_name}`}</h1>
+                      <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
+                      <span>{TextClassName}</span>
+                    </SearchRecord>
+                  );
+                })
               ) : (
                 <p style={{ textAlign: 'center', fontSize: '2.5rem', marginTop: '15rem' }}>Brak wyników</p>
               )}
