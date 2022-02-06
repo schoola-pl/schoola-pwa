@@ -8,7 +8,7 @@ describe('Auth routes | Schoola App', () => {
   });
 
   it("Should redirect to '/school-admin' if School Admin is authenticated", () => {
-    cy.intercept('POST', `https://schoola-strapi.herokuapp.com/api/auth/local`).as('login');
+    cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.visit('/');
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
