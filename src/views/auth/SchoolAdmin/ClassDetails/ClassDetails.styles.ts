@@ -7,6 +7,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
+
+  #loader {
+    height: 50vh;
+  }
 `;
 
 export const Heading = styled.h1`
