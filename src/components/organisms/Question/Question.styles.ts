@@ -44,6 +44,7 @@ export const ProfilePicture = styled.div<Props>`
 
 export const InfoWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 export const QuestionInfo = styled.div`
@@ -53,12 +54,14 @@ export const QuestionInfo = styled.div`
   margin-top: 0.75rem;
 
   h1 {
+    transform: translateX(-10%);
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
   }
 
   p {
-    transform: translateY(-100%);
+    margin-right: 3rem;
+    transform: translate(-25%, -100%);
     padding-bottom: 0.75rem;
   }
 `;

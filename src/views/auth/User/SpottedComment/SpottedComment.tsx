@@ -66,6 +66,7 @@ export const ProfilePicture = styled.div<Props>`
 
 export const InfoWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 export const QuestionInfo = styled.div`
@@ -94,26 +95,23 @@ export const ToggleMenu = styled(SidebarLink)`
 `;
 
 export const QuestionInnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translateY(-40%);
+  display: grid;
+  width: 80%;
+  grid-template-columns: 10% 90%;
+  grid-gap: 5rem;
+  margin-left: 0rem;
+  height: 6rem;
+  transform: translateY(-45%);
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 
   p {
-    padding: 1rem;
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
-`;
-
-const HeartWrapper = styled.div`
-  position: relative;
-  height: 1rem;
-  display: flex;
-  padding: 0;
-  position: relative;
-  margin-right: 20rem;
-  transform: translateY(-150%);
 `;
 
 const SpottedComment = () => {
@@ -135,10 +133,10 @@ const SpottedComment = () => {
             <ToggleMenu icon={DotsMenuIcon} />
           </InfoWrapper>
           <QuestionInnerWrapper>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <HeartWrapper>
+            <div>
               <Heart numberOfHearts={19} />
-            </HeartWrapper>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
           </QuestionInnerWrapper>
         </CommentWrapper>
       </SectionWrapper>
