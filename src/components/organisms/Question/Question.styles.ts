@@ -121,3 +121,14 @@ export const LikeWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const StyledInput = styled.input`
+  border-radius: 1rem;
+  padding: 1rem;
+  border: none;
+  background-color: #f7f8fa;
+  color: black;
+  &:focus {
+    outline: none;
+  }
+`;

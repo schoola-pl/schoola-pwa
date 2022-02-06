@@ -9,6 +9,10 @@ const Wrapper = styled.div`
   z-index: -1;
   overflow-x: hidden;
   overflow-y: scroll !important;
+
+  ::-webkit-scrollbar {
+    background-color: transparent;
+  }
 `;
 
 const UserTemplate: React.FC = ({ children }) => (

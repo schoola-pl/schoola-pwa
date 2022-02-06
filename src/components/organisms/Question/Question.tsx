@@ -8,7 +8,8 @@ import {
   QuestionInfo,
   QuestionInnerWrapper,
   ToggleMenu,
-  LikeWrapper
+  LikeWrapper,
+  StyledInput
 } from './Question.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
@@ -21,9 +22,10 @@ interface Props {
   content: string;
   numberOfComments: number;
   numberOfHearts: number;
+  isSpotted: boolean;
 }
 
-const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHearts }) => {
+const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHearts, isSpotted }) => {
   return (
     <QuestionWrapper>
       <InfoWrapper>
@@ -43,12 +45,16 @@ const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHe
         <LikeWrapper>
           <Heart numberOfHearts={numberOfHearts} />
         </LikeWrapper>
-        <StyledComments as="a" href="/comments">
-          <SidebarLink icon={CommentIcon} />
-          <p>
-            <strong>{numberOfComments}</strong> komentarzy
-          </p>
-        </StyledComments>
+        {isSpotted ? (
+          <StyledComments as="a" href="/spotted/comments">
+            <SidebarLink icon={CommentIcon} />
+            <p>
+              <strong>{numberOfComments}</strong> komentarzy
+            </p>
+          </StyledComments>
+        ) : (
+          <StyledInput type="text" placeholder="Napisz komentarz" />
+        )}
       </ActionsWrapper>
     </QuestionWrapper>
   );

@@ -61,7 +61,7 @@ const Spotted = () => {
       <PageWrapper>
         <AskQuestionInput />
         {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
-          <Question date={date} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
+          <Question isSpotted={true} date={date} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
         ))}
       </PageWrapper>
     </UserTemplate>
