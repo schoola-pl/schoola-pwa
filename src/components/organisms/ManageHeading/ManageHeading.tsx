@@ -1,6 +1,7 @@
 import { AddButton, Heading, Wrapper } from './ManageHeading.styles';
 import AddIcon from 'assets/icons/AddIcon.svg';
 import { useNavigate } from 'react-router';
+import React from 'react';
 
 const ManageHeading = () => {
   const navigate = useNavigate();
@@ -23,4 +24,4 @@ const ManageHeading = () => {
   );
 };
 
-export default ManageHeading;
+export default React.memo(ManageHeading);
