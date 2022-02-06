@@ -1,10 +1,11 @@
-import { AddButton, ContentWrapper, Heading, HeadingLink, InnerWrapper, Links, Wrapper } from './ManageClasses.styles';
+import { AddButton, ContentWrapper, Heading, InnerWrapper, Wrapper } from './ManageClasses.styles';
 import AddIcon from 'assets/icons/AddIcon.svg';
 import { Route, Routes, useNavigate } from 'react-router';
 import Classes from 'components/organisms/Classes/Classes';
 import Roles from 'components/organisms/Roles/Roles';
 import Error404 from 'views/Error404/Error404';
 import AllAccounts from 'components/organisms/AllAccounts/AllAccounts';
+import ManageLinks from 'components/molecules/ManageLinks/ManageLinks';
 
 const ManageClasses = () => {
   const navigate = useNavigate();
@@ -26,11 +27,7 @@ const ManageClasses = () => {
         </span>
       </InnerWrapper>
       <ContentWrapper>
-        <Links>
-          <HeadingLink to={'/school-admin/manage/classes'}>klasy</HeadingLink>
-          <HeadingLink to={'/school-admin/manage/roles'}>role</HeadingLink>
-          <HeadingLink to={'/school-admin/manage/find-student'}>Szukaj ucznia</HeadingLink>
-        </Links>
+        <ManageLinks />
         <Routes>
           <Route path={'/classes'} element={<Classes />} />
           <Route path={'/roles'} element={<Roles />} />
