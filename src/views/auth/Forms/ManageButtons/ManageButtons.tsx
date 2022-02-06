@@ -31,12 +31,12 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
   const { addNewUser } = useUser();
 
   const handleAddUser = async (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+    closeModal();
     const createdUser = await addNewUser(data, classId, className);
     const { login, password, name } = createdUser as { login: string; password: string; name: string };
     copy(`Użytkownik: ${name || 'błąd'} | Login: ${login || 'błąd'} | Hasło: ${password || 'błąd'}`, () => {
       alert('Dane nowo stworzonego użytkownika zostały skopiowane do schowka!');
     });
-    closeModal();
     reset();
   };
 
