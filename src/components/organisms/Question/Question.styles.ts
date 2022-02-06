@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-import HeartIcon from 'assets/icons/HeartIcon.svg';
 
 type Props = {
-  icon?: any;
+  icon?: string;
 };
 
 export const QuestionWrapper = styled.div`
