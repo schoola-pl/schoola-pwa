@@ -25,6 +25,13 @@ jobs:
       run: npm ci
     - name: Testing application...
       run: npm test
+      
+  e2e:
+
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - uses: actions/checkout@v2
     - name: Testing (e2e) application...
       uses: cypress-io/github-action@v3
       with:
