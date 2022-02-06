@@ -33,6 +33,14 @@ const AllAccounts: React.FC = () => {
     });
   };
 
+  const findAccount = (array: unknown, query: string) => {
+    const typedArray = array as resultType[];
+    return typedArray.filter(({ first_name, last_name }) => {
+      const username = `${first_name} ${last_name}`;
+      return username.toLowerCase().includes(query.toLowerCase());
+    });
+  };
+
   const handleSearch = (ev: KeyboardEvent) => {
     if (ev.target && ev.key !== 'Shift' && ev.key !== 'Enter' && ev.key !== 'Tab' && ev.key !== 'Ctrl') {
       const target = ev.target;
@@ -40,11 +48,7 @@ const AllAccounts: React.FC = () => {
       const preparedValue = value.toLowerCase().trim();
       setPhrase(value ? value.trim() : defaultPhrase);
       if (preparedValue) {
-        const destructuredUsers = users.data as resultType[];
-        const founded = destructuredUsers.filter(({ first_name, last_name }) => {
-          const username = `${first_name} ${last_name}`;
-          return username.toLowerCase().includes(preparedValue);
-        });
+        const founded = findAccount(users.data, preparedValue);
         setResults(founded);
       } else setResults([]);
     }
@@ -72,11 +76,7 @@ const AllAccounts: React.FC = () => {
     const query = urlParams.get('q');
     if (!users.isLoading && query && searchInput.current) {
       setPhrase(query);
-      const destructuredUsers = users.data as resultType[];
-      const founded = destructuredUsers.filter(({ first_name, last_name }) => {
-        const username = `${first_name} ${last_name}`;
-        return username.toLowerCase().includes(query);
-      });
+      const founded = findAccount(users.data, query);
       setResults(founded);
       searchInput.current.value = query;
     }
