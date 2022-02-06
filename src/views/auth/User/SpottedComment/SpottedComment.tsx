@@ -19,7 +19,27 @@ const SectionWrapper = styled.div`
   heigth: 100vh;
   justify-content: flex-start;
   align-items: center;
+  overflow: scroll !important;
 `;
+
+const commentData = [
+  {
+    profilePicture:
+      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thefamouspeople.com%2Fprofiles%2Fimages%2Fvladimir-putin-6.jpg&f=1&nofb=1',
+    name: 'Władimir Putin',
+    date: '12.05.2012',
+    content: 'Idę po was',
+    numberOfHearts: 3
+  },
+  {
+    profilePicture:
+      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa1%2F8a%2Fef%2Fa18aefbb385e8a4d755d2885fa2d2cc2.jpg&f=1&nofb=1',
+    name: 'Ryszard Riedel',
+    date: '12.05.2012',
+    content: 'Lubię motocykle, muzykę i heroinę',
+    numberOfHearts: 3
+  }
+];
 
 const SpottedComment = () => {
   return (
@@ -28,9 +48,10 @@ const SpottedComment = () => {
         {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
           <Question key={date} date={date} isSpotted={false} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
         ))}
-        <Comment />
-        <Comment />
-        <Comment />
+
+        {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
+          <Comment profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
+        ))}
       </SectionWrapper>
     </UserTemplate>
   );
