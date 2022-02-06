@@ -1,4 +1,5 @@
 import { StyledLink, Wrapper } from './ManageLinks.styles';
+import React from 'react';
 
 const ManageLinks = () => {
   return (
@@ -10,4 +11,4 @@ const ManageLinks = () => {
   );
 };
 
-export default ManageLinks;
+export default React.memo(ManageLinks);
