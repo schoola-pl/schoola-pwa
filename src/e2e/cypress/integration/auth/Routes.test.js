@@ -13,9 +13,9 @@ describe('Auth routes | Schoola App', () => {
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
-    // eslint-disable-next-line testing-library/await-async-utils
-    cy.wait('@login');
-    cy.url().should('include', '/school-admin');
+    cy.wait('@login').then(() => {
+      cy.url().should('include', '/school-admin');
+    });
   });
 
   it("Should redirect to '/login' if role hasn't permissions to visit a path", () => {
