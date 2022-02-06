@@ -2,16 +2,14 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 
 describe('Auth routes | Schoola App', () => {
-  beforeEach(() => {
-    cy.visit('/');
-  });
-
   it("Should redirect to '/login' if user isn't authenticated", () => {
+    cy.visit('/');
     cy.url().should('include', '/login');
   });
 
   it("Should redirect to '/school-admin' if School Admin is authenticated", () => {
     cy.intercept('POST', `https://schoola-strapi.herokuapp.com/api/auth/local`).as('login');
+    cy.visit('/');
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
@@ -22,6 +20,7 @@ describe('Auth routes | Schoola App', () => {
 
   it("Should redirect to '/login' if role hasn't permissions to visit a path", () => {
     cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
+    cy.visit('/');
     cy.findByPlaceholderText(/login/i).type('test_admin');
     cy.findByPlaceholderText(/hasło/i).type('Admin321!');
     cy.findByText(/zaloguj/i).click();
@@ -33,6 +32,7 @@ describe('Auth routes | Schoola App', () => {
   });
 
   it("Shows 404 when route doesn't match", () => {
+    cy.visit('/');
     cy.findByText(/nie znaleziono/i).should('not.exist');
     cy.visit(`/randomRoute-${Math.random() * 10}`);
     cy.findByText(/nie znaleziono/i).should('be.visible');
