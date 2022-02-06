@@ -55,17 +55,24 @@ const ClassesCard: React.FC = () => {
             </NavLink>
           </>
         )}
-        {classes.data?.data?.length > 4 && (
-          <div style={{ display: 'flex', marginTop: '2rem' }}>
+        {classes.data?.meta.pagination.pageCount > 1 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
             <SmallButton isGood={currentPage > 1} onClick={fetchPrevPage}>
-              Mniej
+              Poprzednia
             </SmallButton>
+            <p
+              style={{
+                marginInline: '1.3rem',
+                fontSize: '1.5rem'
+              }}
+            >
+              {currentPage}/{classes.data?.meta.pagination.pageCount}
+            </p>
             <SmallButton
               isGood={classes.isSuccess && classes.data.meta.pagination.pageCount > currentPage && currentPage >= 1}
-              style={{ marginLeft: '2rem' }}
               onClick={fetchNextPage}
             >
-              Więcej
+              Następna
             </SmallButton>
           </div>
         )}
