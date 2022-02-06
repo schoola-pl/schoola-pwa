@@ -37,7 +37,7 @@ const AllAccounts: React.FC = () => {
     const typedArray = array as resultType[];
     return typedArray.filter(({ first_name, last_name }) => {
       const username = `${first_name} ${last_name}`;
-      return username.toLowerCase().includes(query.toLowerCase());
+      return username.toLowerCase().includes(query.toLowerCase()) && username !== `${user?.first_name} ${user?.last_name}`;
     });
   };
 
