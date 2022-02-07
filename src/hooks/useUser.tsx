@@ -24,6 +24,7 @@ interface UserContextTypes {
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
   addInterested: (interested: { id: number; name: string }) => void;
+  removeInterested: (id: number) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number
@@ -45,6 +46,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   addInterested: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  removeInterested: () => {
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
@@ -180,6 +184,28 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method removes the user interested
+  const removeInterested = (id: number) => {
+    if (user?.id) {
+      const actualInteresteds = user.interesteds;
+      const interesteds = actualInteresteds.filter((interested) => interested.id !== id);
+
+      dispatch(
+        updateUser({
+          updated: {
+            interesteds
+          }
+        })
+      );
+      updateUserDatabase({
+        id: user.id || null,
+        data: {
+          interesteds
+        }
+      });
+    }
+  };
+
   // This method resets the user password in the database
   const resetPassword = (newPassword: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
@@ -213,6 +239,7 @@ export const UserProvider: React.FC = ({ children }) => {
     updateUserState,
     updateSettings,
     addInterested,
+    removeInterested,
     addNewUser,
     deleteUser,
     deleteUsers
