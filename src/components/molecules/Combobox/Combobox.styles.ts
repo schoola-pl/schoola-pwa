@@ -85,9 +85,7 @@ export const StyledList = styled.ul`
   }
 
   li:hover {
-    border: none;
-    border-radius: 2rem;
-    background-color: #f7f8fa !important;
+    cursor: pointer;
   }
 `;
 

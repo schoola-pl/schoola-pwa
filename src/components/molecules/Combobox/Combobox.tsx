@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyledCombobox, StyledDropdownToggle, StyledHeading, StyledInputWrapper, StyledList, StyledSelectedItem, Wrapper } from './Combobox.styles';
 import { useCombobox, useMultipleSelection } from 'downshift';
-import { items } from './items';
+import { getAltByName, getOnlyNames, items } from './items';
 import { theme } from 'assets/styles/theme';
 
 interface props {
@@ -12,7 +12,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () =>
-    items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
+    getOnlyNames(items).filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
     inputValue,
     selectedItem: null,
@@ -39,6 +39,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         case useCombobox.stateChangeTypes.InputBlur:
           if (selectedItem && selectedItems.length <= 2) {
             setInputValue('');
+            console.log(getAltByName(items, selectedItem));
             // TODO: Add selected item to user in database
             if (selectedItems.length === 2) setReadyState(true);
             addSelectedItem(selectedItem);
