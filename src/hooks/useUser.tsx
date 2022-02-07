@@ -23,6 +23,7 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
+  addInterested: (interested: { id: number; name: string }) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number
@@ -41,6 +42,9 @@ interface UserContextTypes {
 
 const UserContext = createContext<UserContextTypes>({
   updateUserState: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  addInterested: () => {
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
@@ -65,7 +69,7 @@ const UserContext = createContext<UserContextTypes>({
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [addUserToDatabase] = useUpdateUserMutation();
+  const [updateUserDatabase] = useUpdateUserMutation();
   const { classId } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
   const [addUser, { isLoading }] = useAddUserToClassMutation();
@@ -141,14 +145,45 @@ export const UserProvider: React.FC = ({ children }) => {
         }
       });
       if (!userId) dispatch(updateUser({ updated: tempObj }));
-      addUserToDatabase({ id: userId || user?.id || null, data: { ...tempObj, role } });
+      updateUserDatabase({ id: userId || user?.id || null, data: { ...tempObj, role } });
+    }
+  };
+
+  // This method adds the user interested
+  const addInterested = ({ id, name }: { id: number; name: string }) => {
+    if (user?.id) {
+      const currentInterested = user.interesteds;
+      dispatch(
+        updateUser({
+          updated: {
+            interesteds: [
+              ...currentInterested,
+              {
+                id,
+                name
+              }
+            ]
+          }
+        })
+      );
+      updateUserDatabase({
+        id: user.id || null,
+        data: {
+          interesteds: [
+            ...currentInterested,
+            {
+              id
+            }
+          ]
+        }
+      });
     }
   };
 
   // This method resets the user password in the database
   const resetPassword = (newPassword: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
-      addUserToDatabase({ id: user?.id || null, data: { password: newPassword } });
+      updateUserDatabase({ id: user?.id || null, data: { password: newPassword } });
     }
   };
 
@@ -177,6 +212,7 @@ export const UserProvider: React.FC = ({ children }) => {
     resetPassword,
     updateUserState,
     updateSettings,
+    addInterested,
     addNewUser,
     deleteUser,
     deleteUsers
