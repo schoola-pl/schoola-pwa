@@ -48,7 +48,6 @@ const SpottedComment = () => {
         {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
           <Question key={date} date={date} isSpotted={false} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
         ))}
-
         {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
           <Comment profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
         ))}

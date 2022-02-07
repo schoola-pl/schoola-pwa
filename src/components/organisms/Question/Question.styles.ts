@@ -6,6 +6,7 @@ type Props = {
 };
 
 export const QuestionWrapper = styled.div`
+  position: relative;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   height: 20rem;
@@ -64,14 +65,6 @@ export const QuestionInfo = styled.div`
     transform: translate(-25%, -100%);
     padding-bottom: 0.75rem;
   }
-`;
-
-export const ToggleMenu = styled(SidebarLink)`
-  transform: translateY(16%);
-  margin-left: 7rem;
-  height: 4rem;
-  width: 4rem;
-  background-color: transparent;
 `;
 
 export const QuestionInnerWrapper = styled.div`
