@@ -1,4 +1,10 @@
-export const items = [
+type itemsType = {
+  name: string;
+  alt: string;
+}[];
+
+// After you have created new record in the list below, you have to update 'interested component' in database.
+export const items: itemsType = [
   { name: 'sport ⚽️', alt: 'sport' },
   { name: 'muzyka 🎧', alt: 'music' },
   { name: 'gry 🎮', alt: 'games' },
@@ -36,3 +42,10 @@ export const items = [
   { name: 'szycie 🪡', alt: 'sewing' },
   { name: 'programowanie 📟', alt: 'programming' }
 ];
+
+// Methods to manipulate the above list
+export const getOnlyNames = (items: itemsType) => items.map((item) => item.name);
+export const getAltByName = (items: itemsType, name: string) => {
+  const filteredItems = items.find((item) => item.name === name) || { alt: 'not-found' };
+  return filteredItems.alt;
+};
