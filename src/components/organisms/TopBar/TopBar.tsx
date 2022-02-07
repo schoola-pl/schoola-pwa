@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import NotificationList from 'components/organisms/NotificationList/NotificationList';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
-import NotificationIcon from 'assets/icons/NotificationIcon.svg';
+
 import { Link } from 'react-router-dom';
 
 const Logo = styled.h1`
@@ -54,19 +55,17 @@ const StyledSidebarLink = styled(SidebarLink)`
   padding: 2rem;
 `;
 
-const Notification = styled(StyledSidebarLink)`
-  transform: translateX(25%);
-`;
-
-const TopBar = () => (
-  <Wrapper>
-    <Logo>schoola</Logo>
-    <InnerWrapper>
-      <Notification icon={NotificationIcon} />
-      <StyledSidebarLink icon={SettingsIcon} />
-      <UserPicture to="/profile" />
-    </InnerWrapper>
-  </Wrapper>
-);
+const TopBar = () => {
+  return (
+    <Wrapper>
+      <Logo>schoola</Logo>
+      <InnerWrapper>
+        <NotificationList />
+        <StyledSidebarLink as={Link} to="profile/settings" icon={SettingsIcon} />
+        <UserPicture to="/profile" />
+      </InnerWrapper>
+    </Wrapper>
+  );
+};
 
 export default TopBar;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const CommentWrapper = styled.div`
   position: relative;
