@@ -17,7 +17,6 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () => {
     const items = interesteds?.data?.data?.map((item) => item.attributes.name) || [];
-    console.log(items);
     return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
   };
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
