@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 
 export const FormWrapper = styled.div`
-  height: 75%;
-  width: 90%;
+  width: 100%;
+  padding: 1rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
-  margin-top: 3rem;
   border-radius: 2rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
@@ -17,9 +16,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 1rem;
   width: 100%;
-  margin-left: 3.5rem;
   align-items: center;
 
   div {
@@ -34,7 +31,7 @@ export const Label = styled.label`
 `;
 
 export const StyledInput = styled(Input)`
-  width: 90%;
+  width: 100%;
 `;
 export const LawWrapper = styled.div`
   display: flex;
@@ -49,6 +46,7 @@ export const LawLabel = styled(Label)`
 `;
 export const Statute = styled.a`
   text-decoration: none;
+
   &::after {
     content: 'regulamin';
     color: ${({ theme }) => theme.colors.accentBlue};
@@ -56,6 +54,7 @@ export const Statute = styled.a`
 `;
 export const PrivacyPolicy = styled.a`
   text-decoration: none;
+
   &::after {
     content: 'politykę prywatności';
     color: ${({ theme }) => theme.colors.accentBlue};

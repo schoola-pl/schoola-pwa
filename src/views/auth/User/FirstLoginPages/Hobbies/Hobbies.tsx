@@ -1,19 +1,25 @@
 import styled from 'styled-components';
-import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 import Combobox from 'components/molecules/Combobox/Combobox';
+import React, { useEffect } from 'react';
 
 const Wrapper = styled.div`
   overflow-y: hidden;
   padding-bottom: 25rem;
 `;
 
-const Hobbies = () => {
+interface props {
+  setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Hobbies: React.FC<props> = ({ setReadyState }) => {
+  useEffect(() => {
+    setReadyState(false);
+  }, []);
+
   return (
-    <FirstLoginTemplate>
-      <Wrapper>
-        <Combobox />
-      </Wrapper>
-    </FirstLoginTemplate>
+    <Wrapper>
+      <Combobox setReadyState={setReadyState} />
+    </Wrapper>
   );
 };
 

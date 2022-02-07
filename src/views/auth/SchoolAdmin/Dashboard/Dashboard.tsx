@@ -4,7 +4,7 @@ import StudentIcon from 'assets/icons/StudentIcon.png';
 import InfoCard from 'components/molecules/InfoCard/InfoCard';
 import ClassesCard from 'components/organisms/ClassesCard/ClassesCard';
 import React from 'react';
-import { storeRoot, useGetClassesCountQuery, useGetUsersCountQuery } from '../../../../store';
+import { storeRoot, useGetClassesCountQuery, useGetUsersCountQuery } from 'store';
 import { useSelector } from 'react-redux';
 import Loading from '../../../../components/molecules/Loading/Loading';
 
@@ -21,8 +21,12 @@ const Dashboard: React.FC = () => {
           <Loading />
         ) : (
           <>
-            <InfoCard name="Łączna liczba użytkowników" number={usersCount.data.data[0].attributes.totalUsers} icon={StudentIcon} />
-            <InfoCard name="Łączna liczba klas" number={classesCount.data.data.length} icon={ClassIcon} />
+            <InfoCard
+              name="Łączna liczba użytkowników"
+              number={usersCount.isLoading ? 0 : usersCount.data.data[0].attributes.totalUsers}
+              icon={StudentIcon}
+            />
+            <InfoCard name="Łączna liczba klas" number={classesCount.isLoading ? 0 : classesCount.data.data.length} icon={ClassIcon} />
             <ClassesCard />
           </>
         )}
