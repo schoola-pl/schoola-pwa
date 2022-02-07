@@ -1,9 +1,13 @@
 import styled from 'styled-components';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 type Props = {
   icon?: string;
 };
+
+interface ToggleMenuProps {
+  icon?: string;
+  onClick?: any;
+}
 
 export const QuestionWrapper = styled.div`
   position: relative;
@@ -52,17 +56,19 @@ export const QuestionInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  margin-left: 2.5rem;
   margin-top: 0.75rem;
+  transform: translateX(-28%);
 
   h1 {
-    transform: translateX(-10%);
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
   }
 
   p {
+    transform: translateY(-100%);
     margin-right: 3rem;
-    transform: translate(-25%, -100%);
     padding-bottom: 0.75rem;
   }
 `;
@@ -126,4 +132,22 @@ export const StyledInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const ToggleMenu = styled.button<ToggleMenuProps>`
+  transform: translateY(16%);
+  margin-left: 7rem;
+  background-color: transparent;
+  height: 5rem;
+  width: 5rem;
+  background-image: url(${({ icon }) => icon});
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 1.5rem;
+  border: none;
+  display: block;
+  background-size: 75%;
+  background-position: center;
+  cursor: pointer;
+  margin: 1rem;
 `;

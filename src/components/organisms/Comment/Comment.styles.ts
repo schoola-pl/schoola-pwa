@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const CommentWrapper = styled.div`
+  position: relative;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   height: 15rem;
@@ -52,6 +53,7 @@ export const QuestionInfo = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 0.75rem;
+  transform: translateX(-45%);
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -64,12 +66,27 @@ export const QuestionInfo = styled.div`
   }
 `;
 
-export const ToggleMenu = styled(SidebarLink)`
+interface ToggleMenuProps {
+  icon?: string;
+  onClick?: any;
+}
+
+export const ToggleMenu = styled.button<ToggleMenuProps>`
   transform: translateY(16%);
-  margin-left: 11rem;
-  height: 4rem;
-  width: 4rem;
+  margin-left: 7rem;
   background-color: transparent;
+  height: 5rem;
+  width: 5rem;
+  background-image: url(${({ icon }) => icon});
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 1.5rem;
+  border: none;
+  display: block;
+  background-size: 75%;
+  background-position: center;
+  cursor: pointer;
+  margin: 1rem;
 `;
 
 export const CommentInnerWrapper = styled.div`

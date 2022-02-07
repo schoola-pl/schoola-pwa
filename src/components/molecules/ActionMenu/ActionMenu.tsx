@@ -30,9 +30,7 @@ const ActionButton = styled.button`
 
 const ActionMenu: React.FC<Props> = ({ isOpened, accountType }) => {
   return (
-    <Wrapper isOpened={isOpened}>
-      {accountType === 'spottedAdmin' ? <ActionButton>Usuń post</ActionButton> : <ActionButton>Zgłoś post</ActionButton>}
-    </Wrapper>
+    <Wrapper isOpened={isOpened}>{accountType === 'spottedAdmin' ? <ActionButton>Usuń</ActionButton> : <ActionButton>Zgłoś</ActionButton>}</Wrapper>
   );
 };
 

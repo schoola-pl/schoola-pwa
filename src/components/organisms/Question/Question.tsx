@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import {
   QuestionWrapper,
   InfoWrapper,
@@ -10,7 +9,8 @@ import {
   QuestionInfo,
   QuestionInnerWrapper,
   LikeWrapper,
-  StyledInput
+  StyledInput,
+  ToggleMenu
 } from './Question.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
@@ -26,29 +26,6 @@ interface Props {
   numberOfHearts: number;
   isSpotted: boolean;
 }
-
-interface ToggleMenuProps {
-  icon?: string;
-  onClick?: any;
-}
-
-const ToggleMenu = styled.button<ToggleMenuProps>`
-  transform: translateY(16%);
-  margin-left: 7rem;
-  background-color: transparent;
-  height: 5rem;
-  width: 5rem;
-  background-image: url(${({ icon }) => icon});
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border-radius: 1.5rem;
-  border: none;
-  display: block;
-  background-size: 75%;
-  background-position: center;
-  cursor: pointer;
-  margin: 1rem;
-`;
 
 const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHearts, isSpotted }) => {
   const [isOpened, setMenuOpen] = useState(false);
@@ -68,7 +45,7 @@ const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHe
           <p>{date}</p>
         </QuestionInfo>
         <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-        <ActionMenu accountType="spottedAdmin" isOpened={isOpened} />
+        <ActionMenu accountType="user" isOpened={isOpened} />
       </InfoWrapper>
       <QuestionInnerWrapper>
         <p>{content}</p>
