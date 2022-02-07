@@ -14,4 +14,5 @@ export type authUser = {
   Birthday: string;
   schoolId: number;
   TextRole: string;
+  interesteds: { id: number; name: string }[];
 };
