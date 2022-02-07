@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { StyledCombobox, StyledDropdownToggle, StyledHeading, StyledInputWrapper, StyledList, StyledSelectedItem, Wrapper } from './Combobox.styles';
 import { useCombobox, useMultipleSelection } from 'downshift';
-import { getAltByName, getOnlyNames, items } from './items';
 import { theme } from 'assets/styles/theme';
+import { useUser } from 'hooks/useUser';
+import { useGetInterestedsQuery } from 'store';
 
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Combobox: React.FC<props> = ({ setReadyState }) => {
+  const { addInterested } = useUser();
+  const interesteds = useGetInterestedsQuery({});
+  const getIdFromName = (name: string) => interesteds?.data?.data?.find((item) => item.attributes.name === name)?.id;
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
-  const getFilteredItems = () =>
-    getOnlyNames(items).filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
+  const getFilteredItems = () => {
+    const items = interesteds?.data?.data?.map((item) => item.attributes.name) || [];
+    console.log(items);
+    return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
+  };
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
     inputValue,
     selectedItem: null,
@@ -39,12 +46,11 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         case useCombobox.stateChangeTypes.InputBlur:
           if (selectedItem && selectedItems.length <= 2) {
             setInputValue('');
-            console.log(getAltByName(items, selectedItem));
-            // TODO: Add selected item to user in database
+            const selectedItemId = getIdFromName(selectedItem);
+            if (selectedItemId) addInterested({ id: selectedItemId, name: selectedItem });
             if (selectedItems.length === 2) setReadyState(true);
             addSelectedItem(selectedItem);
           }
-
           break;
         default:
           break;
@@ -85,7 +91,9 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
           </div>
         </StyledInputWrapper>
         <StyledList {...getMenuProps()}>
-          {isOpen &&
+          {interesteds.isLoading ? (
+            <p>loading...</p>
+          ) : isOpen ? (
             getFilteredItems().map((item, index) => (
               <li
                 style={
@@ -102,7 +110,8 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
               >
                 {item}
               </li>
-            ))}
+            ))
+          ) : null}
         </StyledList>
       </StyledCombobox>
     </Wrapper>
