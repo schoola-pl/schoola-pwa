@@ -10,7 +10,7 @@ interface props {
 }
 
 const Combobox: React.FC<props> = ({ setReadyState }) => {
-  const { addInterested } = useUser();
+  const { addInterested, removeInterested } = useUser();
   const interesteds = useGetInterestedsQuery({});
   const getIdFromName = (name: string) => interesteds?.data?.data?.find((item) => item.attributes.name === name)?.id;
   const [inputValue, setInputValue] = useState<string | undefined>('');
@@ -72,7 +72,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    // TODO: Remove selected item from user in database
+                    removeInterested(getIdFromName(selectedItem as string) || 0);
                     setReadyState(false);
                     removeSelectedItem(selectedItem);
                   }}
