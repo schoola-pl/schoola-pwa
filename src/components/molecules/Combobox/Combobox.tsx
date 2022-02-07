@@ -93,23 +93,25 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
           {interesteds.isLoading ? (
             <p>loading...</p>
           ) : isOpen ? (
-            getFilteredItems().map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? {
-                        backgroundColor: theme.colors.accentGreen,
-                        paddingLeft: '1.5rem',
-                        color: 'white'
-                      }
-                    : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
-              >
-                {item}
-              </li>
-            ))
+            getFilteredItems()
+              .sort()
+              .map((item, index) => (
+                <li
+                  style={
+                    highlightedIndex === index
+                      ? {
+                          backgroundColor: theme.colors.accentGreen,
+                          paddingLeft: '1.5rem',
+                          color: 'white'
+                        }
+                      : {}
+                  }
+                  key={`${item}${index}`}
+                  {...getItemProps({ item, index })}
+                >
+                  {item}
+                </li>
+              ))
           ) : null}
         </StyledList>
       </StyledCombobox>
