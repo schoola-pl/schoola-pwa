@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 
 type Props = {
   icon?: string;
@@ -27,7 +28,7 @@ export const QuestionWrapper = styled.div<WrapperProps>`
 
 export const StyledPicture = styled.div`
   transform: translateY(10%);
-  margin: 1rem;
+  margin: 1rem 1rem 1rem;
   height: 5rem;
   width: 5rem;
   display: flex;
@@ -47,23 +48,25 @@ export const ProfilePicture = styled.div<Props>`
   border: none;
   background-size: 70%;
   background-position: center;
-  padding: 2rem;
   z-index: 9999999;
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  section {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const QuestionInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
-  margin-left: 2.5rem;
-  margin-top: 0.75rem;
-  transform: translateX(-28%);
+  transform: translateY(15%);
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -71,17 +74,15 @@ export const QuestionInfo = styled.div`
   }
 
   p {
-    transform: translateY(-100%);
-    margin-right: 3rem;
-    padding-bottom: 0.75rem;
+    transform: translateY(-150%);
   }
 `;
 
 export const QuestionInnerWrapper = styled.div`
   display: flex;
   align-items: center;
-  transform: translateY(-20%);
-  margin-left: 3rem;
+
+  margin-left: 3.5rem;
   height: 6rem;
   margin-bottom: 0.75rem;
   border-left: 3px solid ${({ theme }) => theme.colors.accentGreen};
@@ -95,10 +96,9 @@ export const QuestionInnerWrapper = styled.div`
 
 export const ActionsWrapper = styled.div`
   display: flex;
-  transform: translateY(-30%);
+  width: 100%;
   align-items: center;
-  justify-content: space-around;
-  margin-right: 0.75rem;
+  justify-content: space-between;
 `;
 
 export const StyledComments = styled.div`
@@ -106,18 +106,18 @@ export const StyledComments = styled.div`
   text-decoration: none;
   display: flex;
   align-items: center;
-  margin-left: 9rem;
   height: 4rem;
-  width: 12rem;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.lightBlue};
+  max-width: 13rem;
+  margin-right: 1rem;
 
   p {
     display: flex;
-    margin-right: 0.5rem;
+    padding-right: 0.5rem;
 
     strong {
-      margin-right: 0.5rem;
+      padding-right: 0.5rem;
     }
   }
 `;
@@ -154,4 +154,8 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
   background-position: center;
   cursor: pointer;
   margin: 1rem;
+`;
+
+export const StyledActionMenu = styled(ActionMenu)`
+  position: relative;
 `;

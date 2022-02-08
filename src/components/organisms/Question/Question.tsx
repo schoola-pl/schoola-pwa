@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
   QuestionWrapper,
   InfoWrapper,
@@ -10,14 +11,14 @@ import {
   QuestionInnerWrapper,
   LikeWrapper,
   StyledInput,
-  ToggleMenu
+  ToggleMenu,
+  StyledActionMenu
 } from './Question.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
-import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 
 interface Props {
   date: string;
@@ -27,7 +28,6 @@ interface Props {
   isSpotted: boolean;
   ref?: any;
 }
-
 const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
 
@@ -38,15 +38,18 @@ const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfCom
   return (
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
-        <StyledPicture>
-          <ProfilePicture icon={QuestionMark} />
-        </StyledPicture>
-        <QuestionInfo>
-          <h1>Ktoś zadał pytanie:</h1>
-          <p>{date}</p>
-        </QuestionInfo>
+        <section>
+          <StyledPicture>
+            <ProfilePicture icon={QuestionMark} />
+          </StyledPicture>
+          <QuestionInfo>
+            <h1>Ktoś zadał pytanie:</h1>
+            <p>{date}</p>
+          </QuestionInfo>
+        </section>
+
+        <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
         <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-        <ActionMenu accountType="spottedAdmin" isOpened={isOpened} />
       </InfoWrapper>
       <QuestionInnerWrapper>
         <p>{content}</p>

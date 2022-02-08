@@ -61,5 +61,12 @@
     "content": "Idzie ktoś do piekarni?",
     "numberOfComments": 3,
     "numberOfHearts": 22
+  },
+  {
+    "id": 10,
+    "date": "23.01.2015",
+    "content": "Idzie ktoś do piekarni?",
+    "numberOfComments": 3,
+    "numberOfHearts": 22
   }
 ]
