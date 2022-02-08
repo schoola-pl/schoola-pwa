@@ -7,10 +7,12 @@ import { storeRoot, useGetUsersByClassQuery } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
 import { useEffect } from 'react';
 import ClassDetailsHeader from 'components/organisms/ClassDetailsHeader/ClassDetailsHeader';
+import { useClass } from 'hooks/useClass';
 
 const ClassDetails = () => {
   const { id } = useParams();
-  const classLevel = id?.split('')[0] || 0;
+  const { checkDoesClassExist } = useClass();
+  const classLevel = id?.split('')[0] || '0';
   const className = id?.slice(1) || null;
   const user = useSelector((state: storeRoot) => state.user);
   const navigate = useNavigate();
@@ -21,10 +23,12 @@ const ClassDetails = () => {
   });
 
   useEffect(() => {
-    if (students.isSuccess && !students.data.data[0]?.attributes) {
-      navigate(-1);
-    }
-  }, [students.data, students.isSuccess]);
+    (async () => {
+      if (!(await checkDoesClassExist(className || 'none', parseInt(classLevel)))) {
+        navigate(-1);
+      }
+    })();
+  }, [id]);
 
   return (
     <Wrapper>
