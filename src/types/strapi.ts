@@ -1,19 +1,21 @@
 import { paginatedStrapiOptions } from 'types/pagination';
 
+interface baseBody<T> {
+  id: number;
+  attributes: T;
+}
+
 export type oneResponse<T = unknown> = {
-  data: {
-    id: number;
-    attributes: T;
-  };
+  data: baseBody<T>;
 };
 
 export type multiResponseWithoutPagination<T = unknown> = {
-  data: oneResponse<T>[] | [];
+  data: baseBody<T>[];
 };
 
 export type multiResponse<T = unknown> = {
-  data: oneResponse<T>[] | [];
-  meta: { paginate: paginatedStrapiOptions };
+  data: baseBody<T>[];
+  meta: { pagination: paginatedStrapiOptions };
 };
 
 export type strapiRequestType = string | number | null;
