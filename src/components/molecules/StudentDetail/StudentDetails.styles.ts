@@ -1,7 +1,7 @@
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ isBlocked?: boolean }>`
+export const Wrapper = styled.div<{ isBlocked?: boolean; isHighlighted?: boolean }>`
   width: 95.8%;
   height: 8.5rem;
   background-color: white;
@@ -12,6 +12,7 @@ export const Wrapper = styled.div<{ isBlocked?: boolean }>`
   align-items: center;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   justify-items: left;
+  border: 3px solid white;
   padding-left: 3rem;
 
   ${({ isBlocked }) =>
@@ -23,6 +24,12 @@ export const Wrapper = styled.div<{ isBlocked?: boolean }>`
   input {
     width: 70%;
   }
+
+  ${({ isHighlighted, theme }) =>
+    isHighlighted &&
+    `
+    border: 3px solid ${theme.colors.accentGreen};
+    `}
 `;
 
 export const BoxWrapper = styled.div`

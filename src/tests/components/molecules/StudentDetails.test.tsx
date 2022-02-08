@@ -5,6 +5,7 @@ describe('Components > Molecules > StudentDetail', () => {
   it('Should render a student detail', () => {
     render(
       <StudentDetail
+        userToFind={'userToFind'}
         students={[
           {
             id: '23',
@@ -47,7 +48,7 @@ describe('Components > Molecules > StudentDetail', () => {
         }
       }
     ];
-    render(<StudentDetail students={students} />);
+    render(<StudentDetail students={students} userToFind={'userToFind'} />);
     expect(screen.getByText('testFirstName test')).toBeInTheDocument();
     expect(screen.getByText('testFirstName2 test2')).toBeInTheDocument();
     expect(screen.queryByText('testFirstName3 test3')).not.toBeInTheDocument();

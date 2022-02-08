@@ -5,6 +5,7 @@ describe('Components > Molecules > StudentInfoRecord', () => {
   it('Should render a student info record', () => {
     render(
       <StudentInfoRecord
+        userToFind={'userToFind'}
         info={{
           id: '23',
           attributes: {
@@ -24,6 +25,7 @@ describe('Components > Molecules > StudentInfoRecord', () => {
   it('Should block user edition when user is blocked', () => {
     render(
       <StudentInfoRecord
+        userToFind={'userToFind'}
         info={{
           id: '23',
           attributes: {

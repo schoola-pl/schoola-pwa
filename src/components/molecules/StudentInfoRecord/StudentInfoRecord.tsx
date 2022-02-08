@@ -21,13 +21,15 @@ interface props {
       blocked: boolean;
     };
   };
+  userToFind: string;
 }
 
 const StudentInfoRecord: React.FC<props> = ({
   info: {
     id,
     attributes: { first_name, Birthday, last_name, TextRole, blocked }
-  }
+  },
+  userToFind
 }) => {
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
@@ -50,7 +52,13 @@ const StudentInfoRecord: React.FC<props> = ({
   };
 
   return (
-    <Wrapper as={'form'} onSubmit={handleSubmit(handleEditUser)} isBlocked={blocked}>
+    <Wrapper
+      as={'form'}
+      id={`${first_name.toLowerCase()}-${last_name.toLowerCase()}`}
+      isHighlighted={userToFind === `${first_name.toLowerCase()}-${last_name.toLowerCase()}`}
+      onSubmit={handleSubmit(handleEditUser)}
+      isBlocked={blocked}
+    >
       <StudentBox icon={blueStudent} />
       {!isEdit ? <Name>{`${first_name} ${last_name}`}</Name> : <Input placeholder={`${first_name} ${last_name}`} small {...register('name')} />}
       {!isEdit ? (
