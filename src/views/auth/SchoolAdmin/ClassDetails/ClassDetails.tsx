@@ -1,43 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Heading, InfoWrapper, InnerWrapper, Paragraph, ParagraphsWrapper, Wrapper } from './ClassDetails.styles';
+import { InnerWrapper, Wrapper } from './ClassDetails.styles';
 import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetUsersByClassQuery, useGetUsersCountQuery, useRemoveClassMutation } from 'store';
+import { storeRoot, useGetUsersByClassQuery } from 'store';
 import Loading from '../../../../components/molecules/Loading/Loading';
-import { useModal } from 'hooks/useModal';
-import { useUser } from 'hooks/useUser';
-import ManageButtons from 'views/auth/Forms/ManageButtons/ManageButtons';
 import { useEffect } from 'react';
+import ClassDetailsHeader from 'components/organisms/ClassDetailsHeader/ClassDetailsHeader';
 
 const ClassDetails = () => {
   const { id } = useParams();
   const classLevel = id?.split('')[0] || 0;
   const className = id?.slice(1) || null;
-  const { closeModal } = useModal();
-  const { deleteUsers } = useUser();
   const user = useSelector((state: storeRoot) => state.user);
-  const [removeClassRecord] = useRemoveClassMutation();
   const navigate = useNavigate();
   const students = useGetUsersByClassQuery({
     schoolId: user?.schoolId || null,
     classLevel,
     className
   });
-  const usersCount = useGetUsersCountQuery({
-    schoolId: user?.schoolId || null
-  });
-
-  const deleteClass = () => {
-    closeModal();
-    const users = students.data?.data[0].attributes?.users?.data || [];
-    deleteUsers(users, usersCount.data.data[0].attributes.totalUsers);
-    const id = students.data.data[0].id;
-    removeClassRecord({
-      classId: id
-    });
-    navigate(-1);
-  };
 
   useEffect(() => {
     if (students.isSuccess && !students.data.data[0]?.attributes) {
@@ -47,18 +28,7 @@ const ClassDetails = () => {
 
   return (
     <Wrapper>
-      <InfoWrapper>
-        <Heading>
-          Edytuj <span>{String(id).toUpperCase()}</span>
-        </Heading>
-        <ParagraphsWrapper>
-          <Paragraph>Imię i nazwisko</Paragraph>
-          <Paragraph>Rola</Paragraph>
-          <Paragraph>Data urodzenia</Paragraph>
-          <Paragraph>Numer</Paragraph>
-          <ManageButtons deleteClass={deleteClass} className={id || ''} classId={students?.data?.data[0]?.id || 0} />
-        </ParagraphsWrapper>
-      </InfoWrapper>
+      <ClassDetailsHeader id={id} students={students} user={user} />
       <InnerWrapper>
         {!students.isLoading ? (
           students.data?.data[0]?.attributes?.users.data.length > 0 ? (
