@@ -9,8 +9,8 @@ import data from './posts.json';
 import * as paginate from 'paginatejson';
 
 const fetchPosts = (page = 1) => {
-  const { items, ...pageInfo } = paginate.paginate(data, page, 1);
-  return new Promise((resolve) => setTimeout(() => resolve({ items, pageInfo }), 100));
+  const { items, ...pageInfo } = paginate.paginate(data, page, 3);
+  return new Promise((resolve) => setTimeout(() => resolve({ items, pageInfo }), 500));
 };
 
 const Spotted = () => {
@@ -63,7 +63,6 @@ const Spotted = () => {
     <UserTemplate>
       <PageWrapper>
         <AskQuestionInput />
-        <button onClick={getMorePosts}>Load</button>
         {posts.map((post, i) => {
           if (i === posts.length - 1) {
             return (
