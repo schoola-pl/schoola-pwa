@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getJWT } from '../../helpers/jwt';
+import { getJWT } from 'helpers/jwt';
+import { multiResponse, multiResponseWithoutPagination, strapiRequestType } from 'types/strapi';
 
 export const ClassAPI = createApi({
   reducerPath: 'ClassAPI',
@@ -8,7 +9,7 @@ export const ClassAPI = createApi({
   }),
   tagTypes: ['classes'],
   endpoints: (builder) => ({
-    getClassesCount: builder.query({
+    getClassesCount: builder.query<multiResponse, { schoolId: strapiRequestType }>({
       providesTags: ['classes'],
       query: (args) => ({
         url: `/classes?fields[0]=id&filters[schoolId][$eq]=${args.schoolId}`,
@@ -17,7 +18,10 @@ export const ClassAPI = createApi({
         }
       })
     }),
-    getClasses: builder.query({
+    getClasses: builder.query<
+      multiResponse<{ classLevel: number; className: string; users: multiResponseWithoutPagination }>,
+      { pagination?: boolean; page?: strapiRequestType; schoolId: strapiRequestType; classLevel?: strapiRequestType }
+    >({
       providesTags: ['classes'],
       query: (args) => ({
         url: `/classes?populate[users][fields][0]=id${
@@ -30,7 +34,21 @@ export const ClassAPI = createApi({
         }
       })
     }),
-    getClass: builder.query({
+    getClass: builder.query<
+      multiResponse<{
+        classLevel: number;
+        className: string;
+        users: multiResponseWithoutPagination<{
+          blocked: boolean;
+          first_name: string;
+          last_name: string;
+          avatar: string | null;
+          Birthday: string;
+          TextRole: string;
+        }>;
+      }>,
+      { className: string; classLevel: strapiRequestType; schoolId: strapiRequestType }
+    >({
       query: (args) => ({
         url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&populate[users][fields][3]=avatar&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
         headers: {
