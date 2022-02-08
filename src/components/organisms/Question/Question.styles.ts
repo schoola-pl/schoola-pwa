@@ -9,7 +9,11 @@ interface ToggleMenuProps {
   onClick?: any;
 }
 
-export const QuestionWrapper = styled.div`
+interface WrapperProps {
+  ref?: any;
+}
+
+export const QuestionWrapper = styled.div<WrapperProps>`
   position: relative;
   display: grid;
   grid-template-rows: repeat(3, 1fr);

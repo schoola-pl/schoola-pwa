@@ -3,7 +3,7 @@ import TopBar from 'components/organisms/TopBar/TopBar';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  height: 100rem;
+  height: 72rem;
   width: 95%;
   margin-top: 10rem;
   z-index: -1;

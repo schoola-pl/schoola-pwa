@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   QuestionWrapper,
   InfoWrapper,
@@ -25,9 +25,10 @@ interface Props {
   numberOfComments: number;
   numberOfHearts: number;
   isSpotted: boolean;
+  ref?: any;
 }
 
-const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHearts, isSpotted }) => {
+const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -35,7 +36,7 @@ const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHe
   };
 
   return (
-    <QuestionWrapper>
+    <QuestionWrapper ref={ref}>
       <InfoWrapper>
         <StyledPicture>
           <ProfilePicture icon={QuestionMark} />
@@ -45,7 +46,7 @@ const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHe
           <p>{date}</p>
         </QuestionInfo>
         <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-        <ActionMenu accountType="user" isOpened={isOpened} />
+        <ActionMenu accountType="spottedAdmin" isOpened={isOpened} />
       </InfoWrapper>
       <QuestionInnerWrapper>
         <p>{content}</p>
@@ -67,6 +68,6 @@ const Question: React.FC<Props> = ({ date, content, numberOfComments, numberOfHe
       </ActionsWrapper>
     </QuestionWrapper>
   );
-};
+});
 
 export default Question;
