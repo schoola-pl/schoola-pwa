@@ -19,7 +19,7 @@ export const InterestedsAPI = createApi({
       unknown
     >({
       query: () => ({
-        url: `/interesteds`,
+        url: `/interesteds?pagination[pageSize]=50`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
