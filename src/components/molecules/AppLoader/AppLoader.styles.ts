@@ -22,5 +22,7 @@ export const Text = styled.p`
   color: black;
   font-weight: bold;
   letter-spacing: 0.4px;
-  font-size: ${({ theme }) => theme.fontSize.l};
+  font-size: clamp(${({ theme }) => theme.fontSize.m}, 2vw, ${({ theme }) => theme.fontSize.l});
+  padding-inline: 1.4rem;
+  text-align: center;
 `;
