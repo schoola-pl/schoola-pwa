@@ -31,14 +31,14 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
               backgroundColor: theme.colors.accentBlue
             }}
           >
-            {!classes.isLoading ? classes.data.data.length : '...'}
+            {!classes.isLoading && classes.data?.data ? classes.data.data.length : '...'}
           </span>
         </summary>
         <div>
           {classes.isLoading ? (
             <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '1.4rem' }}>Wczytywanie klas...</p>
-          ) : classes.data.data.length > 0 ? (
-            classes.data.data.map(
+          ) : classes.data?.data && classes.data.data.length > 0 ? (
+            classes.data?.data.map(
               (
                 {
                   attributes: {
