@@ -12,6 +12,7 @@ import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
 import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
 import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
 import SpottedComment from 'views/auth/User/SpottedComment/SpottedComment';
+import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
 interface routesInterface {
   // Path to component
   path: string;
@@ -41,6 +42,7 @@ const addClassRoute = '/add-class';
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: '/feed', Component: Feed, isProtected: false, role: roles.authenticated },
+  { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
   { path: '/welcome', Component: Welcome, isProtected: false, role: roles.authenticated },
   { path: '/finish', Component: FinishPage, isProtected: false, role: roles.authenticated },
   { path: '/hobbies', Component: Hobbies, isProtected: false, role: roles.authenticated },
