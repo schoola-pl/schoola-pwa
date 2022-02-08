@@ -49,4 +49,4 @@ const ClassDetailsHeader: React.FC<props> = ({ id, students, user }) => {
   );
 };
 
-export default ClassDetailsHeader;
+export default React.memo(ClassDetailsHeader);
