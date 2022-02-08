@@ -9,6 +9,7 @@ import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
 import { getPathForRole } from 'helpers/roles';
+import Loader from 'components/atoms/Loader/Loader';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -65,7 +66,15 @@ const Login: React.FC = () => {
           />
           {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
           <StyledButton error={isError} type="submit" data-cy="login-button">
-            {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
+            {!isLoading && !isError ? (
+              'Zaloguj się'
+            ) : !isError && isLoading ? (
+              <>
+                Logowanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
+              </>
+            ) : (
+              'Spróbuj ponownie!'
+            )}
           </StyledButton>
         </Form>
       </AuthCard>

@@ -23,10 +23,10 @@ const Dashboard: React.FC = () => {
           <>
             <InfoCard
               name="Łączna liczba użytkowników"
-              number={usersCount.isLoading ? 0 : usersCount.data.data[0].attributes.totalUsers}
+              number={usersCount.isLoading ? 0 : usersCount?.data?.data[0].attributes.totalUsers || 0}
               icon={StudentIcon}
             />
-            <InfoCard name="Łączna liczba klas" number={classesCount.isLoading ? 0 : classesCount.data.data.length} icon={ClassIcon} />
+            <InfoCard name="Łączna liczba klas" number={classesCount.isLoading ? 0 : classesCount?.data?.data.length || 0} icon={ClassIcon} />
             <ClassesCard />
           </>
         )}

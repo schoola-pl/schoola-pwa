@@ -31,7 +31,7 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
               backgroundColor: theme.colors.accentBlue
             }}
           >
-            {!classes.isLoading && classes.data.data.length}
+            {!classes.isLoading ? classes.data.data.length : '...'}
           </span>
         </summary>
         <div>
@@ -50,21 +50,21 @@ const ClassCard: React.FC<Props> = ({ classYear, classLevel }) => {
                 { attributes: { className: string; classLevel: number; users: { data: any[] } } },
                 index: number
               ) => (
-                <Wrapper onClick={() => navigate(`${classLevel}${className}`)} key={index}>
+                <Wrapper key={index}>
                   <Circle>
                     <h1>{`${classLevel}${className}`}</h1>
                   </Circle>
                   <p>
                     Liczba uczniów: <strong>{usersCount.length}</strong>
                   </p>
-                  <EditLink icon={EditIcon} />
+                  <EditLink onClick={() => navigate(`${classLevel}${className}`)} icon={EditIcon} />
                 </Wrapper>
               )
             )
           ) : (
             <p style={{ fontSize: '1.3rem', textAlign: 'center', margin: '20px 0' }}>
               Pusto jak na pustyni!{' '}
-              <NavLink style={{ color: 'black' }} to={`add-class/${classLevel}`}>
+              <NavLink style={{ color: 'black' }} to={`/school-admin/manage/add-class/${classLevel}`}>
                 Dodaj
               </NavLink>
             </p>

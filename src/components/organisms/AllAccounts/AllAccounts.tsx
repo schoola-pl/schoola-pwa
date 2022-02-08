@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux';
 import { SearchRecord, SearchRecords, Wrapper } from './AllAccounts.styles';
 import Loading from 'components/molecules/Loading/Loading';
 import { copy } from 'helpers/copy';
+import { useNavigate } from 'react-router';
 
 interface resultType {
   id: string;
   first_name: string;
   last_name: string;
   TextRole: string;
+  TextClassName: string;
 }
 
 const defaultPhrase = 'Tutaj się pojawi twoja fraza...';
@@ -22,11 +24,20 @@ const AllAccounts: React.FC = () => {
     schoolId: user?.schoolId
   });
   const searchInput = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   const copyURL = () => {
     const preparedURL = encodeURI(window.location.href.split('?', 1) + '?q=' + phrase);
     copy(preparedURL, () => {
       alert('Skopiowano URL do schowka!');
+    });
+  };
+
+  const findAccount = (array: unknown, query: string) => {
+    const typedArray = array as resultType[];
+    return typedArray.filter(({ first_name, last_name }) => {
+      const username = `${first_name} ${last_name}`;
+      return username.toLowerCase().includes(query.toLowerCase());
     });
   };
 
@@ -37,11 +48,7 @@ const AllAccounts: React.FC = () => {
       const preparedValue = value.toLowerCase().trim();
       setPhrase(value ? value.trim() : defaultPhrase);
       if (preparedValue) {
-        const destructuredUsers = users.data as resultType[];
-        const founded = destructuredUsers.filter(({ first_name, last_name }) => {
-          const username = `${first_name} ${last_name}`;
-          return username.toLowerCase().includes(preparedValue);
-        });
+        const founded = findAccount(users.data, preparedValue);
         setResults(founded);
       } else setResults([]);
     }
@@ -69,11 +76,7 @@ const AllAccounts: React.FC = () => {
     const query = urlParams.get('q');
     if (!users.isLoading && query && searchInput.current) {
       setPhrase(query);
-      const destructuredUsers = users.data as resultType[];
-      const founded = destructuredUsers.filter(({ first_name, last_name }) => {
-        const username = `${first_name} ${last_name}`;
-        return username.toLowerCase().includes(query);
-      });
+      const founded = findAccount(users.data, query);
       setResults(founded);
       searchInput.current.value = query;
     }
@@ -106,12 +109,16 @@ const AllAccounts: React.FC = () => {
             </h1>
             <SearchRecords>
               {results.length > 0 ? (
-                results.map(({ id, first_name, last_name, TextRole }) => (
-                  <SearchRecord key={id}>
-                    <h1>{`${first_name} ${last_name}`}</h1>
-                    <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
-                  </SearchRecord>
-                ))
+                results.map(({ id, first_name, last_name, TextRole, TextClassName }) => {
+                  if (TextRole === 'School Admin') return null;
+                  return (
+                    <SearchRecord key={id} onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
+                      <h1>{`${first_name} ${last_name}`}</h1>
+                      <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
+                      <span>{TextClassName}</span>
+                    </SearchRecord>
+                  );
+                })
               ) : (
                 <p style={{ textAlign: 'center', fontSize: '2.5rem', marginTop: '15rem' }}>Brak wyników</p>
               )}

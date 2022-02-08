@@ -15,4 +15,5 @@ export type authUser = {
   schoolId: number;
   TextRole: string;
   interesteds: { id: number; name: string }[];
+  TextClassName: string;
 };
