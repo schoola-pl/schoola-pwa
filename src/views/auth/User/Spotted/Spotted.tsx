@@ -67,7 +67,7 @@ const Spotted = () => {
           if (i === posts.length - 1) {
             return (
               <Question
-                key={post.date}
+                key={post.id}
                 isSpotted={true}
                 date={post.date}
                 content={post.content}
@@ -79,7 +79,7 @@ const Spotted = () => {
           }
           return (
             <Question
-              key={post.date}
+              key={post.id}
               isSpotted={true}
               date={post.date}
               content={post.content}
