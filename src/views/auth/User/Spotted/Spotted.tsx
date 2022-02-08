@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import { PageWrapper } from './Spotted.styles';
 import Question from 'components/organisms/Question/Question';
@@ -10,21 +10,20 @@ import * as paginate from 'paginatejson';
 
 const fetchPosts = (page = 1) => {
   const { items, ...pageInfo } = paginate.paginate(data, page, 1);
-  return new Promise((resolve) => setTimeout(() => resolve({ items, page: pageInfo }), 100));
+  return new Promise((resolve) => setTimeout(() => resolve({ items, pageInfo }), 100));
 };
 
 const Spotted = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [page, setPage] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
-  const lastItemRef = useRef(null);
+  const lastItemRef = useRef<any>(null);
   const observer = useRef<IntersectionObserver>();
 
   useEffect(() => {
     fetchPosts().then((res: any | never) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      setPosts([...res.items], setPage(res.page));
+      setPosts(res.items);
+      setPage(res.pageInfo);
     });
   }, []);
 
@@ -32,8 +31,8 @@ const Spotted = () => {
     if (!page || !page.next || isLoading) return;
     setIsLoading(true);
     fetchPosts(page.next).then((res: any) => {
-      setPosts((i) => [...i, ...res.posts]);
-      setPage(res.page);
+      setPosts((prev) => [...prev, ...res.items]);
+      setPage(res.pageInfo);
       setIsLoading(false);
     });
   }, [isLoading, page]);
@@ -56,11 +55,10 @@ const Spotted = () => {
     }
 
     return () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      observer.current.disconnect();
+      observer.current?.disconnect();
     };
-  }, [getMorePosts]);
+  }, [getMorePosts, lastItemRef]);
+
   return (
     <UserTemplate>
       <PageWrapper>
