@@ -112,7 +112,10 @@ const AllAccounts: React.FC = () => {
                 results.map(({ id, first_name, last_name, TextRole, TextClassName }) => {
                   if (TextRole === 'School Admin') return null;
                   return (
-                    <SearchRecord key={id} onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
+                    <SearchRecord
+                      key={id}
+                      onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}#${first_name.toLowerCase()}-${last_name.toLowerCase()}`)}
+                    >
                       <h1>{`${first_name} ${last_name}`}</h1>
                       <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
                       <span>{TextClassName}</span>

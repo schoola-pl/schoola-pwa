@@ -11,6 +11,7 @@ import { useClass } from 'hooks/useClass';
 
 const ClassDetails = () => {
   const { id } = useParams();
+  const userToFind = window.location.href.split('#')[1];
   const { checkDoesClassExist } = useClass();
   const classLevel = id?.split('')[0] || '0';
   const className = id?.slice(1) || null;
@@ -36,7 +37,7 @@ const ClassDetails = () => {
       <InnerWrapper>
         {!students.isLoading ? (
           students.data?.data[0]?.attributes?.users.data.length > 0 ? (
-            <StudentDetail students={students.data?.data[0]?.attributes?.users?.data || []} />
+            <StudentDetail students={students.data?.data[0]?.attributes?.users?.data || []} userToFind={userToFind} />
           ) : (
             <p style={{ width: 'fit-content', margin: '20px auto', textAlign: 'center', fontSize: '1.5rem' }}>Brak uczniów w klasie!</p>
           )
