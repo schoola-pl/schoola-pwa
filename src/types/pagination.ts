@@ -5,3 +5,10 @@ export interface paginatedOptions<T = unknown> {
   next: number;
   first: number;
 }
+
+export interface paginatedStrapiOptions {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
