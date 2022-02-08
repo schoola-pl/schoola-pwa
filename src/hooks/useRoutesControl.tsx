@@ -1,11 +1,11 @@
 import React, { createContext, useContext } from 'react';
-import { getJWT, removeJWT, setJWT } from '../helpers/jwt';
+import { getJWT, removeJWT, setJWT } from 'helpers/jwt';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import { addUser, removeUser } from '../store';
-import { authUser } from '../types/auth';
+import { addUser, removeUser } from 'store';
+import { authUser } from 'types/auth';
 import { useNavigate } from 'react-router';
-import { dashboardRoute, loginRoute } from '../routes';
+import { dashboardRoute, loginRoute } from 'routes';
 import { useAppLoading } from './useAppLoading';
 
 interface RouteContextTypes {
@@ -75,6 +75,7 @@ export const RouteProvider: React.FC = ({ children }) => {
         removeJWT();
         dispatch(removeUser({}));
         navigate(loginRoute);
+        localStorage.removeItem('role');
       }
     }
   };

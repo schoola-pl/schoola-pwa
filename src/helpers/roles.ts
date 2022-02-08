@@ -11,7 +11,7 @@ export const getPathForRole = (role: string) => {
     case roles.schoolAdmin:
       return pathsPrepared.schoolAdmin;
     default:
-      return pathsPrepared.student;
+      return `${pathsPrepared.student}home`;
   }
 };
 
@@ -25,3 +25,5 @@ export const getRoleFromText = (textRole: string) => {
       return 3;
   }
 };
+
+export const getRoleFromLocalStorage = () => localStorage.getItem('role');

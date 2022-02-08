@@ -8,7 +8,7 @@ import { getJWT } from 'helpers/jwt';
 import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
-import { getPathForRole } from 'helpers/roles';
+import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
 
 const Login: React.FC = () => {
@@ -24,9 +24,15 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (getJWT()) {
-      navigate(dashboardRoute.replaceAll('*', ''));
+      const lsRole = getRoleFromLocalStorage();
+      if (lsRole) {
+        navigate(getPathForRole(lsRole));
+      } else {
+        navigate(dashboardRoute.replaceAll('*', ''));
+      }
     } else if (isSuccess) {
       unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
+      localStorage.setItem('role', data.user.TextRole);
     }
     // eslint-disable-next-line
   }, [data]);
