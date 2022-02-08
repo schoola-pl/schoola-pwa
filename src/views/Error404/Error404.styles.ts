@@ -27,6 +27,8 @@ export const Wrapper = styled.div`
 `;
 
 export const ErrorDiv = styled.div<Props>`
+  height: 75rem;
+  width: 75rem;
   background-size: 75%;
   background-position: center;
   background-image: url(${({ icon }) => icon});

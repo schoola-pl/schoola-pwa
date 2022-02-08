@@ -6,6 +6,7 @@ export type authUser = {
   email: string;
   first_name: string;
   last_name: string;
+  confirmed: boolean;
   password: string;
   blocked: boolean;
   age: number;
@@ -13,5 +14,6 @@ export type authUser = {
   Birthday: string;
   schoolId: number;
   TextRole: string;
+  interesteds: { id: number; name: string }[];
   TextClassName: string;
 };

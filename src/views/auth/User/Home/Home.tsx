@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Home: React.FC = () => {
-  return <p data-cy="student-view">For everyone</p>;
+  return <p>For everyone</p>;
 };
 
 export default Home;

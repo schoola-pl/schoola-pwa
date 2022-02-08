@@ -23,6 +23,8 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
+  addInterested: (interested: { id: number; name: string }) => void;
+  removeInterested: (id: number) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number,
@@ -42,6 +44,12 @@ interface UserContextTypes {
 
 const UserContext = createContext<UserContextTypes>({
   updateUserState: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  addInterested: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  removeInterested: () => {
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
@@ -66,7 +74,7 @@ const UserContext = createContext<UserContextTypes>({
 export const UserProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [addUserToDatabase] = useUpdateUserMutation();
+  const [updateUserDatabase] = useUpdateUserMutation();
   const { classId, className } = useClass();
   const user = useSelector((state: storeRoot) => state.user);
   const [addUser, { isLoading }] = useAddUserToClassMutation();
@@ -97,7 +105,7 @@ export const UserProvider: React.FC = ({ children }) => {
       email: `${nanoid()}@email.com`,
       first_name: userData.first_name.charAt(0).toUpperCase() + userData.first_name.slice(1),
       last_name: userData.last_name.charAt(0).toUpperCase() + userData.last_name.slice(1),
-      confirmed: true,
+      confirmed: false,
       blocked: false,
       Birthday: new Date(userData.birthday).toISOString(),
       avatar: null,
@@ -134,24 +142,77 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method updates the user settings in the redux store & database
   const updateSettings = (settings: settingsType, userId?: number) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
-      const tempObj: { [key: string]: string } = {};
+      const tempObj: { [key: string]: string | boolean } = {};
       const settingsArray = Object.entries(settings);
       const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
         if (value !== '') {
-          if (key === 'first_name' || key === 'last_name') value = value.charAt(0).toUpperCase() + value.slice(1);
+          if (typeof value !== 'boolean' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
       if (!userId) dispatch(updateUser({ updated: tempObj }));
-      addUserToDatabase({ id: userId || user?.id || null, data: { ...tempObj, role } });
+      updateUserDatabase({ id: userId || user?.id || null, data: { ...tempObj, role } });
+    }
+  };
+
+  // This method adds the user interested
+  const addInterested = ({ id, name }: { id: number; name: string }) => {
+    if (user?.id) {
+      const currentInterested = user.interesteds;
+      dispatch(
+        updateUser({
+          updated: {
+            interesteds: [
+              ...currentInterested,
+              {
+                id,
+                name
+              }
+            ]
+          }
+        })
+      );
+      updateUserDatabase({
+        id: user.id || null,
+        data: {
+          interesteds: [
+            ...currentInterested,
+            {
+              id
+            }
+          ]
+        }
+      });
+    }
+  };
+
+  // This method removes the user interested
+  const removeInterested = (id: number) => {
+    if (user?.id) {
+      const actualInteresteds = user.interesteds;
+      const interesteds = actualInteresteds.filter((interested) => interested.id !== id);
+
+      dispatch(
+        updateUser({
+          updated: {
+            interesteds
+          }
+        })
+      );
+      updateUserDatabase({
+        id: user.id || null,
+        data: {
+          interesteds
+        }
+      });
     }
   };
 
   // This method resets the user password in the database
   const resetPassword = (newPassword: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
-      addUserToDatabase({ id: user?.id || null, data: { password: newPassword } });
+      updateUserDatabase({ id: user?.id || null, data: { password: newPassword } });
     }
   };
 
@@ -180,6 +241,8 @@ export const UserProvider: React.FC = ({ children }) => {
     resetPassword,
     updateUserState,
     updateSettings,
+    addInterested,
+    removeInterested,
     addNewUser,
     deleteUser,
     deleteUsers
