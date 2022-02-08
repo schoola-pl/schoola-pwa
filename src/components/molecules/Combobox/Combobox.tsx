@@ -17,7 +17,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () => {
     const items = interesteds?.data?.data?.map((item) => item.attributes.name) || [];
-    return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || ''));
+    return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || '')).sort();
   };
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
     inputValue,
@@ -93,25 +93,23 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
           {interesteds.isLoading ? (
             <p>loading...</p>
           ) : isOpen ? (
-            getFilteredItems()
-              .sort()
-              .map((item, index) => (
-                <li
-                  style={
-                    highlightedIndex === index
-                      ? {
-                          backgroundColor: theme.colors.accentGreen,
-                          paddingLeft: '1.5rem',
-                          color: 'white'
-                        }
-                      : {}
-                  }
-                  key={`${item}${index}`}
-                  {...getItemProps({ item, index })}
-                >
-                  {item}
-                </li>
-              ))
+            getFilteredItems().map((item, index) => (
+              <li
+                style={
+                  highlightedIndex === index
+                    ? {
+                        backgroundColor: theme.colors.accentGreen,
+                        paddingLeft: '1.5rem',
+                        color: 'white'
+                      }
+                    : {}
+                }
+                key={`${item}${index}`}
+                {...getItemProps({ item, index })}
+              >
+                {item}
+              </li>
+            ))
           ) : null}
         </StyledList>
       </StyledCombobox>
