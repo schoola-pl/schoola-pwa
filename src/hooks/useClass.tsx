@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getJWT } from '../helpers/jwt';
+import { getJWT } from 'helpers/jwt';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { storeRoot, useAddClassMutation, useRemoveClassMutation } from '../store';
-import { authUser } from '../types/auth';
+import { storeRoot, useAddClassMutation, useRemoveClassMutation } from 'store';
+import { authUser } from 'types/auth';
 
 interface ClassContextTypes {
   // Informations
@@ -17,6 +17,7 @@ interface ClassContextTypes {
   isError: boolean;
   // Functions
   addClassProtocol: ({ classLevel, className, usersCount }: { classLevel: number; className: string; usersCount: string }) => Promise<void>;
+  checkDoesClassExist: (className: string, classLevel: number) => Promise<boolean>;
   restoreClass: () => void;
   clearStates: (reset: () => void) => void;
 }
@@ -30,6 +31,9 @@ const ClassContext = createContext<ClassContextTypes>({
   isError: false,
   addClassProtocol: async () => {
     throw new Error('ClassContext: addClassProtocol is not implemented');
+  },
+  checkDoesClassExist: async () => {
+    throw new Error('ClassContext: checkDoesClassExist is not implemented');
   },
   restoreClass: async () => {
     throw new Error('ClassContext: restoreClass is not implemented');
@@ -108,6 +112,7 @@ export const ClassProvider: React.FC = ({ children }) => {
   const values = {
     addClassProtocol,
     restoreClass,
+    checkDoesClassExist,
     clearStates,
     users,
     isError: isErrorAdding || isErrorRemoving,

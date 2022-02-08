@@ -55,7 +55,9 @@ const RoleSection: React.FC<props> = ({ role, title }) => {
           data.length > 0 ? (
             data.map(({ first_name, last_name, TextClassName }) => {
               return (
-                <RoleRecord onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}`)}>
+                <RoleRecord
+                  onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}#${first_name.toLowerCase()}-${last_name.toLowerCase()}`)}
+                >
                   {first_name} {last_name}
                 </RoleRecord>
               );

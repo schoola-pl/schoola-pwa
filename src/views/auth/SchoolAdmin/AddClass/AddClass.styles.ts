@@ -46,25 +46,6 @@ export const Select = styled.select<{ small?: boolean }>`
   `}
 `;
 
-export const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: 100vh;
-  width: 30rem;
-  margin-top: 3rem;
-  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
-    height: fit-content;
-    margin-bottom: 5rem;
-  }
-`;
-
-export const Label = styled.label`
-  font-size: ${({ theme }) => theme.fontSize.m};
-  margin-bottom: 2rem;
-`;
-
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 35% 65%;
@@ -101,15 +82,6 @@ export const PeopleCard = styled.div`
   @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
     width: 95%;
     margin: 0 auto;
-  }
-`;
-
-export const InnerWrapper = styled.div`
-  margin-top: -2rem;
-  border-right: 2px solid #eceff7;
-  @media (max-width: ${({ theme }) => theme.screenSize.tabletMD}) {
-    border: none;
-    padding-inline: 1rem;
   }
 `;
 
