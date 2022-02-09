@@ -35,6 +35,16 @@ export const MessageActionWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  p {
+    padding-left: 1rem;
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+    &::after {
+      content: ' anonimowe!';
+      color: ${({ theme }) => theme.colors.accentGreen};
+    }
+  }
 `;
 
 export const StyledRadio = styled.input`
