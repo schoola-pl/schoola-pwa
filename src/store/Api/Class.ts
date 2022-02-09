@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getJWT } from 'helpers/jwt';
-import { multiResponse, multiResponseWithoutPagination, strapiRequestType } from 'types/strapi';
+import { multiResponse, multiResponseWithoutPagination, oneResponse, strapiRequestType } from 'types/strapi';
 
 export const ClassAPI = createApi({
   reducerPath: 'ClassAPI',
@@ -56,7 +56,10 @@ export const ClassAPI = createApi({
         }
       })
     }),
-    addClass: builder.mutation({
+    addClass: builder.mutation<
+      oneResponse<{ className: string; classLeve: number; schoolId: string }>,
+      { className: string; classLevel: strapiRequestType; schoolId: strapiRequestType; school: strapiRequestType }
+    >({
       invalidatesTags: ['classes'],
       query: (body) => ({
         url: '/classes',
@@ -71,7 +74,7 @@ export const ClassAPI = createApi({
         }
       })
     }),
-    removeClass: builder.mutation({
+    removeClass: builder.mutation<oneResponse<{ className: string; classLeve: number; schoolId: string }>, { classId: strapiRequestType }>({
       invalidatesTags: ['classes'],
       query: (args) => ({
         url: `/classes/${args.classId}`,
