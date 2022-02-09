@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getJWT } from 'helpers/jwt';
+import { multiResponse } from 'types/strapi';
 
 export const InterestedsAPI = createApi({
   reducerPath: 'InterestedsAPI',
@@ -7,17 +8,7 @@ export const InterestedsAPI = createApi({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
   endpoints: (builder) => ({
-    getInteresteds: builder.query<
-      {
-        data: {
-          id: number;
-          attributes: {
-            name: string;
-          };
-        }[];
-      },
-      unknown
-    >({
+    getInteresteds: builder.query<multiResponse<{ name: string }>, unknown>({
       query: () => ({
         url: `/interesteds?pagination[pageSize]=50`,
         headers: {
