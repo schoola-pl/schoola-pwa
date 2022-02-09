@@ -211,6 +211,29 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method removes the user interested
   const removeInterested = (id: number) => {
     if (user?.id) {
+      const currentInterestedIDs = user.TextInteresteds;
+      const newInterestedsText = currentInterestedIDs
+        .split(';')
+        .filter((item) => item !== String(id))
+        .join(';');
+      const newInterestedsObjects = currentInterestedIDs
+        .split(';')
+        .filter((item) => item !== String(id))
+        .map((item) => ({ id: item }));
+      dispatch(
+        updateUser({
+          updated: {
+            TextInteresteds: newInterestedsText
+          }
+        })
+      );
+      updateUserDatabase({
+        id: user?.id || null,
+        data: {
+          interesteds: newInterestedsObjects,
+          TextInteresteds: newInterestedsText
+        }
+      });
     }
   };
 
