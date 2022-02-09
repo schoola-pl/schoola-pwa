@@ -18,6 +18,7 @@ import {
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
+import { getInterestedsByIDs } from 'helpers/interesteds';
 
 export interface preparedUserInterface {
   username: string;
@@ -41,7 +42,7 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addInterested: (interested: { id: number; name: string }) => void;
+  addInterested: (interested: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => void;
   removeInterested: (id: number) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
@@ -175,19 +176,20 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds the user interested
-  const addInterested = ({ id, name }: { id: number; name: string }) => {
+  const addInterested = ({ id, allInteresteds }: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => {
     if (user?.id) {
-      const currentInterested = user.interesteds;
+      const currentInterestedIDs = user.TextInteresteds;
+      let currentInterested;
+      if (currentInterestedIDs) {
+        if (currentInterestedIDs.includes(String(id))) return;
+        const currentInterestedNames = getInterestedsByIDs(currentInterestedIDs, allInteresteds);
+        currentInterested = currentInterestedIDs.split(';').map((item) => ({ id: item }));
+        console.log(currentInterestedNames);
+      }
       dispatch(
         updateUser({
           updated: {
-            interesteds: [
-              ...currentInterested,
-              {
-                id,
-                name
-              }
-            ]
+            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
           }
         })
       );
@@ -195,11 +197,12 @@ export const UserProvider: React.FC = ({ children }) => {
         id: user?.id || null,
         data: {
           interesteds: [
-            ...currentInterested,
+            ...(currentInterested ? currentInterested : []),
             {
               id
             }
-          ]
+          ],
+          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
         }
       });
     }
@@ -208,22 +211,6 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method removes the user interested
   const removeInterested = (id: number) => {
     if (user?.id) {
-      const actualInteresteds = user.interesteds;
-      const interesteds = actualInteresteds.filter((interested) => interested.id !== id);
-
-      dispatch(
-        updateUser({
-          updated: {
-            interesteds
-          }
-        })
-      );
-      updateUserDatabase({
-        id: user.id || null,
-        data: {
-          interesteds
-        }
-      });
     }
   };
 

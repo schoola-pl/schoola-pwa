@@ -43,10 +43,14 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
         case useCombobox.stateChangeTypes.InputBlur:
-          if (selectedItem && selectedItems.length <= 2) {
+          if (selectedItem && selectedItems.length <= 2 && interesteds.data?.data) {
             setInputValue('');
             const selectedItemId = getIdFromName(selectedItem);
-            if (selectedItemId) addInterested({ id: selectedItemId, name: selectedItem });
+            if (selectedItemId)
+              addInterested({
+                id: selectedItemId,
+                allInteresteds: interesteds.data?.data
+              });
             if (selectedItems.length === 2) setReadyState(true);
             addSelectedItem(selectedItem);
           }
