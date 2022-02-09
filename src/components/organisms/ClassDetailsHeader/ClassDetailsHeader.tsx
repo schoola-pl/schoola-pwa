@@ -23,14 +23,16 @@ const ClassDetailsHeader: React.FC<props> = ({ id, students, user }) => {
     schoolId: user?.schoolId || null
   });
   const deleteClass = () => {
-    closeModal();
-    const users = students.data?.data[0].attributes?.users?.data || [];
-    deleteUsers(users, usersCount.data.data[0].attributes.totalUsers);
-    const id = students.data.data[0].id;
-    removeClassRecord({
-      classId: id
-    });
-    navigate(-1);
+    if (usersCount.data?.data[0] && students.data.data[0]) {
+      closeModal();
+      const users = students.data.data[0].attributes.users.data || [];
+      deleteUsers(users, usersCount.data.data[0].attributes.totalUsers);
+      const id = students.data.data[0].id;
+      removeClassRecord({
+        classId: id
+      });
+      navigate(-1);
+    }
   };
 
   return (

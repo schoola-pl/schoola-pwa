@@ -12,7 +12,7 @@ import { useUser } from 'hooks/useUser';
 
 interface props {
   info: {
-    id: string;
+    id: number;
     attributes: {
       first_name: string;
       last_name: string;
@@ -46,7 +46,7 @@ const StudentInfoRecord: React.FC<props> = ({
         TextRole: data.TextRole,
         username: data.name.toLowerCase().split(' ').join('_')
       },
-      parseInt(id)
+      id
     );
     setEditState(false);
   };
@@ -77,7 +77,7 @@ const StudentInfoRecord: React.FC<props> = ({
       <Number>{id}</Number>
       <BoxWrapper>
         {!blocked && !isEdit && <EditBox data-testid="edition-button" onClick={() => setEditState((prev) => !prev)} icon={EditIcon} />}
-        {!isEdit && <DeleteBox data-testid="delete-button" icon={DeleteIcon} onClick={() => deleteUser(parseInt(id))} />}
+        {!isEdit && <DeleteBox data-testid="delete-button" icon={DeleteIcon} onClick={() => deleteUser(id)} />}
         {isEdit && <EditBox icon={AcceptIcon} />}
         {isEdit && <DeleteBox icon={CancelIcon} onClick={() => setEditState(false)} />}
       </BoxWrapper>

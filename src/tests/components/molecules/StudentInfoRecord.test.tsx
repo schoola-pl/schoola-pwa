@@ -7,7 +7,7 @@ describe('Components > Molecules > StudentInfoRecord', () => {
       <StudentInfoRecord
         userToFind={'userToFind'}
         info={{
-          id: '23',
+          id: 23,
           attributes: {
             first_name: 'name',
             Birthday: 'string',
@@ -27,7 +27,7 @@ describe('Components > Molecules > StudentInfoRecord', () => {
       <StudentInfoRecord
         userToFind={'userToFind'}
         info={{
-          id: '23',
+          id: 23,
           attributes: {
             first_name: 'name',
             Birthday: 'string',

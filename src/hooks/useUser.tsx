@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsType } from 'types/school';
 import {
+  addUser as addUserStore,
   removeUser,
   storeRoot,
   updateUser,
@@ -17,6 +18,23 @@ import {
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
+
+export interface preparedUserInterface {
+  username: string;
+  email: string;
+  password: string;
+  confirmed: boolean;
+  blocked: boolean;
+  first_name: string;
+  last_name: string;
+  Birthday: string;
+  avatar: string | null;
+  schoolId: number | null;
+  TextClassName: string;
+  TextRole: string;
+  class: number | null;
+  role: number;
+}
 
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
@@ -96,11 +114,11 @@ export const UserProvider: React.FC = ({ children }) => {
     customClassId?: number,
     customClassName?: string
   ) => {
-    if (isLoading) return;
+    if (isLoading || !usersCount.data?.data) return;
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
     userData.last_name = dividedName[1];
-    const preparedUser = {
+    const preparedUser: preparedUserInterface = {
       username: `${userData.name.toLowerCase().split(' ').join('_')}`,
       email: `${nanoid()}@email.com`,
       first_name: userData.first_name.charAt(0).toUpperCase() + userData.first_name.slice(1),
@@ -135,7 +153,7 @@ export const UserProvider: React.FC = ({ children }) => {
   // This method updates the user state in the redux store
   const updateUserState = (user: authUser) => {
     if (user && getJWT()) {
-      dispatch(addUser({ user }));
+      dispatch(addUserStore({ user }));
     } else logout();
   };
 
@@ -174,7 +192,7 @@ export const UserProvider: React.FC = ({ children }) => {
         })
       );
       updateUserDatabase({
-        id: user.id || null,
+        id: user?.id || null,
         data: {
           interesteds: [
             ...currentInterested,
@@ -218,6 +236,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   // This method deletes the user from the database
   const deleteUser = (userId: number, count?: number) => {
+    if (!usersCount.data?.data) return;
     deleteUserMethod({
       id: userId
     });
