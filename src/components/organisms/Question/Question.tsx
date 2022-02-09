@@ -47,7 +47,6 @@ const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfCom
             <p>{date}</p>
           </QuestionInfo>
         </section>
-
         <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
         <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
       </InfoWrapper>

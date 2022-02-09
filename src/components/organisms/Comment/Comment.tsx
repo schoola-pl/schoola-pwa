@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
-import { CommentWrapper, InfoWrapper, StyledPicture, ProfilePicture, QuestionInfo, ToggleMenu, CommentInnerWrapper } from './Comment.styles';
+import {
+  CommentWrapper,
+  StyledActionMenu,
+  InfoWrapper,
+  StyledPicture,
+  ProfilePicture,
+  CommentInfo,
+  ToggleMenu,
+  CommentInnerWrapper
+} from './Comment.styles';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
 
@@ -22,15 +30,17 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, 
   return (
     <CommentWrapper>
       <InfoWrapper>
-        <StyledPicture>
-          <ProfilePicture icon={profilePicture} />
-        </StyledPicture>
-        <QuestionInfo>
-          <h1>{name}</h1>
-          <p>{date}</p>
-        </QuestionInfo>
+        <section>
+          <StyledPicture>
+            <ProfilePicture icon={profilePicture} />
+          </StyledPicture>
+          <CommentInfo>
+            <h1>{name}</h1>
+            <p>{date}</p>
+          </CommentInfo>
+        </section>
         <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
-        <ActionMenu accountType="user" isOpened={isOpened} />
+        <StyledActionMenu accountType="user" isOpened={isOpened} />
       </InfoWrapper>
       <CommentInnerWrapper>
         <div>

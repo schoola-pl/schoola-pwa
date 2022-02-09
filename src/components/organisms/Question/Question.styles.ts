@@ -81,7 +81,6 @@ export const QuestionInfo = styled.div`
 export const QuestionInnerWrapper = styled.div`
   display: flex;
   align-items: center;
-
   margin-left: 3.5rem;
   height: 6rem;
   margin-bottom: 0.75rem;
@@ -110,7 +109,7 @@ export const StyledComments = styled.div`
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.lightBlue};
   max-width: 13rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 
   p {
     display: flex;
@@ -132,6 +131,7 @@ export const StyledInput = styled.input`
   padding: 1rem;
   border: none;
   background-color: #f7f8fa;
+  margin-right: 0.5rem;
   color: black;
   &:focus {
     outline: none;

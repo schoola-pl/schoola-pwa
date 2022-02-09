@@ -22,13 +22,7 @@ export const StyledList = styled.ul`
   justify-content: center;
   align-items: center;
   position: relative;
-  padding-left: 2rem;
-
-  li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  padding-left: 1rem;
 `;
 
 interface Props {
@@ -39,7 +33,7 @@ export const StyledListItem = styled(NavLink)<Props>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-right: 1.5rem;
+  // margin-right: 1.5rem;
 
   &.active {
     border-radius: 2rem;

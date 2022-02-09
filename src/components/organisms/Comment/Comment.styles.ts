@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 
 export const CommentWrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  overflow-x: hidden;
+  grid-template-rows: repeat(2, 1fr);
   height: 15rem;
   background-color: white;
   border-radius: 2rem;
@@ -38,21 +40,25 @@ export const ProfilePicture = styled.div<Props>`
   border: none;
   background-size: contain;
   background-position: center;
-  padding: 2rem;
   z-index: 9999999;
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  section {
+    display: flex;
+    align-items: center;
+  }
 `;
 
-export const QuestionInfo = styled.div`
+export const CommentInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-top: 0.75rem;
-  transform: translateX(-45%);
+  justify-content: center;
+  transform: translateY(13%);
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -60,8 +66,7 @@ export const QuestionInfo = styled.div`
   }
 
   p {
-    transform: translateY(-100%);
-    padding-bottom: 0.75rem;
+    transform: translateY(-150%);
   }
 `;
 
@@ -71,8 +76,6 @@ interface ToggleMenuProps {
 }
 
 export const ToggleMenu = styled.button<ToggleMenuProps>`
-  transform: translateY(16%);
-  margin-left: 7rem;
   background-color: transparent;
   height: 5rem;
   width: 5rem;
@@ -90,13 +93,11 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
 
 export const CommentInnerWrapper = styled.div`
   display: grid;
-  width: 80%;
   grid-template-columns: 10% 90%;
-  grid-gap: 5rem;
-  margin-left: 0rem;
+  grid-gap: 3rem;
   height: 6rem;
-  transform: translateY(-45%);
   align-content: center;
+  transform: translateY(-10%);
 
   div {
     display: flex;
@@ -107,4 +108,8 @@ export const CommentInnerWrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
+`;
+
+export const StyledActionMenu = styled(ActionMenu)`
+  position: relative;
 `;
