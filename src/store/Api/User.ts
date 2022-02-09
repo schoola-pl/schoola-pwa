@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getJWT } from 'helpers/jwt';
+import { multiResponse, multiResponseWithoutPagination, oneResponse, strapiRequestType } from 'types/strapi';
+import { authUser } from 'types/auth';
+import { preparedUserInterface } from 'hooks/useUser';
 
 export const UserAPI = createApi({
   reducerPath: 'UserAPI',
@@ -8,18 +11,16 @@ export const UserAPI = createApi({
   }),
   tagTypes: ['removeUser', 'addUser', 'update', 'updateCount'],
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getUsers: builder.query<authUser[], { schoolId: strapiRequestType; role?: string }>({
       providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
-        url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${
-          args.schoolId
-        }&fields[0]=id&fields[1]=first_name&fields[2]=last_name&fields[3]=TextClassName`,
+        url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${args.schoolId}`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
-    getUsersCount: builder.query({
+    getUsersCount: builder.query<multiResponse<{ totalUsers: number }>, { schoolId: strapiRequestType }>({
       providesTags: ['removeUser', 'addUser', 'updateCount'],
       query: (args) => ({
         url: `/schools?fields[0]=totalUsers&filters[id][$eq]=${args.schoolId}`,
@@ -28,7 +29,21 @@ export const UserAPI = createApi({
         }
       })
     }),
-    getUsersByClass: builder.query({
+    getUsersByClass: builder.query<
+      multiResponse<{
+        classLevel: string | number;
+        className: string;
+        users: multiResponseWithoutPagination<{
+          blocked: boolean;
+          first_name: string;
+          last_name: string;
+          avatar: string | null;
+          Birthday: string;
+          TextRole: string;
+        }>;
+      }>,
+      { classLevel: number | string; className: string; schoolId: strapiRequestType }
+    >({
       providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
         url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&populate[users][fields][3]=avatar&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
@@ -37,7 +52,7 @@ export const UserAPI = createApi({
         }
       })
     }),
-    getUser: builder.query({
+    getUser: builder.query<authUser, { userId: strapiRequestType }>({
       query: (args) => ({
         url: `/users/${args.userId}`,
         headers: {
@@ -45,7 +60,7 @@ export const UserAPI = createApi({
         }
       })
     }),
-    addUserToClass: builder.mutation({
+    addUserToClass: builder.mutation<authUser, preparedUserInterface>({
       invalidatesTags: ['addUser'],
       query: (body) => ({
         method: 'POST',
@@ -56,7 +71,10 @@ export const UserAPI = createApi({
         body
       })
     }),
-    updateSchoolCount: builder.mutation({
+    updateSchoolCount: builder.mutation<
+      oneResponse<{ name: string; totalUsers: number }>,
+      { schoolId: strapiRequestType; totalUsers: number | string }
+    >({
       invalidatesTags: ['updateCount'],
       query: (body) => ({
         method: 'PUT',
@@ -71,7 +89,7 @@ export const UserAPI = createApi({
         }
       })
     }),
-    updateUser: builder.mutation({
+    updateUser: builder.mutation<oneResponse<authUser>, { id: strapiRequestType; data: any }>({
       invalidatesTags: ['update'],
       query: (body) => ({
         method: 'PUT',
@@ -82,7 +100,7 @@ export const UserAPI = createApi({
         body: body.data
       })
     }),
-    removeUser: builder.mutation({
+    removeUser: builder.mutation<authUser, { id: strapiRequestType }>({
       invalidatesTags: ['removeUser'],
       query: (body) => ({
         method: 'DELETE',

@@ -8,7 +8,7 @@ describe('Components > Molecules > StudentDetail', () => {
         userToFind={'userToFind'}
         students={[
           {
-            id: '23',
+            id: 23,
             attributes: {
               first_name: 'testFirstName',
               last_name: 'test',
@@ -26,7 +26,7 @@ describe('Components > Molecules > StudentDetail', () => {
   it('Should display multiple students', () => {
     const students = [
       {
-        id: '23',
+        id: 23,
         attributes: {
           first_name: 'testFirstName',
           last_name: 'test',
@@ -37,7 +37,7 @@ describe('Components > Molecules > StudentDetail', () => {
         }
       },
       {
-        id: '24',
+        id: 24,
         attributes: {
           first_name: 'testFirstName2',
           last_name: 'test2',

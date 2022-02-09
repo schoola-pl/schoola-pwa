@@ -3,8 +3,8 @@ import StudentInfoRecord from '../StudentInfoRecord/StudentInfoRecord';
 
 interface props {
   students: {
-    id: string;
-    attributes: { first_name: string; last_name: string; blocked: boolean; avatar: string; Birthday: string; TextRole: string };
+    id: number;
+    attributes: { first_name: string; last_name: string; blocked: boolean; avatar: string | null; Birthday: string; TextRole: string };
   }[];
   userToFind: string;
 }

@@ -3,7 +3,6 @@ import ClassLink from 'components/molecules/ClassLink/ClassLink';
 import React, { useState } from 'react';
 import { storeRoot, useGetClassesQuery } from 'store';
 import { useSelector } from 'react-redux';
-import { schoolClass } from 'types/school';
 import Loading from '../../molecules/Loading/Loading';
 import { NavLink } from 'react-router-dom';
 import SmallButton from 'components/atoms/SmallButton/SmallButton';
@@ -33,8 +32,8 @@ const ClassesCard: React.FC = () => {
       <ClassesWrapper>
         {classes.isLoading ? (
           <Loading />
-        ) : classes.data.data.length > 0 ? (
-          classes.data.data.map(
+        ) : classes.data?.data && classes.data?.data.length > 0 ? (
+          classes.data?.data.map(
             ({
               id,
               attributes: {
@@ -42,9 +41,6 @@ const ClassesCard: React.FC = () => {
                 className,
                 users: { data: usersCount }
               }
-            }: {
-              id: number;
-              attributes: { classLevel: schoolClass['classLevel']; className: schoolClass['className']; users: { data: { id: number }[] } };
             }) => <ClassLink key={id} classLevel={classLevel} classLetter={className} numberOfStudents={usersCount.length} />
           )
         ) : (

@@ -11,7 +11,7 @@ const Classes = () => {
     <>
       <AmountWrapper>
         <h1>
-          Łączna liczba klas: <span>{classesCount.isLoading ? 'Liczenie...' : classesCount.data.data.length}</span>
+          Łączna liczba klas: <span>{classesCount.isLoading ? 'Liczenie...' : classesCount.data?.data.length}</span>
         </h1>
       </AmountWrapper>
       <ClassesWrapper>

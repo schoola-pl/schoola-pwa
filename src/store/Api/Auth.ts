@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { authUser } from 'types/auth';
 
 export const AuthAPI = createApi({
   reducerPath: 'authAPI',
@@ -6,7 +7,7 @@ export const AuthAPI = createApi({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
   endpoints: (builder) => ({
-    getUserInfo: builder.query({
+    getUserInfo: builder.query<authUser, { token: string }>({
       query: (args) => ({
         url: '/users/me',
         headers: {
@@ -14,7 +15,7 @@ export const AuthAPI = createApi({
         }
       })
     }),
-    login: builder.mutation({
+    login: builder.mutation<{ jwt: string; user: authUser }, { identifier: string; password: string }>({
       query: (body) => ({
         url: '/auth/local',
         method: 'POST',

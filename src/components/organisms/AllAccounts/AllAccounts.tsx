@@ -21,7 +21,7 @@ const AllAccounts: React.FC = () => {
   const [results, setResults] = useState<resultType[] | []>([]);
   const user = useSelector((state: storeRoot) => state.user);
   const users = useGetUsersQuery({
-    schoolId: user?.schoolId
+    schoolId: user?.schoolId || null
   });
   const searchInput = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();

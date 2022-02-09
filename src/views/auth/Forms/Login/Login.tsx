@@ -30,7 +30,7 @@ const Login: React.FC = () => {
       } else {
         navigate(dashboardRoute.replaceAll('*', ''));
       }
-    } else if (isSuccess) {
+    } else if (isSuccess && data) {
       unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
       localStorage.setItem('role', data.user.TextRole);
     }

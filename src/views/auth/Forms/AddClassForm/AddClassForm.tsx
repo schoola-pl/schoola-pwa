@@ -28,14 +28,16 @@ const AddClassForm: React.FC<props> = ({ addedUsers, setAddedUser }) => {
   const { addClassProtocol, restoreClass, clearStates, isCreated, isLoading } = useClass();
   const user = useSelector((store: storeRoot) => store.user);
   const usersCount = useGetUsersCountQuery({
-    schoolId: user?.schoolId
+    schoolId: user?.schoolId || null
   });
   const { deleteUsers } = useUser();
 
   const extendedRestoreClass = () => {
-    restoreClass();
-    deleteUsers(addedUsers, usersCount.data.data[0].attributes.totalUsers);
-    setAddedUser([]);
+    if (usersCount.data?.data[0]) {
+      restoreClass();
+      deleteUsers(addedUsers, usersCount.data?.data[0].attributes.totalUsers);
+      setAddedUser([]);
+    }
   };
 
   return (
