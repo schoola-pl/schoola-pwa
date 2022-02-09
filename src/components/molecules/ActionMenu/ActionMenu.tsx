@@ -2,12 +2,15 @@ import React from 'react';
 import { Wrapper, ActionButton } from './ActionMenu.styles';
 interface Props {
   isOpened: boolean;
-  accountType?: string;
+  accountType: string;
+  isComment?: boolean;
 }
 
-const ActionMenu: React.FC<Props> = ({ isOpened, accountType }) => {
+const ActionMenu: React.FC<Props> = ({ isOpened, accountType, isComment }) => {
   return (
-    <Wrapper isOpened={isOpened}>{accountType === 'spottedAdmin' ? <ActionButton>Usuń</ActionButton> : <ActionButton>Zgłoś</ActionButton>}</Wrapper>
+    <Wrapper isComment={isComment} isOpened={isOpened}>
+      {accountType === 'spottedAdmin' ? <ActionButton>Usuń</ActionButton> : <ActionButton>Zgłoś</ActionButton>}
+    </Wrapper>
   );
 };
 

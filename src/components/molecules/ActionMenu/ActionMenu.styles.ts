@@ -3,12 +3,13 @@ import styled from 'styled-components';
 interface Props {
   isOpened: boolean;
   accountType?: string;
+  isComment?: boolean;
 }
 
 export const Wrapper = styled.div<Props>`
   display: ${({ isOpened }) => (isOpened ? 'flex' : 'none')};
   position: absolute;
-  bottom: 65%;
+  bottom: ${({ isComment }) => (isComment ? '60%' : '65%')};
   right: 15%;
   z-index: 999;
   height: 4rem;

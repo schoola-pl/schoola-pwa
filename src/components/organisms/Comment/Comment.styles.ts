@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 
 export const CommentWrapper = styled.div`
   position: relative;
@@ -108,8 +107,4 @@ export const CommentInnerWrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
-`;
-
-export const StyledActionMenu = styled(ActionMenu)`
-  position: relative;
 `;
