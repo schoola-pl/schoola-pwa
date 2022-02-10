@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wrapper, Picture } from './ProfilePicture.styles';
+import { Link } from 'react-router-dom';
 
 interface Props {
   icon: string | undefined;
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const ProfilePicture: React.FC<Props> = ({ icon, isPublic }) => (
-  <Wrapper>
+  <Wrapper as={Link} to="/profile">
     <Picture icon={icon} isPublic={isPublic} />
   </Wrapper>
 );
