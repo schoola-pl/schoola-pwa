@@ -15,6 +15,8 @@ export const Logo = styled.h1`
 export const Wrapper = styled.div`
   position: fixed;
   z-index: 999999;
+  background-color: ${({ theme }) => theme.colors.accentBrown};
+  box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.2);
   top: 0;
   width: 100vw;
   padding: 1rem;

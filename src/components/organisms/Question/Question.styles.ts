@@ -17,25 +17,34 @@ interface WrapperProps {
 export const QuestionWrapper = styled.div<WrapperProps>`
   position: relative;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  height: 20rem;
-  width: 90%;
+  min-height: 200px;
+  grid-template-rows: 7rem 1fr 4rem;
+  grid-gap: 1rem;
+  align-items: center;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   border-radius: 1.5rem;
-  margin-bottom: 3rem;
+  padding: 1rem;
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
 `;
 
-export const StyledPicture = styled.div`
-  transform: translateY(10%);
-  margin: 1rem 1rem 1rem;
+export const StyledPicture = styled.div<{ random?: number }>`
   height: 5rem;
   width: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10rem;
-  background: linear-gradient(90deg, rgba(184, 208, 252, 1) 0%, rgba(91, 117, 166, 1) 0%, rgba(85, 171, 103, 1) 100%);
+  background: linear-gradient(
+    ${({ random }) => (random ? `${((Math.ceil(Math.random() * 360) * random) / random) * 2}deg` : `${Math.ceil(Math.random() * 360)}deg`)},
+    rgba(184, 208, 252, 1) 0%,
+    rgba(91, 117, 166, 1) 0%,
+    rgba(85, 171, 103, 1) 100%
+  );
 `;
 
 export const ProfilePicture = styled.div<Props>`
@@ -52,42 +61,37 @@ export const ProfilePicture = styled.div<Props>`
 `;
 
 export const InfoWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 6.5rem 1fr 6.5rem;
   align-items: center;
-  justify-content: space-between;
-
-  section {
-    display: flex;
-    align-items: center;
-  }
+  justify-content: center;
 `;
 
 export const QuestionInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateY(15%);
+
+  p,
+  h1 {
+    margin: 0;
+  }
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
   }
-
-  p {
-    transform: translateY(-150%);
-  }
 `;
 
 export const QuestionInnerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 3.5rem;
-  height: 6rem;
-  margin-bottom: 0.75rem;
   border-left: 3px solid ${({ theme }) => theme.colors.accentGreen};
+  padding: 0.5rem 2.2rem 0.5rem 1rem;
+  margin-left: 2.2rem;
+  text-align: justify;
+  height: max-content;
 
   p {
-    padding: 1rem;
+    margin: 0;
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
@@ -105,19 +109,23 @@ export const StyledComments = styled.div`
   text-decoration: none;
   display: flex;
   align-items: center;
-  height: 4rem;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.lightBlue};
-  max-width: 13rem;
-  margin-right: 0.5rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  position: relative;
 
-  p {
-    display: flex;
-    padding-right: 0.5rem;
+  &::after {
+    position: absolute;
+    content: attr(data-comments-count);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
 
-    strong {
-      padding-right: 0.5rem;
-    }
+  * {
+    background-size: 100%;
   }
 `;
 
@@ -133,6 +141,7 @@ export const StyledInput = styled.input`
   background-color: #f7f8fa;
   margin-right: 0.5rem;
   color: black;
+
   &:focus {
     outline: none;
   }
@@ -140,7 +149,6 @@ export const StyledInput = styled.input`
 
 export const ToggleMenu = styled.button<ToggleMenuProps>`
   transform: translateY(16%);
-  margin-left: 7rem;
   background-color: transparent;
   height: 5rem;
   width: 5rem;

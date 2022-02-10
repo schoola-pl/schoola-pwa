@@ -2,11 +2,9 @@ import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.form`
-  margin-top: 2.56rem;
-  height: 12rem;
   border-radius: 2rem;
-  width: 90%;
-  transform: translateY(-20%);
+  width: 100%;
+  margin-bottom: 2rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   display: grid;
@@ -16,9 +14,10 @@ export const Wrapper = styled.form`
 
 export const StyledInput = styled.input`
   border: none;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   height: 100%;
   width: 100%;
+  font-size: 1.7rem;
 
   &:focus {
     outline: none;
@@ -26,8 +25,9 @@ export const StyledInput = styled.input`
 `;
 
 export const SendMessageButton = styled(SidebarLink)`
-  height: 4rem;
-  width: 4rem;
+  height: 5rem;
+  width: 5rem;
+  margin: 0;
   background-color: ${({ theme }) => theme.colors.lightBlue};
 `;
 
@@ -35,22 +35,18 @@ export const MessageActionWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem 1.5rem;
 
   p {
-    padding-left: 1rem;
     font-weight: ${({ theme }) => theme.fontWeight.medium};
+    font-size: 1.3rem;
+    margin: 0;
 
     &::after {
       content: ' anonimowe!';
       color: ${({ theme }) => theme.colors.accentGreen};
     }
   }
-`;
-
-export const StyledRadio = styled.input`
-  border-radius: 1px;
-  height: 2rem;
-  width: 2rem;
 `;
 
 export const InputWrapper = styled.div`

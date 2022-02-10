@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import { PageWrapper } from './Spotted.styles';
 import Question from 'components/organisms/Question/Question';
 import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
@@ -60,23 +59,10 @@ const Spotted = () => {
   }, [getMorePosts, lastItemRef]);
 
   return (
-    <UserTemplate>
-      <PageWrapper>
-        <AskQuestionInput />
-        {posts.map((post, i) => {
-          if (i === posts.length - 1) {
-            return (
-              <Question
-                key={post.id}
-                isSpotted={true}
-                date={post.date}
-                content={post.content}
-                numberOfComments={post.numberOfComments}
-                numberOfHearts={post.numberOfHearts}
-                ref={lastItemRef}
-              />
-            );
-          }
+    <PageWrapper>
+      <AskQuestionInput />
+      {posts.map((post, i) => {
+        if (i === posts.length - 1) {
           return (
             <Question
               key={post.id}
@@ -85,11 +71,22 @@ const Spotted = () => {
               content={post.content}
               numberOfComments={post.numberOfComments}
               numberOfHearts={post.numberOfHearts}
+              ref={lastItemRef}
             />
           );
-        })}
-      </PageWrapper>
-    </UserTemplate>
+        }
+        return (
+          <Question
+            key={post.id}
+            isSpotted={true}
+            date={post.date}
+            content={post.content}
+            numberOfComments={post.numberOfComments}
+            numberOfHearts={post.numberOfHearts}
+          />
+        );
+      })}
+    </PageWrapper>
   );
 };
 
