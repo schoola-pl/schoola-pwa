@@ -4,8 +4,6 @@ import {
   InfoWrapper,
   ActionsWrapper,
   StyledComments,
-  StyledPicture,
-  ProfilePicture,
   QuestionInfo,
   QuestionInnerWrapper,
   LikeWrapper,
@@ -13,6 +11,7 @@ import {
   ToggleMenu,
   StyledActionMenu
 } from './Post.styles';
+import ProfilePicture from 'components/atoms/ProfilePicture/ProfilePicture';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
@@ -32,9 +31,7 @@ const Post: React.FC<Props> = React.forwardRef(
       <QuestionWrapper ref={ref}>
         <InfoWrapper>
           <section>
-            <StyledPicture>
-              <ProfilePicture icon={isPublic ? userProfilePicture : QuestionMark} isPublic={isPublic} />
-            </StyledPicture>
+            <ProfilePicture icon={isPublic ? userProfilePicture : QuestionMark} isPublic={isPublic} />
             <QuestionInfo>
               <h1>{isPublic ? userName : 'Anonim napisał:'}</h1>
               <p>{date}</p>
