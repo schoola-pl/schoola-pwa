@@ -3,7 +3,7 @@ import { Wrapper, Picture } from './ProfilePicture.styles';
 
 interface Props {
   icon: string | undefined;
-  isPublic: boolean;
+  isPublic?: boolean;
 }
 
 const ProfilePicture: React.FC<Props> = ({ icon, isPublic }) => (

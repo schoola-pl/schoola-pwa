@@ -57,7 +57,7 @@ const CommentSection = () => {
           />
         ))}
         {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
-          <Comment profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
+          <Comment isPublic={true} profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
         ))}
       </SectionWrapper>
     </UserTemplate>

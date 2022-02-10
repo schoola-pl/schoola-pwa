@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CommentWrapper, InfoWrapper, StyledPicture, ProfilePicture, CommentInfo, ToggleMenu, CommentInnerWrapper } from './Comment.styles';
+import ProfilePicture from 'components/atoms/ProfilePicture/ProfilePicture';
+import { CommentWrapper, InfoWrapper, CommentInfo, ToggleMenu, CommentInnerWrapper } from './Comment.styles';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
@@ -10,9 +11,10 @@ interface Props {
   date: string;
   numberOfHearts: number;
   content: string;
+  isPublic: boolean;
 }
 
-const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, content }) => {
+const Comment: React.FC<Props> = ({ isPublic, profilePicture, name, date, numberOfHearts, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -23,9 +25,7 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, 
     <CommentWrapper>
       <InfoWrapper>
         <section>
-          <StyledPicture>
-            <ProfilePicture icon={profilePicture} />
-          </StyledPicture>
+          <ProfilePicture icon={profilePicture} isPublic={isPublic} />
           <CommentInfo>
             <h1>{name}</h1>
             <p>{date}</p>
