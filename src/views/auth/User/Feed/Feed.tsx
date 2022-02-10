@@ -42,13 +42,13 @@ const Feed = () => (
       {posts.map((post) => (
         <Post
           key={post.id}
-          isSpottedPost={false}
+          isPublic={true}
           date={post.date}
           content={post.content}
           numberOfComments={post.numberOfComments}
           numberOfHearts={post.numberOfHearts}
-          // userProfilePicture={post.userProfilePicture}
-          // userName={post.userName}
+          userProfilePicture={post.userProfilePicture}
+          userName={post.userName}
         />
       ))}
     </PageWrapper>

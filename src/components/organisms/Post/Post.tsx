@@ -25,52 +25,56 @@ interface Props {
   content: string;
   numberOfComments: number;
   numberOfHearts: number;
-  isSpottedPost: boolean;
+  isPublic: boolean;
   ref?: any;
   commentSection?: boolean;
+  userProfilePicture?: string;
+  userName?: string;
 }
-const Post: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpottedPost, commentSection }, ref) => {
-  const [isOpened, setMenuOpen] = useState(false);
+const Post: React.FC<Props> = React.forwardRef(
+  ({ userName, userProfilePicture, date, content, numberOfComments, numberOfHearts, isPublic, commentSection }, ref) => {
+    const [isOpened, setMenuOpen] = useState(false);
 
-  const handleToggleMenu = () => {
-    setMenuOpen(!isOpened);
-  };
+    const handleToggleMenu = () => {
+      setMenuOpen(!isOpened);
+    };
 
-  return (
-    <QuestionWrapper ref={ref}>
-      <InfoWrapper>
-        <section>
-          <StyledPicture>
-            <ProfilePicture icon={QuestionMark} />
-          </StyledPicture>
-          <QuestionInfo>
-            <h1>Ktoś zadał pytanie:</h1>
-            <p>{date}</p>
-          </QuestionInfo>
-        </section>
-        <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
-        <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-      </InfoWrapper>
-      <QuestionInnerWrapper>
-        <p>{content}</p>
-      </QuestionInnerWrapper>
-      <ActionsWrapper>
-        <LikeWrapper>
-          <Heart numberOfHearts={numberOfHearts} />
-        </LikeWrapper>
-        {commentSection ? (
-          <StyledInput type="text" placeholder="Napisz komentarz" />
-        ) : (
-          <StyledComments as="a" href="/spotted/comments">
-            <SidebarLink icon={CommentIcon} />
-            <p>
-              <strong>{numberOfComments}</strong> komentarzy
-            </p>
-          </StyledComments>
-        )}
-      </ActionsWrapper>
-    </QuestionWrapper>
-  );
-});
+    return (
+      <QuestionWrapper ref={ref}>
+        <InfoWrapper>
+          <section>
+            <StyledPicture>
+              <ProfilePicture icon={QuestionMark} />
+            </StyledPicture>
+            <QuestionInfo>
+              <h1>{isPublic ? userName : 'Anonim napisał:'}</h1>
+              <p>{date}</p>
+            </QuestionInfo>
+          </section>
+          <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
+          <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
+        </InfoWrapper>
+        <QuestionInnerWrapper>
+          <p>{content}</p>
+        </QuestionInnerWrapper>
+        <ActionsWrapper>
+          <LikeWrapper>
+            <Heart numberOfHearts={numberOfHearts} />
+          </LikeWrapper>
+          {commentSection ? (
+            <StyledInput type="text" placeholder="Napisz komentarz" />
+          ) : (
+            <StyledComments as="a" href="/spotted/comments">
+              <SidebarLink icon={CommentIcon} />
+              <p>
+                <strong>{numberOfComments}</strong> komentarzy
+              </p>
+            </StyledComments>
+          )}
+        </ActionsWrapper>
+      </QuestionWrapper>
+    );
+  }
+);
 
 export default Post;

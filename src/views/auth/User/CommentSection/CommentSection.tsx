@@ -49,7 +49,7 @@ const CommentSection = () => {
           <Post
             key={date}
             date={date}
-            isSpottedPost={true}
+            isPublic={false}
             commentSection={true}
             content={content}
             numberOfComments={numberOfComments}

@@ -68,7 +68,7 @@ const Spotted = () => {
             return (
               <Post
                 key={post.id}
-                isSpottedPost={true}
+                isPublic={false}
                 date={post.date}
                 content={post.content}
                 numberOfComments={post.numberOfComments}
@@ -80,7 +80,7 @@ const Spotted = () => {
           return (
             <Post
               key={post.id}
-              isSpottedPost={true}
+              isPublic={false}
               date={post.date}
               content={post.content}
               numberOfComments={post.numberOfComments}
