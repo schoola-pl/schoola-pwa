@@ -18,17 +18,18 @@ import {
   StyledPicture,
   ToggleMenu
 } from './Question.styles';
+import { formatDistance } from 'date-fns';
+import { pl } from 'date-fns/locale';
 
-interface Props {
+interface props {
   date: string;
   content: string;
   numberOfComments: number;
   numberOfHearts: number;
   isSpotted: boolean;
-  ref?: any;
 }
 
-const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
+const Question = React.forwardRef<HTMLDivElement, props>(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -42,7 +43,7 @@ const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfCom
           <ProfilePicture icon={QuestionMark} />
         </StyledPicture>
         <QuestionInfo>
-          <p>{date}</p>
+          <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
           <h1>Ktoś zadał pytanie:</h1>
         </QuestionInfo>
         <div>
