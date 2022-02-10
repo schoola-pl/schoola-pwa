@@ -13,7 +13,7 @@ import {
   StyledInput,
   ToggleMenu,
   StyledActionMenu
-} from './Question.styles';
+} from './Post.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
@@ -25,10 +25,11 @@ interface Props {
   content: string;
   numberOfComments: number;
   numberOfHearts: number;
-  isSpotted: boolean;
+  isSpottedPost: boolean;
   ref?: any;
+  commentSection?: boolean;
 }
-const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
+const Post: React.FC<Props> = React.forwardRef(({ date, content, numberOfComments, numberOfHearts, isSpottedPost, commentSection }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -57,19 +58,19 @@ const Question: React.FC<Props> = React.forwardRef(({ date, content, numberOfCom
         <LikeWrapper>
           <Heart numberOfHearts={numberOfHearts} />
         </LikeWrapper>
-        {isSpotted ? (
+        {commentSection ? (
+          <StyledInput type="text" placeholder="Napisz komentarz" />
+        ) : (
           <StyledComments as="a" href="/spotted/comments">
             <SidebarLink icon={CommentIcon} />
             <p>
               <strong>{numberOfComments}</strong> komentarzy
             </p>
           </StyledComments>
-        ) : (
-          <StyledInput type="text" placeholder="Napisz komentarz" />
         )}
       </ActionsWrapper>
     </QuestionWrapper>
   );
 });
 
-export default Question;
+export default Post;

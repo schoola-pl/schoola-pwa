@@ -11,7 +11,7 @@ import Welcome from 'views/auth/User/FirstLoginPages/Welcome/Welcome';
 import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
 import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
 import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
-import SpottedComment from 'views/auth/User/SpottedComment/SpottedComment';
+import CommentSection from 'views/auth/User/CommentSection/CommentSection';
 import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
 interface routesInterface {
   // Path to component
@@ -50,7 +50,7 @@ const routes: routesInterface[] = [
   { path: '/spotted', Component: Spotted, isProtected: false, role: roles.authenticated },
   { path: '/appointment', Component: Appointment, isProtected: false, role: roles.authenticated },
   { path: '/profile', Component: Profile, isProtected: false, role: roles.authenticated },
-  { path: '/spotted/comments', Component: SpottedComment, isProtected: false, role: roles.authenticated },
+  { path: '/spotted/comments', Component: CommentSection, isProtected: false, role: roles.authenticated },
   { path: dashboardRoute, Component: Dashboard, isProtected: false, role: roles.authenticated },
   { path: addClassRoute, Component: AddClass, isProtected: false, role: roles.authenticated },
   { path: '/manage/*', Component: ManageClasses, isProtected: false, role: roles.authenticated },

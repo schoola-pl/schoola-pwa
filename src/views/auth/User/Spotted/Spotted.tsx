@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import { PageWrapper } from './Spotted.styles';
-import Question from 'components/organisms/Question/Question';
+import Post from 'components/organisms/Post/Post';
 import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
 import data from './posts.json';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -66,9 +66,9 @@ const Spotted = () => {
         {posts.map((post, i) => {
           if (i === posts.length - 1) {
             return (
-              <Question
+              <Post
                 key={post.id}
-                isSpotted={true}
+                isSpottedPost={true}
                 date={post.date}
                 content={post.content}
                 numberOfComments={post.numberOfComments}
@@ -78,9 +78,9 @@ const Spotted = () => {
             );
           }
           return (
-            <Question
+            <Post
               key={post.id}
-              isSpotted={true}
+              isSpottedPost={true}
               date={post.date}
               content={post.content}
               numberOfComments={post.numberOfComments}

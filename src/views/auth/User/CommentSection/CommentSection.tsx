@@ -1,5 +1,5 @@
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
-import Question from 'components/organisms/Question/Question';
+import Post from 'components/organisms/Post/Post';
 import styled from 'styled-components';
 import Comment from 'components/organisms/Comment/Comment';
 
@@ -41,12 +41,20 @@ const commentData = [
   }
 ];
 
-const SpottedComment = () => {
+const CommentSection = () => {
   return (
     <UserTemplate>
       <SectionWrapper>
         {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
-          <Question key={date} date={date} isSpotted={false} content={content} numberOfComments={numberOfComments} numberOfHearts={numberOfHearts} />
+          <Post
+            key={date}
+            date={date}
+            isSpottedPost={true}
+            commentSection={true}
+            content={content}
+            numberOfComments={numberOfComments}
+            numberOfHearts={numberOfHearts}
+          />
         ))}
         {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
           <Comment profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
@@ -56,4 +64,4 @@ const SpottedComment = () => {
   );
 };
 
-export default SpottedComment;
+export default CommentSection;
