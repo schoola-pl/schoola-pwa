@@ -1,59 +1,100 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { PageWrapper } from './Feed.styles';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import FeedInput from 'components/molecules/FeedInput/FeedInput';
 import Post from 'components/organisms/Post/Post';
+import data from './posts.json';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as paginate from 'paginatejson';
 
-const posts = [
-  {
-    id: '2',
-    date: '12.05.2012',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipis',
-    numberOfHearts: 12,
-    numberOfComments: 4,
-    userName: 'Marita Deynn',
-    userProfilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd.wpimg.pl%2F1861132436-573487822%2Fkuba-wojewodzki.jpg&f=1&nofb=1'
-  },
-  {
-    id: '2',
-    date: '12.05.2012',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipis',
-    numberOfHearts: 12,
-    numberOfComments: 4,
-    userName: 'Daniel Majewski',
-    userProfilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F4.bp.blogspot.com%2F-IJqkXiJA0qg%2FWGJXo1GjESI%2FAAAAAAAABjA%2F6cpPNqAGQ_sxcWWtsMMOKufRije7Jh_BgCLcB%2Fs1600%2F15179001_1133562156679714_3959263731698865475_n.jpg&f=1&nofb=1'
-  },
-  {
-    id: '2',
-    date: '12.05.2012',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipis',
-    numberOfHearts: 12,
-    numberOfComments: 4,
-    userName: 'Daniel Majewski',
-    userProfilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.qM6BuEe3xd_HHHScpLYxygHaEK%26pid%3DApi&f=1'
-  }
-];
+const fetchPosts = (page = 1) => {
+  const { items, ...pageInfo } = paginate.paginate(data, page, 3);
+  return new Promise((resolve) => setTimeout(() => resolve({ items, pageInfo }), 500));
+};
 
-const Feed = () => (
-  <UserTemplate>
-    <PageWrapper>
-      <FeedInput />
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          isPublic={true}
-          date={post.date}
-          content={post.content}
-          numberOfComments={post.numberOfComments}
-          numberOfHearts={post.numberOfHearts}
-          userProfilePicture={post.userProfilePicture}
-          userName={post.userName}
-        />
-      ))}
-    </PageWrapper>
-  </UserTemplate>
-);
+const Feed = () => {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [page, setPage] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+  const lastItemRef = useRef<any>(null);
+  const observer = useRef<IntersectionObserver>();
+
+  useEffect(() => {
+    fetchPosts().then((res: any | never) => {
+      setPosts(res.items);
+      setPage(res.pageInfo);
+    });
+  }, []);
+
+  const getMorePosts = useCallback(() => {
+    if (!page || !page.next || isLoading) return;
+    setIsLoading(true);
+    fetchPosts(page.next).then((res: any) => {
+      setPosts((prev) => [...prev, ...res.items]);
+      setPage(res.pageInfo);
+      setIsLoading(false);
+    });
+  }, [isLoading, page]);
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          getMorePosts();
+        }
+      },
+      {
+        root: document,
+        threshold: 1
+      }
+    );
+
+    if (lastItemRef.current) {
+      observer.current.observe(lastItemRef.current);
+    }
+
+    return () => {
+      observer.current?.disconnect();
+    };
+  }, [getMorePosts, lastItemRef]);
+
+  return (
+    <UserTemplate>
+      <PageWrapper>
+        <FeedInput />
+        {posts.map((post, i) => {
+          if (i === posts.length - 1) {
+            return (
+              <Post
+                key={post.id}
+                isPublic={true}
+                date={post.date}
+                content={post.content}
+                numberOfComments={post.numberOfComments}
+                numberOfHearts={post.numberOfHearts}
+                userProfilePicture={post.userProfilePicture}
+                userName={post.userName}
+                ref={lastItemRef}
+              />
+            );
+          }
+          return (
+            <Post
+              key={post.id}
+              isPublic={true}
+              date={post.date}
+              content={post.content}
+              numberOfComments={post.numberOfComments}
+              numberOfHearts={post.numberOfHearts}
+              userProfilePicture={post.userProfilePicture}
+              userName={post.userName}
+            />
+          );
+        })}
+      </PageWrapper>
+    </UserTemplate>
+  );
+};
 
 export default Feed;
