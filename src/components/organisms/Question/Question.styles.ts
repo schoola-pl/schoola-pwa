@@ -57,7 +57,6 @@ export const ProfilePicture = styled.div<Props>`
   border: none;
   background-size: 70%;
   background-position: center;
-  z-index: 9999999;
 `;
 
 export const InfoWrapper = styled.div`
