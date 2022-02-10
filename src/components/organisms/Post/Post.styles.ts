@@ -3,6 +3,7 @@ import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 
 type Props = {
   icon?: string;
+  isPublic?: boolean;
 };
 
 interface ToggleMenuProps {
@@ -46,7 +47,7 @@ export const ProfilePicture = styled.div<Props>`
   background-color: white;
   border-radius: inherit;
   border: none;
-  background-size: 70%;
+  background-size: ${({ isPublic }) => (isPublic ? 'contain' : '70%')};
   background-position: center;
   z-index: 9999999;
 `;

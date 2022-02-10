@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import {
   QuestionWrapper,
   InfoWrapper,
@@ -19,18 +18,8 @@ import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
+import { Props } from './PostTypes';
 
-interface Props {
-  date: string;
-  content: string;
-  numberOfComments: number;
-  numberOfHearts: number;
-  isPublic: boolean;
-  ref?: any;
-  commentSection?: boolean;
-  userProfilePicture?: string;
-  userName?: string;
-}
 const Post: React.FC<Props> = React.forwardRef(
   ({ userName, userProfilePicture, date, content, numberOfComments, numberOfHearts, isPublic, commentSection }, ref) => {
     const [isOpened, setMenuOpen] = useState(false);
@@ -44,7 +33,7 @@ const Post: React.FC<Props> = React.forwardRef(
         <InfoWrapper>
           <section>
             <StyledPicture>
-              <ProfilePicture icon={QuestionMark} />
+              <ProfilePicture icon={isPublic ? userProfilePicture : QuestionMark} isPublic={isPublic} />
             </StyledPicture>
             <QuestionInfo>
               <h1>{isPublic ? userName : 'Anonim napisał:'}</h1>
