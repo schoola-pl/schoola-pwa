@@ -15,9 +15,24 @@ export const SpottedAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    getComments: builder.query<
+      multiResponse<{
+        message: string;
+        publishedAt: string;
+        spotted_comments: { data: { id: number; attributes: { message: string; author_name: string; avatar?: string; createdAt: string } }[] };
+      }>,
+      { spottedId: strapiRequestType; schoolId: strapiRequestType }
+    >({
+      query: (args) => ({
+        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate=*`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
     })
   })
 });
 
-export const { useGetSpottedsQuery } = SpottedAPI;
+export const { useGetSpottedsQuery, useGetCommentsQuery } = SpottedAPI;
 export default SpottedAPI;

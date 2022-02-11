@@ -6,11 +6,11 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import axios, { AxiosResponse } from 'axios';
 import { getJWT } from 'helpers/jwt';
-import { baseBody, multiResponse } from 'types/strapi';
+import { baseBody, multiResponse, multiResponseWithoutPagination } from 'types/strapi';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
 
 const Spotted = () => {
-  const [posts, setPosts] = useState<baseBody<{ message: string; publishedAt: string }>[]>([]);
+  const [posts, setPosts] = useState<baseBody<{ message: string; publishedAt: string; spotted_comments: multiResponseWithoutPagination }>[]>([]);
   const [page, setPage] = useState<{ actual: number; total: number }>({ actual: 0, total: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const lastItemRef = useRef<HTMLDivElement>(null);
@@ -20,10 +20,11 @@ const Spotted = () => {
   const fetchPosts = async (page = 1) => {
     const url = `${process.env.REACT_APP_BACKEND_BASE_URL}/spotteds?filters[schoolId][$eq]=${
       user?.schoolId || null
-    }&fields[0]=publishedAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=publishedAt:desc`;
-    const response: AxiosResponse<multiResponse<{ message: string; publishedAt: string }>> = await axios.get(url, {
-      headers: { Authorization: `Bearer ${getJWT()}` }
-    });
+    }&fields[0]=publishedAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=publishedAt:desc&populate[spotted_comments][fields]=id`;
+    const response: AxiosResponse<multiResponse<{ message: string; publishedAt: string; spotted_comments: multiResponseWithoutPagination }>> =
+      await axios.get(url, {
+        headers: { Authorization: `Bearer ${getJWT()}` }
+      });
     return response;
   };
 
@@ -73,13 +74,22 @@ const Spotted = () => {
       <AskQuestionInput />
       {isLoading && <InfiniteScrollLoading />}
       {posts.length > 0 &&
-        posts.map(({ id, attributes: { message, publishedAt } }, i) => {
+        posts.map(({ id, attributes: { message, publishedAt, spotted_comments } }, i) => {
           if (i === posts.length - 1) {
             return (
-              <Question key={id} isSpotted={true} date={publishedAt} content={message} numberOfComments={0} numberOfHearts={0} ref={lastItemRef} />
+              <Question
+                key={id}
+                isSpotted={true}
+                date={publishedAt}
+                content={message}
+                qId={id}
+                numberOfComments={spotted_comments.data.length}
+                numberOfHearts={0}
+                ref={lastItemRef}
+              />
             );
           }
-          return <Question key={id} isSpotted={true} date={publishedAt} content={message} numberOfComments={0} numberOfHearts={0} />;
+          return <Question key={id} qId={id} isSpotted={true} date={publishedAt} content={message} numberOfComments={0} numberOfHearts={0} />;
         })}
     </PageWrapper>
   );

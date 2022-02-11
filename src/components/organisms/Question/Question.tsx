@@ -20,8 +20,10 @@ import {
 } from './Question.styles';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
 
 interface props {
+  qId: number;
   date: string;
   content: string;
   numberOfComments: number;
@@ -29,7 +31,7 @@ interface props {
   isSpotted: boolean;
 }
 
-const Question = React.forwardRef<HTMLDivElement, props>(({ date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
+const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -59,7 +61,7 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ date, content, numbe
           <Heart numberOfHearts={numberOfHearts} />
         </LikeWrapper>
         {isSpotted ? (
-          <StyledComments as="a" href="/spotted/comments" data-comments-count={numberOfComments}>
+          <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={numberOfComments}>
             <SidebarLink icon={CommentIcon} />
           </StyledComments>
         ) : (

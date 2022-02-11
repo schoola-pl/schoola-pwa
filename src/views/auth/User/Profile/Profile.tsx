@@ -9,6 +9,7 @@ import Home from 'views/auth/User/Home/Home';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
+import SpottedComment from 'views/auth/User/SpottedComment/SpottedComment';
 
 const Profile = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -24,6 +25,8 @@ const Profile = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
+            <Route path="/spotted/comments" element={<Navigate to="/student/spotted" />} />
+            <Route path="/spotted/comments/:spottedId" element={<SpottedComment />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
