@@ -7,6 +7,7 @@ import { storeRoot } from 'store';
 import axios, { AxiosResponse } from 'axios';
 import { getJWT } from 'helpers/jwt';
 import { baseBody, multiResponse } from 'types/strapi';
+import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
 
 const Spotted = () => {
   const [posts, setPosts] = useState<baseBody<{ message: string; publishedAt: string }>[]>([]);
@@ -19,7 +20,7 @@ const Spotted = () => {
   const fetchPosts = async (page = 1) => {
     const url = `${process.env.REACT_APP_BACKEND_BASE_URL}/spotteds?filters[schoolId][$eq]=${
       user?.schoolId || null
-    }&fields[0]=publishedAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3`;
+    }&fields[0]=publishedAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=publishedAt:desc`;
     const response: AxiosResponse<multiResponse<{ message: string; publishedAt: string }>> = await axios.get(url, {
       headers: { Authorization: `Bearer ${getJWT()}` }
     });
@@ -30,7 +31,7 @@ const Spotted = () => {
     fetchPosts().then((res) => {
       if (res.data.data.length > 0 && user?.schoolId) {
         setPosts(res.data.data);
-        setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.total });
+        setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
       }
     });
   }, [user?.schoolId]);
@@ -40,7 +41,7 @@ const Spotted = () => {
     setIsLoading(true);
     fetchPosts(page.actual + 1).then((res) => {
       setPosts((prev) => [...prev, ...res.data.data]);
-      setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.total });
+      setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
       setIsLoading(false);
     });
   }, [isLoading, page]);
@@ -70,6 +71,7 @@ const Spotted = () => {
   return (
     <PageWrapper>
       <AskQuestionInput />
+      {isLoading && <InfiniteScrollLoading />}
       {posts.length > 0 &&
         posts.map(({ id, attributes: { message, publishedAt } }, i) => {
           if (i === posts.length - 1) {
