@@ -41,6 +41,7 @@ export const MessageActionWrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     font-size: 1.3rem;
     margin: 0;
+    padding-right: 1rem;
 
     &::after {
       content: ' anonimowe!';
