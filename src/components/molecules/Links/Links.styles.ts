@@ -29,6 +29,8 @@ export const SocialMediaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 export const LinksHeading = styled.h1`
