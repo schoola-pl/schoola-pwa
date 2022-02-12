@@ -13,7 +13,7 @@ interface Props {
   content: string;
 }
 
-const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, content }) => {
+const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -34,9 +34,6 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, 
         <ActionMenu isComment={true} accountType="spottedAdmin" isOpened={isOpened} />
       </InfoWrapper>
       <CommentInnerWrapper>
-        {/*<div>*/}
-        {/*  <Heart numberOfHearts={numberOfHearts} />*/}
-        {/*</div>*/}
         <p>{content}</p>
       </CommentInnerWrapper>
     </CommentWrapper>
