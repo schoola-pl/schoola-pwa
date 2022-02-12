@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-import StudentHatIcon from 'assets/icons/StudentHatIcon.svg';
+import Person from 'components/atoms/Person/Person';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -50,48 +49,6 @@ export const RoleWrapper = styled.div`
     transform: translateY(15%);
     font-size: ${({ theme }) => theme.fontSize.s};
     color: grey;
-  }
-`;
-
-export const UserInfoWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2rem;
-  width: 17rem;
-  height: 24rem;
-  background-color: white;
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-`;
-
-export const Picture = styled.img`
-  background-repeat: no-repeat;
-  max-height: 70%;
-  min-width: 100%;
-`;
-
-export const ContentWrapper = styled.div`
-  height: 30%;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  padding-left: 1rem;
-  transform: translateY(-10%);
-
-  h1 {
-    font-size: ${({ theme }) => theme.fontSize.s};
-    font-weight: ${({ theme }) => theme.fontWeight.medium};
-  }
-
-  p {
-    transform: translateY(-60%);
-    color: grey;
-    font-size: ${({ theme }) => theme.fontSize.xs};
-    font-weight: ${({ theme }) => theme.fontWeight.light};
   }
 `;
 
@@ -193,16 +150,7 @@ const Profile = () => {
               <h1>Uczeń</h1>
             </div>
           </RoleWrapper>
-          <UserInfoWrapper>
-            <Picture
-              src="https://s7.tvp.pl/images2/7/8/e/uid_78ea317e92356f6cd75b0ad95c3fbd7e1634707736779_width_1280_play_0_pos_0_gs_0_height_720_kuba-wojewodzki-fot-papmarcin-kmiecinski.jpg"
-              alt="user photo"
-            />
-            <ContentWrapper>
-              <h1>Kuba Wojewódźki</h1>
-              <p>Lorem ipsum dolor sit amet</p>
-            </ContentWrapper>
-          </UserInfoWrapper>
+          <Person />
         </Grid>
       </Wrapper>
     </UserTemplate>
