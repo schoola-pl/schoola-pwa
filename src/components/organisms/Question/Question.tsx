@@ -21,6 +21,9 @@ import {
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
+import { storeRoot, useAddCommentMutation } from 'store';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 interface props {
   qId: number;
@@ -33,6 +36,21 @@ interface props {
 
 const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
+  const [addComment, { isSuccess, isLoading }] = useAddCommentMutation();
+  const { register, handleSubmit, reset } = useForm();
+  const user = useSelector((state: storeRoot) => state.user);
+
+  const handleAddComment = ({ message }: { message: string }) => {
+    if (user && !isSpotted) {
+      reset();
+      addComment({
+        spotted: qId,
+        schoolId: String(user.schoolId),
+        message,
+        author_name: `${user.first_name} ${user.last_name}`
+      });
+    }
+  };
 
   const handleToggleMenu = () => {
     setMenuOpen(!isOpened);
@@ -65,7 +83,14 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
             <SidebarLink icon={CommentIcon} />
           </StyledComments>
         ) : (
-          <StyledInput type="text" placeholder="Napisz komentarz" />
+          <form onSubmit={handleSubmit(handleAddComment)}>
+            <StyledInput
+              type="text"
+              disabled={isLoading}
+              placeholder={!isSuccess ? (!isLoading ? 'Napisz komentarz' : 'Wysyłanie...') : 'Skomentowano!'}
+              {...register('message', { required: true })}
+            />
+          </form>
         )}
       </ActionsWrapper>
     </QuestionWrapper>

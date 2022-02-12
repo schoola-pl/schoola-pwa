@@ -33,7 +33,15 @@ const SpottedComment = () => {
 
   return (
     <SectionWrapper>
-      <Question key={id} qId={id} date={publishedAt} isSpotted={false} content={message} numberOfComments={commentsArray.length} numberOfHearts={0} />
+      <Question
+        key={id}
+        qId={parseInt(spottedId || '0')}
+        date={publishedAt}
+        isSpotted={false}
+        content={message}
+        numberOfComments={commentsArray.length}
+        numberOfHearts={0}
+      />
       {commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
         <Comment key={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
       ))}
