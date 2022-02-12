@@ -67,7 +67,7 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
           <h1>Ktoś zadał pytanie:</h1>
         </QuestionInfo>
         <div>
-          <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
+          <StyledActionMenu isOpened={isOpened} />
           <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
         </div>
       </InfoWrapper>

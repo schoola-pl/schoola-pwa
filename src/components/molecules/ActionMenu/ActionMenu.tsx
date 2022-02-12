@@ -1,15 +1,19 @@
 import React from 'react';
-import { Wrapper, ActionButton } from './ActionMenu.styles';
+import { ActionButton, Wrapper } from './ActionMenu.styles';
+import { useSelector } from 'react-redux';
+import { storeRoot } from 'store';
+
 interface Props {
   isOpened: boolean;
-  accountType: string;
   isComment?: boolean;
 }
 
-const ActionMenu: React.FC<Props> = ({ isOpened, accountType, isComment }) => {
+const ActionMenu: React.FC<Props> = ({ isOpened, isComment }) => {
+  const user = useSelector((state: storeRoot) => state.user);
+
   return (
     <Wrapper isComment={isComment} isOpened={isOpened}>
-      {accountType === 'spottedAdmin' ? <ActionButton>Usuń</ActionButton> : <ActionButton>Zgłoś</ActionButton>}
+      {user?.TextRole === 'Moderator' ? <ActionButton>Usuń</ActionButton> : <ActionButton>Zgłoś</ActionButton>}
     </Wrapper>
   );
 };

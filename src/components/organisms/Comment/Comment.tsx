@@ -31,7 +31,7 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
         </CommentInfo>
         <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
-        <ActionMenu isComment={true} accountType="spottedAdmin" isOpened={isOpened} />
+        <ActionMenu isComment={true} isOpened={isOpened} />
       </InfoWrapper>
       <CommentInnerWrapper>
         <p>{content}</p>
