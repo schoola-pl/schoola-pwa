@@ -11,7 +11,7 @@ const rotate = keyframes`
 
 const Loader = styled.div.attrs({
   'data-testid': 'loader'
-})<{ fitContent?: boolean }>`
+})<{ fitContent?: boolean; bgColor?: string | undefined }>`
   width: 110px;
   height: 110px;
   background: ${({ theme }) => theme.colors.accentGreen};
@@ -26,6 +26,11 @@ const Loader = styled.div.attrs({
     height: 25px;
     width: 25px;
     background: ${theme.colors.accentBlue};
+  `}
+  ${({ bgColor }) =>
+    bgColor &&
+    `
+  --loadingColor: ${bgColor};
   `}
   &::before {
     content: '';

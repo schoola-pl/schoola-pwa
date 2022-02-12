@@ -4,6 +4,8 @@ import { storeRoot, useGetCommentsQuery } from 'store';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Comment from 'components/organisms/Comment/Comment';
+import Loading from 'components/molecules/Loading/Loading';
+import { theme } from 'assets/styles/theme';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -20,7 +22,12 @@ const SpottedComment = () => {
     spottedId: spottedId || null
   });
 
-  if (comments.isLoading || !comments.data?.data) return <p>loading...</p>;
+  if (comments.isLoading || !comments.data?.data)
+    return (
+      <div style={{ position: 'relative', height: '65vh' }}>
+        <Loading bgColor={theme.colors.lightBrown} />
+      </div>
+    );
 
   const {
     id,
