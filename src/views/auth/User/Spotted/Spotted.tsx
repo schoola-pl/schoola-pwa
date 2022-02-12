@@ -89,7 +89,17 @@ const Spotted = () => {
               />
             );
           }
-          return <Question key={id} qId={id} isSpotted={true} date={publishedAt} content={message} numberOfComments={0} numberOfHearts={0} />;
+          return (
+            <Question
+              key={id}
+              qId={id}
+              isSpotted={true}
+              date={publishedAt}
+              content={message}
+              numberOfComments={spotted_comments.data.length}
+              numberOfHearts={0}
+            />
+          );
         })}
     </PageWrapper>
   );
