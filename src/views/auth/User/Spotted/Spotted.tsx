@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import { PageWrapper } from './Spotted.styles';
 import Post from 'components/organisms/Post/Post';
-import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
+import SpottedInput from 'components/molecules/SpottedInput/SpottedInput';
 import data from './posts.json';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -62,7 +62,7 @@ const Spotted = () => {
   return (
     <UserTemplate>
       <PageWrapper>
-        <AskQuestionInput />
+        <SpottedInput />
         {posts.map((post, i) => {
           if (i === posts.length - 1) {
             return (

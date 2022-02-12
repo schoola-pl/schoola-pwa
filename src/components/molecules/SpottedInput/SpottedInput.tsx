@@ -1,7 +1,7 @@
-import { Wrapper, InputWrapper, StyledInput, MessageActionWrapper, SendMessageButton } from './AskQuestionInput.styles';
+import { Wrapper, InputWrapper, StyledInput, MessageActionWrapper, SendMessageButton } from './SpottedInput.styles';
 import SendIcon from 'assets/icons/SendIcon.svg';
 
-const AskQuestionInput = () => {
+const SpottedInput = () => {
   return (
     <Wrapper>
       <InputWrapper>
@@ -15,4 +15,4 @@ const AskQuestionInput = () => {
   );
 };
 
-export default AskQuestionInput;
+export default SpottedInput;
