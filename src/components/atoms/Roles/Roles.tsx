@@ -1,10 +1,14 @@
 import { RoleWrapper } from './Roles.styles';
 
-const Roles = () => (
+interface Props {
+  role: string;
+}
+
+const Roles: React.FC<Props> = ({ role }) => (
   <RoleWrapper>
     <div>
       <p>Rola:</p>
-      <h1>Uczeń</h1>
+      <h1>{role}</h1>
     </div>
   </RoleWrapper>
 );

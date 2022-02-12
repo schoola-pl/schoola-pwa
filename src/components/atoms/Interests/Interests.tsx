@@ -1,14 +1,16 @@
 import { InterestSectionWrapper, Interest, InterestHeading, InterestWrapper } from './Interests.styles';
 
-const Interests = () => (
+interface Props {
+  interests: string[];
+}
+
+const Interests: React.FC<Props> = ({ interests }) => (
   <InterestSectionWrapper>
     <InterestHeading>Zainteresowania</InterestHeading>
     <InterestWrapper>
-      <Interest>Imprezy 🎉</Interest>
-      <Interest>Technologia 💻</Interest>
-      <Interest>Fizyka ⚛️</Interest>
-      <Interest>Gotowanie 🥘</Interest>
-      <Interest>Medytacja 🧘‍♂️</Interest>
+      {interests.map((interest) => (
+        <Interest>{interest}</Interest>
+      ))}
     </InterestWrapper>
   </InterestSectionWrapper>
 );
