@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import Person from 'components/atoms/Person/Person';
+import Interests from 'components/atoms/Interests/Interests';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -152,6 +153,7 @@ const Profile = () => {
           </RoleWrapper>
           <Person />
         </Grid>
+        <Interests />
       </Wrapper>
     </UserTemplate>
   );
