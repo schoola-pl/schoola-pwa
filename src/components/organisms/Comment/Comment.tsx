@@ -23,7 +23,7 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
   return (
     <CommentWrapper>
       <InfoWrapper>
-        <StyledPicture>
+        <StyledPicture random={Math.ceil(Math.random() * 5)}>
           <ProfilePicture icon={profilePicture} />
         </StyledPicture>
         <CommentInfo>
