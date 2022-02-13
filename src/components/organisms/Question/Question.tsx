@@ -12,7 +12,6 @@ import {
   QuestionInfo,
   QuestionInnerWrapper,
   QuestionWrapper,
-  StyledActionMenu,
   StyledComments,
   StyledInput,
   StyledPicture,
@@ -24,6 +23,8 @@ import { Link } from 'react-router-dom';
 import { storeRoot, useAddCommentMutation } from 'store';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
+import { useSpotted } from 'hooks/useSpotted';
 
 interface props {
   qId: number;
@@ -32,13 +33,15 @@ interface props {
   numberOfComments: number;
   numberOfHearts: number;
   isSpotted: boolean;
+  resetSpotted?: () => void;
 }
 
-const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted }, ref) => {
+const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted, resetSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [addComment, { isSuccess, isLoading }] = useAddCommentMutation();
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
+  const { deleteSpott } = useSpotted();
 
   const handleAddComment = ({ message }: { message: string }) => {
     if (user && !isSpotted) {
@@ -56,6 +59,12 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
     setMenuOpen(!isOpened);
   };
 
+  const handleDeleteQuestion = async () => {
+    if (!isSpotted || !resetSpotted) return;
+    await deleteSpott(qId);
+    resetSpotted();
+  };
+
   return (
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
@@ -66,10 +75,12 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
           <h1>Ktoś zadał pytanie:</h1>
         </QuestionInfo>
-        <div>
-          <StyledActionMenu isOpened={isOpened} />
-          <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-        </div>
+        {isSpotted && (
+          <div>
+            <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} />
+            <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
+          </div>
+        )}
       </InfoWrapper>
       <QuestionInnerWrapper>
         <p>{content}</p>

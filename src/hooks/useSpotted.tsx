@@ -77,8 +77,8 @@ export const SpottedProvider: React.FC = ({ children }) => {
     });
   };
 
-  const deleteSpott = (spottId: number) => {
-    deleteSpottRecord({
+  const deleteSpott = async (spottId: number) => {
+    await deleteSpottRecord({
       spottId
     });
   };

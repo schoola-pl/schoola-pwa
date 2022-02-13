@@ -118,6 +118,7 @@ const Spotted = () => {
                 qId={id}
                 numberOfComments={spotted_comments.data.length}
                 numberOfHearts={0}
+                resetSpotted={resetSpotted}
                 ref={lastItemRef}
               />
             );
@@ -131,6 +132,7 @@ const Spotted = () => {
               content={message}
               numberOfComments={spotted_comments.data.length}
               numberOfHearts={0}
+              resetSpotted={resetSpotted}
             />
           );
         })}
