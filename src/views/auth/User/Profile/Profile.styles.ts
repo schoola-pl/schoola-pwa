@@ -21,4 +21,9 @@ export const Grid = styled.div`
     grid-row: 1/3;
     grid-column: 1/2;
   }
+
+  @media (min-width: 390px) {
+    padding-top: 4rem;
+    padding-right: 4rem;
+  }
 `;

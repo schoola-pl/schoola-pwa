@@ -11,12 +11,21 @@ export const RoleWrapper = styled.div`
   flex-direction: column;
   padding-left: 1.5rem;
 
+  @media (min-width: 390px) {
+    height: 12.5rem;
+  }
+
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     &::after {
       content: '👨‍🎓';
       padding-left: 1rem;
+    }
+
+    @media (min-width: 390px) {
+      font-size: 1.9rem;
+      transform: translateY(5%);
     }
   }
 

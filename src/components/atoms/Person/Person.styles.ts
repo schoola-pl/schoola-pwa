@@ -7,15 +7,18 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
-  transform: translateY(-10%);
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+    @media (min-width: 390px) {
+      font-size: 1.8rem;
+    }
   }
 
   p {
-    transform: translateY(-60%);
+    transform: translateY(-100%);
     color: grey;
     font-size: ${({ theme }) => theme.fontSize.xs};
     font-weight: ${({ theme }) => theme.fontWeight.light};
@@ -34,6 +37,11 @@ export const UserInfoWrapper = styled.div`
   height: 24rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+
+  @media (min-width: 390px) {
+    width: 20rem;
+    height: 27rem;
+  }
 `;
 
 export const Picture = styled.img`

@@ -29,6 +29,10 @@ export const ClassWrapper = styled.div`
       font-size: ${({ theme }) => theme.fontSize.s};
     }
   }
+
+  @media (min-width: 390px) {
+    height: 12.5rem;
+  }
 `;
 
 export const CirclesWrapper = styled.div`
@@ -72,4 +76,8 @@ export const Flex = styled.div`
   align-items: center;
   justify-content: space-between;
   transform: translateY(-25%);
+
+  @media (min-width: 390px) {
+    transform: translateY(-18%);
+  }
 `;
