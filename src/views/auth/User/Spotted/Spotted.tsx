@@ -9,7 +9,7 @@ import { getJWT } from 'helpers/jwt';
 import { baseBody, multiResponse, multiResponseWithoutPagination } from 'types/strapi';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
 import Proposal from 'components/organisms/Proposal/Proposal';
-import SpottedSection from 'views/auth/User/Spotted/SpottedSection';
+import SpottedSection from 'components/molecules/SpottedSection/SpottedSection';
 
 const Spotted = () => {
   const [posts, setPosts] = useState<baseBody<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>[]>([]);

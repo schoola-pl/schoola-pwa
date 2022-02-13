@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -17,18 +16,3 @@ export const Body = styled.div`
   padding-bottom: 2rem;
   border-bottom: 2px solid #000;
 `;
-
-interface props {
-  title: string | JSX.Element;
-}
-
-const SpottedSection: React.FC<props> = ({ children, title }) => {
-  return (
-    <Wrapper>
-      <Title>{title}</Title>
-      <Body>{children}</Body>
-    </Wrapper>
-  );
-};
-
-export default SpottedSection;
