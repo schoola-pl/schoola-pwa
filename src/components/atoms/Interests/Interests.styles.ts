@@ -10,6 +10,10 @@ export const InterestSectionWrapper = styled.div`
   display: flex;
   transform: translateY(-35%);
   flex-direction: column;
+
+  @media (min-width: 390px) {
+    transform: translateY(-25%);
+  }
 `;
 
 export const InterestWrapper = styled.div`
@@ -31,4 +35,10 @@ export const Interest = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+  @media (min-width: 390px) {
+    height: 5.5rem;
+    width: 11rem;
+    font-size: 1.1rem;
+  }
 `;
