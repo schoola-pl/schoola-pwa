@@ -32,7 +32,7 @@ const SpottedComment = () => {
   const {
     id,
     attributes: {
-      publishedAt,
+      createdAt,
       message,
       spotted_comments: { data: commentsArray }
     }
@@ -43,7 +43,7 @@ const SpottedComment = () => {
       <Question
         key={id}
         qId={parseInt(spottedId || '0')}
-        date={publishedAt}
+        date={createdAt}
         isSpotted={false}
         content={message}
         numberOfComments={commentsArray.length}

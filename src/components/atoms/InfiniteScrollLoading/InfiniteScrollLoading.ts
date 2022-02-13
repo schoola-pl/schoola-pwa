@@ -26,7 +26,7 @@ export default styled.div`
     transform: translateX(-50%);
     color: #fff;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    animation: ${textBouncing} 0.5s 1.5s ease-in-out infinite alternate;
+    animation: ${textBouncing} 0.5s 0.2s ease-in-out infinite alternate;
     font-size: 2.3rem;
     font-weight: bold;
   }

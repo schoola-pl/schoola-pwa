@@ -1,27 +1,33 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { PageWrapper } from './Spotted.styles';
+import { Info, PageWrapper } from './Spotted.styles';
 import Question from 'components/organisms/Question/Question';
 import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
 import { useSelector } from 'react-redux';
-import { storeRoot } from 'store';
+import { storeRoot, useGetProposalsQuery } from 'store';
 import axios, { AxiosResponse } from 'axios';
 import { getJWT } from 'helpers/jwt';
 import { baseBody, multiResponse, multiResponseWithoutPagination } from 'types/strapi';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
+import Proposal from 'components/organisms/Proposal/Proposal';
+import SpottedSection from 'views/auth/User/Spotted/SpottedSection';
 
 const Spotted = () => {
-  const [posts, setPosts] = useState<baseBody<{ message: string; publishedAt: string; spotted_comments: multiResponseWithoutPagination }>[]>([]);
+  const [posts, setPosts] = useState<baseBody<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>[]>([]);
   const [page, setPage] = useState<{ actual: number; total: number }>({ actual: 0, total: 0 });
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setFirstLoading] = useState(true);
   const lastItemRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>();
   const user = useSelector((state: storeRoot) => state.user);
+  const proposals = useGetProposalsQuery({
+    schoolId: user?.schoolId || null
+  });
 
   const fetchPosts = async (page = 1) => {
     const url = `${process.env.REACT_APP_BACKEND_BASE_URL}/spotteds?filters[schoolId][$eq]=${
       user?.schoolId || null
-    }&fields[0]=publishedAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=publishedAt:desc&populate[spotted_comments][fields]=id`;
-    const response: AxiosResponse<multiResponse<{ message: string; publishedAt: string; spotted_comments: multiResponseWithoutPagination }>> =
+    }&fields[0]=createdAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id`;
+    const response: AxiosResponse<multiResponse<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>> =
       await axios.get(url, {
         headers: { Authorization: `Bearer ${getJWT()}` }
       });
@@ -33,6 +39,7 @@ const Spotted = () => {
       if (res.data.data.length > 0 && user?.schoolId) {
         setPosts(res.data.data);
         setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
+        setFirstLoading(false);
       }
     });
   }, [user?.schoolId]);
@@ -46,6 +53,18 @@ const Spotted = () => {
       setIsLoading(false);
     });
   }, [isLoading, page]);
+
+  const resetSpotted = () => {
+    setPosts([]);
+    setFirstLoading(true);
+    fetchPosts().then((res) => {
+      if (res.data.data.length > 0 && user?.schoolId) {
+        setPosts(res.data.data);
+        setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
+        setFirstLoading(false);
+      }
+    });
+  };
 
   useEffect(() => {
     observer.current = new IntersectionObserver(
@@ -71,16 +90,30 @@ const Spotted = () => {
 
   return (
     <PageWrapper>
-      <AskQuestionInput />
+      <AskQuestionInput resetSpotted={resetSpotted} />
       {isLoading && <InfiniteScrollLoading />}
+      {user?.TextRole === 'Moderator' && proposals.data?.data && proposals.data?.data.length > 0 ? (
+        <SpottedSection
+          title={
+            <>
+              Propozycje <span>nowych postów</span>
+            </>
+          }
+        >
+          {proposals.data.data.map(({ id, attributes: { message } }) => (
+            <Proposal key={id} qId={id} question={message} resetSpotted={resetSpotted} />
+          ))}
+        </SpottedSection>
+      ) : null}
+      {isFirstLoading ? <Info>Ładowanie spotted...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
       {posts.length > 0 &&
-        posts.map(({ id, attributes: { message, publishedAt, spotted_comments } }, i) => {
+        posts.map(({ id, attributes: { message, createdAt, spotted_comments } }, i) => {
           if (i === posts.length - 1) {
             return (
               <Question
                 key={id}
                 isSpotted={true}
-                date={publishedAt}
+                date={createdAt}
                 content={message}
                 qId={id}
                 numberOfComments={spotted_comments.data.length}
@@ -94,7 +127,7 @@ const Spotted = () => {
               key={id}
               qId={id}
               isSpotted={true}
-              date={publishedAt}
+              date={createdAt}
               content={message}
               numberOfComments={spotted_comments.data.length}
               numberOfHearts={0}
