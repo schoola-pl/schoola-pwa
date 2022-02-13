@@ -1,12 +1,13 @@
 import React, { createContext, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { storeRoot, useAddSpottMutation, useDeleteSpottProposalMutation, useProposeSpottMutation } from 'store';
+import { storeRoot, useAddSpottMutation, useDeleteSpottMutation, useDeleteSpottProposalMutation, useProposeSpottMutation } from 'store';
 import { roles } from 'routes';
 
 interface SpottedContextTypes {
   addSpottProtocol: (message: string) => void;
   approveSpott: (spottId: number, message: string) => void;
   disapproveSpott: (spottId: number) => void;
+  deleteSpott: (spottId: number) => void;
 }
 
 const SpottedContext = createContext<SpottedContextTypes>({
@@ -18,6 +19,9 @@ const SpottedContext = createContext<SpottedContextTypes>({
   },
   disapproveSpott: () => {
     throw new Error('disapproveSpott is not implemented');
+  },
+  deleteSpott: () => {
+    throw new Error('deleteSpott is not implemented');
   }
 });
 export const SpottedProvider: React.FC = ({ children }) => {
@@ -25,6 +29,7 @@ export const SpottedProvider: React.FC = ({ children }) => {
   const [addSpott] = useAddSpottMutation();
   const [proposeSpott] = useProposeSpottMutation();
   const [deleteProposal] = useDeleteSpottProposalMutation();
+  const [deleteSpottRecord] = useDeleteSpottMutation();
 
   const addSpottProtocol = (message: string) => {
     if (!user) return;
@@ -72,10 +77,17 @@ export const SpottedProvider: React.FC = ({ children }) => {
     });
   };
 
+  const deleteSpott = (spottId: number) => {
+    deleteSpottRecord({
+      spottId
+    });
+  };
+
   const values = {
     addSpottProtocol,
     approveSpott,
-    disapproveSpott
+    disapproveSpott,
+    deleteSpott
   };
   return <SpottedContext.Provider value={values}>{children}</SpottedContext.Provider>;
 };
