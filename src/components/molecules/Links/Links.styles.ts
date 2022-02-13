@@ -6,6 +6,14 @@ export const LinkWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   transform: translateY(-40%);
+  justify-content: center;
+
+  @media (min-height: 760px) {
+    transform: translateY(-30%);
+  }
+  @media (min-height: 800px) {
+    transform: translateY(-10%);
+  }
 `;
 
 interface Props {
@@ -23,6 +31,11 @@ export const SocialMediaLink = styled.a<Props>`
   cursor: pointer;
   border: none;
   display: block;
+
+  @media (min-width: 400px) {
+    height: 5rem;
+    width: 5rem;
+  }
 `;
 
 export const SocialMediaWrapper = styled.div`

@@ -39,8 +39,8 @@ export const UserInfoWrapper = styled.div`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 
   @media (min-width: 390px) {
-    width: 20rem;
-    height: 27rem;
+    width: 21rem;
+    height: 28rem;
   }
 `;
 

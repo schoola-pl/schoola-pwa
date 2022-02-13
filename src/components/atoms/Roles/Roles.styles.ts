@@ -27,6 +27,11 @@ export const RoleWrapper = styled.div`
       font-size: 1.9rem;
       transform: translateY(5%);
     }
+
+    @media (min-height: 750px) {
+      font-size: 1.9rem;
+      transform: translateY(5%);
+    }
   }
 
   p {
