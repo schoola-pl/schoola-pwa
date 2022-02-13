@@ -92,7 +92,8 @@ const Spotted = () => {
     <PageWrapper>
       <AskQuestionInput resetSpotted={resetSpotted} />
       {isLoading && <InfiniteScrollLoading />}
-      {user?.TextRole === 'Moderator' && proposals.data?.data && proposals.data?.data.length > 0 ? (
+      {proposals.isLoading && <Info style={{ marginBottom: '1rem' }}>Wczytywanie propozycji...</Info>}
+      {user?.TextRole === 'Moderator' && proposals.data?.data ? (
         <SpottedSection
           title={
             <>
@@ -100,9 +101,13 @@ const Spotted = () => {
             </>
           }
         >
-          {proposals.data.data.map(({ id, attributes: { message } }) => (
-            <Proposal key={id} qId={id} question={message} resetSpotted={resetSpotted} />
-          ))}
+          {proposals.data?.data.length > 0 ? (
+            proposals.data.data.map(({ id, attributes: { message } }) => (
+              <Proposal key={id} qId={id} question={message} resetSpotted={resetSpotted} />
+            ))
+          ) : (
+            <Info style={{ paddingBlock: '5rem' }}>Brak propozycji!</Info>
+          )}
         </SpottedSection>
       ) : null}
       {isFirstLoading ? <Info>Ładowanie spotted...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
