@@ -32,7 +32,15 @@ const LinksPage: React.FC<props> = ({ setReadyState }) => {
     <Wrapper>
       <h1>Dodaj linki społecznościowe</h1>
       <Form isVisible={isVisible}>
-        <select name="" id=""></select>
+        <select name="" id="">
+          <option value="">facebook</option>
+          <option value="">instagram</option>
+          <option value="">spotify</option>
+          <option value="">strona www</option>
+          <option value="">blog</option>
+          <option value="">twitter</option>
+          <option value="">github</option>
+        </select>
         <input type="text" />
         <button onClick={handleAddLink}>dodaj</button>
       </Form>
