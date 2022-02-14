@@ -31,25 +31,25 @@ export const SpottedProvider: React.FC = ({ children }) => {
   const [deleteProposal] = useDeleteSpottProposalMutation();
   const [deleteSpottRecord] = useDeleteSpottMutation();
 
-  const addSpottProtocol = (message: string) => {
+  const addSpottProtocol = async (message: string) => {
     if (!user) return;
     const { schoolId: schoolIdNP, TextRole } = user;
     const schoolId = String(schoolIdNP);
     switch (TextRole) {
       case roles.student:
-        proposeSpott({
+        await proposeSpott({
           schoolId,
           message
         });
         break;
       case roles.moderator:
-        addSpott({
+        await addSpott({
           schoolId,
           message
         });
         break;
       default:
-        proposeSpott({
+        await proposeSpott({
           schoolId,
           message
         });
