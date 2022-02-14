@@ -49,9 +49,15 @@ const SpottedComment = () => {
         numberOfComments={commentsArray.length}
         numberOfHearts={0}
       />
-      {commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
-        <Comment key={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
-      ))}
+      {commentsArray.length > 0 ? (
+        commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
+          <Comment key={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
+        ))
+      ) : (
+        <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>
+          Nikt jeszcze nie skomentował tego posta. <br /> Bądź pierwszy!
+        </p>
+      )}
     </SectionWrapper>
   );
 };
