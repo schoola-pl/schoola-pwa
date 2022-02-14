@@ -38,6 +38,7 @@ interface props {
 
 const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted, resetSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
+  const [isPostLoading, setPostLoading] = useState(false);
   const [addComment, { isSuccess, isLoading }] = useAddCommentMutation();
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
@@ -61,8 +62,10 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
 
   const handleDeleteQuestion = async () => {
     if (!isSpotted || !resetSpotted) return;
+    setPostLoading(true);
     await deleteSpott(qId);
     resetSpotted();
+    setPostLoading(false);
   };
 
   return (
@@ -77,7 +80,7 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
         </QuestionInfo>
         {isSpotted && (
           <div>
-            <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} />
+            <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
             <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
           </div>
         )}

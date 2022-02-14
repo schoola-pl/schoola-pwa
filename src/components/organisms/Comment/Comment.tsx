@@ -15,6 +15,7 @@ interface Props {
 
 const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
+  const [isCommentLoading, setCommentLoading] = useState(false);
 
   const handleToggleMenu = () => {
     setMenuOpen(!isOpened);
@@ -31,7 +32,7 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
         </CommentInfo>
         <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
-        <ActionMenu isComment={true} isOpened={isOpened} />
+        <ActionMenu isComment={true} isOpened={isOpened} isLoading={isCommentLoading} />
       </InfoWrapper>
       <CommentInnerWrapper>
         <p>{content}</p>

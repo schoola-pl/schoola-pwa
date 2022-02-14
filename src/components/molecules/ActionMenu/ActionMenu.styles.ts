@@ -9,19 +9,17 @@ interface Props {
 export const Wrapper = styled.div<Props>`
   display: ${({ isOpened }) => (isOpened ? 'flex' : 'none')};
   position: absolute;
-  bottom: ${({ isComment }) => (isComment ? '60%' : '65%')};
-  right: 15%;
-  z-index: 999;
-  height: 4rem;
-  width: 9rem;
+  left: calc(100% - 16rem);
+  top: 2.5rem;
   border-radius: 1rem;
-  background-color: #f7f8fa;
 `;
 
 export const ActionButton = styled.button`
   background-color: ${({ theme }) => theme.colors.accentRed};
   height: 100%;
-  width: 100%;
+  width: fit-content;
+  padding: 1rem 1.5rem;
   border: none;
+  color: white;
   border-radius: 1rem;
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
+import React from 'react';
 
 type Props = {
   icon?: string;
@@ -7,11 +7,11 @@ type Props = {
 
 interface ToggleMenuProps {
   icon?: string;
-  onClick?: any;
+  onClick?: () => void;
 }
 
 interface WrapperProps {
-  ref?: any;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 export const QuestionWrapper = styled.div<WrapperProps>`
@@ -147,7 +147,9 @@ export const StyledInput = styled.input`
 `;
 
 export const ToggleMenu = styled.button<ToggleMenuProps>`
-  transform: translateY(16%);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   background-color: transparent;
   height: 5rem;
   width: 5rem;
@@ -161,8 +163,4 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
   background-position: center;
   cursor: pointer;
   margin: 1rem;
-`;
-
-export const StyledActionMenu = styled(ActionMenu)`
-  position: relative;
 `;
