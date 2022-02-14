@@ -11,41 +11,41 @@ export const options = [
   {
     label: 'facebook',
     icon: FacebookIcon,
-    value: 1
+    value: 'facebook'
   },
   {
     label: 'instagram',
     icon: InstagramIcon,
-    value: 2
+    value: 'instagram'
   },
   {
     label: 'spotify',
     icon: SpotifyIcon,
-    value: 3
+    value: 'spotify'
   },
   {
     label: 'tikTok',
     icon: TikTokIcon,
-    value: 4
+    value: 'tikTok'
   },
   {
     label: 'website',
     icon: WebsiteIcon,
-    value: 5
+    value: 'website'
   },
   {
     label: 'blog',
     icon: BlogIcon,
-    value: 6
+    value: 'blog'
   },
   {
     label: 'twitter',
     icon: TwitterIcon,
-    value: 7
+    value: 'twitter'
   },
   {
     label: 'github',
     icon: GithubIcon,
-    value: 8
+    value: 'github'
   }
 ];
