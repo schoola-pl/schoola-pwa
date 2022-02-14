@@ -29,12 +29,13 @@ export const StyledInput = styled.input`
   outline: none;
 `;
 
-export const StyledSelect = styled(Select)`
-  border-radius: 4rem;
+export const StyledSelect = styled.select`
+  border-radius: 1rem;
   border: none;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-right: 1rem;
   background-color: white;
+  height: 4.25rem;
 `;
 
 export const StyledButton = styled(SidebarLink)`
@@ -52,8 +53,15 @@ export const LinkWrapper = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.accentBlue};
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 0.5rem;
+  text-decoration: none;
+  color: black;
 
   p {
     padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: ${({ theme }) => theme.fontSize.s};
+    padding: 1rem;
   }
 `;

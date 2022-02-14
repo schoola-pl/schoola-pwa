@@ -21,7 +21,8 @@ interface routesInterface {
 export const paths: { [key: string]: string } = {
   login: '/login',
   student: '/student/*',
-  schoolAdmin: '/school-admin/*'
+  schoolAdmin: '/school-admin/*',
+  psycho: '/psycho/*'
 };
 
 // Roles
@@ -41,6 +42,7 @@ const loginRoute = paths.login;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: paths.student, Component: Profile, isProtected: true, role: roles.student },
+  { path: paths.psycho, Component: Profile, isProtected: true, role: roles.student },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 

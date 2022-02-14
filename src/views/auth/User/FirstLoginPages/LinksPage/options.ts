@@ -9,42 +9,42 @@ import TikTokIcon from 'assets/icons/SocialMediaIcons/TikTokIcon.svg';
 
 export const options = [
   {
-    label: 'facebook',
+    label: 'Facebook',
     icon: FacebookIcon,
     value: 'facebook'
   },
   {
-    label: 'instagram',
+    label: 'Instagram',
     icon: InstagramIcon,
     value: 'instagram'
   },
   {
-    label: 'spotify',
+    label: 'Spotify',
     icon: SpotifyIcon,
     value: 'spotify'
   },
   {
-    label: 'tikTok',
+    label: 'TikTok',
     icon: TikTokIcon,
     value: 'tikTok'
   },
   {
-    label: 'website',
+    label: 'Website',
     icon: WebsiteIcon,
     value: 'website'
   },
   {
-    label: 'blog',
+    label: 'Blog',
     icon: BlogIcon,
     value: 'blog'
   },
   {
-    label: 'twitter',
+    label: 'Twitter',
     icon: TwitterIcon,
     value: 'twitter'
   },
   {
-    label: 'github',
+    label: 'Github',
     icon: GithubIcon,
     value: 'github'
   }
