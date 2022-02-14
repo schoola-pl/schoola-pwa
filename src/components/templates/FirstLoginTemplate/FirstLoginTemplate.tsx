@@ -7,6 +7,7 @@ import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
 import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
 import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
 import PhotoPage from 'views/auth/User/FirstLoginPages/PhotoPage/PhotoPage';
+import LinksPage from 'views/auth/User/FirstLoginPages/LinksPage/LinksPage';
 
 const FirstLoginTemplate: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -14,7 +15,7 @@ const FirstLoginTemplate: React.FC = () => {
   const [isReady, setReadyState] = useState(true);
 
   const nextStep = () => {
-    if (counter < 3) {
+    if (counter < 4) {
       setCounter((prev) => ++prev);
     } else {
       setCounter((prev) => ++prev);
@@ -33,6 +34,8 @@ const FirstLoginTemplate: React.FC = () => {
       case 3:
         return <PhotoPage setReadyState={setReadyState} />;
       case 4:
+        return <LinksPage setReadyState={setReadyState} />;
+      case 5:
         return <FinishPage />;
       default:
         return <Welcome />;
