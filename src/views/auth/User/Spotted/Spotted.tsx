@@ -34,8 +34,8 @@ const Spotted = () => {
       if (res.data.data.length > 0 && user?.schoolId) {
         setPosts(res.data.data);
         setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
-        setFirstLoading(false);
       }
+      setFirstLoading(false);
     });
   }, [user?.schoolId]);
 
@@ -56,8 +56,8 @@ const Spotted = () => {
       if (res.data.data.length > 0 && user?.schoolId) {
         setPosts(res.data.data);
         setPage({ actual: res.data.meta.pagination.page, total: res.data.meta.pagination.pageCount });
-        setFirstLoading(false);
       }
+      setFirstLoading(false);
     });
   };
 
