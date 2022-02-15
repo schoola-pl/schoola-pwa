@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.form`
   border-radius: 2rem;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   display: grid;
@@ -76,4 +76,38 @@ export const StyledLabel = styled.label`
 export const StyledName = styled.p`
   color: ${({ theme }) => theme.colors.accentGreen};
   padding-left: 0.2rem;
+`;
+
+const fadeInInformation = keyframes`
+  from {
+    transform: translate(-50%, -40px);
+  }
+  to {
+    transform: translate(-50%, -5px);
+  }
+`;
+
+const fadeOutInformation = keyframes`
+  from {
+    transform: translate(-50%, -5px);
+  }
+  to {
+    transform: translate(-50%, -40px);
+  }
+`;
+
+export const StudentInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -40px);
+  animation: ${fadeInInformation} 0.7s 0.2s ease-in-out forwards, ${fadeOutInformation} 0.4s 5s ease-in-out forwards;
+  background-color: ${({ theme }) => theme.colors.accentBlue};
+  padding: 4rem 1rem 0.3rem;
+  width: 100%;
+  border-radius: 0 0 1rem 1rem;
+  color: white;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  z-index: -1;
 `;
