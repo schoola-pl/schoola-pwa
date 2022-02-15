@@ -31,12 +31,18 @@ interface props {
   date: string;
   content: string;
   numberOfComments: number;
-  numberOfHearts: number;
   isSpotted: boolean;
   resetSpotted?: () => void;
+  likes: {
+    id: number;
+    attributes: {
+      likes: number;
+      userIds: { id: number; userId: string }[];
+    };
+  };
 }
 
-const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, numberOfComments, numberOfHearts, isSpotted, resetSpotted }, ref) => {
+const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, content, numberOfComments, isSpotted, resetSpotted }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [isPostLoading, setPostLoading] = useState(false);
   const [addComment, { isSuccess, isLoading }] = useAddCommentMutation();
@@ -90,7 +96,7 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, date, content, 
       </QuestionInnerWrapper>
       <ActionsWrapper>
         <LikeWrapper>
-          <Heart numberOfHearts={numberOfHearts} />
+          <Heart likes={likes} />
         </LikeWrapper>
         {isSpotted ? (
           <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={numberOfComments}>

@@ -12,12 +12,12 @@ interface props {
 const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
   const { handleSubmit, reset, register } = useForm();
   const [isLoading, setLoadingState] = useState(false);
-  const { addSpottProtocol } = useSpotted();
+  const { decideAboutSpott } = useSpotted();
 
   const handleAddSpott = async ({ message }: { message: string }) => {
     reset();
     setLoadingState(true);
-    await addSpottProtocol(message);
+    await decideAboutSpott(message);
     setLoadingState(false);
     resetSpotted();
   };

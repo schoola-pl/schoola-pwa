@@ -6,11 +6,18 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import axios, { AxiosResponse } from 'axios';
 import { getJWT } from 'helpers/jwt';
-import { baseBody, multiResponse, multiResponseWithoutPagination } from 'types/strapi';
+import { baseBody, multiResponse, multiResponseWithoutPagination, oneResponse } from 'types/strapi';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
 
 const Spotted = () => {
-  const [posts, setPosts] = useState<baseBody<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>[]>([]);
+  const [posts, setPosts] = useState<
+    baseBody<{
+      message: string;
+      createdAt: string;
+      spotted_comments: multiResponseWithoutPagination;
+      spotted_like: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
+    }>[]
+  >([]);
   const [page, setPage] = useState<{ actual: number; total: number }>({ actual: 0, total: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setFirstLoading] = useState(true);
@@ -21,11 +28,17 @@ const Spotted = () => {
   const fetchPosts = async (page = 1) => {
     const url = `${process.env.REACT_APP_BACKEND_BASE_URL}/spotteds?filters[schoolId][$eq]=${
       user?.schoolId || null
-    }&fields[0]=createdAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id`;
-    const response: AxiosResponse<multiResponse<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>> =
-      await axios.get(url, {
-        headers: { Authorization: `Bearer ${getJWT()}` }
-      });
+    }&fields[0]=createdAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id&populate[spotted_like][populate]=userIds`;
+    const response: AxiosResponse<
+      multiResponse<{
+        message: string;
+        createdAt: string;
+        spotted_comments: multiResponseWithoutPagination;
+        spotted_like: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
+      }>
+    > = await axios.get(url, {
+      headers: { Authorization: `Bearer ${getJWT()}` }
+    });
     return response;
   };
 
@@ -89,35 +102,48 @@ const Spotted = () => {
       {isLoading && <InfiniteScrollLoading />}
       {isFirstLoading ? <Info>Ładowanie spotted...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
       {posts.length > 0 &&
-        posts.map(({ id, attributes: { message, createdAt, spotted_comments } }, i) => {
-          if (i === posts.length - 1) {
+        posts.map(
+          (
+            {
+              id,
+              attributes: {
+                message,
+                createdAt,
+                spotted_comments,
+                spotted_like: { data: likes }
+              }
+            },
+            i
+          ) => {
+            if (i === posts.length - 1) {
+              return (
+                <Question
+                  key={id}
+                  isSpotted={true}
+                  date={createdAt}
+                  content={message}
+                  qId={id}
+                  numberOfComments={spotted_comments.data.length}
+                  likes={likes}
+                  resetSpotted={resetSpotted}
+                  ref={lastItemRef}
+                />
+              );
+            }
             return (
               <Question
                 key={id}
+                qId={id}
                 isSpotted={true}
                 date={createdAt}
                 content={message}
-                qId={id}
                 numberOfComments={spotted_comments.data.length}
-                numberOfHearts={0}
+                likes={likes}
                 resetSpotted={resetSpotted}
-                ref={lastItemRef}
               />
             );
           }
-          return (
-            <Question
-              key={id}
-              qId={id}
-              isSpotted={true}
-              date={createdAt}
-              content={message}
-              numberOfComments={spotted_comments.data.length}
-              numberOfHearts={0}
-              resetSpotted={resetSpotted}
-            />
-          );
-        })}
+        )}
     </PageWrapper>
   );
 };

@@ -35,12 +35,13 @@ export const SpottedAPI = createApi({
         message: string;
         createdAt: string;
         spotted_comments: { data: { id: number; attributes: { message: string; author_name: string; avatar?: string; createdAt: string } }[] };
+        spotted_like: { data: { id: number; attributes: { likes: number; userIds: { id: number; userId: string }[] } } };
       }>,
       { spottedId: strapiRequestType; schoolId: strapiRequestType }
     >({
       providesTags: ['comments'],
       query: (args) => ({
-        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate=*`,
+        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[spotted_comments][fields]=*&populate[spotted_like][populate]=userIds`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
@@ -75,6 +76,7 @@ export const SpottedAPI = createApi({
       {
         schoolId: string;
         message: string;
+        spotted_like: number;
       }
     >({
       query: (body) => ({
@@ -138,6 +140,27 @@ export const SpottedAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    likeSpott: builder.mutation<
+      unknown,
+      {
+        likesId: number;
+        likes: number;
+        userIds: { id?: number; userId: string }[];
+      }
+    >({
+      query: (body) => ({
+        url: `/spotted-likes/${body.likesId}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
     })
   })
 });
@@ -149,6 +172,7 @@ export const {
   useAddSpottMutation,
   useProposeSpottMutation,
   useDeleteSpottProposalMutation,
-  useDeleteSpottMutation
+  useDeleteSpottMutation,
+  useLikeSpottMutation
 } = SpottedAPI;
 export default SpottedAPI;

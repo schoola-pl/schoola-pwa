@@ -34,7 +34,8 @@ const SpottedComment = () => {
     attributes: {
       createdAt,
       message,
-      spotted_comments: { data: commentsArray }
+      spotted_comments: { data: commentsArray },
+      spotted_like: { data: likes }
     }
   } = comments.data?.data[0];
 
@@ -47,7 +48,7 @@ const SpottedComment = () => {
         isSpotted={false}
         content={message}
         numberOfComments={commentsArray.length}
-        numberOfHearts={0}
+        likes={likes}
       />
       {commentsArray.length > 0 ? (
         commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (

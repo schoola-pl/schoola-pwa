@@ -2,17 +2,19 @@ import React, { createContext, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot, useAddSpottMutation, useDeleteSpottMutation, useDeleteSpottProposalMutation, useProposeSpottMutation } from 'store';
 import { roles } from 'routes';
+import axios from 'axios';
+import { getJWT } from 'helpers/jwt';
 
 interface SpottedContextTypes {
-  addSpottProtocol: (message: string) => void;
+  decideAboutSpott: (message: string) => void;
   approveSpott: (spottId: number, message: string) => void;
   disapproveSpott: (spottId: number) => void;
   deleteSpott: (spottId: number) => void;
 }
 
 const SpottedContext = createContext<SpottedContextTypes>({
-  addSpottProtocol: () => {
-    throw new Error('addSpottProtocol is not implemented');
+  decideAboutSpott: () => {
+    throw new Error('decideAboutSpott is not implemented');
   },
   approveSpott: () => {
     throw new Error('approveSpott is not implemented');
@@ -31,7 +33,32 @@ export const SpottedProvider: React.FC = ({ children }) => {
   const [deleteProposal] = useDeleteSpottProposalMutation();
   const [deleteSpottRecord] = useDeleteSpottMutation();
 
-  const addSpottProtocol = async (message: string) => {
+  const addSpottedPost = async (message: string) => {
+    if (!user) return;
+    const { schoolId: schoolIdNP } = user;
+    const schoolId = String(schoolIdNP);
+    const response = await axios.post<{ likes: number; userIds: [] }, { data: { data: { id: string } } }>(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/spotted-likes`,
+      { data: { likes: 0, userIds: [] } },
+      {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      }
+    );
+    const {
+      data: {
+        data: { id }
+      }
+    } = response;
+    await addSpott({
+      schoolId,
+      message,
+      spotted_like: parseInt(id)
+    });
+  };
+
+  const decideAboutSpott = async (message: string) => {
     if (!user) return;
     const { schoolId: schoolIdNP, TextRole } = user;
     const schoolId = String(schoolIdNP);
@@ -43,10 +70,7 @@ export const SpottedProvider: React.FC = ({ children }) => {
         });
         break;
       case roles.moderator:
-        await addSpott({
-          schoolId,
-          message
-        });
+        await addSpottedPost(message);
         break;
       default:
         await proposeSpott({
@@ -57,18 +81,11 @@ export const SpottedProvider: React.FC = ({ children }) => {
     }
   };
 
-  const approveSpott = (spottId: number, message: string) => {
-    if (!user) return;
-    const { schoolId: schoolIdNP } = user;
-    const schoolId = String(schoolIdNP);
-
+  const approveSpott = async (spottId: number, message: string) => {
     deleteProposal({
       spottId
     });
-    addSpott({
-      schoolId,
-      message
-    });
+    await addSpottedPost(message);
   };
 
   const disapproveSpott = (spottId: number) => {
@@ -84,7 +101,7 @@ export const SpottedProvider: React.FC = ({ children }) => {
   };
 
   const values = {
-    addSpottProtocol,
+    decideAboutSpott,
     approveSpott,
     disapproveSpott,
     deleteSpott
