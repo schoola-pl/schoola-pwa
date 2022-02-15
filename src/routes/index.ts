@@ -42,7 +42,7 @@ const loginRoute = paths.login;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Profile, isProtected: true, role: roles.moderator },
+  { path: paths.student, Component: Profile, isProtected: true, role: roles.student },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 

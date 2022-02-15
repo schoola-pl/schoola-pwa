@@ -17,7 +17,7 @@ const NotificationAction = () => {
       <NotificationContentWrapper>
         {proposals.isLoading ? (
           <p style={{ margin: 0, paddingBlock: '2rem', paddingRight: 0, textAlign: 'center' }}>Wczytuje powiadomienia...</p>
-        ) : proposals.data?.data && proposals.data?.data?.length <= 0 ? (
+        ) : (proposals.data?.data && proposals.data?.data?.length <= 0) || proposals.isError ? (
           <p style={{ margin: 0, paddingBlock: '2rem', paddingRight: 0, textAlign: 'center' }}>Nie tutaj narazie żadnych powiadomień!</p>
         ) : null}
         {user?.TextRole === 'Moderator' && proposals.data?.data && proposals.data?.data?.length > 0
