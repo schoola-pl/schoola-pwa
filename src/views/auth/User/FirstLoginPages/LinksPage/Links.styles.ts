@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import Select from 'react-select';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Form = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin: 2rem;
+  padding-left: 1rem;
 `;
 
 export const Wrapper = styled.div`
