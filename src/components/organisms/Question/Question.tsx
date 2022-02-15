@@ -84,7 +84,7 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, co
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
           <h1>Ktoś zadał pytanie:</h1>
         </QuestionInfo>
-        {isSpotted && (
+        {isSpotted && user?.TextRole !== 'Student' && (
           <div>
             <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
             <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
