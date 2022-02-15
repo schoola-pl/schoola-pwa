@@ -1,6 +1,6 @@
 import { paginatedStrapiOptions } from 'types/pagination';
 
-interface baseBody<T> {
+export interface baseBody<T> {
   id: number;
   attributes: T;
 }

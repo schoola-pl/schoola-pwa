@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
+import { Form, StyledLink, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
@@ -82,6 +82,7 @@ const Login: React.FC = () => {
               'Spróbuj ponownie!'
             )}
           </StyledButton>
+          <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
         </Form>
       </AuthCard>
     </Wrapper>
