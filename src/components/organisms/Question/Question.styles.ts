@@ -136,8 +136,8 @@ export const LikeWrapper = styled.div`
 export const StyledInput = styled.input`
   border-radius: 1rem;
   padding: 1rem;
-  border: none;
   background-color: #f7f8fa;
+  border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   margin-right: 0.5rem;
   color: black;
 
@@ -150,7 +150,6 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: transparent;
   height: 5rem;
   width: 5rem;
   background-image: url(${({ icon }) => icon});
