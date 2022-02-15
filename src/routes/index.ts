@@ -13,7 +13,7 @@ interface routesInterface {
   // Is route protected?
   isProtected: boolean;
   // Who can access this route?
-  role: string;
+  role: string | string[];
   // Where to redirect if user is not authenticated?
   redirectTo?: string;
 }
@@ -42,7 +42,7 @@ const loginRoute = paths.login;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Profile, isProtected: true, role: roles.student },
+  { path: paths.student, Component: Profile, isProtected: true, role: [roles.student, roles.moderator] },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 
