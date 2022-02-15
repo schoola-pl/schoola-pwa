@@ -4,8 +4,10 @@ import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import { useDeleteCommentMutation } from 'store';
 
 interface Props {
+  cId: number;
   profilePicture: string;
   name: string;
   date: string;
@@ -13,9 +15,16 @@ interface Props {
   content: string;
 }
 
-const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
+const Comment: React.FC<Props> = ({ cId, profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [isCommentLoading, setCommentLoading] = useState(false);
+  const [deleteComment] = useDeleteCommentMutation();
+
+  const handleDeleteComment = async () => {
+    setCommentLoading(true);
+    await deleteComment({ commentId: cId });
+    setCommentLoading(false);
+  };
 
   const handleToggleMenu = () => {
     setMenuOpen(!isOpened);
@@ -32,7 +41,7 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, content }) => {
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
         </CommentInfo>
         <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
-        <ActionMenu isComment={true} isOpened={isOpened} isLoading={isCommentLoading} />
+        <ActionMenu onClick={handleDeleteComment} isComment={true} isOpened={isOpened} isLoading={isCommentLoading} />
       </InfoWrapper>
       <CommentInnerWrapper>
         <p>{content}</p>

@@ -52,7 +52,7 @@ const SpottedComment = () => {
       />
       {commentsArray.length > 0 ? (
         commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
-          <Comment key={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
+          <Comment key={id} cId={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
         ))
       ) : (
         <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>

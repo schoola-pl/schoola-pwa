@@ -71,6 +71,21 @@ export const SpottedAPI = createApi({
         }
       })
     }),
+    deleteComment: builder.mutation<
+      unknown,
+      {
+        commentId: strapiRequestType;
+      }
+    >({
+      invalidatesTags: ['comments'],
+      query: (body) => ({
+        url: `/spotted-comments/${body.commentId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
     addSpott: builder.mutation<
       oneResponse<{ message: string; createdAt: string }>,
       {
@@ -168,6 +183,7 @@ export const SpottedAPI = createApi({
 export const {
   useGetProposalsQuery,
   useGetCommentsQuery,
+  useDeleteCommentMutation,
   useAddCommentMutation,
   useAddSpottMutation,
   useProposeSpottMutation,
