@@ -8,21 +8,24 @@ import { AppLoadingProvider } from 'hooks/useAppLoading';
 import { UserProvider } from 'hooks/useUser';
 import { ClassProvider } from 'hooks/useClass';
 import { ModalProvider } from 'hooks/useModal';
+import { SpottedProvider } from 'hooks/useSpotted';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
     <Router>
       <Provider store={store}>
         <AppLoadingProvider>
-          <ModalProvider>
-            <RouteProvider>
-              <ClassProvider>
-                <UserProvider>
-                  <StyleProvider>{children}</StyleProvider>
-                </UserProvider>
-              </ClassProvider>
-            </RouteProvider>
-          </ModalProvider>
+          <SpottedProvider>
+            <ModalProvider>
+              <RouteProvider>
+                <ClassProvider>
+                  <UserProvider>
+                    <StyleProvider>{children}</StyleProvider>
+                  </UserProvider>
+                </ClassProvider>
+              </RouteProvider>
+            </ModalProvider>
+          </SpottedProvider>
         </AppLoadingProvider>
       </Provider>
     </Router>

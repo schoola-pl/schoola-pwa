@@ -2,10 +2,14 @@ import Loader from 'components/atoms/Loader/Loader';
 import React from 'react';
 import { Wrapper } from './Loading.styles';
 
-const Loading: React.FC = () => {
+interface props {
+  bgColor?: string;
+}
+
+const Loading: React.FC<props> = ({ bgColor }) => {
   return (
-    <Wrapper id="loader">
-      <Loader />
+    <Wrapper id="loader" style={{ backgroundColor: bgColor || 'white' }}>
+      <Loader bgColor={bgColor} />
     </Wrapper>
   );
 };

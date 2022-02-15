@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import { CommentWrapper, InfoWrapper, StyledPicture, ProfilePicture, CommentInfo, ToggleMenu, CommentInnerWrapper } from './Comment.styles';
+import React, { useState } from 'react';
+import { CommentInfo, CommentInnerWrapper, CommentWrapper, InfoWrapper, ProfilePicture, StyledPicture, ToggleMenu } from './Comment.styles';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
-import Heart from 'components/atoms/Heart/Heart';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
+import { formatDistance } from 'date-fns';
+import { pl } from 'date-fns/locale';
+import { storeRoot, useDeleteCommentMutation } from 'store';
+import { useSelector } from 'react-redux';
 
 interface Props {
+  cId: number;
   profilePicture: string;
   name: string;
   date: string;
@@ -12,8 +16,17 @@ interface Props {
   content: string;
 }
 
-const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, content }) => {
+const Comment: React.FC<Props> = ({ cId, profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
+  const [isCommentLoading, setCommentLoading] = useState(false);
+  const [deleteComment] = useDeleteCommentMutation();
+  const user = useSelector((state: storeRoot) => state.user);
+
+  const handleDeleteComment = async () => {
+    setCommentLoading(true);
+    await deleteComment({ commentId: cId });
+    setCommentLoading(false);
+  };
 
   const handleToggleMenu = () => {
     setMenuOpen(!isOpened);
@@ -22,22 +35,21 @@ const Comment: React.FC<Props> = ({ profilePicture, name, date, numberOfHearts, 
   return (
     <CommentWrapper>
       <InfoWrapper>
-        <section>
-          <StyledPicture>
-            <ProfilePicture icon={profilePicture} />
-          </StyledPicture>
-          <CommentInfo>
-            <h1>{name}</h1>
-            <p>{date}</p>
-          </CommentInfo>
-        </section>
-        <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
-        <ActionMenu isComment={true} accountType="spottedAdmin" isOpened={isOpened} />
+        <StyledPicture random={Math.ceil(Math.random() * 5)}>
+          <ProfilePicture icon={profilePicture} />
+        </StyledPicture>
+        <CommentInfo>
+          <h1>{name}</h1>
+          <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
+        </CommentInfo>
+        {user?.TextRole !== 'Student' && (
+          <>
+            <ToggleMenu onClick={handleToggleMenu} icon={DotsMenuIcon} />
+            <ActionMenu onClick={handleDeleteComment} isComment={true} isOpened={isOpened} isLoading={isCommentLoading} />
+          </>
+        )}
       </InfoWrapper>
       <CommentInnerWrapper>
-        <div>
-          <Heart numberOfHearts={numberOfHearts} />
-        </div>
         <p>{content}</p>
       </CommentInnerWrapper>
     </CommentWrapper>

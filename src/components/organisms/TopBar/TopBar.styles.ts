@@ -19,7 +19,6 @@ export const Wrapper = styled.div`
   box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.2);
   top: 0;
   width: 100vw;
-  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-around;

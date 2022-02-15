@@ -3,26 +3,34 @@ import styled from 'styled-components';
 export const CommentWrapper = styled.div`
   position: relative;
   display: grid;
-  overflow-x: hidden;
-  grid-template-rows: repeat(2, 1fr);
-  height: 15rem;
+  min-height: 150px;
+  grid-template-rows: 7rem 1fr;
+  grid-gap: 1rem;
+  align-items: center;
   background-color: white;
-  border-radius: 2rem;
-  width: 90%;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  width: 90%;
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
 `;
 
-export const StyledPicture = styled.div`
-  transform: translateY(10%);
-  margin: 1rem;
+export const StyledPicture = styled.div<{ random?: number }>`
   height: 5rem;
   width: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10rem;
-  background: linear-gradient(90deg, rgba(184, 208, 252, 1) 0%, rgba(91, 117, 166, 1) 0%, rgba(85, 171, 103, 1) 100%);
+  background: linear-gradient(
+    ${({ random }) => (random ? `${((Math.ceil(Math.random() * 360) * random) / random) * 2}deg` : `${Math.ceil(Math.random() * 360)}deg`)},
+    rgba(184, 208, 252, 1) 0%,
+    rgba(91, 117, 166, 1) 0%,
+    rgba(85, 171, 103, 1) 100%
+  );
 `;
 
 interface Props {
@@ -37,35 +45,30 @@ export const ProfilePicture = styled.div<Props>`
   background-color: white;
   border-radius: inherit;
   border: none;
-  background-size: contain;
+  background-size: 70%;
   background-position: center;
-  z-index: 9999999;
 `;
 
 export const InfoWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 6.5rem 1fr 6.5rem;
   align-items: center;
-
-  section {
-    display: flex;
-    align-items: center;
-  }
+  justify-content: center;
 `;
 
 export const CommentInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateY(13%);
+
+  p,
+  h1 {
+    margin: 0;
+  }
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
-  }
-
-  p {
-    transform: translateY(-150%);
   }
 `;
 
@@ -91,20 +94,15 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
 `;
 
 export const CommentInnerWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 10% 90%;
-  grid-gap: 3rem;
-  height: 6rem;
-  align-content: center;
-  transform: translateY(-10%);
-
-  div {
-    display: flex;
-    align-items: center;
-  }
+  border-left: 3px solid ${({ theme }) => theme.colors.accentGreen};
+  padding: 0.5rem 2.2rem 0.5rem 1rem;
+  margin-left: 2.2rem;
+  text-align: justify;
+  height: max-content;
 
   p {
-    font-weight: ${({ theme }) => theme.fontWeight.medium};
+    margin: 0;
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
 `;

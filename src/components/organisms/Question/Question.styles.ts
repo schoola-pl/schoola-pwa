@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
+import React from 'react';
 
 type Props = {
   icon?: string;
@@ -7,11 +7,11 @@ type Props = {
 
 interface ToggleMenuProps {
   icon?: string;
-  onClick?: any;
+  onClick?: () => void;
 }
 
 interface WrapperProps {
-  ref?: any;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 export const QuestionWrapper = styled.div<WrapperProps>`
@@ -57,7 +57,6 @@ export const ProfilePicture = styled.div<Props>`
   border: none;
   background-size: 70%;
   background-position: center;
-  z-index: 9999999;
 `;
 
 export const InfoWrapper = styled.div`
@@ -137,8 +136,8 @@ export const LikeWrapper = styled.div`
 export const StyledInput = styled.input`
   border-radius: 1rem;
   padding: 1rem;
-  border: none;
   background-color: #f7f8fa;
+  border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   margin-right: 0.5rem;
   color: black;
 
@@ -148,8 +147,9 @@ export const StyledInput = styled.input`
 `;
 
 export const ToggleMenu = styled.button<ToggleMenuProps>`
-  transform: translateY(16%);
-  background-color: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   height: 5rem;
   width: 5rem;
   background-image: url(${({ icon }) => icon});
@@ -162,8 +162,4 @@ export const ToggleMenu = styled.button<ToggleMenuProps>`
   background-position: center;
   cursor: pointer;
   margin: 1rem;
-`;
-
-export const StyledActionMenu = styled(ActionMenu)`
-  position: relative;
 `;
