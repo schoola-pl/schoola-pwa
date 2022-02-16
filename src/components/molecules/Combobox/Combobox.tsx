@@ -48,8 +48,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
             const selectedItemId = getIdFromName(selectedItem);
             if (selectedItemId)
               addInterested({
-                id: selectedItemId,
-                allInteresteds: interesteds.data?.data
+                id: selectedItemId
               });
             if (selectedItems.length === 2) setReadyState(true);
             addSelectedItem(selectedItem);
