@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-type Props = {
-  icon?: any;
-};
-
-const SidebarLink = styled.button<Props>`
+const SidebarLink = styled.button<{ icon: string }>`
   height: 5rem;
   width: 5rem;
   background-image: url(${({ icon }) => icon});

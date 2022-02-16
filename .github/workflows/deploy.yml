@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x, 17.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -32,6 +32,13 @@ jobs:
       run: npm test
     - name: Building application...
       run: npm run build --if-present
+    - name: Testing (e2e) application...
+      uses: cypress-io/github-action@v2
+      with:
+        build: npm run build
+        start: npm start
+        browser: chrome
+        project: ./src/e2e/
     - name: Publishing application...
       if: success()
       uses: crazy-max/ghaction-github-pages@v2

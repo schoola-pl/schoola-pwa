@@ -14,6 +14,7 @@ export const Background = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 25px;
+  z-index: 9999999999999999;
 `;
 
 export const Text = styled.p`
@@ -21,5 +22,7 @@ export const Text = styled.p`
   color: black;
   font-weight: bold;
   letter-spacing: 0.4px;
-  font-size: ${({ theme }) => theme.fontSize.l};
+  font-size: clamp(${({ theme }) => theme.fontSize.m}, 2vw, ${({ theme }) => theme.fontSize.l});
+  padding-inline: 1.4rem;
+  text-align: center;
 `;

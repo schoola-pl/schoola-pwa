@@ -19,10 +19,17 @@ export const Wrapper = styled.div`
 export const StyledList = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   position: relative;
   padding-left: 1rem;
+  width: 100%;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 interface Props {
@@ -37,6 +44,7 @@ export const StyledListItem = styled(NavLink)<Props>`
 
   &.active {
     border-radius: 2rem;
+
     &::after {
       padding-right: 1rem;
       content: '${({ name }) => name}';
@@ -48,5 +56,5 @@ export const StyledListItem = styled(NavLink)<Props>`
 
 export const StyledSidebarLink = styled(SidebarLink)`
   padding-right: 1rem;
-  margin-right: 0rem;
+  margin-right: 0;
 `;

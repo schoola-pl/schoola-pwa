@@ -1,67 +1,65 @@
-import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
-import Post from 'components/organisms/Post/Post';
+import { useParams } from 'react-router';
+import { storeRoot, useGetCommentsQuery } from 'store';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Comment from 'components/organisms/Comment/Comment';
-
-const mockData = [
-  {
-    date: '24.04.2022',
-    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
-    numberOfComments: 4,
-    numberOfHearts: 8
-  }
-];
+import Loading from 'components/molecules/Loading/Loading';
+import { theme } from 'assets/styles/theme';
 
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  heigth: 100vh;
   justify-content: flex-start;
   align-items: center;
-  overflow: scroll !important;
 `;
 
-const commentData = [
-  {
-    profilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thefamouspeople.com%2Fprofiles%2Fimages%2Fvladimir-putin-6.jpg&f=1&nofb=1',
-    name: 'Władimir Putin',
-    date: '12.05.2012',
-    content: 'Idę po was',
-    numberOfHearts: 3
-  },
-  {
-    profilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa1%2F8a%2Fef%2Fa18aefbb385e8a4d755d2885fa2d2cc2.jpg&f=1&nofb=1',
-    name: 'Ryszard Riedel',
-    date: '12.05.2012',
-    content: 'Lubię motocykle, muzykę i heroinę',
-    numberOfHearts: 3
-  }
-];
+const SpottedComment = () => {
+  const { spottedId } = useParams();
+  const user = useSelector((state: storeRoot) => state.user);
+  const comments = useGetCommentsQuery({
+    schoolId: user?.schoolId || null,
+    spottedId: spottedId || null
+  });
 
-const CommentSection = () => {
+  if (comments.isLoading || !comments.data?.data)
+    return (
+      <div style={{ position: 'relative', height: '65vh' }}>
+        <Loading bgColor={theme.colors.lightBrown} />
+      </div>
+    );
+
+  const {
+    id,
+    attributes: {
+      createdAt,
+      message,
+      spotted_comments: { data: commentsArray },
+      spotted_like: { data: likes }
+    }
+  } = comments.data?.data[0];
+
   return (
-    <UserTemplate>
-      <SectionWrapper>
-        {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
-          <Post
-            key={date}
-            date={date}
-            isPublic={false}
-            commentSection={true}
-            content={content}
-            numberOfComments={numberOfComments}
-            numberOfHearts={numberOfHearts}
-          />
-        ))}
-        {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
-          <Comment isPublic={true} profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
-        ))}
-      </SectionWrapper>
-    </UserTemplate>
+    <SectionWrapper>
+      <Question
+        key={id}
+        qId={parseInt(spottedId || '0')}
+        date={createdAt}
+        isSpotted={false}
+        content={message}
+        numberOfComments={commentsArray.length}
+        likes={likes}
+      />
+      {commentsArray.length > 0 ? (
+        commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
+          <Comment key={id} cId={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
+        ))
+      ) : (
+        <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>
+          Nikt jeszcze nie skomentował tego posta. <br /> Bądź pierwszy!
+        </p>
+      )}
+    </SectionWrapper>
   );
 };
 
-export default CommentSection;
+export default SpottedComment;

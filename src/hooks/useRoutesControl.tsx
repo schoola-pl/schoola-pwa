@@ -1,18 +1,19 @@
 import React, { createContext, useContext } from 'react';
-import { getJWT, removeJWT, setJWT } from '../helpers/jwt';
+import { getJWT, removeJWT, setJWT } from 'helpers/jwt';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import { addUser, removeUser } from '../store';
-import { authUser } from '../types/auth';
+import { addUser, removeUser } from 'store';
+import { authUser } from 'types/auth';
 import { useNavigate } from 'react-router';
-import { dashboardRoute, loginRoute } from '../routes';
+import { dashboardRoute, loginRoute, roles } from 'routes';
 import { useAppLoading } from './useAppLoading';
 
 interface RouteContextTypes {
   getUserData: (token: string) => Promise<AxiosResponse<authUser | null> | AxiosError>;
   checkUser: () => Promise<boolean>;
-  unlockRoutes: (jwt: string, userData: authUser) => void;
+  unlockRoutes: (jwt: string, userData: authUser, redirectTo?: string) => void;
   blockRoutes: (redirectTo?: string) => void;
+  checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
 const RouteContext = createContext<RouteContextTypes>({
@@ -27,6 +28,9 @@ const RouteContext = createContext<RouteContextTypes>({
   },
   blockRoutes: () => {
     throw new Error('RouteContext.blockRoutes is not implemented');
+  },
+  checkDoesRoleHasPermission: () => {
+    throw new Error('RouteContext.checkDoesRoleHasPermission is not implemented');
   }
 });
 export const RouteProvider: React.FC = ({ children }) => {
@@ -63,34 +67,48 @@ export const RouteProvider: React.FC = ({ children }) => {
   };
 
   // Unlock routes if JWT token exists and user is authenticated
-  const unlockRoutes = (jwt: string, userData: authUser) => {
+  const unlockRoutes = (jwt: string, userData: authUser, redirectTo = dashboardRoute) => {
     if (getJWT()) {
-      navigate(dashboardRoute);
+      navigate(redirectTo);
     } else {
       try {
         dispatch(addUser({ user: userData }));
         setJWT(jwt);
-        navigate(dashboardRoute);
+        navigate(redirectTo);
       } catch (err) {
         removeJWT();
+        dispatch(removeUser({}));
         navigate(loginRoute);
+        localStorage.removeItem('role');
       }
     }
   };
 
   // Block routes
-  const blockRoutes = (redirectTo = loginRoute) => {
+  const blockRoutes = () => {
     removeJWT();
     dispatch(removeUser({}));
-    navigate(redirectTo);
+    navigate(loginRoute);
     setAppLoading(false);
+  };
+
+  // This method checks does user has permission to access the route (by his role name)
+  const checkDoesRoleHasPermission = (entitledRole: string | string[], actualRole: string) => {
+    if (actualRole === roles.authenticated) return true;
+
+    if (Array.isArray(entitledRole)) {
+      return entitledRole.includes(actualRole);
+    } else {
+      return entitledRole === actualRole;
+    }
   };
 
   const values = {
     getUserData,
     checkUser,
     unlockRoutes,
-    blockRoutes
+    blockRoutes,
+    checkDoesRoleHasPermission
   };
   return <RouteContext.Provider value={values}>{children}</RouteContext.Provider>;
 };

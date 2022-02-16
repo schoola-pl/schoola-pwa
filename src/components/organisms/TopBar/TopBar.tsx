@@ -1,6 +1,5 @@
-import { Wrapper, Logo, InnerWrapper, StyledSidebarLink, UserPicture } from './TopBar.styles';
+import { InnerWrapper, Logo, StyledSidebarLink, UserPicture, Wrapper } from './TopBar.styles';
 import NotificationList from 'components/organisms/NotificationList/NotificationList';
-
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import { Link } from 'react-router-dom';
 
