@@ -30,6 +30,9 @@ export const theme = {
     semibold: '600',
     bold: '700'
   },
+  innerStyles: {
+    box: '-2px 4px 10px rgba(115, 124, 142, 0.09);'
+  },
   screenSize: {
     phoneSM: '320px',
     phoneMD: '480px',
