@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ToggleSwitch from 'components/atoms/ToggleSwitch/ToggleSwitch';
 import styled from 'styled-components';
 import { useModal } from 'hooks/useModal';
+import DayModal from 'components/molecules/DayModal/DayModal';
 
 const DayWrapper = styled.div`
   display: flex;
@@ -10,12 +11,7 @@ const DayWrapper = styled.div`
   width: 89%;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #f7f8fa;
-
-  h1 {
-    padding-left: 1rem;
-    font-weight: ${({ theme }) => theme.fontWeight.medium};
-    font-size: ${({ theme }) => theme.fontSize.s};
-  }
+  margin-bottom: 2rem;
 
   div {
     display: flex;
@@ -44,7 +40,18 @@ const DayTimeWrapper = styled.div`
   }
 `;
 
-const Day = () => {
+const Heading = styled.h1`
+  padding-left: 1rem;
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  font-size: ${({ theme }) => theme.fontSize.s};
+`;
+interface Props {
+  dayName: string;
+  startHour: string;
+  endHour: string;
+}
+
+const Day: React.FC<Props> = ({ dayName, startHour, endHour }) => {
   const [toggle, setToggle] = useState(false);
   const { openModal, closeModal } = useModal();
 
@@ -52,21 +59,14 @@ const Day = () => {
     <DayWrapper>
       <div>
         <ToggleSwitch onChange={(event: any) => setToggle(event.target.checked)} />
-        <h1>Poniedziałek</h1>
+        <Heading>{dayName}</Heading>
       </div>
       {toggle ? (
         <DayTimeWrapper>
-          <p>8:00 - 16:00</p>
-          <button
-            onClick={() =>
-              openModal(
-                <div>
-                  <h1>hello</h1>
-                </div>,
-                'test'
-              )
-            }
-          />
+          <p>
+            {startHour} - {endHour}
+          </p>
+          <button onClick={() => openModal(<DayModal closeModal={closeModal} />, `${dayName}`)} />
         </DayTimeWrapper>
       ) : (
         <p>Nieobecność</p>
