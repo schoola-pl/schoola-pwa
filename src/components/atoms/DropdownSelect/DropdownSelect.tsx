@@ -29,7 +29,6 @@ const StyledList = styled.ul`
     width: 100%;
     padding-bottom: 1rem;
     transform: translateX(-55%);
-    //    border-bottom: 1px solid ${({ theme }) => theme.colors.selectedItemGrey};
     font-size: ${({ theme }) => theme.fontSize.s};
   }
 `;
