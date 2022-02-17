@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import ToggleSwitch from 'components/molecules/ToggleSwitch/ToggleSwitch';
+import React, { useEffect } from 'react';
+import Day from 'components/molecules/Day/Day';
 import styled from 'styled-components';
-
+import { useModal } from 'hooks/useModal';
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -16,15 +16,22 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
   }
 `;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+
 const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
-  const [toggle, setToggle] = useState(false);
   useEffect(() => {
     setReadyState(false);
   }, []);
@@ -32,10 +39,9 @@ const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
   return (
     <Wrapper>
       <h1>Ustaw godziny pracy</h1>
-      <form>
-        <ToggleSwitch onChange={(event: any) => setToggle(event.target.checked)} />
-        <p>the switch is {toggle ? 'on' : 'of'}</p>
-      </form>
+      <Form>
+        <Day />
+      </Form>
     </Wrapper>
   );
 };
