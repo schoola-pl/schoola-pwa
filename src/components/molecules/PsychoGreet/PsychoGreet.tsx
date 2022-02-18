@@ -4,6 +4,9 @@ const GreetWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 100%;
+  margin-left: 4rem;
+  margin-bottom: 5rem;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.m};
@@ -17,7 +20,6 @@ const GreetWrapper = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 `;
 

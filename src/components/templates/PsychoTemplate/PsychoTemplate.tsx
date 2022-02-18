@@ -3,9 +3,9 @@ import PsychoSidebar from 'components/organisms/PsychoSidebar/PsychoSidebar';
 import PsychoTopBar from 'components/organisms/PsychoTopBar/PsychoTopBar';
 
 const Wrapper = styled.div`
-  height: 73vh;
+  height: 83vh;
   width: 95%;
-  margin-top: 10rem;
+  margin-top: 8rem;
   z-index: -1;
   overflow-x: hidden;
   overflow-y: scroll !important;

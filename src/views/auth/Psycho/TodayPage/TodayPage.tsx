@@ -5,6 +5,7 @@ import blueStudent from 'assets/icons/BlueStudent.svg';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
 import PsychoGreet from 'components/molecules/PsychoGreet/PsychoGreet';
+import MailIcon from 'assets/icons/MailIcon.svg';
 
 const PageWrapper = styled.div`
   width: 100vw;
@@ -12,7 +13,6 @@ const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  transform: translateY(-1%);
 `;
 
 const Meeting = styled.div`
@@ -24,11 +24,11 @@ const Meeting = styled.div`
   margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
+`;
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+const InfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const MeetingWrapper = styled.div`
@@ -36,15 +36,14 @@ const MeetingWrapper = styled.div`
   width: 90%;
   flex-direction: column;
   align-items: center;
-
   height: 100%;
-  transform: translateY(-1%);
+  transform: translateY(-10%);
 `;
 
 const Box = styled(SidebarLink)`
   border-radius: 1rem;
-  height: 4.5rem;
-  width: 4.5rem;
+  height: 4.75rem;
+  width: 4.75rem;
   padding: 1rem;
   opacity: 0.8;
   transition: opacity 0.2s ease-in-out;
@@ -55,6 +54,8 @@ const Box = styled(SidebarLink)`
 
 export const EditBox = styled(Box)`
   background-color: #e8fcd9;
+  width: 4rem;
+  height: 4rem;
 `;
 
 export const StudentBox = styled(Box)`
@@ -62,30 +63,83 @@ export const StudentBox = styled(Box)`
 `;
 
 export const StudentInfo = styled.div`
-  transform: translateY(10%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
   h1 {
-    font-size: ${({ theme }) => theme.fontSize.xs};
+    transform: translateY(40%);
+    font-size: 1.5rem;
     font-weight: ${({ theme }) => theme.fontWeight.medium};
   }
 
   p {
-    transform: translateY(-70%);
-    width: 11rem;
     text-align: left;
-    font-size: ${({ theme }) => theme.fontSize.xs};
+    font-size: 1.5rem;
   }
 `;
 
 export const DeleteBox = styled(Box)`
   background-color: #fcb3b0;
+  width: 4rem;
+  height: 4rem;
 `;
 
 export const BoxWrapper = styled.div`
   display: flex;
+  align-items: center;
+`;
+
+export const Time = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    width: 100%;
+    display: inline;
+    color: ${({ theme }) => theme.colors.selectedItemGrey};
+    padding: 1rem;
+    text-align: left;
+    font-weight: ${({ theme }) => theme.fontWeight.regular};
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
+`;
+
+const Line = styled.div`
+  height: 2px;
+  background: ${({ theme }) => theme.colors.selectedItemGrey};
+  width: 50%;
+`;
+
+const SecondLine = styled.div`
+  height: 2px;
+  background: ${({ theme }) => theme.colors.selectedItemGrey};
+  width: 1000%;
+`;
+
+const StyledMail = styled.a<{ icon: string }>`
+  text-decoration: none;
+  height: 4.3rem;
+  width: 4.3rem;
+  background-image: url(${({ icon }) => icon});
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 1.5rem;
+  border: none;
+  display: block;
+  background-size: 75%;
+  background-position: center;
+  cursor: pointer;
+`;
+
+const EmailWrapper = styled.div`
+  transform: translateY(-20%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;s
 `;
 
 const TodayPage = () => (
@@ -93,58 +147,121 @@ const TodayPage = () => (
     <PageWrapper>
       <PsychoGreet />
       <MeetingWrapper>
-        <Meeting>
-          <div>
-            <StudentBox icon={blueStudent} />
-            <StudentInfo>
-              <h1>Tomasz Dupeczka</h1>
-              <p>3E</p>
-            </StudentInfo>
-          </div>
-          <BoxWrapper>
-            <EditBox icon={AcceptIcon} />
-            <DeleteBox icon={CancelIcon} />
-          </BoxWrapper>
-        </Meeting>
-        <Meeting>
-          <div>
-            <StudentBox icon={blueStudent} />
-            <StudentInfo>
-              <h1>Tomasz Dupeczka</h1>
-              <p>3E</p>
-            </StudentInfo>
-          </div>
-          <BoxWrapper>
-            <EditBox icon={AcceptIcon} />
-            <DeleteBox icon={CancelIcon} />
-          </BoxWrapper>
-        </Meeting>
-        <Meeting>
-          <div>
-            <StudentBox icon={blueStudent} />
-            <StudentInfo>
-              <h1>Tomasz Dupeczka</h1>
-              <p>3E</p>
-            </StudentInfo>
-          </div>
-          <BoxWrapper>
-            <EditBox icon={AcceptIcon} />
-            <DeleteBox icon={CancelIcon} />
-          </BoxWrapper>
-        </Meeting>
-        <Meeting>
-          <div>
-            <StudentBox icon={blueStudent} />
-            <StudentInfo>
-              <h1>Tomasz Dupeczka</h1>
-              <p>3E</p>
-            </StudentInfo>
-          </div>
-          <BoxWrapper>
-            <EditBox icon={AcceptIcon} />
-            <DeleteBox icon={CancelIcon} />
-          </BoxWrapper>
-        </Meeting>
+        <>
+          <Time>
+            <Line></Line>
+            <h1>8:00</h1>
+            <SecondLine></SecondLine>
+          </Time>
+          <Meeting>
+            <InfoWrapper>
+              <StudentBox icon={blueStudent} />
+              <StudentInfo>
+                <h1>Tomasz Chic</h1>
+                <EmailWrapper>
+                  <p>3E</p>
+                  <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+                </EmailWrapper>
+              </StudentInfo>
+            </InfoWrapper>
+            <BoxWrapper>
+              <EditBox icon={AcceptIcon} />
+              <DeleteBox icon={CancelIcon} />
+            </BoxWrapper>
+          </Meeting>
+        </>
+        <>
+          <Time>
+            <Line></Line>
+            <h1>8:55</h1>
+            <SecondLine></SecondLine>
+          </Time>
+          <Meeting>
+            <InfoWrapper>
+              <StudentBox icon={blueStudent} />
+              <StudentInfo>
+                <h1>Tomasz Chic</h1>
+                <EmailWrapper>
+                  <p>3E</p>
+                  <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+                </EmailWrapper>
+              </StudentInfo>
+            </InfoWrapper>
+            <BoxWrapper>
+              <EditBox icon={AcceptIcon} />
+              <DeleteBox icon={CancelIcon} />
+            </BoxWrapper>
+          </Meeting>
+        </>
+        <>
+          <Time>
+            <Line></Line>
+            <h1>9:50</h1>
+            <SecondLine></SecondLine>
+          </Time>
+          <Meeting>
+            <InfoWrapper>
+              <StudentBox icon={blueStudent} />
+              <StudentInfo>
+                <h1>Tomasz Chic</h1>
+                <EmailWrapper>
+                  <p>3E</p>
+                  <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+                </EmailWrapper>
+              </StudentInfo>
+            </InfoWrapper>
+            <BoxWrapper>
+              <EditBox icon={AcceptIcon} />
+              <DeleteBox icon={CancelIcon} />
+            </BoxWrapper>
+          </Meeting>
+        </>
+        <>
+          <Time>
+            <Line></Line>
+            <h1>10:55</h1>
+            <SecondLine></SecondLine>
+          </Time>
+          <Meeting>
+            <InfoWrapper>
+              <StudentBox icon={blueStudent} />
+              <StudentInfo>
+                <h1>Tomasz Chic</h1>
+                <EmailWrapper>
+                  <p>3E</p>
+                  <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+                </EmailWrapper>
+              </StudentInfo>
+            </InfoWrapper>
+            <BoxWrapper>
+              <EditBox icon={AcceptIcon} />
+              <DeleteBox icon={CancelIcon} />
+            </BoxWrapper>
+          </Meeting>
+        </>
+        <>
+          <Time>
+            <Line></Line>
+            <h1>11:50</h1>
+            <SecondLine></SecondLine>
+          </Time>
+          <Meeting>
+            <InfoWrapper>
+              <StudentBox icon={blueStudent} />
+              <StudentInfo>
+                <h1>Tomasz Chic</h1>
+                <EmailWrapper>
+                  <p>3E</p>
+                  <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+                </EmailWrapper>
+              </StudentInfo>
+            </InfoWrapper>
+            <BoxWrapper>
+              <EditBox icon={AcceptIcon} />
+              <DeleteBox icon={CancelIcon} />
+            </BoxWrapper>
+          </Meeting>
+        </>
       </MeetingWrapper>
     </PageWrapper>
   </PsychoTemplate>
