@@ -1,10 +1,11 @@
 import { useParams } from 'react-router';
-import { storeRoot, useGetCommentsQuery } from 'store';
+import { storeRoot, useGetPostCommentsQuery, useGetSpottedCommentsQuery } from 'store';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Comment from 'components/organisms/Comment/Comment';
 import Loading from 'components/molecules/Loading/Loading';
 import { theme } from 'assets/styles/theme';
+import Post from 'components/organisms/Post/Post';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -13,15 +14,31 @@ const SectionWrapper = styled.div`
   align-items: center;
 `;
 
-const SpottedComment = () => {
+const CommentSection = () => {
   const { spottedId } = useParams();
   const user = useSelector((state: storeRoot) => state.user);
-  const comments = useGetCommentsQuery({
-    schoolId: user?.schoolId || null,
-    spottedId: spottedId || null
-  });
+  const url = window.location.pathname;
+  const isSpotted = url.includes('/spotted');
+  const spottedComments = useGetSpottedCommentsQuery(
+    {
+      schoolId: user?.schoolId || null,
+      spottedId: spottedId || null
+    },
+    {
+      skip: !isSpotted
+    }
+  );
+  const postComments = useGetPostCommentsQuery(
+    {
+      schoolId: user?.schoolId || null,
+      spottedId: spottedId || null
+    },
+    {
+      skip: isSpotted
+    }
+  );
 
-  if (comments.isLoading || !comments.data?.data)
+  if (spottedComments.isLoading || postComments.isLoading || !spottedComments.data?.data || !spottedComments.data?.data)
     return (
       <div style={{ position: 'relative', height: '65vh' }}>
         <Loading bgColor={theme.colors.lightBrown} />
@@ -33,25 +50,35 @@ const SpottedComment = () => {
     attributes: {
       createdAt,
       message,
-      spotted_comments: { data: commentsArray },
-      spotted_like: { data: likes }
+      comments: { data: commentsArray },
+      likes: { data: likes }
     }
-  } = comments.data?.data[0];
+  } = spottedComments.data?.data[0] || postComments.data?.data[0];
 
   return (
     <SectionWrapper>
-      <Question
+      <Post
         key={id}
         qId={parseInt(spottedId || '0')}
         date={createdAt}
-        isSpotted={false}
+        isComment={true}
+        isSpotted={isSpotted}
         content={message}
-        numberOfComments={commentsArray.length}
+        comments={commentsArray.length}
         likes={likes}
       />
       {commentsArray.length > 0 ? (
-        commentsArray.map(({ id, attributes: { author_name, message, createdAt, avatar } }) => (
-          <Comment key={id} cId={id} profilePicture={avatar || ''} name={author_name} date={createdAt} content={message} numberOfHearts={0} />
+        commentsArray.map(({ id, attributes: { author, message, createdAt } }) => (
+          <Comment
+            key={id}
+            cId={id}
+            isSpotted={isSpotted}
+            profilePicture={author.data.attributes.avatar}
+            name={`${author.data.attributes.first_name} ${author.data.attributes.last_name}`}
+            date={createdAt}
+            content={message}
+            numberOfHearts={0}
+          />
         ))
       ) : (
         <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>
@@ -62,4 +89,4 @@ const SpottedComment = () => {
   );
 };
 
-export default SpottedComment;
+export default CommentSection;

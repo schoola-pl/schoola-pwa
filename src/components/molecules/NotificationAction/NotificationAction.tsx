@@ -2,12 +2,12 @@ import { BoxWrapper, CancelBox, EditBox, Form, InfoWrapper, NotificationContentW
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetProposalsQuery } from 'store';
+import { storeRoot, useGetSpottedProposalsQuery } from 'store';
 import { useSpotted } from 'hooks/useSpotted';
 
 const NotificationAction = () => {
   const user = useSelector((state: storeRoot) => state.user);
-  const proposals = useGetProposalsQuery({
+  const proposals = useGetSpottedProposalsQuery({
     schoolId: user?.schoolId || null
   });
   const { approveSpott, disapproveSpott } = useSpotted();

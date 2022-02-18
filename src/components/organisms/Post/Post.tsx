@@ -1,66 +1,151 @@
 import React, { useState } from 'react';
-import {
-  QuestionWrapper,
-  InfoWrapper,
-  ActionsWrapper,
-  StyledComments,
-  QuestionInfo,
-  QuestionInnerWrapper,
-  LikeWrapper,
-  StyledInput,
-  ToggleMenu,
-  StyledActionMenu
-} from './Post.styles';
-import ProfilePicture from 'components/atoms/ProfilePicture/ProfilePicture';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
-import { Props } from './PostTypes';
+import {
+  ActionsWrapper,
+  InfoWrapper,
+  LikeWrapper,
+  ProfilePicture,
+  QuestionInfo,
+  QuestionInnerWrapper,
+  QuestionWrapper,
+  StyledComments,
+  StyledInput,
+  StyledPicture,
+  ToggleMenu
+} from './Post.styles';
+import { formatDistance } from 'date-fns';
+import { pl } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
+import { storeRoot, useAddPostCommentMutation, useAddSpottedCommentMutation } from 'store';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
+import { useSpotted } from 'hooks/useSpotted';
+import { usePost } from 'hooks/usePost';
 
-const Post: React.FC<Props> = React.forwardRef(
-  ({ userName, userProfilePicture, date, content, numberOfComments, numberOfHearts, isPublic, commentSection }, ref) => {
-    const [isOpened, setMenuOpen] = useState(false);
-
-    const handleToggleMenu = () => {
-      setMenuOpen(!isOpened);
+interface props {
+  qId: number;
+  date: string;
+  title?: string;
+  content: string;
+  comments: number;
+  isSpotted: boolean;
+  postOwner?: {
+    id: number;
+    title: string;
+    name: string;
+    profilePicture: string;
+  };
+  isComment: boolean;
+  resetFn?: () => void;
+  likes: {
+    id: number;
+    attributes: {
+      likes: number;
+      userIds: { id: number; userId: string }[];
     };
+  };
+}
 
-    return (
-      <QuestionWrapper ref={ref}>
-        <InfoWrapper>
-          <section>
-            <ProfilePicture icon={isPublic ? userProfilePicture : QuestionMark} isPublic={isPublic} />
-            <QuestionInfo>
-              <h1>{isPublic ? userName : 'Anonim napisał:'}</h1>
-              <p>{date}</p>
-            </QuestionInfo>
-          </section>
-          <StyledActionMenu accountType="spottedAdmin" isOpened={isOpened} />
-          <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
-        </InfoWrapper>
-        <QuestionInnerWrapper>
-          <p>{content}</p>
-        </QuestionInnerWrapper>
-        <ActionsWrapper>
-          <LikeWrapper>
-            <Heart numberOfHearts={numberOfHearts} />
-          </LikeWrapper>
-          {commentSection ? (
-            <StyledInput type="text" placeholder="Napisz komentarz" />
-          ) : (
-            <StyledComments as="a" href="/spotted/comments">
-              <SidebarLink icon={CommentIcon} />
-              <p>
-                <strong>{numberOfComments}</strong> komentarzy
-              </p>
-            </StyledComments>
-          )}
-        </ActionsWrapper>
-      </QuestionWrapper>
-    );
-  }
-);
+const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotted, likes, date, content, comments, isComment, resetFn }, ref) => {
+  const [isOpened, setMenuOpen] = useState(false);
+  const [isPostLoading, setPostLoading] = useState(false);
+  const [addSpottedComment, { isSuccess: isSpottedQuerySuccess, isLoading: isSpottedQueryLoading }] = useAddSpottedCommentMutation();
+  const [addPostComment, { isSuccess: isPostQuerySuccess, isLoading: isPostQueryLoading }] = useAddPostCommentMutation();
+  const { register, handleSubmit, reset } = useForm();
+  const user = useSelector((state: storeRoot) => state.user);
+  const { deleteSpott } = useSpotted();
+  const { deletePost } = usePost();
+
+  const handleAddComment = ({ message }: { message: string }) => {
+    if (user && isComment) {
+      reset();
+      const requestBody = {
+        schoolId: String(user.schoolId),
+        message,
+        author: String(user.id)
+      };
+      if (isSpotted) {
+        addSpottedComment({
+          spotted: qId,
+          ...requestBody
+        });
+      } else {
+        // addPostComment({
+        //   id: qId,
+        //   ...requestBody
+        // });
+      }
+    }
+  };
+
+  const handleToggleMenu = () => {
+    setMenuOpen(!isOpened);
+  };
+
+  const handleDeleteQuestion = async () => {
+    if (isComment || !resetFn) return;
+    setPostLoading(true);
+    if (isSpotted) {
+      await deleteSpott(qId);
+    } else {
+      await deletePost(qId);
+    }
+    resetFn();
+    setPostLoading(false);
+  };
+
+  return (
+    <QuestionWrapper ref={ref}>
+      <InfoWrapper>
+        <StyledPicture random={Math.ceil(Math.random() * 5)}>
+          <ProfilePicture icon={postOwner ? `${process.env.REACT_APP_BACKEND_BASE_URL}${postOwner.profilePicture}` : QuestionMark} />
+        </StyledPicture>
+        <QuestionInfo>
+          <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
+          <h1>{postOwner ? postOwner.title : 'Ktoś zadał pytanie:'}</h1>
+        </QuestionInfo>
+        {!isComment && user?.TextRole !== 'Student' && (
+          <div>
+            <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
+            <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
+          </div>
+        )}
+      </InfoWrapper>
+      <QuestionInnerWrapper>
+        <p>{content}</p>
+      </QuestionInnerWrapper>
+      <ActionsWrapper>
+        <LikeWrapper>
+          <Heart likes={likes} />
+        </LikeWrapper>
+        {!isComment ? (
+          <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={comments}>
+            <SidebarLink icon={CommentIcon} />
+          </StyledComments>
+        ) : (
+          <form onSubmit={handleSubmit(handleAddComment)}>
+            <StyledInput
+              type="text"
+              disabled={isPostQueryLoading || isSpottedQueryLoading}
+              placeholder={
+                !(isPostQuerySuccess || isSpottedQuerySuccess)
+                  ? !(isPostQueryLoading || isSpottedQueryLoading)
+                    ? 'Napisz komentarz'
+                    : 'Wysyłanie...'
+                  : 'Skomentowano!'
+              }
+              {...register('message', { required: true })}
+            />
+          </form>
+        )}
+      </ActionsWrapper>
+    </QuestionWrapper>
+  );
+});
 
 export default Post;

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getJWT } from 'helpers/jwt';
-import { multiResponse, multiResponseWithoutPagination, oneResponse, strapiRequestType } from 'types/strapi';
+import { multiResponse, oneResponse, strapiRequestType } from 'types/strapi';
+import { authUser } from 'types/auth';
 
 export const SpottedAPI = createApi({
   reducerPath: 'SpottedAPI',
@@ -9,52 +10,41 @@ export const SpottedAPI = createApi({
   }),
   tagTypes: ['comments', 'proposals'],
   endpoints: (builder) => ({
-    getSpotteds: builder.query<
-      multiResponse<{ message: string; createdAt: string; spotted_comments: multiResponseWithoutPagination }>,
-      { schoolId: strapiRequestType; page: strapiRequestType }
-    >({
+    // --- GET Methods ---
+    getSpottedProposals: builder.query<multiResponse<{ message: string; createdAt: string }>, { schoolId: strapiRequestType }>({
       providesTags: ['proposals'],
       query: (args) => ({
-        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&fields[0]=createdAt&fields[1]=message&pagination[page]=${args.page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id`,
+        url: `/spotted-proposals?filters[schoolId][$eq]=${args.schoolId}&fields[0]=createdAt&fields[1]=message`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
-    getProposals: builder.query<multiResponse<{ message: string; createdAt: string }>, { schoolId: strapiRequestType }>({
-      providesTags: ['proposals'],
-      query: (args) => ({
-        url: `/spotted-proposals?filters[schoolId][$eq]=${args.schoolId}&fields[0]=createdAt&fields[1]=message&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id`,
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        }
-      })
-    }),
-    getComments: builder.query<
+    getSpottedComments: builder.query<
       multiResponse<{
         message: string;
         createdAt: string;
-        spotted_comments: { data: { id: number; attributes: { message: string; author_name: string; avatar?: string; createdAt: string } }[] };
-        spotted_like: { data: { id: number; attributes: { likes: number; userIds: { id: number; userId: string }[] } } };
+        comments: { data: { id: number; attributes: { message: string; author: { data: { attributes: authUser } }; createdAt: string } }[] };
+        likes: { data: { id: number; attributes: { likes: number; userIds: { id: number; userId: string }[] } } };
       }>,
       { spottedId: strapiRequestType; schoolId: strapiRequestType }
     >({
       providesTags: ['comments'],
       query: (args) => ({
-        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[spotted_comments][sort][0]=createdAt:desc&populate[spotted_comments][fields]=*&populate[spotted_like][populate]=userIds`,
+        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
-    addComment: builder.mutation<
-      oneResponse<{ message: string; author_name: string; avatar?: string; createdAt: string }>,
+    // --- POST Methods ---
+    addSpottedComment: builder.mutation<
+      oneResponse<{ message: string; author: { data: { attributes: authUser } }; createdAt: string }>,
       {
         spotted: number;
         schoolId: string;
         message: string;
-        author_name: string;
-        avatar?: string;
+        author: string;
       }
     >({
       invalidatesTags: ['comments'],
@@ -71,57 +61,7 @@ export const SpottedAPI = createApi({
         }
       })
     }),
-    deleteComment: builder.mutation<
-      unknown,
-      {
-        commentId: strapiRequestType;
-      }
-    >({
-      invalidatesTags: ['comments'],
-      query: (body) => ({
-        url: `/spotted-comments/${body.commentId}`,
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        }
-      })
-    }),
-    addSpott: builder.mutation<
-      oneResponse<{ message: string; createdAt: string }>,
-      {
-        schoolId: string;
-        message: string;
-        spotted_like: number;
-      }
-    >({
-      query: (body) => ({
-        url: '/spotteds',
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        },
-        body: {
-          data: {
-            ...body
-          }
-        }
-      })
-    }),
-    deleteSpott: builder.mutation<
-      oneResponse<{ message: string; createdAt: string }>,
-      {
-        spottId: strapiRequestType;
-      }
-    >({
-      query: (body) => ({
-        url: `/spotteds/${body.spottId}`,
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        }
-      })
-    }),
-    proposeSpott: builder.mutation<
+    proposeSpotted: builder.mutation<
       oneResponse<{ message: string; createdAt: string }>,
       {
         schoolId: string;
@@ -141,7 +81,58 @@ export const SpottedAPI = createApi({
         }
       })
     }),
-    deleteSpottProposal: builder.mutation<
+    addSpotted: builder.mutation<
+      oneResponse<{ message: string; createdAt: string }>,
+      {
+        schoolId: string;
+        message: string;
+        likes: number;
+      }
+    >({
+      query: (body) => ({
+        url: '/spotteds',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
+    }),
+    // --- DELETE Methods ---
+    deleteSpottedComment: builder.mutation<
+      unknown,
+      {
+        commentId: strapiRequestType;
+      }
+    >({
+      invalidatesTags: ['comments'],
+      query: (body) => ({
+        url: `/spotted-comments/${body.commentId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
+    deleteSpotted: builder.mutation<
+      oneResponse<{ message: string; createdAt: string }>,
+      {
+        spottId: strapiRequestType;
+      }
+    >({
+      query: (body) => ({
+        url: `/spotteds/${body.spottId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
+    deleteSpottedProposal: builder.mutation<
       oneResponse<{ message: string; createdAt: string }>,
       {
         spottId: strapiRequestType;
@@ -155,40 +146,18 @@ export const SpottedAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
-    }),
-    likeSpott: builder.mutation<
-      unknown,
-      {
-        likesId: number;
-        likes: number;
-        userIds: { id?: number; userId: string }[];
-      }
-    >({
-      query: (body) => ({
-        url: `/spotted-likes/${body.likesId}`,
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        },
-        body: {
-          data: {
-            ...body
-          }
-        }
-      })
     })
   })
 });
 
 export const {
-  useGetProposalsQuery,
-  useGetCommentsQuery,
-  useDeleteCommentMutation,
-  useAddCommentMutation,
-  useAddSpottMutation,
-  useProposeSpottMutation,
-  useDeleteSpottProposalMutation,
-  useDeleteSpottMutation,
-  useLikeSpottMutation
+  useGetSpottedProposalsQuery,
+  useGetSpottedCommentsQuery,
+  useAddSpottedCommentMutation,
+  useProposeSpottedMutation,
+  useAddSpottedMutation,
+  useDeleteSpottedCommentMutation,
+  useDeleteSpottedProposalMutation,
+  useDeleteSpottedMutation
 } = SpottedAPI;
 export default SpottedAPI;

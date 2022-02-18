@@ -4,27 +4,30 @@ import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import { storeRoot, useDeleteCommentMutation } from 'store';
+import { storeRoot, useDeletePostCommentMutation, useDeleteSpottedCommentMutation } from 'store';
 import { useSelector } from 'react-redux';
 
 interface Props {
   cId: number;
   profilePicture: string;
   name: string;
+  isSpotted: boolean;
   date: string;
   numberOfHearts: number;
   content: string;
 }
 
-const Comment: React.FC<Props> = ({ cId, profilePicture, name, date, content }) => {
+const Comment: React.FC<Props> = ({ cId, isSpotted, profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [isCommentLoading, setCommentLoading] = useState(false);
-  const [deleteComment] = useDeleteCommentMutation();
+  const [deletePostComment] = useDeletePostCommentMutation();
+  const [deleteSpottedComment] = useDeleteSpottedCommentMutation();
   const user = useSelector((state: storeRoot) => state.user);
 
   const handleDeleteComment = async () => {
     setCommentLoading(true);
-    await deleteComment({ commentId: cId });
+    if (isSpotted) await deleteSpottedComment({ commentId: cId });
+    else await deletePostComment({ commentId: cId });
     setCommentLoading(false);
   };
 
