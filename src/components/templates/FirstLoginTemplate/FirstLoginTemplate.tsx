@@ -30,7 +30,7 @@ const FirstLoginTemplate: React.FC = () => {
       case 2:
         return <Hobbies setReadyState={setReadyState} />;
       case 3:
-        return <FinishPage />;
+        return <FinishPage accountType="user" />;
       default:
         return <Welcome />;
     }
