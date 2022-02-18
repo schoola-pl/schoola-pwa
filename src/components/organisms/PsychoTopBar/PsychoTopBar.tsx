@@ -1,15 +1,15 @@
-import { Wrapper, Logo, InnerWrapper } from './PsychoTopBar.styles';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-import NotificationsIcon from 'assets/icons/NotificationIcon.svg';
-import SettingsIcon from 'assets/icons/SettingsIcon.png';
+import { Wrapper, Logo, DateWrapper, Day } from './PsychoTopBar.styles';
 
 const PsychoTopBar = () => (
   <Wrapper>
     <Logo>schoola</Logo>
-    <InnerWrapper>
-      <SidebarLink icon={NotificationsIcon} />
-      <SidebarLink icon={SettingsIcon} />
-    </InnerWrapper>
+    <DateWrapper>
+      <h1>9</h1>
+      <div>
+        <Day>Piątek</Day>
+        <p>Marzec 2022</p>
+      </div>
+    </DateWrapper>
   </Wrapper>
 );
 
