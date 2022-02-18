@@ -3,7 +3,22 @@ import PsychoSidebar from 'components/organisms/PsychoSidebar/PsychoSidebar';
 import PsychoTopBar from 'components/organisms/PsychoTopBar/PsychoTopBar';
 
 const Wrapper = styled.div`
-  margin-top: 12rem;
+  height: 73vh;
+  width: 95%;
+  margin-top: 10rem;
+  z-index: -1;
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+
+  @media (min-height: 740px) {
+    height: 75vh;
+  }
+  @media (min-height: 800px) {
+    height: 78vh;
+  }
+  ::-webkit-scrollbar {
+    background-color: transparent;
+  }
 `;
 
 const PsychoTemplate: React.FC = ({ children }) => (
