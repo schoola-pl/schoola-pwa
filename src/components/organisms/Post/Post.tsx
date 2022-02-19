@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { useSpotted } from 'hooks/useSpotted';
 import { usePost } from 'hooks/usePost';
+import { authUser } from 'types/auth';
 
 interface props {
   qId: number;
@@ -34,12 +35,7 @@ interface props {
   content: string;
   comments: number;
   isSpotted: boolean;
-  postOwner?: {
-    id: number;
-    title: string;
-    name: string;
-    profilePicture: string;
-  };
+  postOwner?: authUser;
   isComment: boolean;
   resetFn?: () => void;
   likes: {
@@ -75,10 +71,10 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
           ...requestBody
         });
       } else {
-        // addPostComment({
-        //   id: qId,
-        //   ...requestBody
-        // });
+        addPostComment({
+          post: qId,
+          ...requestBody
+        });
       }
     }
   };
@@ -103,11 +99,11 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
         <StyledPicture random={Math.ceil(Math.random() * 5)}>
-          <ProfilePicture icon={postOwner ? `${process.env.REACT_APP_BACKEND_BASE_URL}${postOwner.profilePicture}` : QuestionMark} />
+          <ProfilePicture icon={postOwner ? `${process.env.REACT_APP_BACKEND_BASE_URL}${postOwner.avatar}` : QuestionMark} />
         </StyledPicture>
         <QuestionInfo>
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
-          <h1>{postOwner ? postOwner.title : 'Ktoś zadał pytanie:'}</h1>
+          <h1>{postOwner ? `${postOwner.first_name} ${postOwner.last_name}` : 'Ktoś zadał pytanie:'}</h1>
         </QuestionInfo>
         {!isComment && user?.TextRole !== 'Student' && (
           <div>

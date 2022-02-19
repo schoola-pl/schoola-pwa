@@ -1,20 +1,19 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
-export const InputWrapper = styled.div`
+export const InputWrapper = styled.form`
   width: 90%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 7rem 1fr 7rem;
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
   background-color: white;
   border-radius: 1.75rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 3rem;
 
-  section {
-    display: flex;
-    align-items: center;
-    margin-left: 1rem;
+  input {
+    width: 100%;
   }
 `;
 
@@ -58,6 +57,7 @@ export const StyledInput = styled.input`
   border: none;
   background-color: #f7f8fa;
   color: black;
+
   &:focus {
     outline: none;
   }

@@ -15,14 +15,14 @@ const SectionWrapper = styled.div`
 `;
 
 const CommentSection = () => {
-  const { spottedId } = useParams();
+  const { commentsId } = useParams();
   const user = useSelector((state: storeRoot) => state.user);
   const url = window.location.pathname;
   const isSpotted = url.includes('/spotted');
   const spottedComments = useGetSpottedCommentsQuery(
     {
       schoolId: user?.schoolId || null,
-      spottedId: spottedId || null
+      spottedId: commentsId || null
     },
     {
       skip: !isSpotted
@@ -31,14 +31,14 @@ const CommentSection = () => {
   const postComments = useGetPostCommentsQuery(
     {
       schoolId: user?.schoolId || null,
-      spottedId: spottedId || null
+      postId: commentsId || null
     },
     {
       skip: isSpotted
     }
   );
 
-  if (spottedComments.isLoading || postComments.isLoading || !spottedComments.data?.data || !spottedComments.data?.data)
+  if (spottedComments.isLoading || postComments.isLoading || (!postComments.data?.data && !spottedComments.data?.data))
     return (
       <div style={{ position: 'relative', height: '65vh' }}>
         <Loading bgColor={theme.colors.lightBrown} />
@@ -51,17 +51,43 @@ const CommentSection = () => {
       createdAt,
       message,
       comments: { data: commentsArray },
-      likes: { data: likes }
+      likes: { data: likes },
+      ...rest
     }
-  } = spottedComments.data?.data[0] || postComments.data?.data[0];
+  } = spottedComments.data?.data[0] ||
+    postComments.data?.data[0] || {
+      id: 0,
+      attributes: {
+        createdAt: new Date().toDateString(),
+        message: '',
+        comments: { data: [] },
+        likes: {
+          data: {
+            id: 0,
+            attributes: {
+              likes: 0,
+              userIds: []
+            }
+          }
+        },
+        author: {
+          data: {
+            attributes: {}
+          }
+        }
+      }
+    };
 
   return (
     <SectionWrapper>
       <Post
         key={id}
-        qId={parseInt(spottedId || '0')}
+        qId={parseInt(commentsId || '0')}
         date={createdAt}
         isComment={true}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        postOwner={!isSpotted && rest?.author ? rest.author.data.attributes : null}
         isSpotted={isSpotted}
         content={message}
         comments={commentsArray.length}
