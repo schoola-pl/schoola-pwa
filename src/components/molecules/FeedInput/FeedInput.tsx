@@ -3,9 +3,10 @@ import SendIcon from 'assets/icons/SendIcon.svg';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { usePost } from 'hooks/usePost';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from 'components/atoms/Loader/Loader';
 import { useForm } from 'react-hook-form';
+import { useAvatar } from 'hooks/useAvatar';
 
 const getRandomSequence = (number: number, name = 'stary') => {
   switch (number) {
@@ -31,6 +32,17 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   const [isLoading, setLoadingState] = useState(false);
   const { addPost } = usePost();
   const { reset, register, handleSubmit } = useForm();
+  const { getAvatarById } = useAvatar();
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const image = await getAvatarById(user?.avatar, 'thumbnail');
+        setImage(image);
+      })();
+    }
+  }, [user]);
 
   const handleAddPost = async ({ message }: { message: string }) => {
     reset();
@@ -43,7 +55,9 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   return (
     <InputWrapper onSubmit={handleSubmit(handleAddPost)}>
       <StyledPicture>
-        <ProfilePicture icon={user?.avatar} />
+        <ProfilePicture>
+          <img src={image} alt={'Personal image'} />
+        </ProfilePicture>
       </StyledPicture>
       <StyledInput
         type="text"
