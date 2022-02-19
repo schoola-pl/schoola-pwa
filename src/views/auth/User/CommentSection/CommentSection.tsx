@@ -1,66 +1,117 @@
-import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
-import Post from 'components/organisms/Post/Post';
+import { useParams } from 'react-router';
+import { storeRoot, useGetPostCommentsQuery, useGetSpottedCommentsQuery } from 'store';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Comment from 'components/organisms/Comment/Comment';
-
-const mockData = [
-  {
-    date: '24.04.2022',
-    content: 'Czy karny Błaszczykowskiego zostanie powtórzony?',
-    numberOfComments: 4,
-    numberOfHearts: 8
-  }
-];
+import Loading from 'components/molecules/Loading/Loading';
+import { theme } from 'assets/styles/theme';
+import Post from 'components/organisms/Post/Post';
 
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  heigth: 100vh;
   justify-content: flex-start;
   align-items: center;
-  overflow: scroll !important;
 `;
 
-const commentData = [
-  {
-    profilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thefamouspeople.com%2Fprofiles%2Fimages%2Fvladimir-putin-6.jpg&f=1&nofb=1',
-    name: 'Władimir Putin',
-    date: '12.05.2012',
-    content: 'Idę po was',
-    numberOfHearts: 3
-  },
-  {
-    profilePicture:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa1%2F8a%2Fef%2Fa18aefbb385e8a4d755d2885fa2d2cc2.jpg&f=1&nofb=1',
-    name: 'Ryszard Riedel',
-    date: '12.05.2012',
-    content: 'Lubię motocykle, muzykę i heroinę',
-    numberOfHearts: 3
-  }
-];
-
 const CommentSection = () => {
+  const { commentsId } = useParams();
+  const user = useSelector((state: storeRoot) => state.user);
+  const url = window.location.pathname;
+  const isSpotted = url.includes('/spotted');
+  const spottedComments = useGetSpottedCommentsQuery(
+    {
+      schoolId: user?.schoolId || null,
+      spottedId: commentsId || null
+    },
+    {
+      skip: !isSpotted
+    }
+  );
+  const postComments = useGetPostCommentsQuery(
+    {
+      schoolId: user?.schoolId || null,
+      postId: commentsId || null
+    },
+    {
+      skip: isSpotted
+    }
+  );
+
+  if (spottedComments.isLoading || postComments.isLoading || (!postComments.data?.data && !spottedComments.data?.data))
+    return (
+      <div style={{ position: 'relative', height: '65vh' }}>
+        <Loading bgColor={theme.colors.lightBrown} />
+      </div>
+    );
+
+  const {
+    id,
+    attributes: {
+      createdAt,
+      message,
+      comments: { data: commentsArray },
+      likes: { data: likes },
+      ...rest
+    }
+  } = spottedComments.data?.data[0] ||
+    postComments.data?.data[0] || {
+      id: 0,
+      attributes: {
+        createdAt: new Date().toDateString(),
+        message: '',
+        comments: { data: [] },
+        likes: {
+          data: {
+            id: 0,
+            attributes: {
+              likes: 0,
+              userIds: []
+            }
+          }
+        },
+        author: {
+          data: {
+            attributes: {}
+          }
+        }
+      }
+    };
+
   return (
-    <UserTemplate>
-      <SectionWrapper>
-        {mockData.map(({ date, content, numberOfHearts, numberOfComments }) => (
-          <Post
-            key={date}
-            date={date}
-            isPublic={false}
-            commentSection={true}
-            content={content}
-            numberOfComments={numberOfComments}
-            numberOfHearts={numberOfHearts}
+    <SectionWrapper>
+      <Post
+        key={id}
+        qId={parseInt(commentsId || '0')}
+        date={createdAt}
+        isComment={true}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        postOwner={!isSpotted && rest?.author ? rest.author.data.attributes : null}
+        isSpotted={isSpotted}
+        content={message}
+        comments={commentsArray.length}
+        likes={likes}
+      />
+      {commentsArray.length > 0 ? (
+        commentsArray.map(({ id, attributes: { author, message, createdAt } }) => (
+          <Comment
+            key={id}
+            cId={id}
+            isSpotted={isSpotted}
+            profilePicture={author.data.attributes.avatar}
+            name={`${author.data.attributes.first_name} ${author.data.attributes.last_name}`}
+            date={createdAt}
+            content={message}
+            numberOfHearts={0}
           />
-        ))}
-        {commentData.map(({ profilePicture, name, date, content, numberOfHearts }) => (
-          <Comment isPublic={true} profilePicture={profilePicture} name={name} date={date} content={content} numberOfHearts={numberOfHearts} />
-        ))}
-      </SectionWrapper>
-    </UserTemplate>
+        ))
+      ) : (
+        <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>
+          Nikt jeszcze nie skomentował tego posta. <br /> Bądź pierwszy!
+        </p>
+      )}
+    </SectionWrapper>
   );
 };
 

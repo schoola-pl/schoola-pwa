@@ -7,7 +7,6 @@ interface Props {
 export const Wrapper = styled.div<Props>`
   display: flex;
   align-items: center;
-  transform: translateX(50%);
 
   button {
     display: flex;

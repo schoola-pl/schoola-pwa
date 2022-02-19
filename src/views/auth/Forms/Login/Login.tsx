@@ -3,11 +3,13 @@ import { Form, StyledLink, StyledButton, StyledInput, StyledLogo, Wrapper } from
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
-import { useRoutesControl } from '../../../../hooks/useRoutesControl';
-import { getJWT } from '../../../../helpers/jwt';
-import { dashboardRoute } from '../../../../routes';
+import { useRoutesControl } from 'hooks/useRoutesControl';
+import { getJWT } from 'helpers/jwt';
+import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
+import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
+import Loader from 'components/atoms/Loader/Loader';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
@@ -22,9 +24,15 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (getJWT()) {
-      navigate(dashboardRoute);
-    } else if (isSuccess) {
-      unlockRoutes(data.jwt, data.user);
+      const lsRole = getRoleFromLocalStorage();
+      if (lsRole) {
+        navigate(getPathForRole(lsRole));
+      } else {
+        navigate(dashboardRoute.replaceAll('*', ''));
+      }
+    } else if (isSuccess && data) {
+      unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
+      localStorage.setItem('role', data.user.TextRole);
     }
     // eslint-disable-next-line
   }, [data]);
@@ -44,7 +52,8 @@ const Login: React.FC = () => {
           <StyledInput
             type="text"
             placeholder="Login"
-            error={!!formError.login}
+            data-cy="login-username"
+            error={!!formError.login || isError}
             {...register('login', {
               required: true,
               minLength: 2
@@ -54,15 +63,24 @@ const Login: React.FC = () => {
           <StyledInput
             type="password"
             placeholder="Hasło"
-            error={!!formError.password}
+            data-cy="login-password"
+            error={!!formError.password || isError}
             {...register('password', {
               required: true,
               minLength: 6
             })}
           />
           {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
-          <StyledButton type="submit">
-            {!isLoading && !isError ? 'Zaloguj się' : !isError && isLoading ? 'Sprawdzam dane...' : 'Spróbuj ponownie!'}
+          <StyledButton error={isError} type="submit" data-cy="login-button">
+            {!isLoading && !isError ? (
+              'Zaloguj się'
+            ) : !isError && isLoading ? (
+              <>
+                Logowanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
+              </>
+            ) : (
+              'Spróbuj ponownie!'
+            )}
           </StyledButton>
           <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
         </Form>

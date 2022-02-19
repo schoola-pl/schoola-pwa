@@ -6,11 +6,11 @@
     "plugin:prettier/recommended",
     "prettier",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:eslint-plugin-cypress/recommended"
   ],
   "plugins": [
-    "prettier",
-    "@typescript-eslint"
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": [

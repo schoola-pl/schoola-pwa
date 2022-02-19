@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-export const Form = styled.form`
+
+export const Form = styled.div`
   transform: translateY(-10%);
   position: relative;
   display: flex;
@@ -13,23 +14,31 @@ export const Form = styled.form`
 `;
 
 export const NotificationContentWrapper = styled.div`
-  padding: 2rem;
   width: 100%;
-  display: grid;
-  grid-template-columns: 20% 80%;
-  justify-items: center;
-  align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.selectedItemGrey};
 
   h1 {
     text-align: left;
-    margin-right: 2rem;
     font-size: ${({ theme }) => theme.fontSize.xs};
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
   }
 
+  & > div {
+    display: grid;
+    padding-block: 1rem;
+    grid-template-columns: 35% 65%;
+    justify-items: center;
+    align-items: center;
+    grid-gap: 1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid ${({ theme }) => theme.colors.selectedItemGrey};
+    }
+  }
+
   p {
-    margin-left: 5rem;
+    text-align: justify;
+    padding-right: 2.5rem;
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
 `;
@@ -38,10 +47,9 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 2rem;
+  justify-content: center;
 
   h1 {
-    padding-left: 2rem;
     text-align: center;
   }
 `;
@@ -59,6 +67,7 @@ const Box = styled(SidebarLink)`
   padding: 1rem;
   opacity: 0.8;
   transition: opacity 0.2s ease-in-out;
+
   &:hover {
     opacity: 1;
   }

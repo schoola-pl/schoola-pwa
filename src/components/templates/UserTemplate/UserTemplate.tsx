@@ -1,25 +1,16 @@
 import UserSidebar from 'components/organisms/UserSidebar/UserSidebar';
 import TopBar from 'components/organisms/TopBar/TopBar';
 import styled from 'styled-components';
+import React from 'react';
 
 const Wrapper = styled.div`
-  height: 70vh;
-  width: 95%;
-  margin-top: 10rem;
-  z-index: -1;
   overflow-x: hidden;
-  overflow-y: scroll !important;
-
-  @media (min-height: 740px) {
-    height: 75vh;
-  }
-
-  @media (min-height: 800px) {
-    height: 78vh;
-  }
+  overflow-y: auto !important;
+  max-height: 100vh;
+  padding: 11.5rem 2.5rem;
 
   ::-webkit-scrollbar {
-    background-color: transparent;
+    display: none;
   }
 `;
 
