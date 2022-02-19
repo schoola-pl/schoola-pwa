@@ -31,6 +31,7 @@ export const StyledInput = styled.input`
   border-radius: 2rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 1rem;
+  position: relative;
 
   ::file-selector-button {
     color: black;
