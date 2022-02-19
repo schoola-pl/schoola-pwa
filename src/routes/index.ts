@@ -2,6 +2,7 @@ import React from 'react';
 import Login from '../views/auth/Forms/Login/Login';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
 import Profile from 'views/auth/User/Profile/Profile';
+import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
 
 interface routesInterface {
   // Path to component
@@ -12,7 +13,7 @@ interface routesInterface {
   // Is route protected?
   isProtected: boolean;
   // Who can access this route?
-  role: string;
+  role: string | string[];
   // Where to redirect if user is not authenticated?
   redirectTo?: string;
 }
@@ -21,8 +22,7 @@ interface routesInterface {
 export const paths: { [key: string]: string } = {
   login: '/login',
   student: '/student/*',
-  schoolAdmin: '/school-admin/*',
-  psycho: '/psycho/*'
+  schoolAdmin: '/school-admin/*'
 };
 
 // Roles
@@ -41,8 +41,8 @@ const loginRoute = paths.login;
 // Array with routes in application;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Profile, isProtected: true, role: roles.student },
-  { path: paths.psycho, Component: Profile, isProtected: true, role: roles.student },
+  { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
+  { path: paths.student, Component: Profile, isProtected: true, role: [roles.student, roles.moderator] },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 

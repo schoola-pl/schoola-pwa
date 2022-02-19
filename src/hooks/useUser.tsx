@@ -18,7 +18,6 @@ import {
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
-import { getInterestedsByIDs } from 'helpers/interesteds';
 
 export interface preparedUserInterface {
   username: string;
@@ -42,7 +41,7 @@ interface UserContextTypes {
   logout: () => void;
   updateSettings: (settings: settingsType, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addInterested: (interested: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => void;
+  addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
@@ -176,20 +175,18 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method adds the user interested
-  const addInterested = ({ id, allInteresteds }: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => {
+  const addInterested = ({ id }: { id: number }) => {
     if (user?.id) {
       const currentInterestedIDs = user.TextInteresteds;
       let currentInterested;
       if (currentInterestedIDs) {
         if (currentInterestedIDs.includes(String(id))) return;
-        const currentInterestedNames = getInterestedsByIDs(currentInterestedIDs, allInteresteds);
         currentInterested = currentInterestedIDs.split(';').map((item) => ({ id: item }));
-        console.log(currentInterestedNames);
       }
       dispatch(
         updateUser({
           updated: {
-            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
+            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
           }
         })
       );
@@ -202,7 +199,7 @@ export const UserProvider: React.FC = ({ children }) => {
               id
             }
           ],
-          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
+          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
         }
       });
     }
@@ -212,9 +209,16 @@ export const UserProvider: React.FC = ({ children }) => {
   const removeInterested = (id: number) => {
     if (user?.id) {
       const currentInterestedIDs = user.TextInteresteds;
-      const arrayWithRemovedId = currentInterestedIDs.split(';').filter((item) => item !== String(id));
-      const newInterestedsText = arrayWithRemovedId.join(';');
-      const newInterestedsObjects = arrayWithRemovedId.map((item) => ({ id: item }));
+      let newInterestedsText: string;
+      let newInterestedsObjects: { id: string }[] | [];
+      if (currentInterestedIDs.includes(';')) {
+        const arrayWithRemovedId = currentInterestedIDs.split(';').filter((item) => item !== String(id));
+        newInterestedsText = arrayWithRemovedId.join(';');
+        newInterestedsObjects = arrayWithRemovedId.map((item) => ({ id: item }));
+      } else {
+        newInterestedsText = '';
+        newInterestedsObjects = [];
+      }
       dispatch(
         updateUser({
           updated: {

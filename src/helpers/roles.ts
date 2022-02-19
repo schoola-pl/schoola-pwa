@@ -10,6 +10,8 @@ export const getPathForRole = (role: string) => {
   switch (role) {
     case roles.schoolAdmin:
       return pathsPrepared.schoolAdmin;
+    case roles.moderator:
+      return `${pathsPrepared.student}home`;
     default:
       return `${pathsPrepared.student}home`;
   }
