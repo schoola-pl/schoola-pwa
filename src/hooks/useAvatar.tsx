@@ -5,8 +5,8 @@ import { storeRoot, useUpdateUserMutation } from 'store';
 import { useSelector } from 'react-redux';
 
 interface AvatarContextTypes {
-  saveAvatar: (photo: FormData) => void;
-  getAvatarById: (id: number) => void;
+  saveAvatar: (photo: FormData) => Promise<void>;
+  getAvatarById: (id?: string, size?: 'thumbnail' | 'small' | 'medium' | 'large') => Promise<string>;
 }
 
 const AvatarContext = createContext<AvatarContextTypes>({
@@ -38,8 +38,18 @@ export const AvatarProvider: React.FC = ({ children }) => {
     }
   };
 
-  const getAvatarById = (id: number) => axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/upload/files/${id}`);
-
+  const getAvatarById = async (id?: string, size?: 'thumbnail' | 'small' | 'medium' | 'large') => {
+    const response = await axios.get<{ formats: { [key: string]: { url: string } } }>(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/upload/files/${id || user?.avatar}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      }
+    );
+    const imageUrl = response.data.formats[size || 'medium'].url;
+    return `${process.env.REACT_APP_UPLOADS_BASE}${imageUrl}`;
+  };
   const values = {
     saveAvatar,
     getAvatarById
