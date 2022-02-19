@@ -3,7 +3,7 @@ import PsychoSidebar from 'components/organisms/PsychoSidebar/PsychoSidebar';
 import PsychoTopBar from 'components/organisms/PsychoTopBar/PsychoTopBar';
 
 const Wrapper = styled.div`
-  height: 83vh;
+  height: 100vh;
   width: 95%;
   margin-top: 10rem;
   z-index: -1;

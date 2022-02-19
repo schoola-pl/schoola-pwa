@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Time,
   Line,
@@ -17,21 +18,28 @@ import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
 import MailIcon from 'assets/icons/MailIcon.svg';
 
-const Meeting = () => (
+interface Props {
+  meetHour: string;
+  nameClass: string;
+  user: string;
+  email: string;
+}
+
+const Meeting: React.FC<Props> = ({ meetHour, nameClass, user, email }) => (
   <>
     <Time>
       <Line></Line>
-      <h1>8:00</h1>
+      <h1>{meetHour}</h1>
       <SecondLine></SecondLine>
     </Time>
     <Wrapper>
       <InfoWrapper>
         <StudentBox icon={blueStudent} />
         <StudentInfo>
-          <h1>Tomasz Krzysztofski</h1>
+          <h1>{user}</h1>
           <EmailWrapper>
-            <p>3E</p>
-            <StyledMail href="mailto:name@email.com" icon={MailIcon} />
+            <p>{nameClass}</p>
+            <StyledMail href={`mailto:${email}`} icon={MailIcon} />
           </EmailWrapper>
         </StudentInfo>
       </InfoWrapper>

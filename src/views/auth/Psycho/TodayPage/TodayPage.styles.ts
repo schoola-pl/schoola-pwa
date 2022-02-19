@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const PageWrapper = styled.div`
   width: 100vw;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 export const MeetingWrapper = styled.div`
   display: flex;
@@ -13,5 +14,4 @@ export const MeetingWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  transform: translateY(-35%);
 `;

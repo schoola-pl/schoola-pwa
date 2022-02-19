@@ -6,7 +6,6 @@ const GreetWrapper = styled.div`
   justify-content: flex-start;
   width: 100%;
   margin-left: 4rem;
-  margin-bottom: 5rem;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.m};
@@ -48,7 +47,7 @@ const PsychoGreet = () => (
         Dzień dobry <strong>Maciej!</strong>
       </h1>
       <MeetParagraph>
-        Masz dzisiaj <strong>5</strong> spotkań
+        Masz dzisiaj <strong>3</strong> spotkań
       </MeetParagraph>
     </InnerWrapper>
   </GreetWrapper>
