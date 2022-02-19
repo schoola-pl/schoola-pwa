@@ -1,11 +1,10 @@
 import { StyledInput, Wrapper } from './PhotoPage.styles';
 import React, { useState } from 'react';
-import { storeRoot, useUpdateUserMutation } from 'store';
+import { storeRoot } from 'store';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { getJWT } from 'helpers/jwt';
 import Button from 'components/atoms/Button/Button';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
+import { useAvatar } from 'hooks/useAvatar';
 
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +16,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const [description, setDescription] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [updateUser] = useUpdateUserMutation();
+  const { saveAvatar } = useAvatar();
 
   const changeDescription = (e: any) => {
     const element = e.target as HTMLInputElement;
@@ -49,20 +48,9 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   };
 
   const sendPhoto = async () => {
-    if (photo && user) {
+    if (photo) {
       setError(null);
-      const response = await axios.post<{ id: number }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/upload`, photo, {
-        headers: {
-          Authorization: `Bearer ${getJWT()}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      updateUser({
-        id: user.id,
-        data: {
-          avatar: response.data[0].id
-        }
-      });
+      saveAvatar(photo);
     }
   };
 

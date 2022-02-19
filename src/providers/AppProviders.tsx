@@ -10,26 +10,29 @@ import { ClassProvider } from 'hooks/useClass';
 import { ModalProvider } from 'hooks/useModal';
 import { SpottedProvider } from 'hooks/useSpotted';
 import { PostProvider } from 'hooks/usePost';
+import { AvatarProvider } from 'hooks/useAvatar';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
     <Router>
       <Provider store={store}>
-        <AppLoadingProvider>
-          <PostProvider>
-            <SpottedProvider>
-              <ModalProvider>
-                <RouteProvider>
-                  <ClassProvider>
-                    <UserProvider>
-                      <StyleProvider>{children}</StyleProvider>
-                    </UserProvider>
-                  </ClassProvider>
-                </RouteProvider>
-              </ModalProvider>
-            </SpottedProvider>
-          </PostProvider>
-        </AppLoadingProvider>
+        <AvatarProvider>
+          <AppLoadingProvider>
+            <PostProvider>
+              <SpottedProvider>
+                <ModalProvider>
+                  <RouteProvider>
+                    <ClassProvider>
+                      <UserProvider>
+                        <StyleProvider>{children}</StyleProvider>
+                      </UserProvider>
+                    </ClassProvider>
+                  </RouteProvider>
+                </ModalProvider>
+              </SpottedProvider>
+            </PostProvider>
+          </AppLoadingProvider>
+        </AvatarProvider>
       </Provider>
     </Router>
   );
