@@ -23,13 +23,13 @@ const meetings = [
     email: 'tadeusz@gmail.com'
   },
   {
-    meetHour: '9:50',
+    meetHour: '10:55',
     nameClass: '3B',
     user: 'Jarek Tomaszewski',
     email: 'tadeusz@gmail.com'
   },
   {
-    meetHour: '9:50',
+    meetHour: '11:50',
     nameClass: '3B',
     user: 'Jarek Tomaszewski',
     email: 'tadeusz@gmail.com'

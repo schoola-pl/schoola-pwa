@@ -3,7 +3,7 @@ import PsychoSidebar from 'components/organisms/PsychoSidebar/PsychoSidebar';
 import PsychoTopBar from 'components/organisms/PsychoTopBar/PsychoTopBar';
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 70vh;
   width: 95%;
   margin-top: 10rem;
   z-index: -1;
@@ -13,9 +13,7 @@ const Wrapper = styled.div`
   @media (min-height: 740px) {
     height: 75vh;
   }
-  @media (min-height: 800px) {
-    height: 78vh;
-  }
+
   ::-webkit-scrollbar {
     background-color: transparent;
   }
