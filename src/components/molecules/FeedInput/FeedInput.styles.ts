@@ -11,9 +11,14 @@ export const InputWrapper = styled.form`
   border-radius: 1.75rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 3rem;
+  padding-block: 1rem;
 
   input {
     width: 100%;
+  }
+
+  button {
+    margin: 0;
   }
 `;
 
