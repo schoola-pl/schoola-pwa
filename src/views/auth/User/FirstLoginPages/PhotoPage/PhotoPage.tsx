@@ -1,6 +1,6 @@
 import { StyledInput, Wrapper } from './PhotoPage.styles';
 import React, { useState } from 'react';
-import { storeRoot } from 'store';
+import { storeRoot, useUpdateUserMutation } from 'store';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { getJWT } from 'helpers/jwt';
@@ -17,6 +17,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const [description, setDescription] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [updateUser] = useUpdateUserMutation();
 
   const changeDescription = (e: any) => {
     const element = e.target as HTMLInputElement;
@@ -34,9 +35,11 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
       if (files && /^.+\.(jpg|png|webp|jpeg)$/i.test(files[0].name)) {
         const fd = new FormData();
         fd.append('files', files[0], `avatar-${user.username}-${user.id}`);
-        fd.append('refId', user.id);
-        fd.append('ref', 'plugin::users-permissions.user');
-        fd.append('field', 'avatar');
+        // Parameters below are optional, add them if STRAPI ISSUE #11957 is resolved
+        // --------------------------------------------------
+        // fd.append('refId', user.id);
+        // fd.append('ref', 'plugin::users-permissions.user');
+        // fd.append('field', 'avatar');
         setPhoto(fd);
       } else {
         setPhoto(null);
@@ -45,13 +48,19 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
     }
   };
 
-  const sendPhoto = () => {
+  const sendPhoto = async () => {
     if (photo && user) {
       setError(null);
-      axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/upload`, photo, {
+      const response = await axios.post<{ id: number }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/upload`, photo, {
         headers: {
           Authorization: `Bearer ${getJWT()}`,
           'Content-Type': 'multipart/form-data'
+        }
+      });
+      updateUser({
+        id: user.id,
+        data: {
+          avatar: response.data[0].id
         }
       });
     }
@@ -74,7 +83,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
       </textarea>
       <ErrorParagraph style={{ marginTop: '0.8rem' }}>{error}</ErrorParagraph>
       <Button
-        isDisabled={!photo || !description || error || isSuccess || description.length < 20}
+        isDisabled={!photo || !description || !!error || isSuccess || description.length < 20}
         onClick={confirmChanges}
         style={{ marginTop: '1rem' }}
       >
