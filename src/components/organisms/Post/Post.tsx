@@ -16,23 +16,28 @@ import {
   StyledInput,
   StyledPicture,
   ToggleMenu
-} from './Question.styles';
+} from './Post.styles';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
-import { storeRoot, useAddCommentMutation } from 'store';
+import { storeRoot, useAddPostCommentMutation, useAddSpottedCommentMutation } from 'store';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { useSpotted } from 'hooks/useSpotted';
+import { usePost } from 'hooks/usePost';
+import { authUser } from 'types/auth';
 
 interface props {
   qId: number;
   date: string;
+  title?: string;
   content: string;
-  numberOfComments: number;
+  comments: number;
   isSpotted: boolean;
-  resetSpotted?: () => void;
+  postOwner?: authUser;
+  isComment: boolean;
+  resetFn?: () => void;
   likes: {
     id: number;
     attributes: {
@@ -42,23 +47,35 @@ interface props {
   };
 }
 
-const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, content, numberOfComments, isSpotted, resetSpotted }, ref) => {
+const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotted, likes, date, content, comments, isComment, resetFn }, ref) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [isPostLoading, setPostLoading] = useState(false);
-  const [addComment, { isSuccess, isLoading }] = useAddCommentMutation();
+  const [addSpottedComment, { isSuccess: isSpottedQuerySuccess, isLoading: isSpottedQueryLoading }] = useAddSpottedCommentMutation();
+  const [addPostComment, { isSuccess: isPostQuerySuccess, isLoading: isPostQueryLoading }] = useAddPostCommentMutation();
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector((state: storeRoot) => state.user);
   const { deleteSpott } = useSpotted();
+  const { deletePost } = usePost();
 
   const handleAddComment = ({ message }: { message: string }) => {
-    if (user && !isSpotted) {
+    if (user && isComment) {
       reset();
-      addComment({
-        spotted: qId,
+      const requestBody = {
         schoolId: String(user.schoolId),
         message,
-        author_name: `${user.first_name} ${user.last_name}`
-      });
+        author: String(user.id)
+      };
+      if (isSpotted) {
+        addSpottedComment({
+          spotted: qId,
+          ...requestBody
+        });
+      } else {
+        addPostComment({
+          post: qId,
+          ...requestBody
+        });
+      }
     }
   };
 
@@ -67,10 +84,14 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, co
   };
 
   const handleDeleteQuestion = async () => {
-    if (!isSpotted || !resetSpotted) return;
+    if (isComment || !resetFn) return;
     setPostLoading(true);
-    await deleteSpott(qId);
-    resetSpotted();
+    if (isSpotted) {
+      await deleteSpott(qId);
+    } else {
+      await deletePost(qId);
+    }
+    resetFn();
     setPostLoading(false);
   };
 
@@ -78,13 +99,13 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, co
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
         <StyledPicture random={Math.ceil(Math.random() * 5)}>
-          <ProfilePicture icon={QuestionMark} />
+          <ProfilePicture icon={postOwner ? `${process.env.REACT_APP_BACKEND_BASE_URL}${postOwner.avatar}` : QuestionMark} />
         </StyledPicture>
         <QuestionInfo>
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
-          <h1>Ktoś zadał pytanie:</h1>
+          <h1>{postOwner ? `${postOwner.first_name} ${postOwner.last_name} | ${postOwner.TextClassName}` : 'Ktoś zadał pytanie:'}</h1>
         </QuestionInfo>
-        {isSpotted && user?.TextRole !== 'Student' && (
+        {!isComment && user?.TextRole !== 'Student' && (
           <div>
             <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
             <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
@@ -98,16 +119,22 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, co
         <LikeWrapper>
           <Heart likes={likes} />
         </LikeWrapper>
-        {isSpotted ? (
-          <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={numberOfComments}>
+        {!isComment ? (
+          <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={comments}>
             <SidebarLink icon={CommentIcon} />
           </StyledComments>
         ) : (
           <form onSubmit={handleSubmit(handleAddComment)}>
             <StyledInput
               type="text"
-              disabled={isLoading}
-              placeholder={!isSuccess ? (!isLoading ? 'Napisz komentarz' : 'Wysyłanie...') : 'Skomentowano!'}
+              disabled={isPostQueryLoading || isSpottedQueryLoading}
+              placeholder={
+                !(isPostQuerySuccess || isSpottedQuerySuccess)
+                  ? !(isPostQueryLoading || isSpottedQueryLoading)
+                    ? 'Napisz komentarz'
+                    : 'Wysyłanie...'
+                  : 'Skomentowano!'
+              }
               {...register('message', { required: true })}
             />
           </form>
@@ -117,4 +144,4 @@ const Question = React.forwardRef<HTMLDivElement, props>(({ qId, likes, date, co
   );
 });
 
-export default Question;
+export default Post;

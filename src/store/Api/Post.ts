@@ -3,45 +3,37 @@ import { getJWT } from 'helpers/jwt';
 import { multiResponse, oneResponse, strapiRequestType } from 'types/strapi';
 import { authUser } from 'types/auth';
 
-export const SpottedAPI = createApi({
-  reducerPath: 'SpottedAPI',
+export const PostsAPI = createApi({
+  reducerPath: 'PostsAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['comments', 'proposals'],
+  tagTypes: ['comments'],
   endpoints: (builder) => ({
     // --- GET Methods ---
-    getSpottedProposals: builder.query<multiResponse<{ message: string; createdAt: string }>, { schoolId: strapiRequestType }>({
-      providesTags: ['proposals'],
-      query: (args) => ({
-        url: `/spotted-proposals?filters[schoolId][$eq]=${args.schoolId}&fields[0]=createdAt&fields[1]=message`,
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        }
-      })
-    }),
-    getSpottedComments: builder.query<
+    getPostComments: builder.query<
       multiResponse<{
         message: string;
         createdAt: string;
+        author: { data: { attributes: authUser } };
         comments: { data: { id: number; attributes: { message: string; author: { data: { attributes: authUser } }; createdAt: string } }[] };
         likes: { data: { id: number; attributes: { likes: number; userIds: { id: number; userId: string }[] } } };
       }>,
-      { spottedId: strapiRequestType; schoolId: strapiRequestType }
+      { postId: strapiRequestType; schoolId: strapiRequestType }
     >({
       providesTags: ['comments'],
       query: (args) => ({
-        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author`,
+        url: `/posts?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.postId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author&populate[author][fields]=*`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
     // --- POST Methods ---
-    addSpottedComment: builder.mutation<
+    addPostComment: builder.mutation<
       oneResponse<{ message: string; author: { data: { attributes: authUser } }; createdAt: string }>,
       {
-        spotted: number;
+        post: number;
         schoolId: string;
         message: string;
         author: string;
@@ -49,7 +41,7 @@ export const SpottedAPI = createApi({
     >({
       invalidatesTags: ['comments'],
       query: (body) => ({
-        url: '/spotted-comments',
+        url: '/post-comments',
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getJWT()}`
@@ -61,36 +53,17 @@ export const SpottedAPI = createApi({
         }
       })
     }),
-    proposeSpotted: builder.mutation<
+    addPost: builder.mutation<
       oneResponse<{ message: string; createdAt: string }>,
       {
         schoolId: string;
         message: string;
-      }
-    >({
-      query: (body) => ({
-        url: '/spotted-proposals',
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${getJWT()}`
-        },
-        body: {
-          data: {
-            ...body
-          }
-        }
-      })
-    }),
-    addSpotted: builder.mutation<
-      oneResponse<{ message: string; createdAt: string }>,
-      {
-        schoolId: string;
-        message: string;
+        author: string;
         likes: number;
       }
     >({
       query: (body) => ({
-        url: '/spotteds',
+        url: '/posts',
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getJWT()}`
@@ -102,8 +75,8 @@ export const SpottedAPI = createApi({
         }
       })
     }),
-    // --- DELETE Methods ---
-    deleteSpottedComment: builder.mutation<
+    // DELETE methods
+    deletePostComment: builder.mutation<
       unknown,
       {
         commentId: strapiRequestType;
@@ -111,39 +84,46 @@ export const SpottedAPI = createApi({
     >({
       invalidatesTags: ['comments'],
       query: (body) => ({
-        url: `/spotted-comments/${body.commentId}`,
+        url: `/post-comments/${body.commentId}`,
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
-    deleteSpotted: builder.mutation<
+    deletePost: builder.mutation<
       oneResponse<{ message: string; createdAt: string }>,
       {
-        spottId: strapiRequestType;
+        postId: strapiRequestType;
       }
     >({
       query: (body) => ({
-        url: `/spotteds/${body.spottId}`,
+        url: `/posts/${body.postId}`,
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       })
     }),
-    deleteSpottedProposal: builder.mutation<
-      oneResponse<{ message: string; createdAt: string }>,
+    // --- PUT Methods ---
+    likePost: builder.mutation<
+      unknown,
       {
-        spottId: strapiRequestType;
+        likesId: number;
+        likes: number;
+        userIds: { id?: number; userId: string }[];
       }
     >({
-      invalidatesTags: ['proposals'],
       query: (body) => ({
-        url: `/spotted-proposals/${body.spottId}`,
-        method: 'DELETE',
+        url: `/likes/${body.likesId}`,
+        method: 'PUT',
         headers: {
           Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
         }
       })
     })
@@ -151,13 +131,11 @@ export const SpottedAPI = createApi({
 });
 
 export const {
-  useGetSpottedProposalsQuery,
-  useGetSpottedCommentsQuery,
-  useAddSpottedCommentMutation,
-  useProposeSpottedMutation,
-  useAddSpottedMutation,
-  useDeleteSpottedCommentMutation,
-  useDeleteSpottedProposalMutation,
-  useDeleteSpottedMutation
-} = SpottedAPI;
-export default SpottedAPI;
+  useGetPostCommentsQuery,
+  useAddPostCommentMutation,
+  useAddPostMutation,
+  useDeletePostCommentMutation,
+  useDeletePostMutation,
+  useLikePostMutation
+} = PostsAPI;
+export default PostsAPI;

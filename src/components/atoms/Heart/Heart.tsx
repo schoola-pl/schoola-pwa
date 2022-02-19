@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from './Heart.styles';
-import { storeRoot, useLikeSpottMutation } from 'store';
+import { storeRoot, useLikePostMutation } from 'store';
 import { useSelector } from 'react-redux';
 
 interface Props {
@@ -23,7 +23,7 @@ const Heart: React.FC<Props> = ({
   const [isLiked, setLike] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(likes);
   const [currentUserIds, setCurrentUserIds] = useState<{ userId: string }[]>(userIds);
-  const [likeThisSpott] = useLikeSpottMutation();
+  const [likeThisPost] = useLikePostMutation();
   const user = useSelector((state: storeRoot) => state.user);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Heart: React.FC<Props> = ({
       const newUserIds = currentUserIds.filter((dbUser) => dbUser.userId !== String(user.id));
       setNumberOfLikes(newLikes);
       setCurrentUserIds(newUserIds);
-      likeThisSpott({
+      likeThisPost({
         likes: newLikes,
         userIds: newUserIds,
         likesId: id
@@ -49,7 +49,7 @@ const Heart: React.FC<Props> = ({
       const newUserIds = [...userIds, { userId: String(user.id) }];
       setCurrentUserIds(newUserIds);
       setNumberOfLikes(newLikes);
-      likeThisSpott({
+      likeThisPost({
         likes: newLikes,
         userIds: newUserIds,
         likesId: id

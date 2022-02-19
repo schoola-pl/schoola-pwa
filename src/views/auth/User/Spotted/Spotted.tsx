@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Info, PageWrapper } from './Spotted.styles';
-import Question from 'components/organisms/Question/Question';
+import Post from 'components/organisms/Post/Post';
 import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
@@ -14,8 +14,8 @@ const Spotted = () => {
     baseBody<{
       message: string;
       createdAt: string;
-      spotted_comments: multiResponseWithoutPagination;
-      spotted_like: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
+      comments: multiResponseWithoutPagination;
+      likes: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
     }>[]
   >([]);
   const [page, setPage] = useState<{ actual: number; total: number }>({ actual: 0, total: 0 });
@@ -28,13 +28,13 @@ const Spotted = () => {
   const fetchPosts = async (page = 1) => {
     const url = `${process.env.REACT_APP_BACKEND_BASE_URL}/spotteds?filters[schoolId][$eq]=${
       user?.schoolId || null
-    }&fields[0]=createdAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[spotted_comments][fields]=id&populate[spotted_like][populate]=userIds`;
+    }&fields[0]=createdAt&fields[1]=message&pagination[page]=${page}&pagination[pageSize]=3&sort[0]=createdAt:desc&populate[comments][fields]=id&populate[likes][populate]=userIds`;
     const response: AxiosResponse<
       multiResponse<{
         message: string;
         createdAt: string;
-        spotted_comments: multiResponseWithoutPagination;
-        spotted_like: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
+        comments: multiResponseWithoutPagination;
+        likes: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
       }>
     > = await axios.get(url, {
       headers: { Authorization: `Bearer ${getJWT()}` }
@@ -109,37 +109,39 @@ const Spotted = () => {
               attributes: {
                 message,
                 createdAt,
-                spotted_comments,
-                spotted_like: { data: likes }
+                comments,
+                likes: { data: likes }
               }
             },
             i
           ) => {
             if (i === posts.length - 1) {
               return (
-                <Question
+                <Post
                   key={id}
+                  isComment={false}
                   isSpotted={true}
                   date={createdAt}
                   content={message}
                   qId={id}
-                  numberOfComments={spotted_comments.data.length}
+                  comments={comments.data.length}
                   likes={likes}
-                  resetSpotted={resetSpotted}
+                  resetFn={resetSpotted}
                   ref={lastItemRef}
                 />
               );
             }
             return (
-              <Question
+              <Post
                 key={id}
                 qId={id}
+                isComment={false}
                 isSpotted={true}
                 date={createdAt}
                 content={message}
-                numberOfComments={spotted_comments.data.length}
+                comments={comments.data.length}
                 likes={likes}
-                resetSpotted={resetSpotted}
+                resetFn={resetSpotted}
               />
             );
           }

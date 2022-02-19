@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { storeRoot, useAddSpottMutation, useDeleteSpottMutation, useDeleteSpottProposalMutation, useProposeSpottMutation } from 'store';
+import { storeRoot, useAddSpottedMutation, useDeleteSpottedMutation, useDeleteSpottedProposalMutation, useProposeSpottedMutation } from 'store';
 import { roles } from 'routes';
 import axios from 'axios';
 import { getJWT } from 'helpers/jwt';
@@ -28,17 +28,17 @@ const SpottedContext = createContext<SpottedContextTypes>({
 });
 export const SpottedProvider: React.FC = ({ children }) => {
   const user = useSelector((state: storeRoot) => state.user);
-  const [addSpott] = useAddSpottMutation();
-  const [proposeSpott] = useProposeSpottMutation();
-  const [deleteProposal] = useDeleteSpottProposalMutation();
-  const [deleteSpottRecord] = useDeleteSpottMutation();
+  const [addSpott] = useAddSpottedMutation();
+  const [proposeSpott] = useProposeSpottedMutation();
+  const [deleteProposal] = useDeleteSpottedProposalMutation();
+  const [deleteSpottRecord] = useDeleteSpottedMutation();
 
   const addSpottedPost = async (message: string) => {
     if (!user) return;
     const { schoolId: schoolIdNP } = user;
     const schoolId = String(schoolIdNP);
     const response = await axios.post<{ likes: number; userIds: [] }, { data: { data: { id: string } } }>(
-      `${process.env.REACT_APP_BACKEND_BASE_URL}/spotted-likes`,
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/likes`,
       { data: { likes: 0, userIds: [] } },
       {
         headers: {
@@ -54,7 +54,7 @@ export const SpottedProvider: React.FC = ({ children }) => {
     await addSpott({
       schoolId,
       message,
-      spotted_like: parseInt(id)
+      likes: parseInt(id)
     });
   };
 
