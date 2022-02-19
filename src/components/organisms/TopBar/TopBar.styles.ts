@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-import { Link } from 'react-router-dom';
 
 export const Logo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
@@ -24,21 +23,21 @@ export const Wrapper = styled.div`
   justify-content: space-around;
 `;
 
-type Props = {
-  icon?: string;
-};
-
-export const UserPicture = styled(Link)<Props>`
-  background-color: white;
-  border-radius: 25rem;
-  height: 5rem;
+export const UserPicture = styled.div`
+  border-radius: 50%;
   width: 5rem;
-  background-image: url(https://avatars.dicebear.com/api/miniavs/:teodor-wolski.svg);
+  height: 5rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.19);
-  background-repeat: no-repeat;
-  background-color: white;
-  background-size: 100%;
-  background-position: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    min-width: 100%;
+    height: 100%;
+  }
 `;
 
 export const InnerWrapper = styled.div`

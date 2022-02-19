@@ -28,21 +28,21 @@ export const SendMessageButton = styled(SidebarLink)`
   background-color: ${({ theme }) => theme.colors.lightBlue};
 `;
 
-interface Props {
-  icon?: string;
-}
-
-export const ProfilePicture = styled.div<Props>`
+export const ProfilePicture = styled.div`
   width: 85%;
   height: 85%;
-  background-image: url(${({ icon }) => icon});
-  background-repeat: no-repeat;
-  background-color: white;
+  position: relative;
   border-radius: inherit;
   border: none;
   background-size: cover;
   background-position: center;
   z-index: 9999999;
+  overflow: hidden;
+
+  img {
+    min-width: 100%;
+    height: 100%;
+  }
 `;
 
 export const StyledPicture = styled.div`
