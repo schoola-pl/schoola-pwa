@@ -11,6 +11,8 @@ import axios, { AxiosResponse } from 'axios';
 import { baseBody, multiResponse, oneResponse } from 'types/strapi';
 import { getJWT } from 'helpers/jwt';
 import { authUser } from 'types/auth';
+import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
+import { Info } from 'views/auth/User/Spotted/Spotted.styles';
 
 const Feed = () => {
   const [posts, setPosts] = useState<
@@ -104,8 +106,27 @@ const Feed = () => {
   return (
     <PageWrapper>
       <FeedInput resetFeed={resetFeed} />
-      {posts.map(({ id, attributes: { likes, author, comments, message, createdAt } }, i) => {
-        if (i === posts.length - 1) {
+      {isLoading && <InfiniteScrollLoading />}
+      {isFirstLoading ? <Info>Ładowanie tablicy...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
+      {posts.length > 0 &&
+        posts.map(({ id, attributes: { likes, author, comments, message, createdAt } }, i) => {
+          if (i === posts.length - 1) {
+            return (
+              <Post
+                qId={id}
+                key={id}
+                isSpotted={false}
+                isComment={false}
+                postOwner={author.data.attributes}
+                date={createdAt}
+                content={message}
+                comments={comments.data.length}
+                likes={likes.data}
+                resetFn={resetFeed}
+                ref={lastItemRef}
+              />
+            );
+          }
           return (
             <Post
               qId={id}
@@ -118,24 +139,9 @@ const Feed = () => {
               comments={comments.data.length}
               likes={likes.data}
               resetFn={resetFeed}
-              ref={lastItemRef}
             />
           );
-        }
-        return (
-          <Post
-            qId={id}
-            key={id}
-            isSpotted={false}
-            isComment={false}
-            date={createdAt}
-            content={message}
-            comments={comments.data.length}
-            likes={likes.data}
-            resetFn={resetFeed}
-          />
-        );
-      })}
+        })}
     </PageWrapper>
   );
 };
