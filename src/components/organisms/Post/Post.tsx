@@ -103,7 +103,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         </StyledPicture>
         <QuestionInfo>
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
-          <h1>{postOwner ? `${postOwner.first_name} ${postOwner.last_name}` : 'Ktoś zadał pytanie:'}</h1>
+          <h1>{postOwner ? `${postOwner.first_name} ${postOwner.last_name} | ${postOwner.TextClassName}` : 'Ktoś zadał pytanie:'}</h1>
         </QuestionInfo>
         {!isComment && user?.TextRole !== 'Student' && (
           <div>
