@@ -13,5 +13,5 @@ export const MeetingWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  transform: translateY(-10%);
+  transform: translateY(-35%);
 `;

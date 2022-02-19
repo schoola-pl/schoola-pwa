@@ -5,7 +5,7 @@ import PsychoTopBar from 'components/organisms/PsychoTopBar/PsychoTopBar';
 const Wrapper = styled.div`
   height: 83vh;
   width: 95%;
-  margin-top: 8rem;
+  margin-top: 10rem;
   z-index: -1;
   overflow-x: hidden;
   overflow-y: scroll !important;
