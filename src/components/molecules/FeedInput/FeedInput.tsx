@@ -64,7 +64,7 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
         placeholder={getRandomSequence(Math.ceil(Math.random() * 4), user?.first_name)}
         {...register('message', { required: true })}
       />
-      {!isLoading ? <SendMessageButton icon={SendIcon} disabled={isLoading} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
+      {!isLoading ? <SendMessageButton icon={SendIcon} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
     </InputWrapper>
   );
 };
