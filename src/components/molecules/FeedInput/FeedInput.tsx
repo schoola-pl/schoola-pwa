@@ -8,14 +8,14 @@ import Loader from 'components/atoms/Loader/Loader';
 import { useForm } from 'react-hook-form';
 import { useAvatar } from 'hooks/useAvatar';
 
-const getRandomSequence = (number: number, name = 'stary') => {
+const getRandomSequence = (number: number, name = '') => {
   switch (number) {
     case 1:
       return `Chcesz coś ogłosić ${name}?`;
     case 2:
       return `Pytaj o co chcesz ${name}!`;
     case 3:
-      return 'Pochwal się całej szkole swoimi osiągnięciami!';
+      return `Chcesz coś zorganizować ${name}?`;
     case 4:
       return 'Potrzebujesz czegoś? Pisz!';
     default:
