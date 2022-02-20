@@ -1,5 +1,5 @@
 import { StyledInput, Wrapper } from './PhotoPage.styles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storeRoot } from 'store';
 import { useSelector } from 'react-redux';
 import Button from 'components/atoms/Button/Button';
@@ -16,7 +16,12 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const [description, setDescription] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { saveAvatar } = useAvatar();
+  const [isLoading, setLoadingState] = useState(false);
+  const { saveAvatar, uploadProgress } = useAvatar();
+
+  useEffect(() => {
+    setReadyState(false);
+  }, []);
 
   const changeDescription = (e: any) => {
     const element = e.target as HTMLInputElement;
@@ -50,15 +55,17 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const sendPhoto = async () => {
     if (photo) {
       setError(null);
-      saveAvatar(photo);
+      await saveAvatar(photo);
     }
   };
 
-  const confirmChanges = () => {
+  const confirmChanges = async () => {
     if (photo && description) {
-      setReadyState(true);
-      sendPhoto();
+      setLoadingState(true);
+      await sendPhoto();
+      setLoadingState(true);
       setIsSuccess(true);
+      setReadyState(true);
     }
   };
 
@@ -66,16 +73,14 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
     <Wrapper>
       <h1>Dodaj swoje zdjęcie profilowe</h1>
       <StyledInput disabled={isSuccess} type="file" onChange={getPhotoFromForm} accept=".jpg,.jpeg,.png,.webp" />
-      <textarea disabled={isSuccess} onChange={changeDescription} placeholder={`Opowiedz innym o sobie ${user?.first_name}!`}>
-        {description}
-      </textarea>
+      <textarea disabled={isSuccess} onChange={changeDescription} placeholder={`Opowiedz innym o sobie ${user?.first_name}!`} value={description} />
       <ErrorParagraph style={{ marginTop: '0.8rem' }}>{error}</ErrorParagraph>
       <Button
-        isDisabled={!photo || !description || !!error || isSuccess || description.length < 20}
+        isDisabled={!photo || !description || !!error || isSuccess || description.length < 20 || isLoading}
         onClick={confirmChanges}
         style={{ marginTop: '1rem' }}
       >
-        {isSuccess ? 'Zapisano zmiany!' : 'Zapisz zmiany'}
+        {isSuccess ? 'Zapisano zmiany!' : !isLoading ? 'Zapisz zmiany' : `${uploadProgress}%`}
       </Button>
     </Wrapper>
   );

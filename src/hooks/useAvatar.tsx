@@ -1,12 +1,13 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import { getJWT } from 'helpers/jwt';
-import { storeRoot, useUpdateUserMutation } from 'store';
-import { useSelector } from 'react-redux';
+import { storeRoot, updateUser as updateUserStore, useUpdateUserMutation } from 'store';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface AvatarContextTypes {
   saveAvatar: (photo: FormData) => Promise<void>;
   getAvatarById: (id?: string, size?: 'thumbnail' | 'small' | 'medium' | 'large') => Promise<string>;
+  uploadProgress: number;
 }
 
 const AvatarContext = createContext<AvatarContextTypes>({
@@ -15,11 +16,14 @@ const AvatarContext = createContext<AvatarContextTypes>({
   },
   getAvatarById: () => {
     throw new Error('getAvatarById is not implemented');
-  }
+  },
+  uploadProgress: 0
 });
 export const AvatarProvider: React.FC = ({ children }) => {
   const [updateUser] = useUpdateUserMutation();
   const user = useSelector((state: storeRoot) => state.user);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const dispatch = useDispatch();
 
   const saveAvatar = async (photo: FormData) => {
     if (user) {
@@ -27,6 +31,10 @@ export const AvatarProvider: React.FC = ({ children }) => {
         headers: {
           Authorization: `Bearer ${getJWT()}`,
           'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          setUploadProgress(Math.round((loaded / total) * 100));
         }
       });
       updateUser({
@@ -35,6 +43,13 @@ export const AvatarProvider: React.FC = ({ children }) => {
           avatar: response.data[0].id
         }
       });
+      dispatch(
+        updateUserStore({
+          updated: {
+            avatar: response.data[0].id
+          }
+        })
+      );
     }
   };
 
@@ -52,7 +67,8 @@ export const AvatarProvider: React.FC = ({ children }) => {
   };
   const values = {
     saveAvatar,
-    getAvatarById
+    getAvatarById,
+    uploadProgress
   };
   return <AvatarContext.Provider value={values}>{children}</AvatarContext.Provider>;
 };
