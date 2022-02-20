@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
@@ -27,6 +27,7 @@ import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { useSpotted } from 'hooks/useSpotted';
 import { usePost } from 'hooks/usePost';
 import { authUser } from 'types/auth';
+import { useAvatar } from 'hooks/useAvatar';
 
 interface props {
   qId: number;
@@ -56,6 +57,8 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   const user = useSelector((state: storeRoot) => state.user);
   const { deleteSpott } = useSpotted();
   const { deletePost } = usePost();
+  const { getAvatarById } = useAvatar();
+  const [image, setImage] = useState('');
 
   const handleAddComment = ({ message }: { message: string }) => {
     if (user && isComment) {
@@ -79,6 +82,15 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
     }
   };
 
+  useEffect(() => {
+    if (!isSpotted && postOwner) {
+      (async () => {
+        const image = await getAvatarById(postOwner?.avatar, 'thumbnail');
+        setImage(image);
+      })();
+    }
+  }, [postOwner]);
+
   const handleToggleMenu = () => {
     setMenuOpen(!isOpened);
   };
@@ -99,7 +111,9 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
         <StyledPicture random={Math.ceil(Math.random() * 5)}>
-          <ProfilePicture icon={postOwner ? `${process.env.REACT_APP_BACKEND_BASE_URL}${postOwner.avatar}` : QuestionMark} />
+          <ProfilePicture>
+            <img src={image || QuestionMark} alt={`${postOwner?.first_name}'s photo`} />
+          </ProfilePicture>
         </StyledPicture>
         <QuestionInfo>
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>

@@ -50,13 +50,15 @@ export const StyledPicture = styled.div<{ random?: number }>`
 export const ProfilePicture = styled.div<Props>`
   width: 87%;
   height: 87%;
-  background-image: url(${({ icon }) => icon});
-  background-repeat: no-repeat;
-  background-color: white;
   border-radius: inherit;
   border: none;
-  background-size: 70%;
-  background-position: center;
+  overflow: hidden;
+
+  img {
+    min-width: 100%;
+    background-color: white;
+    height: 100%;
+  }
 `;
 
 export const InfoWrapper = styled.div`
