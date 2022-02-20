@@ -6,6 +6,7 @@ export type authUser = {
   email: string;
   first_name: string;
   last_name: string;
+  description: string;
   confirmed: boolean;
   password: string;
   blocked: boolean;
