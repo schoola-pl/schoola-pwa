@@ -52,7 +52,7 @@ const Comment: React.FC<Props> = ({ cId, isSpotted, profilePicture, name, date, 
       <InfoWrapper>
         <StyledPicture random={Math.ceil(Math.random() * 5)}>
           <ProfilePicture>
-            <img src={image} alt={`${user?.first_name}'s photo`} />
+            <img src={image} alt={`${name.split(' ')[0]}'s photo`} />
           </ProfilePicture>
         </StyledPicture>
         <CommentInfo>
