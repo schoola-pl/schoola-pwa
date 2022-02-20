@@ -1,7 +1,7 @@
 import { StyledInput, Wrapper } from './PhotoPage.styles';
 import React, { useEffect, useState } from 'react';
-import { storeRoot } from 'store';
-import { useSelector } from 'react-redux';
+import { storeRoot, updateUser, useUpdateUserMutation } from 'store';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/atoms/Button/Button';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import { useAvatar } from 'hooks/useAvatar';
@@ -18,6 +18,8 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setLoadingState] = useState(false);
   const { saveAvatar, uploadProgress } = useAvatar();
+  const [updateUserDB] = useUpdateUserMutation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setReadyState(false);
@@ -60,10 +62,23 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   };
 
   const confirmChanges = async () => {
-    if (photo && description) {
+    if (photo && description && user) {
       setLoadingState(true);
       await sendPhoto();
-      setLoadingState(true);
+      await updateUserDB({
+        id: user.id,
+        data: {
+          description
+        }
+      });
+      dispatch(
+        updateUser({
+          updated: {
+            description
+          }
+        })
+      );
+      setLoadingState(false);
       setIsSuccess(true);
       setReadyState(true);
     }
