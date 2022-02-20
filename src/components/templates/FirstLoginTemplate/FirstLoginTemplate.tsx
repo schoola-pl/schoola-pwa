@@ -27,13 +27,13 @@ const FirstLoginTemplate: React.FC = () => {
     switch (c) {
       case 0:
         return <Welcome />;
-      case 1:
+      case 4:
         return <DataPage setReadyState={setReadyState} />;
       case 2:
         return <Hobbies setReadyState={setReadyState} />;
       case 3:
         return <PhotoPage setReadyState={setReadyState} />;
-      case 4:
+      case 1:
         return <LinksPage setReadyState={setReadyState} />;
       case 5:
         return <FinishPage />;

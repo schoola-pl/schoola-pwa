@@ -1,15 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AddIcon from 'assets/icons/AddIcon.svg';
-import { Wrapper, Form, StyledInput, StyledSelect, StyledButton, LinkWrapper } from './Links.styles';
+import { Form, LinkWrapper, StyledButton, StyledInput, StyledSelect, Wrapper } from './Links.styles';
 import { options } from './options';
+
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface linkInterface {
+  id: number;
+  platform: string;
+  url: string;
+}
+
 const LinksPage: React.FC<props> = ({ setReadyState }) => {
-  const [links, setLink] = useState<any>([]);
+  const [links, setLink] = useState<linkInterface[]>([]);
   const [selectedValue, setSelectedValue] = useState('');
-  const inputRef = useRef<any>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setReadyState(true);
@@ -17,12 +24,21 @@ const LinksPage: React.FC<props> = ({ setReadyState }) => {
 
   const handleChange = (e: any) => {
     setSelectedValue(e.target.value);
-    console.log(selectedValue);
   };
 
   const handleAddLink = (e: any) => {
     e.preventDefault();
-    setLink([...links, { selectedOption: selectedValue, link: inputRef.current.value }]);
+    if (links.length > 10) return;
+    const link = {
+      id: Math.round(Math.random() * 100),
+      platform: selectedValue,
+      url: inputRef.current?.value || 'https://app.schoola.pl/'
+    };
+    setLink([link, ...links]);
+  };
+
+  const deleteLink = (id: number) => {
+    setLink(links.filter((link) => link.id !== id));
   };
 
   return (
@@ -38,10 +54,10 @@ const LinksPage: React.FC<props> = ({ setReadyState }) => {
         <StyledButton icon={AddIcon} type="submit" />
       </Form>
       <>
-        {links.map((link: any) => (
-          <LinkWrapper as="a" href={link.link} target="_blank" rel="noopener noreferrer">
-            <h1>{link.selectedOption}</h1>
-            <p>{link.link}</p>
+        {links.map(({ id, platform, url }) => (
+          <LinkWrapper key={id} as="a" href={url} target="_blank" rel="noopener noreferrer">
+            <h1>{platform}</h1>
+            <p>{url}</p>
           </LinkWrapper>
         ))}
       </>

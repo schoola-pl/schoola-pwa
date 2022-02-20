@@ -52,12 +52,24 @@ export const LinkWrapper = styled.div`
   border-radius: 2rem;
   border: 2px solid ${({ theme }) => theme.colors.accentBlue};
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-  margin-bottom: 0.5rem;
   text-decoration: none;
   color: black;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+    color: white;
+  }
 
   p {
-    padding-right: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 1.5rem;
+    text-overflow: ellipsis;
   }
 
   h1 {
