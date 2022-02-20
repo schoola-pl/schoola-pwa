@@ -40,13 +40,13 @@ interface Props {
 export const ProfilePicture = styled.div<Props>`
   width: 87%;
   height: 87%;
-  background-image: url(${({ icon }) => icon});
-  background-repeat: no-repeat;
-  background-color: white;
-  border-radius: inherit;
-  border: none;
-  background-size: 70%;
-  background-position: center;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const InfoWrapper = styled.div`
