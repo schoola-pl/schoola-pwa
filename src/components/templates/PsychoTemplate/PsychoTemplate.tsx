@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   margin-top: 10rem;
   z-index: -1;
   overflow-x: hidden;
-  overflow-y: scroll !important;
+  overflow-y: auto !important;
 
   @media (min-height: 740px) {
     height: 75vh;
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const PsychoTemplate: React.FC = ({ children }) => (
   <>
-    <PsychoTopBar />
+    <PsychoTopBar number={9} day="Piątek" month="Marzec" year={2020} />
     <Wrapper>{children}</Wrapper>
     <PsychoSidebar />
   </>

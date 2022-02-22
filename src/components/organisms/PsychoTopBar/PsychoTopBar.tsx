@@ -1,13 +1,23 @@
+import React from 'react';
 import { Wrapper, Logo, DateWrapper, Day } from './PsychoTopBar.styles';
 
-const PsychoTopBar = () => (
+interface Props {
+  number: number;
+  day: string;
+  month: string;
+  year: number;
+}
+
+const PsychoTopBar: React.FC<Props> = ({ number, day, month, year }) => (
   <Wrapper>
     <Logo>schoola</Logo>
     <DateWrapper>
-      <h1>9</h1>
+      <h1>{number}</h1>
       <div>
-        <Day>Piątek</Day>
-        <p>Marzec 2022</p>
+        <Day>{day}</Day>
+        <p>
+          {month} {year}
+        </p>
       </div>
     </DateWrapper>
   </Wrapper>
