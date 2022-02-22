@@ -1,5 +1,6 @@
 import { Routes } from 'react-router-dom';
 import { Navigate, Route } from 'react-router';
+import DayPage from 'views/auth/Psycho/DayPage/DayPage';
 import TodayPage from 'views/auth/Psycho/TodayPage/TodayPage';
 import ProfilePage from 'views/auth/Psycho/ProfilePage/ProfilePage';
 import CalendarPage from 'views/auth/Psycho/CalendarPage/CalendarPage';
@@ -15,6 +16,7 @@ const PsychoRoutes = () => {
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/week" element={<WeekPage />} />
       <Route path="/setup" element={<PsychoLoginTemplate />} />
+      <Route path="/week/week-day" element={<DayPage />} />
     </Routes>
   );
 };
