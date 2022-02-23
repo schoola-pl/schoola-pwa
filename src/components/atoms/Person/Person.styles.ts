@@ -33,7 +33,6 @@ export const UserInfoWrapper = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 2rem;
-  width: 17rem;
   height: 24rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
