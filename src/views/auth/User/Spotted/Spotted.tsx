@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Info, PageWrapper } from './Spotted.styles';
 import Post from 'components/organisms/Post/Post';
-import AskQuestionInput from 'components/molecules/AskQuestionInput/AskQuestionInput';
+import SpottedInput from 'components/molecules/SpottedInput/SpottedInput';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import axios, { AxiosResponse } from 'axios';
@@ -98,7 +98,7 @@ const Spotted = () => {
 
   return (
     <PageWrapper>
-      <AskQuestionInput resetSpotted={resetSpotted} />
+      <SpottedInput resetSpotted={resetSpotted} />
       {isLoading && <InfiniteScrollLoading />}
       {isFirstLoading ? <Info>Ładowanie spotted...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
       {posts.length > 0 &&
