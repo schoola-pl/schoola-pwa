@@ -8,6 +8,16 @@ import PostsAPI from './Api/Post';
 import SocialsAPI from './Api/Social';
 import userSlice from './Slices/User';
 
+const middlewares = [
+  AuthAPI.middleware,
+  ClassAPI.middleware,
+  UserAPI.middleware,
+  InterestedsAPI.middleware,
+  SpottedAPI.middleware,
+  PostsAPI.middleware,
+  SocialsAPI.middleware
+];
+
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
@@ -19,15 +29,7 @@ const store = configureStore({
     [PostsAPI.reducerPath]: PostsAPI.reducer,
     [SocialsAPI.reducerPath]: SocialsAPI.reducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(AuthAPI.middleware)
-      .concat(ClassAPI.middleware)
-      .concat(UserAPI.middleware)
-      .concat(InterestedsAPI.middleware)
-      .concat(SpottedAPI.middleware)
-      .concat(PostsAPI.middleware)
-      .concat(SocialsAPI.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares)
 });
 
 const storeState = store.getState();
