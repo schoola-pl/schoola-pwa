@@ -17,4 +17,5 @@ export type authUser = {
   TextRole: string;
   TextInteresteds: string;
   TextClassName: string;
+  TextSocials: string | null;
 };
