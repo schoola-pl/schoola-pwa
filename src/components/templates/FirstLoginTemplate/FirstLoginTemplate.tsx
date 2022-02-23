@@ -6,6 +6,8 @@ import Welcome from 'views/auth/User/FirstLoginPages/Welcome/Welcome';
 import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
 import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
 import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
+import PhotoPage from 'views/auth/User/FirstLoginPages/PhotoPage/PhotoPage';
+import LinksPage from 'views/auth/User/FirstLoginPages/LinksPage/LinksPage';
 
 const FirstLoginTemplate: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -13,7 +15,7 @@ const FirstLoginTemplate: React.FC = () => {
   const [isReady, setReadyState] = useState(true);
 
   const nextStep = () => {
-    if (counter < 2) {
+    if (counter < 4) {
       setCounter((prev) => ++prev);
     } else {
       setCounter((prev) => ++prev);
@@ -25,11 +27,15 @@ const FirstLoginTemplate: React.FC = () => {
     switch (c) {
       case 0:
         return <Welcome />;
-      case 1:
+      case 4:
         return <DataPage setReadyState={setReadyState} />;
       case 2:
         return <Hobbies setReadyState={setReadyState} />;
       case 3:
+        return <PhotoPage setReadyState={setReadyState} />;
+      case 1:
+        return <LinksPage setReadyState={setReadyState} />;
+      case 5:
         return <FinishPage />;
       default:
         return <Welcome />;

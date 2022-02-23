@@ -5,7 +5,18 @@ import InterestedsAPI from './Api/Interesteds';
 import UserAPI from './Api/User';
 import SpottedAPI from './Api/Spotted';
 import PostsAPI from './Api/Post';
+import SocialsAPI from './Api/Social';
 import userSlice from './Slices/User';
+
+const middlewares = [
+  AuthAPI.middleware,
+  ClassAPI.middleware,
+  UserAPI.middleware,
+  InterestedsAPI.middleware,
+  SpottedAPI.middleware,
+  PostsAPI.middleware,
+  SocialsAPI.middleware
+];
 
 const store = configureStore({
   reducer: {
@@ -15,16 +26,10 @@ const store = configureStore({
     [UserAPI.reducerPath]: UserAPI.reducer,
     [InterestedsAPI.reducerPath]: InterestedsAPI.reducer,
     [SpottedAPI.reducerPath]: SpottedAPI.reducer,
-    [PostsAPI.reducerPath]: PostsAPI.reducer
+    [PostsAPI.reducerPath]: PostsAPI.reducer,
+    [SocialsAPI.reducerPath]: SocialsAPI.reducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(AuthAPI.middleware)
-      .concat(ClassAPI.middleware)
-      .concat(UserAPI.middleware)
-      .concat(InterestedsAPI.middleware)
-      .concat(SpottedAPI.middleware)
-      .concat(PostsAPI.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares)
 });
 
 const storeState = store.getState();
@@ -36,5 +41,6 @@ export * from './Api/User';
 export * from './Api/Spotted';
 export * from './Api/Post';
 export * from './Api/Interesteds';
+export * from './Api/Social';
 export * from './Slices/User';
 export default store;

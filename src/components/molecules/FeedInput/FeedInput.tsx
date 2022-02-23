@@ -3,18 +3,19 @@ import SendIcon from 'assets/icons/SendIcon.svg';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { usePost } from 'hooks/usePost';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from 'components/atoms/Loader/Loader';
 import { useForm } from 'react-hook-form';
+import { useAvatar } from 'hooks/useAvatar';
 
-const getRandomSequence = (number: number, name = 'stary') => {
+const getRandomSequence = (number: number, name = '') => {
   switch (number) {
     case 1:
       return `Chcesz coś ogłosić ${name}?`;
     case 2:
       return `Pytaj o co chcesz ${name}!`;
     case 3:
-      return 'Pochwal się całej szkole swoimi osiągnięciami!';
+      return `Chcesz coś zorganizować ${name}?`;
     case 4:
       return 'Potrzebujesz czegoś? Pisz!';
     default:
@@ -31,6 +32,17 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   const [isLoading, setLoadingState] = useState(false);
   const { addPost } = usePost();
   const { reset, register, handleSubmit } = useForm();
+  const { getAvatarById } = useAvatar();
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const image = await getAvatarById(user?.avatar, 'thumbnail');
+        setImage(image);
+      })();
+    }
+  }, [user]);
 
   const handleAddPost = async ({ message }: { message: string }) => {
     reset();
@@ -43,14 +55,16 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   return (
     <InputWrapper onSubmit={handleSubmit(handleAddPost)}>
       <StyledPicture>
-        <ProfilePicture icon={user?.avatar} />
+        <ProfilePicture>
+          <img src={image} alt={'Personal image'} />
+        </ProfilePicture>
       </StyledPicture>
       <StyledInput
         type="text"
         placeholder={getRandomSequence(Math.ceil(Math.random() * 4), user?.first_name)}
         {...register('message', { required: true })}
       />
-      {!isLoading ? <SendMessageButton icon={SendIcon} disabled={isLoading} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
+      {!isLoading ? <SendMessageButton icon={SendIcon} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
     </InputWrapper>
   );
 };

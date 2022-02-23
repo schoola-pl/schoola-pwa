@@ -10,14 +10,17 @@ import {
   storeRoot,
   updateUser,
   useAddUserToClassMutation,
+  useGetSocialsQuery,
   useGetUsersCountQuery,
   useRemoveUserMutation,
   useUpdateSchoolCountMutation,
+  useUpdateSocialMutation,
   useUpdateUserMutation
 } from 'store';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
+import axios from 'axios';
 
 export interface preparedUserInterface {
   username: string;
@@ -32,8 +35,10 @@ export interface preparedUserInterface {
   schoolId: number | null;
   TextClassName: string;
   TextRole: string;
+  TextSocials: string | null;
   class: number | null;
   role: number;
+  socials: number;
 }
 
 interface UserContextTypes {
@@ -58,6 +63,9 @@ interface UserContextTypes {
   >;
   deleteUser: (userId: number, count?: number) => void;
   deleteUsers: (users: Partial<authUser>[] | number[], actualCount: number) => void;
+  socials: { id: number; platform: string; url: string }[];
+  addSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
+  deleteSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -87,6 +95,13 @@ const UserContext = createContext<UserContextTypes>({
   },
   deleteUsers: () => {
     throw new Error('UserContext is not initialized');
+  },
+  socials: [],
+  addSocial: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  deleteSocial: () => {
+    throw new Error('UserContext is not initialized');
   }
 });
 export const UserProvider: React.FC = ({ children }) => {
@@ -100,6 +115,15 @@ export const UserProvider: React.FC = ({ children }) => {
   const [addToSchoolCount] = useUpdateSchoolCountMutation();
   const [deleteUserMethod] = useRemoveUserMutation();
   const [updateCount] = useUpdateSchoolCountMutation();
+  const [updateSocials] = useUpdateSocialMutation();
+  const userSocials = useGetSocialsQuery(
+    {
+      userId: user?.TextSocials || null
+    },
+    {
+      refetchOnMountOrArgChange: true
+    }
+  );
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -118,6 +142,23 @@ export const UserProvider: React.FC = ({ children }) => {
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
     userData.last_name = dividedName[1];
+    const {
+      data: {
+        data: { id: socialsId }
+      }
+    } = await axios.post<{ data: { id: number } }>(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/socials`,
+      {
+        data: {
+          socials: []
+        }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      }
+    );
     const preparedUser: preparedUserInterface = {
       username: `${userData.name.toLowerCase().split(' ').join('_')}`,
       email: `${nanoid()}@email.com`,
@@ -132,7 +173,9 @@ export const UserProvider: React.FC = ({ children }) => {
       TextClassName: customClassName || className.split(' ')[1],
       role: getRoleFromText(userData?.TextRole || 'Student'),
       class: customClassId || classId,
-      password: nanoid()
+      password: nanoid(),
+      socials: socialsId,
+      TextSocials: String(socialsId)
     };
     const response = await addUser({ ...preparedUser });
     const {
@@ -205,6 +248,30 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method adds the user's socials
+  const addSocial = async ({ platform, url }: { [k: string]: string }, currentSocials?: { platform: string; url: string }[]) => {
+    if (user && (userSocials.data || currentSocials)) {
+      const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
+      const newSocials = [...socials, { platform, url }];
+      updateSocials({
+        userId: user.TextSocials,
+        data: newSocials
+      });
+    }
+  };
+
+  // This method removes the user's socials
+  const deleteSocial = async ({ platform, url }: { [k: string]: string }, currentSocials?: { platform: string; url: string }[]) => {
+    if (user && (userSocials.data || currentSocials)) {
+      const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
+      const newSocials = socials.filter((item) => item.platform !== platform && item.url !== url);
+      updateSocials({
+        userId: user.TextSocials,
+        data: newSocials
+      });
+    }
+  };
+
   // This method removes the user interested
   const removeInterested = (id: number) => {
     if (user?.id) {
@@ -273,7 +340,10 @@ export const UserProvider: React.FC = ({ children }) => {
     removeInterested,
     addNewUser,
     deleteUser,
-    deleteUsers
+    deleteUsers,
+    socials: userSocials.data || [],
+    addSocial,
+    deleteSocial
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
