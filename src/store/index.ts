@@ -5,6 +5,7 @@ import InterestedsAPI from './Api/Interesteds';
 import UserAPI from './Api/User';
 import SpottedAPI from './Api/Spotted';
 import PostsAPI from './Api/Post';
+import SocialsAPI from './Api/Social';
 import userSlice from './Slices/User';
 
 const store = configureStore({
@@ -15,7 +16,8 @@ const store = configureStore({
     [UserAPI.reducerPath]: UserAPI.reducer,
     [InterestedsAPI.reducerPath]: InterestedsAPI.reducer,
     [SpottedAPI.reducerPath]: SpottedAPI.reducer,
-    [PostsAPI.reducerPath]: PostsAPI.reducer
+    [PostsAPI.reducerPath]: PostsAPI.reducer,
+    [SocialsAPI.reducerPath]: SocialsAPI.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -25,6 +27,7 @@ const store = configureStore({
       .concat(InterestedsAPI.middleware)
       .concat(SpottedAPI.middleware)
       .concat(PostsAPI.middleware)
+      .concat(SocialsAPI.middleware)
 });
 
 const storeState = store.getState();
@@ -36,5 +39,6 @@ export * from './Api/User';
 export * from './Api/Spotted';
 export * from './Api/Post';
 export * from './Api/Interesteds';
+export * from './Api/Social';
 export * from './Slices/User';
 export default store;
