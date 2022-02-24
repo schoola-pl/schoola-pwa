@@ -48,6 +48,10 @@ interface UserContextTypes {
   resetPassword: (newPassword: string) => void;
   addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
+  findInterested: (
+    id: string[] | string,
+    interesteds: { id: number; name: string }[]
+  ) => { id: number; name: string }[] | { id: number; name: string };
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number,
@@ -76,6 +80,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   removeInterested: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  findInterested: () => {
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
@@ -217,6 +224,20 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  const findInterested = (
+    id: string | string[],
+    interesteds: { id: number; name: string }[]
+  ): { id: number; name: string }[] | { id: number; name: string } => {
+    if (user) {
+      if (Array.isArray(id)) {
+        const parsedIds: number[] = id.map((item) => parseInt(item));
+        return parsedIds.map((i) => interesteds.find((u) => u.id === i) || { id: 0, name: 'No interested' });
+      } else {
+        return interesteds.find((interested) => interested.id === parseInt(id)) || { id: 0, name: '' };
+      }
+    } else return [];
+  };
+
   // This method adds the user interested
   const addInterested = ({ id }: { id: number }) => {
     if (user?.id) {
@@ -338,6 +359,7 @@ export const UserProvider: React.FC = ({ children }) => {
     updateSettings,
     addInterested,
     removeInterested,
+    findInterested,
     addNewUser,
     deleteUser,
     deleteUsers,

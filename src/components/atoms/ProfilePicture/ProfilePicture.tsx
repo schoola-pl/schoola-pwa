@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ProfilePicture: React.FC<Props> = ({ icon, isPublic }) => (
-  <Wrapper as={Link} to="/profile">
+  <Wrapper as={isPublic ? Link : ''} to="/profile">
     <Picture icon={icon} isPublic={isPublic} />
   </Wrapper>
 );

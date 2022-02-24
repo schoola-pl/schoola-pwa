@@ -1,4 +1,4 @@
-import { InputWrapper, MessageActionWrapper, SendMessageButton, StudentInfo, StyledInput, Wrapper } from './AskQuestionInput.styles';
+import { InputWrapper, MessageActionWrapper, SendMessageButton, StudentInfo, StyledInput, Wrapper } from './SpottedInput.styles';
 import SendIcon from 'assets/icons/SendIcon.svg';
 import { useForm } from 'react-hook-form';
 import { useSpotted } from 'hooks/useSpotted';

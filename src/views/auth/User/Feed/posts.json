@@ -2,20 +2,20 @@
   {
     "id": "1",
     "date": "12.05.2012",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipis",
+    "content": "Ma ktoś pożyczyć ładowarkę do iphone?",
     "numberOfHearts": 12,
     "numberOfComments": 4,
-    "userName": "Marita Deynn",
-    "userProfilePicture": "        https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd.wpimg.pl%2F1861132436-573487822%2Fkuba-wojewodzki.jpg&f=1&nofb=1"
+    "userName": "Tomasz Krzysztofiański",
+    "userProfilePicture": "https://www.bravo.de/assets/field/image/elon_musk_prognostiziert_katastrophe_fast_alles_leben_wird_zerstort.jpg"
   },
   {
     "id": "2",
     "date": "12.05.2012",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipis",
+    "content": "Hejka, mamy ogłoszenie z samorządu o 19.03 jest zbiórka na zwierzaki!",
     "numberOfHearts": 12,
     "numberOfComments": 4,
-    "userName": "Marita Deynn",
-    "userProfilePicture": "        https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd.wpimg.pl%2F1861132436-573487822%2Fkuba-wojewodzki.jpg&f=1&nofb=1"
+    "userName": "Krzysztof Romper",
+    "userProfilePicture": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Jared_Leto%2C_San_Diego_Comic_Con_2016_%282%29.jpg/640px-Jared_Leto%2C_San_Diego_Comic_Con_2016_%282%29.jpg"
   },
   {
     "id": "3",
