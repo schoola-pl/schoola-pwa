@@ -13,6 +13,7 @@ export const Grid = styled.div`
   grid-template-rows: auto;
   grid-gap: 2rem;
   margin-bottom: 4rem;
+  width: min(100%, 400px);
 
   & > div {
     width: 100%;
