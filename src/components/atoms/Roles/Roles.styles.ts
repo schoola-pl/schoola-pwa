@@ -5,7 +5,6 @@ export const RoleWrapper = styled.div`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   border-radius: 2rem;
   height: 11rem;
-  width: 14rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -18,6 +17,7 @@ export const RoleWrapper = styled.div`
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
+
     &::after {
       content: '👨‍🎓';
       padding-left: 1rem;
