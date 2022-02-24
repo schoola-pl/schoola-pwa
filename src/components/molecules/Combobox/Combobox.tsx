@@ -12,11 +12,11 @@ interface props {
 const Combobox: React.FC<props> = ({ setReadyState }) => {
   const { addInterested, removeInterested } = useUser();
   const interesteds = useGetInterestedsQuery({});
-  const getIdFromName = (name: string) => interesteds?.data?.data?.find((item) => item.attributes.name === name)?.id;
+  const getIdFromName = (name: string) => interesteds.data?.find((item) => item.name === name)?.id;
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () => {
-    const items = interesteds?.data?.data?.map((item) => item.attributes.name) || [];
+    const items = interesteds.data?.map((item) => item.name) || [];
     return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || '')).sort();
   };
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
@@ -43,7 +43,7 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
         case useCombobox.stateChangeTypes.InputBlur:
-          if (selectedItem && selectedItems.length <= 2 && interesteds.data?.data) {
+          if (selectedItem && selectedItems.length <= 2 && interesteds.data) {
             setInputValue('');
             const selectedItemId = getIdFromName(selectedItem);
             if (selectedItemId)
