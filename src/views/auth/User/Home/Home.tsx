@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (user) {
       (async () => {
-        const avatar = await getAvatarById(user.avatar);
+        const avatar = await getAvatarById(user.avatar, 'thumbnail');
         setImage(avatar);
       })();
     }
