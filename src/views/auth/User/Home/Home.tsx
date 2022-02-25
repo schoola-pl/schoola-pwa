@@ -35,8 +35,10 @@ const Home: React.FC = () => {
         <Roles role={user.TextRole === 'Moderator' ? 'Samorząd' : 'Uczeń'} />
         <Person userName={`${user.first_name} ${user.last_name}`} userProfilePicture={image} description={user.description} />
       </Grid>
-      <Interests interests={findInterested(user.TextInteresteds.split(';'), interesteds.data)} />
-      {socials.length > 0 && <Links socials={socials} />}
+      <div>
+        <Interests interests={findInterested(user.TextInteresteds.split(';'), interesteds.data)} />
+        {socials.length > 0 && <Links socials={socials} />}
+      </div>
     </Wrapper>
   );
 };

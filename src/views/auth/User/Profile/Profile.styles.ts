@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const Grid = styled.div`
@@ -12,8 +11,10 @@ export const Grid = styled.div`
   grid-template-columns: 57% 43%;
   grid-template-rows: auto;
   grid-gap: 2rem;
-  margin-bottom: 4rem;
   width: min(100%, 400px);
+  justify-content: center;
+  padding-inline: 1rem;
+  margin-bottom: 1rem;
 
   & > div {
     width: 100%;

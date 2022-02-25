@@ -5,15 +5,7 @@ export const LinkWrapper = styled.div`
   text-align: left;
   width: 100%;
   flex-direction: column;
-  transform: translateY(-40%);
   justify-content: center;
-
-  @media (min-height: 760px) {
-    transform: translateY(-30%);
-  }
-  @media (min-height: 800px) {
-    transform: translateY(-10%);
-  }
 `;
 
 interface Props {

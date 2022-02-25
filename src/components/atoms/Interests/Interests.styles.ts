@@ -1,23 +1,18 @@
 import styled from 'styled-components';
 
 export const InterestHeading = styled.h1`
-  padding-left: 2.5rem;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
+  padding-left: 2.5rem;
 `;
 
 export const InterestSectionWrapper = styled.div`
   width: 100%;
   display: flex;
-  transform: translateY(-35%);
   flex-direction: column;
-
-  @media (min-width: 390px) {
-    transform: translateY(-25%);
-  }
+  margin-bottom: 1rem;
 `;
 
 export const InterestWrapper = styled.div`
-  transform: translateY(10%);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
