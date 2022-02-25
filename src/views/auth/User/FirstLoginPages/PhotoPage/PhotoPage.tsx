@@ -10,6 +10,8 @@ interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// Below you can set the default limit of chars in description
+const descriptionLimit = 50;
 const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [photo, setPhoto] = useState<FormData | null>(null);
@@ -27,7 +29,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
 
   const changeDescription = (e: any) => {
     const element = e.target as HTMLInputElement;
-    if (element.value.length < 20) setError('Opis musi mieć conajmniej 20 znaków');
+    if (element.value.length > descriptionLimit) setError(`Opis musi mieć nie więcej niż ${descriptionLimit} znaków`);
     else setError(null);
     setDescription(element.value);
   };
@@ -62,7 +64,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
   };
 
   const confirmChanges = async () => {
-    if (photo && description && user) {
+    if (photo && user) {
       setLoadingState(true);
       await sendPhoto();
       await updateUserDB({
@@ -91,7 +93,7 @@ const PhotoPage: React.FC<props> = ({ setReadyState }) => {
       <textarea disabled={isSuccess} onChange={changeDescription} placeholder={`Opowiedz innym o sobie ${user?.first_name}!`} value={description} />
       <ErrorParagraph style={{ marginTop: '0.8rem' }}>{error}</ErrorParagraph>
       <Button
-        isDisabled={!photo || !description || !!error || isSuccess || description.length < 20 || isLoading}
+        isDisabled={!photo || !!error || isSuccess || description.length > descriptionLimit || isLoading}
         onClick={confirmChanges}
         style={{ marginTop: '1rem' }}
       >
