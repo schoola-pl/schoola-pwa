@@ -18,4 +18,5 @@ export type authUser = {
   TextInteresteds: string;
   TextClassName: string;
   TextSocials: string | null;
+  working_hours: { day: string; start: string; end: string }[] | null;
 };
