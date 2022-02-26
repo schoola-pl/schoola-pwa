@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 
 export const PageWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
 `;
 export const MeetingWrapper = styled.div`
   display: flex;
