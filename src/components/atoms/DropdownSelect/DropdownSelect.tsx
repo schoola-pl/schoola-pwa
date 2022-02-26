@@ -1,6 +1,7 @@
 import { StyledButton, StyledList } from './DropdownSelect.styles';
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useSelect } from 'downshift';
+import React, { useEffect } from 'react';
 
 const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:10'];
 
@@ -23,11 +24,28 @@ const stateReducer = (state: any, actionAndChanges: any) => {
       return changes; // otherwise business as usual.
   }
 };
-const DropdownSelect = () => {
+
+interface props {
+  type: 'start' | 'end';
+  setDayTime: React.Dispatch<React.SetStateAction<{ start: string; end: string }>>;
+}
+
+const DropdownSelect: React.FC<props> = ({ setDayTime, type }) => {
   const { isOpen, selectedItem, getToggleButtonProps, getLabelProps, getMenuProps, highlightedIndex, getItemProps } = useSelect({
     items,
     stateReducer
   });
+
+  useEffect(() => {
+    if (selectedItem) {
+      if (type === 'start') {
+        setDayTime((prev) => ({ ...prev, start: selectedItem }));
+      } else {
+        setDayTime((prev) => ({ ...prev, end: selectedItem }));
+      }
+    }
+  }, [selectedItem]);
+
   return (
     <div>
       <label {...getLabelProps()} />
@@ -46,8 +64,6 @@ const DropdownSelect = () => {
             </li>
           ))}
       </StyledList>
-      {/* if you Tab from menu, focus goes on button, and it shouldn't. only happens in codesandbox. */}
-
       <div />
     </div>
   );

@@ -1,31 +1,38 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ToggleSwitch from 'components/atoms/ToggleSwitch/ToggleSwitch';
-import { DayWrapper, Heading, DayTimeWrapper } from './Day.styles';
+import { DayTimeWrapper, DayWrapper, Heading } from './Day.styles';
 import { useModal } from 'hooks/useModal';
 import DayModal from 'components/molecules/DayModal/DayModal';
 
 interface Props {
   dayName: string;
-  startHour: string;
-  endHour: string;
 }
 
-const Day: React.FC<Props> = ({ dayName, startHour, endHour }) => {
+const defaultWorkHours = {
+  start: '08:00',
+  end: '16:00'
+};
+
+const Day: React.FC<Props> = ({ dayName }) => {
   const [toggle, setToggle] = useState(false);
+  const [dayTime, setDayTime] = useState<{ start: string; end: string }>({
+    start: defaultWorkHours.start,
+    end: defaultWorkHours.end
+  });
   const { openModal, closeModal } = useModal();
 
   return (
     <DayWrapper>
       <div>
-        <ToggleSwitch onChange={(event: any) => setToggle(event.target.checked)} />
+        <ToggleSwitch onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setToggle(ev.target?.checked)} />
         <Heading>{dayName}</Heading>
       </div>
       {toggle ? (
         <DayTimeWrapper>
           <p>
-            {startHour} - {endHour}
+            {dayTime.start} - {dayTime.end}
           </p>
-          <button onClick={() => openModal(<DayModal closeModal={closeModal} />, `${dayName}`)} />
+          <button onClick={() => openModal(<DayModal closeModal={closeModal} setDayTime={setDayTime} />, `${dayName}`)} />
         </DayTimeWrapper>
       ) : (
         <p>Nieobecność</p>
