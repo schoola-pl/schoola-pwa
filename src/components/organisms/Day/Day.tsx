@@ -32,7 +32,7 @@ const Day: React.FC<Props> = ({ dayName }) => {
           <p>
             {dayTime.start} - {dayTime.end}
           </p>
-          <button onClick={() => openModal(<DayModal closeModal={closeModal} setDayTime={setDayTime} />, `${dayName}`)} />
+          <button onClick={() => openModal(<DayModal closeModal={closeModal} dayTime={dayTime} setDayTime={setDayTime} />, `${dayName}`)} />
         </DayTimeWrapper>
       ) : (
         <p>Nieobecność</p>

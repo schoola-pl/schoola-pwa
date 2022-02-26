@@ -27,15 +27,19 @@ const stateReducer = (state: any, actionAndChanges: any) => {
 
 interface props {
   type: 'start' | 'end';
+  dayTime: {
+    start: string;
+    end: string;
+  };
   setDayTime: React.Dispatch<React.SetStateAction<{ start: string; end: string }>>;
 }
 
-const DropdownSelect: React.FC<props> = ({ setDayTime, type }) => {
+const DropdownSelect: React.FC<props> = ({ dayTime, setDayTime, type }) => {
+  const isStart = type === 'start';
   const { isOpen, selectedItem, getToggleButtonProps, getLabelProps, getMenuProps, highlightedIndex, getItemProps } = useSelect({
     items,
     stateReducer
   });
-  const isStart = type === 'start';
 
   useEffect(() => {
     if (selectedItem) {
@@ -51,7 +55,7 @@ const DropdownSelect: React.FC<props> = ({ setDayTime, type }) => {
     <div>
       <label {...getLabelProps()} />
       <StyledButton type="button" {...getToggleButtonProps()}>
-        {selectedItem || items[isStart ? 0 : items.length - 1]}
+        {selectedItem || dayTime[isStart ? 'start' : 'end'] || items[isStart ? 0 : items.length - 1]}
       </StyledButton>
       <StyledList {...getMenuProps()}>
         {isOpen &&

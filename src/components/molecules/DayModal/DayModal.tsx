@@ -4,17 +4,21 @@ import React from 'react';
 
 interface props {
   closeModal: () => void;
+  dayTime: {
+    start: string;
+    end: string;
+  };
   setDayTime: React.Dispatch<React.SetStateAction<{ start: string; end: string }>>;
 }
 
-const DayModal: React.FC<props> = ({ closeModal, setDayTime }) => {
+const DayModal: React.FC<props> = ({ closeModal, dayTime, setDayTime }) => {
   return (
     <Wrapper>
       <DropdownWrapper>
         <h1>Godziny przyjmowania</h1>
-        <DropdownSelect setDayTime={setDayTime} type={'start'} />
+        <DropdownSelect dayTime={dayTime} setDayTime={setDayTime} type={'start'} />
         <p>-</p>
-        <DropdownSelect setDayTime={setDayTime} type={'end'} />
+        <DropdownSelect dayTime={dayTime} setDayTime={setDayTime} type={'end'} />
       </DropdownWrapper>
       <StyledButton onClick={closeModal}>Zamknij</StyledButton>
     </Wrapper>
