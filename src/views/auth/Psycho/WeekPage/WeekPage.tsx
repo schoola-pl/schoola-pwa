@@ -1,9 +1,3 @@
-import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
-
-const WeekPage = () => (
-  <PsychoTemplate>
-    <h1>week page</h1>
-  </PsychoTemplate>
-);
+const WeekPage = () => <h1>week page</h1>;
 
 export default WeekPage;
