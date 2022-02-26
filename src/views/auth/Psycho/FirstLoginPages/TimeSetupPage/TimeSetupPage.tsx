@@ -21,7 +21,9 @@ const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
         {days.map((name) => (
           <Day dayName={name} setDaysConfig={setDaysConfig} />
         ))}
-        <StyledButton onClick={() => setReadyState(true)}>Zatwierdź</StyledButton>
+        <StyledButton isDisabled={daysConfig.length <= 0} onClick={() => setReadyState(true)}>
+          {daysConfig.length <= 0 ? 'Wybierz coś!' : 'Zatwierdź'}
+        </StyledButton>
       </Form>
     </Wrapper>
   );
