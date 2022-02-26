@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Logo from 'components/atoms/Logo/Logo';
 import Button from 'components/atoms/Button/Button';
 import Input from 'components/atoms/Input/Input';
+import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.div`
   height: 100vh;
@@ -39,4 +40,11 @@ export const StyledButton = styled(Button)<{ error?: boolean }>`
 
 export const StyledInput = styled(Input)`
   margin-block: 10px;
+`;
+
+export const StyledLink = styled(Link)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.accentBlue};
+  text-decoration: none;
+  padding-top: 1.5rem;
 `;

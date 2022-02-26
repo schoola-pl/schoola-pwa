@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Wrapper = styled.div`
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,8 +22,8 @@ export const StyledList = styled.ul`
   justify-content: space-evenly;
   align-items: center;
   position: relative;
+  padding-left: 1rem;
   width: 100%;
-  padding-left: 2rem;
 
   li {
     display: flex;
@@ -39,7 +40,7 @@ export const StyledListItem = styled(NavLink)<Props>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-right: 1.5rem;
+  // margin-right: 1.5rem;
 
   &.active {
     border-radius: 2rem;
