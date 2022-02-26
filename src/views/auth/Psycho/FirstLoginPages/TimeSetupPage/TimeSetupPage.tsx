@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Day from 'components/organisms/Day/Day';
 import { Form, Heading, StyledButton, Wrapper } from './TimeSetupPage.styles';
 
@@ -9,6 +9,7 @@ interface props {
 const days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
 const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
+  const [daysConfig, setDaysConfig] = useState<{ day: string; start: string; end: string }[]>([]);
   useEffect(() => {
     setReadyState(false);
   }, []);
@@ -18,7 +19,7 @@ const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
       <Heading>Ustaw godziny pracy</Heading>
       <Form>
         {days.map((name) => (
-          <Day dayName={name} />
+          <Day dayName={name} setDaysConfig={setDaysConfig} />
         ))}
         <StyledButton onClick={() => setReadyState(true)}>Zatwierdź</StyledButton>
       </Form>
