@@ -3,7 +3,7 @@ import { StyledButton, StyledList } from './DropdownSelect.styles';
 import { useSelect } from 'downshift';
 import React, { useEffect } from 'react';
 
-const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:10'];
+const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:00'];
 
 const stateReducer = (state: any, actionAndChanges: any) => {
   const { type, changes } = actionAndChanges;
@@ -35,10 +35,11 @@ const DropdownSelect: React.FC<props> = ({ setDayTime, type }) => {
     items,
     stateReducer
   });
+  const isStart = type === 'start';
 
   useEffect(() => {
     if (selectedItem) {
-      if (type === 'start') {
+      if (isStart) {
         setDayTime((prev) => ({ ...prev, start: selectedItem }));
       } else {
         setDayTime((prev) => ({ ...prev, end: selectedItem }));
@@ -50,7 +51,7 @@ const DropdownSelect: React.FC<props> = ({ setDayTime, type }) => {
     <div>
       <label {...getLabelProps()} />
       <StyledButton type="button" {...getToggleButtonProps()}>
-        {selectedItem || items[0]}
+        {selectedItem || items[isStart ? 0 : items.length - 1]}
       </StyledButton>
       <StyledList {...getMenuProps()}>
         {isOpen &&
