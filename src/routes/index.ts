@@ -3,6 +3,7 @@ import Login from '../views/auth/Forms/Login/Login';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
 import Profile from 'views/auth/User/Profile/Profile';
 import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
+import PsychoRoutes from 'views/auth/Psycho/PsychoRoutes/PsychoRoutes';
 
 interface routesInterface {
   // Path to component
@@ -22,7 +23,8 @@ interface routesInterface {
 export const paths: { [key: string]: string } = {
   login: '/login',
   student: '/student/*',
-  schoolAdmin: '/school-admin/*'
+  schoolAdmin: '/school-admin/*',
+  psycho: '/psycho/*'
 };
 
 // Roles
@@ -31,7 +33,8 @@ export const roles: { [key: string]: string } = {
   authenticated: 'any',
   student: 'Student',
   schoolAdmin: 'School Admin',
-  moderator: 'Moderator'
+  moderator: 'Moderator',
+  psycho: 'Psycho'
 };
 
 // Environment routes
@@ -43,6 +46,7 @@ const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
   { path: paths.student, Component: Profile, isProtected: true, role: [roles.student, roles.moderator] },
+  { path: paths.psycho, Component: PsychoRoutes, isProtected: true, role: roles.psycho },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];
 

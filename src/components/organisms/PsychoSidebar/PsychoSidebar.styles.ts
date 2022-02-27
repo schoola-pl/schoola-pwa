@@ -11,7 +11,6 @@ export const StyledListItem = styled(NavLink)<Props>`
   align-items: center;
   text-decoration: none;
   // margin-right: 1.5rem;
-
   &.active {
     border-radius: 2rem;
 
@@ -26,5 +25,5 @@ export const StyledListItem = styled(NavLink)<Props>`
 
 export const StyledSidebarLink = styled(SidebarLink)`
   padding-right: 1rem;
-  margin-right: 0;
+  margin-right: 0rem;
 `;
