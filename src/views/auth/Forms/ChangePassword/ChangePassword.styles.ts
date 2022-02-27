@@ -9,7 +9,7 @@ export const PasswordForm = styled.form`
   margin-top: 1rem;
 `;
 
-export const Card = styled.div`
+export const Card = styled.div<{ isRestore?: boolean }>`
   display: flex;
   border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   border-radius: 2rem;
@@ -18,6 +18,13 @@ export const Card = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  ${({ isRestore }) =>
+    isRestore &&
+    `
+  background-color: white;
+  padding: 2rem;
+`}
 `;
 
 export const CardHeading = styled.h1`
