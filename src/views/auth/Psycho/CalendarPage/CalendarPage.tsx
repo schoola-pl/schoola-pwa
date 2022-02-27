@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
 import './styles.css';
+import { format } from 'date-fns';
+import pl from 'date-fns/locale/pl';
 
 export const PageWrapper = styled.div`
   width: 100vw;
@@ -74,15 +76,17 @@ const Hour = styled.div`
 
 const CalendarPage = () => {
   const [value, onChange] = useState(new Date());
-  const setActive = () => {
-    const element: any = document.querySelector('.react-calendar__month-view__days__day');
+  const setActive = (day: string) => {
+    const activeButtons = document.querySelectorAll('.button-active');
+    if (activeButtons.length >= 1) activeButtons.forEach((button) => button.classList.remove('button-active'));
+    const element: any = document.querySelector('[aria-label="' + day + '"]');
     element.classList.add('button-active');
   };
   return (
     <PsychoTemplate>
       <PageWrapper>
         <StyledCalendar
-          onClickDay={() => setActive()}
+          onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
           locale="pl"
           minDate={new Date(2022, 1, 1)}
           maxDate={new Date(2022, 6, 12)}
