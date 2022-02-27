@@ -1,12 +1,13 @@
-import { Wrapper, StyledListItem, StyledList, StyledSidebarLink } from './PsychoSidebar.styles';
+import { StyledListItem, StyledSidebarLink } from './PsychoSidebar.styles';
 import TodayIcon from 'assets/icons/TodayIcon.svg';
 import AppointmentIcon from 'assets/icons/UserSidebarIcons/AppointmentIcon.svg';
 import UserIcon from 'assets/icons/UserSidebarIcons/UserIcon.svg';
 import WeekIcon from 'assets/icons/WeekIcon.svg';
+import Sidebar from 'components/atoms/Sidebar/Sidebar';
 
 const PsychoSidebar = () => (
-  <Wrapper>
-    <StyledList key="237079786">
+  <Sidebar>
+    <ul>
       <StyledListItem name="Profil" to="/psycho/profile">
         <StyledSidebarLink icon={UserIcon} />
       </StyledListItem>
@@ -19,8 +20,8 @@ const PsychoSidebar = () => (
       <StyledListItem name="Dzisiaj" to="/psycho/today">
         <StyledSidebarLink icon={TodayIcon} />
       </StyledListItem>
-    </StyledList>
-  </Wrapper>
+    </ul>
+  </Sidebar>
 );
 
 export default PsychoSidebar;

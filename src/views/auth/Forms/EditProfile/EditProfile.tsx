@@ -2,9 +2,9 @@ import { Card, CardHeading, EditProfileForm, Label, StyledInput, SubmitButton } 
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useForm } from 'react-hook-form';
-import { settingsType } from 'types/school';
 import { useUser } from 'hooks/useUser';
 import { useState } from 'react';
+import { authUser } from 'types/auth';
 
 const EditProfile = () => {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -17,7 +17,7 @@ const EditProfile = () => {
     reset
   } = useForm();
 
-  const handleChangeSettings = (settings: settingsType) => {
+  const handleChangeSettings = (settings: Partial<authUser>) => {
     updateSettings(settings);
     setIsSuccess(true);
     reset();

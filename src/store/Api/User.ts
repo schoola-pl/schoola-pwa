@@ -37,7 +37,6 @@ export const UserAPI = createApi({
           blocked: boolean;
           first_name: string;
           last_name: string;
-          avatar: string | null;
           Birthday: string;
           TextRole: string;
         }>;
@@ -46,7 +45,7 @@ export const UserAPI = createApi({
     >({
       providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
-        url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&populate[users][fields][3]=avatar&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
+        url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }

@@ -13,7 +13,6 @@ describe('Components > Molecules > StudentDetail', () => {
               first_name: 'testFirstName',
               last_name: 'test',
               blocked: false,
-              avatar: 'test',
               Birthday: 'test',
               TextRole: 'test'
             }
