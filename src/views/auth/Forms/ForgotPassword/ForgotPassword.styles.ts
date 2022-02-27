@@ -21,7 +21,8 @@ export const Form = styled.form`
 `;
 
 export const StyledInput = styled(Input)`
-  margin-block: 4rem;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
 `;
 
 export const StyledLink = styled(Link)`
