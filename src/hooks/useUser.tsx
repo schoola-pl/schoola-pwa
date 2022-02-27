@@ -3,7 +3,7 @@ import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { settingsType } from 'types/school';
+
 import {
   addUser as addUserStore,
   removeUser,
@@ -44,7 +44,7 @@ export interface preparedUserInterface {
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
-  updateSettings: (settings: settingsType, userId?: number) => void;
+  updateSettings: (settings: Partial<authUser>, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
   addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
@@ -208,14 +208,14 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method updates the user settings in the redux store & database
-  const updateSettings = (settings: settingsType, userId?: number) => {
+  const updateSettings = (settings: Partial<authUser>, userId?: number) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
-      const tempObj: { [key: string]: string | boolean } = {};
+      const tempObj: { [key: string]: unknown } = {};
       const settingsArray = Object.entries(settings);
       const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
-        if (value !== '') {
-          if (typeof value !== 'boolean' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
+        if (value && value !== '') {
+          if (typeof value === 'string' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });

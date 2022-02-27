@@ -1,52 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Day from 'components/organisms/Day/Day';
-import { Wrapper, Form, Heading, StyledButton } from './TimeSetupPage.styles';
+import { Form, Heading, StyledButton, Wrapper } from './TimeSetupPage.styles';
+import { useUser } from 'hooks/useUser';
 
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const defaultData = [
-  {
-    dayName: 'Poniedziałek',
-    startHour: '8:00',
-    endHour: '16:00'
-  },
-  {
-    dayName: 'Wtorek',
-    startHour: '8:00',
-    endHour: '16:00'
-  },
-  {
-    dayName: 'Środa',
-    startHour: '8:00',
-    endHour: '16:00'
-  },
-  {
-    dayName: 'Czwartek',
-    startHour: '8:00',
-    endHour: '16:00'
-  },
-  {
-    dayName: 'Piątek',
-    startHour: '8:00',
-    endHour: '16:00'
-  }
-];
+const days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
 const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
+  const [daysConfig, setDaysConfig] = useState<{ day: string; start: string; end: string }[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  const { updateSettings } = useUser();
+
   useEffect(() => {
     setReadyState(false);
   }, []);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+    updateSettings({
+      working_hours: daysConfig
+    });
+    setIsLoading(false);
+    setIsSuccess(true);
+    setReadyState(true);
+  };
 
   return (
     <Wrapper>
       <Heading>Ustaw godziny pracy</Heading>
       <Form>
-        {defaultData.map(({ startHour, endHour, dayName }) => (
-          <Day startHour={startHour} endHour={endHour} dayName={dayName} />
+        {days.map((name) => (
+          <Day dayName={name} setDaysConfig={setDaysConfig} />
         ))}
-        <StyledButton onClick={() => setReadyState(true)}>Zatwierdź</StyledButton>
+        <StyledButton isDisabled={daysConfig.length <= 0 || isSuccess || isLoading} onClick={handleSubmit}>
+          {!isSuccess ? (daysConfig.length <= 0 ? 'Wybierz coś!' : 'Zatwierdź') : 'Skonfigurowano godziny!'}
+        </StyledButton>
       </Form>
     </Wrapper>
   );
