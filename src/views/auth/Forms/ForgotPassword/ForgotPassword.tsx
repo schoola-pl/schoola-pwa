@@ -4,6 +4,7 @@ import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
+import axios, { AxiosError } from 'axios';
 
 const ForgotPassword = () => {
   const {
@@ -11,10 +12,22 @@ const ForgotPassword = () => {
     handleSubmit,
     formState: { errors }
   } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<number | null>(null);
 
-  const handleRestoreEmail = ({ email }: { email: string }) => {
-    console.log(email);
+  const handleRestoreEmail = async ({ email }: { email: string }) => {
+    setError(null);
+    setIsSuccess(false);
+    setIsLoading(true);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/forgot-password`, { email });
+      if (response.status === 200) setIsSuccess(true);
+    } catch (err) {
+      const error = err as AxiosError;
+      setError(error.response?.status || 500);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -31,7 +44,17 @@ const ForgotPassword = () => {
             })}
           />
           {errors.email && <ErrorParagraph style={{ marginBottom: '2rem' }}>Podaj prawidłowy adres email!</ErrorParagraph>}
-          <Button>Potwierdź</Button>
+          <Button isDanger={!!error}>
+            {!error
+              ? !isLoading
+                ? isSuccess
+                  ? 'Wysłano!'
+                  : 'Potwierdź'
+                : 'Wysyłanie...'
+              : error === 400
+              ? 'Niepoprawny e-mail!'
+              : 'Nieoczekiwany błąd'}
+          </Button>
           <StyledLink to="/login">Masz już konto?</StyledLink>
         </Form>
       </AuthCard>
