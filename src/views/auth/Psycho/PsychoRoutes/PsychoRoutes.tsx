@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import PsychoLoginTemplate from 'components/templates/PsychoLoginTemplate/PsychoLoginTemplate';
 import { Navigate, Route, Routes } from 'react-router';
-import DayPage from 'views/auth/Psycho/DayPage/DayPage';
 import TodayPage from 'views/auth/Psycho/TodayPage/TodayPage';
 import ProfilePage from 'views/auth/Psycho/ProfilePage/ProfilePage';
 import CalendarPage from 'views/auth/Psycho/CalendarPage/CalendarPage';
@@ -23,7 +22,6 @@ const PsychoRoutes = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/week" element={<WeekPage />} />
-          <Route path="/week/week-day" element={<DayPage />} />
         </Routes>
       )}
     </PsychoTemplate>
