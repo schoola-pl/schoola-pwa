@@ -3,22 +3,24 @@ import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { settingsType } from 'types/school';
+
 import {
   addUser as addUserStore,
   removeUser,
   storeRoot,
   updateUser,
   useAddUserToClassMutation,
+  useGetSocialsQuery,
   useGetUsersCountQuery,
   useRemoveUserMutation,
   useUpdateSchoolCountMutation,
+  useUpdateSocialMutation,
   useUpdateUserMutation
 } from 'store';
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
-import { getInterestedsByIDs } from 'helpers/interesteds';
+import axios from 'axios';
 
 export interface preparedUserInterface {
   username: string;
@@ -33,17 +35,23 @@ export interface preparedUserInterface {
   schoolId: number | null;
   TextClassName: string;
   TextRole: string;
+  TextSocials: string | null;
   class: number | null;
   role: number;
+  socials: number;
 }
 
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
-  updateSettings: (settings: settingsType, userId?: number) => void;
+  updateSettings: (settings: Partial<authUser>, userId?: number) => void;
   resetPassword: (newPassword: string) => void;
-  addInterested: (interested: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => void;
+  addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
+  findInterested: (
+    id: string[] | string,
+    interesteds: { id: number; name: string }[]
+  ) => { id: number; name: string }[] | { id: number; name: string };
   addNewUser: (
     newUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string },
     customClassId?: number,
@@ -59,6 +67,9 @@ interface UserContextTypes {
   >;
   deleteUser: (userId: number, count?: number) => void;
   deleteUsers: (users: Partial<authUser>[] | number[], actualCount: number) => void;
+  socials: { id: number; platform: string; url: string }[];
+  addSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
+  deleteSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
 }
 
 const UserContext = createContext<UserContextTypes>({
@@ -69,6 +80,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   removeInterested: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  findInterested: () => {
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
@@ -88,6 +102,13 @@ const UserContext = createContext<UserContextTypes>({
   },
   deleteUsers: () => {
     throw new Error('UserContext is not initialized');
+  },
+  socials: [],
+  addSocial: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  deleteSocial: () => {
+    throw new Error('UserContext is not initialized');
   }
 });
 export const UserProvider: React.FC = ({ children }) => {
@@ -101,6 +122,15 @@ export const UserProvider: React.FC = ({ children }) => {
   const [addToSchoolCount] = useUpdateSchoolCountMutation();
   const [deleteUserMethod] = useRemoveUserMutation();
   const [updateCount] = useUpdateSchoolCountMutation();
+  const [updateSocials] = useUpdateSocialMutation();
+  const userSocials = useGetSocialsQuery(
+    {
+      userId: user?.TextSocials || null
+    },
+    {
+      refetchOnMountOrArgChange: true
+    }
+  );
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -119,6 +149,23 @@ export const UserProvider: React.FC = ({ children }) => {
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
     userData.last_name = dividedName[1];
+    const {
+      data: {
+        data: { id: socialsId }
+      }
+    } = await axios.post<{ data: { id: number } }>(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/socials`,
+      {
+        data: {
+          socials: []
+        }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      }
+    );
     const preparedUser: preparedUserInterface = {
       username: `${userData.name.toLowerCase().split(' ').join('_')}`,
       email: `${nanoid()}@email.com`,
@@ -133,7 +180,9 @@ export const UserProvider: React.FC = ({ children }) => {
       TextClassName: customClassName || className.split(' ')[1],
       role: getRoleFromText(userData?.TextRole || 'Student'),
       class: customClassId || classId,
-      password: nanoid()
+      password: nanoid(),
+      socials: socialsId,
+      TextSocials: String(socialsId)
     };
     const response = await addUser({ ...preparedUser });
     const {
@@ -159,14 +208,14 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method updates the user settings in the redux store & database
-  const updateSettings = (settings: settingsType, userId?: number) => {
+  const updateSettings = (settings: Partial<authUser>, userId?: number) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
-      const tempObj: { [key: string]: string | boolean } = {};
+      const tempObj: { [key: string]: unknown } = {};
       const settingsArray = Object.entries(settings);
       const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
-        if (value !== '') {
-          if (typeof value !== 'boolean' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
+        if (value && value !== '') {
+          if (typeof value === 'string' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
@@ -175,21 +224,33 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  const findInterested = (
+    id: string | string[],
+    interesteds: { id: number; name: string }[]
+  ): { id: number; name: string }[] | { id: number; name: string } => {
+    if (user) {
+      if (Array.isArray(id)) {
+        const parsedIds: number[] = id.map((item) => parseInt(item));
+        return parsedIds.map((i) => interesteds.find((u) => u.id === i) || { id: 0, name: 'No interested' });
+      } else {
+        return interesteds.find((interested) => interested.id === parseInt(id)) || { id: 0, name: '' };
+      }
+    } else return [];
+  };
+
   // This method adds the user interested
-  const addInterested = ({ id, allInteresteds }: { id: number; allInteresteds: { id: number; attributes: { name: string } }[] }) => {
+  const addInterested = ({ id }: { id: number }) => {
     if (user?.id) {
       const currentInterestedIDs = user.TextInteresteds;
       let currentInterested;
       if (currentInterestedIDs) {
         if (currentInterestedIDs.includes(String(id))) return;
-        const currentInterestedNames = getInterestedsByIDs(currentInterestedIDs, allInteresteds);
         currentInterested = currentInterestedIDs.split(';').map((item) => ({ id: item }));
-        console.log(currentInterestedNames);
       }
       dispatch(
         updateUser({
           updated: {
-            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
+            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
           }
         })
       );
@@ -202,8 +263,32 @@ export const UserProvider: React.FC = ({ children }) => {
               id
             }
           ],
-          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : id
+          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
         }
+      });
+    }
+  };
+
+  // This method adds the user's socials
+  const addSocial = async ({ platform, url }: { [k: string]: string }, currentSocials?: { platform: string; url: string }[]) => {
+    if (user && (userSocials.data || currentSocials)) {
+      const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
+      const newSocials = [...socials, { platform, url }];
+      updateSocials({
+        userId: user.TextSocials,
+        data: newSocials
+      });
+    }
+  };
+
+  // This method removes the user's socials
+  const deleteSocial = async ({ platform, url }: { [k: string]: string }, currentSocials?: { platform: string; url: string }[]) => {
+    if (user && (userSocials.data || currentSocials)) {
+      const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
+      const newSocials = socials.filter((item) => item.platform !== platform && item.url !== url);
+      updateSocials({
+        userId: user.TextSocials,
+        data: newSocials
       });
     }
   };
@@ -212,9 +297,16 @@ export const UserProvider: React.FC = ({ children }) => {
   const removeInterested = (id: number) => {
     if (user?.id) {
       const currentInterestedIDs = user.TextInteresteds;
-      const arrayWithRemovedId = currentInterestedIDs.split(';').filter((item) => item !== String(id));
-      const newInterestedsText = arrayWithRemovedId.join(';');
-      const newInterestedsObjects = arrayWithRemovedId.map((item) => ({ id: item }));
+      let newInterestedsText: string;
+      let newInterestedsObjects: { id: string }[] | [];
+      if (currentInterestedIDs.includes(';')) {
+        const arrayWithRemovedId = currentInterestedIDs.split(';').filter((item) => item !== String(id));
+        newInterestedsText = arrayWithRemovedId.join(';');
+        newInterestedsObjects = arrayWithRemovedId.map((item) => ({ id: item }));
+      } else {
+        newInterestedsText = '';
+        newInterestedsObjects = [];
+      }
       dispatch(
         updateUser({
           updated: {
@@ -267,9 +359,13 @@ export const UserProvider: React.FC = ({ children }) => {
     updateSettings,
     addInterested,
     removeInterested,
+    findInterested,
     addNewUser,
     deleteUser,
-    deleteUsers
+    deleteUsers,
+    socials: userSocials.data || [],
+    addSocial,
+    deleteSocial
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

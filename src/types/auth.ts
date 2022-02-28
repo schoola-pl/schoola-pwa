@@ -6,6 +6,7 @@ export type authUser = {
   email: string;
   first_name: string;
   last_name: string;
+  description: string;
   confirmed: boolean;
   password: string;
   blocked: boolean;
@@ -16,4 +17,6 @@ export type authUser = {
   TextRole: string;
   TextInteresteds: string;
   TextClassName: string;
+  TextSocials: string | null;
+  working_hours: { day: string; start: string; end: string }[] | null;
 };

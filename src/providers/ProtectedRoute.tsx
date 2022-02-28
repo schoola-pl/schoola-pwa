@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useRoutesControl } from 'hooks/useRoutesControl';
-import { roles } from 'routes';
 import { useAppLoading } from 'hooks/useAppLoading';
 
 interface props {
   Element: React.FC;
-  role: string;
+  role: string | string[];
 }
 
 const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const { checkUser, blockRoutes } = useRoutesControl();
+  const { checkUser, blockRoutes, checkDoesRoleHasPermission } = useRoutesControl();
   const { setAppLoading } = useAppLoading();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
       // Checks is user blocked
       if (!user.blocked) {
         // Checks if user has permission to access route
-        if (role !== user.TextRole && role !== roles.authenticated) {
+        if (!checkDoesRoleHasPermission(role, user?.TextRole)) {
           blockRoutes();
         } else {
           setAppLoading(false);

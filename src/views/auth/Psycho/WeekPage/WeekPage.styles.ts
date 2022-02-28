@@ -2,16 +2,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const PageWrapper = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding-inline: 2rem;
   align-items: center;
 `;
 export const MeetingWrapper = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const DayLink = styled(Link)`
@@ -21,9 +23,9 @@ export const DayLink = styled(Link)`
   border-radius: 2rem;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
   border-bottom: 2px solid ${({ theme }) => theme.colors.accentGreen};
-  display: grid;
-  grid-template-columns: 45% 55%;
-  padding-left: 1rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 2rem;
   cursor: pointer;
   text-decoration: none;
   color: black;
@@ -74,6 +76,7 @@ export const WeekWrapper = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+
   p {
     transform: translateY(-10%);
   }

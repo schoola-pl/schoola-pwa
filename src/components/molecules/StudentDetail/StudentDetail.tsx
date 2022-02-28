@@ -4,7 +4,7 @@ import StudentInfoRecord from '../StudentInfoRecord/StudentInfoRecord';
 interface props {
   students: {
     id: number;
-    attributes: { first_name: string; last_name: string; blocked: boolean; avatar: string | null; Birthday: string; TextRole: string };
+    attributes: { first_name: string; last_name: string; blocked: boolean; Birthday: string; TextRole: string };
   }[];
   userToFind: string;
 }
