@@ -19,6 +19,8 @@
     "node-forge": "^1.2.0",
     "paginatejson": "^1.0.3",
     "react": "^17.0.2",
+    "react-calendar": "^3.7.0",
+    "react-datetime-picker": "^3.5.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.22.5",
     "react-redux": "^7.2.6",
@@ -45,7 +47,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test ./tests",
+    "test:e2e": "cypress open --project ./src/e2e",
+    "test:e2e:cmd": "cypress run --browser chrome --project ./src/e2e",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -61,9 +65,12 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
+    "@types/react-datetime-picker": "^3.4.1",
     "@types/styled-components": "^5.1.19",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "cypress": "^9.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
