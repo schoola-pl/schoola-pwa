@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
+import Button from 'components/atoms/Button/Button';
 
 export const PageWrapper = styled.div`
   width: 100vw;
@@ -55,5 +56,20 @@ export const InnerWrapper = styled.div`
     align-items: center;
     font-size: ${({ theme }) => theme.fontSize.xs};
     background-color: ${({ theme }) => theme.colors.accentBlue};
+  }
+`;
+
+export const ModalWrapper = styled.div`
+  display: flex;
+`;
+
+export const CancelButton = styled(Button)`
+  margin-left: 1rem;
+  background-color: ${({ theme }) => theme.colors.accentRed};
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentRed};
+    opacity: 0.5;
   }
 `;
