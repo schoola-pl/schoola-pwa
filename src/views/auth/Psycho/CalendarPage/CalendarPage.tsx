@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import Hours from 'components/organisms/Hours/Hours';
+import { useModal } from 'hooks/useModal';
 import Calendar from 'react-calendar';
 import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
 import './styles.css';
+import { format } from 'date-fns';
+import pl from 'date-fns/locale/pl';
 
 export const PageWrapper = styled.div`
   width: 100vw;
@@ -25,7 +29,7 @@ const StyledCalendar = styled(Calendar)`
   margin-bottom: 1rem;
 `;
 
-const InnerWrapper = styled.div`
+const Wrapper = styled.div`
   width: 90%;
   height: 24.5rem;
   background-color: white;
@@ -34,73 +38,59 @@ const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const InnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
 
   h1 {
-    margin-left: 3rem;
-    width: 100%;
+    margin-right: 6rem;
     font-weight: ${({ theme }) => theme.fontWeight.medium};
-  }
-
-  div {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2.5rem;
-    margin-bottom: 0.2rem;
-    transform: translateY(-5%);
   }
 
   button {
     border: none;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     color: white;
     height: 4rem;
-    width: 90%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSize.xs};
     background-color: ${({ theme }) => theme.colors.accentBlue};
   }
-`;
-const Hour = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  border-radius: 1rem;
-  background-color: #f7f8fa;
-  height: 2.8rem;
-  width: 13rem;
-
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
 `;
 
 const CalendarPage = () => {
   const [value, onChange] = useState(new Date());
-  const setActive = () => {
-    const element: any = document.querySelector('.react-calendar__month-view__days__day');
+  const setActive = (day: string) => {
+    const activeButtons = document.querySelectorAll('.button-active');
+    if (activeButtons.length >= 1) activeButtons.forEach((button) => button.classList.remove('button-active'));
+    const element: any = document.querySelector('[aria-label="' + day + '"]');
     element.classList.add('button-active');
   };
   return (
     <PsychoTemplate>
       <PageWrapper>
         <StyledCalendar
-          onClickDay={() => setActive()}
+          onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
           locale="pl"
           minDate={new Date(2022, 1, 1)}
           maxDate={new Date(2022, 6, 12)}
           onChange={onChange}
           value={value}
         />
-        <InnerWrapper>
-          <h1>Godziny</h1>
-          <div>
-            <Hour>8:00</Hour>
-            <Hour>8:55</Hour>
-            <Hour>9:50</Hour>
-            <Hour>10:55</Hour>
-            <Hour>11:50</Hour>
-            <Hour>12:35</Hour>
-          </div>
-          <button>Potwierdź</button>
-        </InnerWrapper>
+        <Wrapper>
+          <InnerWrapper>
+            <h1>Godziny</h1>
+            <button>Odwołaj obecność</button>
+          </InnerWrapper>
+          <Hours />
+        </Wrapper>
       </PageWrapper>
     </PsychoTemplate>
   );
