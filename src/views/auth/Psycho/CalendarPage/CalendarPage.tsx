@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
-import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
 import './styles.css';
 import { format } from 'date-fns';
 import pl from 'date-fns/locale/pl';
@@ -83,30 +82,28 @@ const CalendarPage = () => {
     element.classList.add('button-active');
   };
   return (
-    <PsychoTemplate>
-      <PageWrapper>
-        <StyledCalendar
-          onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
-          locale="pl"
-          minDate={new Date(2022, 1, 1)}
-          maxDate={new Date(2022, 6, 12)}
-          onChange={onChange}
-          value={value}
-        />
-        <InnerWrapper>
-          <h1>Godziny</h1>
-          <div>
-            <Hour>8:00</Hour>
-            <Hour>8:55</Hour>
-            <Hour>9:50</Hour>
-            <Hour>10:55</Hour>
-            <Hour>11:50</Hour>
-            <Hour>12:35</Hour>
-          </div>
-          <button>Potwierdź</button>
-        </InnerWrapper>
-      </PageWrapper>
-    </PsychoTemplate>
+    <PageWrapper>
+      <StyledCalendar
+        onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
+        locale="pl"
+        minDate={new Date(2022, 1, 1)}
+        maxDate={new Date(2022, 6, 12)}
+        onChange={onChange}
+        value={value}
+      />
+      <InnerWrapper>
+        <h1>Godziny</h1>
+        <div>
+          <Hour>8:00</Hour>
+          <Hour>8:55</Hour>
+          <Hour>9:50</Hour>
+          <Hour>10:55</Hour>
+          <Hour>11:50</Hour>
+          <Hour>12:35</Hour>
+        </div>
+        <button>Potwierdź</button>
+      </InnerWrapper>
+    </PageWrapper>
   );
 };
 
