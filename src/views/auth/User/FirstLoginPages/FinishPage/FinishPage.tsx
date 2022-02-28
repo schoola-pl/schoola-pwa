@@ -9,9 +9,7 @@ const FinishPage: React.FC<{ accountType: string }> = ({ accountType }) => {
     <Wrapper>
       <h1>Wszystko gotowe!</h1>
       <IconDiv icon={FinishIcon} />
-      <StyledButton as="a" href={accountType === 'psycho' ? '/psycho/today' : '/student/home'} onClick={() => updateSettings({ confirmed: true })}>
-        Przejdź do aplikacji!
-      </StyledButton>
+      <StyledButton onClick={() => updateSettings({ confirmed: true })}>Przejdź do aplikacji!</StyledButton>
     </Wrapper>
   );
 };
