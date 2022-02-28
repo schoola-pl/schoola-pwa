@@ -1,8 +1,9 @@
 import { IconDiv, StyledButton, Wrapper } from './FinishPage.styles';
 import FinishIcon from 'assets/icons/FinishIcon.svg';
 import { useUser } from 'hooks/useUser';
+import React from 'react';
 
-const FinishPage: React.FC<{ accountType: string }> = ({ accountType }) => {
+const FinishPage: React.FC = () => {
   const { updateSettings } = useUser();
 
   return (
