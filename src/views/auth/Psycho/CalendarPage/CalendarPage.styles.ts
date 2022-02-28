@@ -7,7 +7,7 @@ export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 export const StyledCalendar = styled(Calendar)`
@@ -21,6 +21,16 @@ export const StyledCalendar = styled(Calendar)`
   overflow: hidden;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 1rem;
+
+  @media (min-height: 788px) {
+    margin-bottom: 2rem;
+    height: 30.5rem;
+  }
+
+  @media (min-height: 830px) {
+    margin-bottom: 4.2rem;
+    height: 31.5rem;
+  }
 `;
 
 export const Wrapper = styled.div`
