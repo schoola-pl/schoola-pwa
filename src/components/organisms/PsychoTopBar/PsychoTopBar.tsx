@@ -1,15 +1,25 @@
-import { Wrapper, Logo, InnerWrapper } from './PsychoTopBar.styles';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
-import NotificationsIcon from 'assets/icons/NotificationIcon.svg';
-import SettingsIcon from 'assets/icons/SettingsIcon.png';
+import React from 'react';
+import { Wrapper, Logo, DateWrapper, Day } from './PsychoTopBar.styles';
 
-const PsychoTopBar = () => (
+interface Props {
+  number: number;
+  day: string;
+  month: string;
+  year: number;
+}
+
+const PsychoTopBar: React.FC<Props> = ({ number, day, month, year }) => (
   <Wrapper>
     <Logo>schoola</Logo>
-    <InnerWrapper>
-      <SidebarLink icon={NotificationsIcon} />
-      <SidebarLink icon={SettingsIcon} />
-    </InnerWrapper>
+    <DateWrapper>
+      <h1>{number}</h1>
+      <div>
+        <Day>{day}</Day>
+        <p>
+          {month} {year}
+        </p>
+      </div>
+    </DateWrapper>
   </Wrapper>
 );
 

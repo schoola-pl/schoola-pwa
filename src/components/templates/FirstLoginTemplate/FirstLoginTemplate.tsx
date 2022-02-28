@@ -36,7 +36,7 @@ const FirstLoginTemplate: React.FC = () => {
       case 4:
         return <LinksPage setReadyState={setReadyState} />;
       case 5:
-        return <FinishPage />;
+        return <FinishPage accountType="user" />;
       default:
         return <Welcome />;
     }

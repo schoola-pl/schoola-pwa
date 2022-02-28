@@ -30,7 +30,7 @@ const PsychoLoginTemplate: React.FC = () => {
       case 2:
         return <TimeSetupPage setReadyState={setReadyState} />;
       case 3:
-        return <FinishPage />;
+        return <FinishPage accountType="psycho" />;
       default:
         return <Welcome />;
     }
