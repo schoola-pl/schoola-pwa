@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 type Props = {
   icon?: string;
@@ -103,6 +104,10 @@ export const ActionsWrapper = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+
+  form {
+    display: flex;
+  }
 `;
 
 export const StyledComments = styled.div`
@@ -137,7 +142,7 @@ export const LikeWrapper = styled.div`
 
 export const StyledInput = styled.input`
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #f7f8fa;
   border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   margin-right: 0.5rem;
@@ -146,6 +151,13 @@ export const StyledInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const SendMessageButton = styled(SidebarLink)`
+  height: 4rem;
+  width: 4rem;
+  margin: 0;
+  background-color: ${({ theme }) => theme.colors.lightBlue};
 `;
 
 export const ToggleMenu = styled.button<ToggleMenuProps>`

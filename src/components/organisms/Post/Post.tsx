@@ -3,6 +3,7 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
 import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
+import SendIcon from 'assets/icons/SendIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
 import {
   ActionsWrapper,
@@ -15,7 +16,8 @@ import {
   StyledComments,
   StyledInput,
   StyledPicture,
-  ToggleMenu
+  ToggleMenu,
+  SendMessageButton
 } from './Post.styles';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
@@ -151,6 +153,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
               }
               {...register('message', { required: true })}
             />
+            <SendMessageButton type="submit" icon={SendIcon} />
           </form>
         )}
       </ActionsWrapper>
