@@ -27,9 +27,6 @@ const TopBar = () => {
       <InnerWrapper>
         <NotificationList />
         <StyledSidebarLink as={Link} to="profile/settings" icon={SettingsIcon} />
-        <UserPicture>
-          <img src={image} alt={`Personal image`} />
-        </UserPicture>
       </InnerWrapper>
     </Wrapper>
   );

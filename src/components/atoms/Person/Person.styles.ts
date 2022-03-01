@@ -42,4 +42,5 @@ export const UserInfoWrapper = styled.div`
 export const Picture = styled.img`
   min-width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
