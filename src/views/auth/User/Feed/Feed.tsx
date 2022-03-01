@@ -110,6 +110,7 @@ const Feed = () => {
       {isFirstLoading ? <Info>Ładowanie tablicy...</Info> : posts.length <= 0 ? <Info>Jeszcze nikt nic nie napisał, bądź pierwszy!</Info> : null}
       {posts.length > 0 &&
         posts.map(({ id, attributes: { likes, author, comments, message, createdAt } }, i) => {
+          if (!author || !author.data) return;
           if (i === posts.length - 1) {
             return (
               <Post

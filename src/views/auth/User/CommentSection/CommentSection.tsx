@@ -87,25 +87,28 @@ const CommentSection = () => {
         isComment={true}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        postOwner={!isSpotted && rest?.author ? rest.author.data.attributes : null}
+        postOwner={!isSpotted && rest?.author.data ? rest.author.data.attributes : null}
         isSpotted={isSpotted}
         content={message}
         comments={commentsArray.length}
         likes={likes}
       />
       {commentsArray.length > 0 ? (
-        commentsArray.map(({ id, attributes: { author, message, createdAt } }) => (
-          <Comment
-            key={id}
-            cId={id}
-            isSpotted={isSpotted}
-            profilePicture={author.data.attributes.avatar}
-            name={`${author.data.attributes.first_name} ${author.data.attributes.last_name}`}
-            date={createdAt}
-            content={message}
-            numberOfHearts={0}
-          />
-        ))
+        commentsArray.map(({ id, attributes: { author, message, createdAt } }) => {
+          if (!author || !author.data) return;
+          return (
+            <Comment
+              key={id}
+              cId={id}
+              isSpotted={isSpotted}
+              profilePicture={author.data.attributes.avatar}
+              name={`${author.data.attributes.first_name} ${author.data.attributes.last_name}`}
+              date={createdAt}
+              content={message}
+              numberOfHearts={0}
+            />
+          );
+        })
       ) : (
         <p style={{ fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center', opacity: 0.8 }}>
           Nikt jeszcze nie skomentował tego posta. <br /> Bądź pierwszy!
