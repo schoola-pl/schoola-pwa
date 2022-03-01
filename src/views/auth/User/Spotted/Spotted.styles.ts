@@ -5,7 +5,6 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 90%;
 `;
 
 export const Info = styled.p`
