@@ -3,6 +3,7 @@ import { PageWrapper, StyledCalendar, Wrapper, InnerWrapper } from './Appointmen
 import { format } from 'date-fns';
 import pl from 'date-fns/locale/pl';
 import './styles.css';
+
 const Appointment = () => {
   const [value, onChange] = useState(new Date());
   const setActive = (day: string) => {
