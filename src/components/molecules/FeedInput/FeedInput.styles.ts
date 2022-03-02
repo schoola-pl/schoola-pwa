@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const InputWrapper = styled.form`
-  width: 90%;
+  width: 100%;
   display: grid;
   grid-template-columns: 7rem 1fr 7rem;
   align-items: center;
@@ -36,10 +36,10 @@ export const ProfilePicture = styled.div`
   border: none;
   background-size: cover;
   background-position: center;
-  z-index: 9999999;
   overflow: hidden;
 
   img {
+    object-fit: cover;
     min-width: 100%;
     height: 100%;
   }
