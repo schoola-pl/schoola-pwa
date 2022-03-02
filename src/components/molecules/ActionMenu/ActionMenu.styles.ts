@@ -9,8 +9,8 @@ interface Props {
 export const Wrapper = styled.div<Props>`
   display: ${({ isOpened }) => (isOpened ? 'flex' : 'none')};
   position: absolute;
-  left: calc(100% - 16rem);
-  top: 2.5rem;
+  left: calc(100% - 12.5rem);
+  top: 2.4rem;
   border-radius: 1rem;
 `;
 

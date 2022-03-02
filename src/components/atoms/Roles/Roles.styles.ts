@@ -19,17 +19,17 @@ export const RoleWrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.medium};
 
     &::after {
+      padding-left: 0.5rem;
       content: '👨‍🎓';
-      padding-left: 1rem;
     }
 
     @media (min-width: 390px) {
-      font-size: 1.9rem;
+      font-size: 1.8rem !important;
       transform: translateY(5%);
     }
 
     @media (min-height: 750px) {
-      font-size: 1.9rem;
+      font-size: 1.8rem !important;
       transform: translateY(5%);
     }
   }
