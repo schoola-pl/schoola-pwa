@@ -28,7 +28,7 @@ export const NotificationWrapper = styled.div<Props>`
   border-radius: 2rem;
   align-items: center;
   top: 85%;
-  left: 25%;
+  left: calc(100% - 31rem);
   width: 30rem;
   height: 50rem;
   background-color: white;
