@@ -4,6 +4,7 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 type Props = {
   icon?: string;
+  isSpotted: boolean;
 };
 
 interface ToggleMenuProps {
@@ -59,6 +60,8 @@ export const ProfilePicture = styled.div<Props>`
     min-width: 100%;
     background-color: white;
     height: 100%;
+    object-fit: cover;
+    padding: ${({ isSpotted }) => (isSpotted ? '0.5rem' : 0)};
   }
 `;
 

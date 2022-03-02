@@ -113,7 +113,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
         <StyledPicture random={Math.ceil(Math.random() * 5)}>
-          <ProfilePicture>
+          <ProfilePicture isSpotted={isSpotted}>
             <img src={image || QuestionMark} alt={`${postOwner?.first_name}'s photo`} />
           </ProfilePicture>
         </StyledPicture>
