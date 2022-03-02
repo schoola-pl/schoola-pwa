@@ -116,6 +116,7 @@ export const ActionsWrapper = styled.div`
 export const StyledComments = styled.div`
   color: black;
   text-decoration: none;
+  justify-content: center;
   display: flex;
   align-items: center;
   border-radius: 1rem;
@@ -129,7 +130,7 @@ export const StyledComments = styled.div`
     content: attr(data-comments-count);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
     color: white;
   }
 
