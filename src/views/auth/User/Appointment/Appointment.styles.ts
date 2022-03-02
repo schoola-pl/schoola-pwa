@@ -24,8 +24,7 @@ export const StyledCalendar = styled(Calendar)`
     height: 30.5rem;
   }
   @media (min-height: 830px) {
-    margin-bottom: 4.2rem;
-    height: 31.5rem;
+    margin-bottom: 4rem;
   }
 `;
 

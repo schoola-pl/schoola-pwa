@@ -13,11 +13,13 @@ export const InterestSectionWrapper = styled.div`
 `;
 
 export const InterestWrapper = styled.div`
+  padding: 1rem;
+  width: 100vw;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1rem 2rem;
+  gap: 2rem 2rem;
 `;
 
 export const Interest = styled.div`
