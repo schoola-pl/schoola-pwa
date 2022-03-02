@@ -1,5 +1,4 @@
-import { PageWrapper, MeetingWrapper } from './TodayPage.styles';
-import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
+import { MeetingWrapper, PageWrapper } from './TodayPage.styles';
 import PsychoGreet from 'components/molecules/PsychoGreet/PsychoGreet';
 import Meeting from 'components/molecules/Meeting/Meeting';
 
@@ -37,16 +36,14 @@ const meetings = [
 ];
 
 const TodayPage = () => (
-  <PsychoTemplate>
-    <PageWrapper>
-      <PsychoGreet />
-      <MeetingWrapper>
-        {meetings.map(({ meetHour, nameClass, user, email }) => (
-          <Meeting meetHour={meetHour} user={user} email={email} nameClass={nameClass} />
-        ))}
-      </MeetingWrapper>
-    </PageWrapper>
-  </PsychoTemplate>
+  <PageWrapper>
+    <PsychoGreet />
+    <MeetingWrapper>
+      {meetings.map(({ meetHour, nameClass, user, email }) => (
+        <Meeting meetHour={meetHour} user={user} email={email} nameClass={nameClass} />
+      ))}
+    </MeetingWrapper>
+  </PageWrapper>
 );
 
 export default TodayPage;

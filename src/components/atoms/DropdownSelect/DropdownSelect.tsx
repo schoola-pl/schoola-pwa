@@ -1,8 +1,9 @@
 import { StyledButton, StyledList } from './DropdownSelect.styles';
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useSelect } from 'downshift';
+import React, { useEffect } from 'react';
 
-const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:10'];
+const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:00'];
 
 const stateReducer = (state: any, actionAndChanges: any) => {
   const { type, changes } = actionAndChanges;
@@ -23,16 +24,38 @@ const stateReducer = (state: any, actionAndChanges: any) => {
       return changes; // otherwise business as usual.
   }
 };
-const DropdownSelect = () => {
+
+interface props {
+  type: 'start' | 'end';
+  dayTime: {
+    start: string;
+    end: string;
+  };
+  setDayTime: React.Dispatch<React.SetStateAction<{ start: string; end: string }>>;
+}
+
+const DropdownSelect: React.FC<props> = ({ dayTime, setDayTime, type }) => {
+  const isStart = type === 'start';
   const { isOpen, selectedItem, getToggleButtonProps, getLabelProps, getMenuProps, highlightedIndex, getItemProps } = useSelect({
     items,
     stateReducer
   });
+
+  useEffect(() => {
+    if (selectedItem) {
+      if (isStart) {
+        setDayTime((prev) => ({ ...prev, start: selectedItem }));
+      } else {
+        setDayTime((prev) => ({ ...prev, end: selectedItem }));
+      }
+    }
+  }, [selectedItem]);
+
   return (
     <div>
       <label {...getLabelProps()} />
       <StyledButton type="button" {...getToggleButtonProps()}>
-        {selectedItem || items[0]}
+        {selectedItem || dayTime[isStart ? 'start' : 'end'] || items[isStart ? 0 : items.length - 1]}
       </StyledButton>
       <StyledList {...getMenuProps()}>
         {isOpen &&
@@ -46,8 +69,6 @@ const DropdownSelect = () => {
             </li>
           ))}
       </StyledList>
-      {/* if you Tab from menu, focus goes on button, and it shouldn't. only happens in codesandbox. */}
-
       <div />
     </div>
   );

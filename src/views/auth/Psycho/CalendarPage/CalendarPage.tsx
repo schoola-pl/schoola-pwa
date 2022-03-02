@@ -1,12 +1,11 @@
-import { PageWrapper, StyledCalendar, CancelButton, Wrapper, InnerWrapper, ModalWrapper } from './CalendarPage.styles';
+import { CancelButton, InnerWrapper, ModalWrapper, PageWrapper, StyledCalendar, Wrapper } from './CalendarPage.styles';
 import { useState } from 'react';
 import { useModal } from 'hooks/useModal';
-import { format } from 'date-fns';
 import Button from 'components/atoms/Button/Button';
 import Hours from 'components/molecules/Hours/Hours';
-import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
-import pl from 'date-fns/locale/pl';
 import './styles.css';
+import { format } from 'date-fns';
+import pl from 'date-fns/locale/pl';
 
 const CalendarPage = () => {
   const [value, onChange] = useState(new Date());
@@ -18,37 +17,35 @@ const CalendarPage = () => {
     element.classList.add('button-active');
   };
   return (
-    <PsychoTemplate>
-      <PageWrapper>
-        <StyledCalendar
-          onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
-          locale="pl"
-          minDate={new Date(2022, 1, 1)}
-          maxDate={new Date(2022, 6, 12)}
-          onChange={onChange}
-          value={value}
-        />
-        <Wrapper>
-          <InnerWrapper>
-            <h1>Godziny</h1>
-            <button
-              onClick={() =>
-                openModal(
-                  <ModalWrapper>
-                    <Button onClick={closeModal}>Akceptuj zmiany</Button>
-                    <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                  </ModalWrapper>,
-                  'Odwołaj - 10.03'
-                )
-              }
-            >
-              Odwołaj obecność
-            </button>
-          </InnerWrapper>
-          <Hours />
-        </Wrapper>
-      </PageWrapper>
-    </PsychoTemplate>
+    <PageWrapper>
+      <StyledCalendar
+        onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
+        locale="pl"
+        minDate={new Date(2022, 1, 1)}
+        maxDate={new Date(2022, 6, 12)}
+        onChange={onChange}
+        value={value}
+      />
+      <Wrapper>
+        <InnerWrapper>
+          <h1>Godziny</h1>
+          <button
+            onClick={() =>
+              openModal(
+                <ModalWrapper>
+                  <Button onClick={closeModal}>Akceptuj zmiany</Button>
+                  <CancelButton onClick={closeModal}>Anuluj</CancelButton>
+                </ModalWrapper>,
+                'Odwołaj - 10.03'
+              )
+            }
+          >
+            Odwołaj obecność
+          </button>
+        </InnerWrapper>
+        <Hours />
+      </Wrapper>
+    </PageWrapper>
   );
 };
 

@@ -8,7 +8,11 @@ export const InterestedsAPI = createApi({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
   endpoints: (builder) => ({
-    getInteresteds: builder.query<multiResponse<{ name: string }>, unknown>({
+    getInteresteds: builder.query<{ id: number; name: string }[], unknown>({
+      transformResponse: (response) => {
+        const { data } = response as multiResponse<{ name: string }>;
+        return data.map((interested) => ({ id: interested.id, name: interested.attributes.name }));
+      },
       query: () => ({
         url: `/interesteds?pagination[pageSize]=50`,
         headers: {

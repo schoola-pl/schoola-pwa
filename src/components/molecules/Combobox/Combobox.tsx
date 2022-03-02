@@ -9,14 +9,15 @@ interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const hobbiesLimit = 5;
 const Combobox: React.FC<props> = ({ setReadyState }) => {
   const { addInterested, removeInterested } = useUser();
   const interesteds = useGetInterestedsQuery({});
-  const getIdFromName = (name: string) => interesteds?.data?.data?.find((item) => item.attributes.name === name)?.id;
+  const getIdFromName = (name: string) => interesteds.data?.find((item) => item.name === name)?.id;
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection();
   const getFilteredItems = () => {
-    const items = interesteds?.data?.data?.map((item) => item.attributes.name) || [];
+    const items = interesteds.data?.map((item) => item.name) || [];
     return items.filter((item) => selectedItems.indexOf(item) < 0 && item.toLowerCase().startsWith(inputValue?.toLowerCase() || '')).sort();
   };
   const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
@@ -43,15 +44,14 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
         case useCombobox.stateChangeTypes.InputBlur:
-          if (selectedItem && selectedItems.length <= 2 && interesteds.data?.data) {
+          if (selectedItem && selectedItems.length <= hobbiesLimit - 1 && interesteds.data) {
             setInputValue('');
             const selectedItemId = getIdFromName(selectedItem);
             if (selectedItemId)
               addInterested({
-                id: selectedItemId,
-                allInteresteds: interesteds.data?.data
+                id: selectedItemId
               });
-            if (selectedItems.length === 2) setReadyState(true);
+            if (selectedItems.length === hobbiesLimit - 1) setReadyState(true);
             addSelectedItem(selectedItem);
           }
           break;
@@ -68,7 +68,9 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
         </label>
         <StyledInputWrapper {...getComboboxProps()}>
           <div style={{ padding: '0.6rem' }}>
-            {!selectedItems.length && <div style={{ paddingBottom: '1.2rem', fontSize: '1.2rem' }}>Tutaj znajdziesz wybrane 3 pozycje!</div>}
+            {!selectedItems.length && (
+              <div style={{ paddingBottom: '1.2rem', fontSize: '1.2rem' }}>Tutaj znajdziesz wybrane {hobbiesLimit} pozycji!</div>
+            )}
             {selectedItems.map((selectedItem, index) => (
               <StyledSelectedItem key={`selected-item-${index}`} {...getSelectedItemProps({ selectedItem, index })}>
                 {selectedItem}

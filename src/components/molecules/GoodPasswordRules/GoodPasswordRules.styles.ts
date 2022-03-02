@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PasswordInfoWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0rem;
+  margin-bottom: 0;
 `;
 
 export const Signature = styled.p`

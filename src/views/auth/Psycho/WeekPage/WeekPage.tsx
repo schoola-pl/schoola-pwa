@@ -1,12 +1,17 @@
-import { PageWrapper, MeetingWrapper, Week, WeekWrapper, DayLink } from './WeekPage.styles';
-import PsychoTemplate from 'components/templates/PsychoTemplate/PsychoTemplate';
+import { DayLink, MeetingWrapper, PageWrapper, Week, WeekWrapper } from './WeekPage.styles';
+import { endOfWeek, format, startOfWeek } from 'date-fns';
 
-const WeekPage = () => (
-  <PsychoTemplate>
+const WeekPage = () => {
+  const weekStart = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'dd.MM');
+  const weekEnd = format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'dd.MM');
+
+  return (
     <PageWrapper>
       <Week>
         <WeekWrapper>
-          <p>13.02 - 20.02</p>
+          <p>
+            {weekStart} - {weekEnd}
+          </p>
         </WeekWrapper>
       </Week>
       <MeetingWrapper>
@@ -42,7 +47,7 @@ const WeekPage = () => (
         </DayLink>
       </MeetingWrapper>
     </PageWrapper>
-  </PsychoTemplate>
-);
+  );
+};
 
 export default WeekPage;

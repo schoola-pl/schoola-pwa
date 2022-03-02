@@ -19,7 +19,7 @@ export const StyledList = styled.ul`
   justify-content: center !important;
   border-radius: 1rem;
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   li {
     width: 100%;

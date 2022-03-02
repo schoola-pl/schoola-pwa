@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from 'store';
 import { authUser } from 'types/auth';
 import { useNavigate } from 'react-router';
-import { dashboardRoute, loginRoute } from 'routes';
+import { dashboardRoute, loginRoute, roles } from 'routes';
 import { useAppLoading } from './useAppLoading';
 
 interface RouteContextTypes {
@@ -13,6 +13,7 @@ interface RouteContextTypes {
   checkUser: () => Promise<boolean>;
   unlockRoutes: (jwt: string, userData: authUser, redirectTo?: string) => void;
   blockRoutes: (redirectTo?: string) => void;
+  checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
 const RouteContext = createContext<RouteContextTypes>({
@@ -27,6 +28,9 @@ const RouteContext = createContext<RouteContextTypes>({
   },
   blockRoutes: () => {
     throw new Error('RouteContext.blockRoutes is not implemented');
+  },
+  checkDoesRoleHasPermission: () => {
+    throw new Error('RouteContext.checkDoesRoleHasPermission is not implemented');
   }
 });
 export const RouteProvider: React.FC = ({ children }) => {
@@ -88,11 +92,23 @@ export const RouteProvider: React.FC = ({ children }) => {
     setAppLoading(false);
   };
 
+  // This method checks does user has permission to access the route (by his role name)
+  const checkDoesRoleHasPermission = (entitledRole: string | string[], actualRole: string) => {
+    if (actualRole === roles.authenticated) return true;
+
+    if (Array.isArray(entitledRole)) {
+      return entitledRole.includes(actualRole);
+    } else {
+      return entitledRole === actualRole;
+    }
+  };
+
   const values = {
     getUserData,
     checkUser,
     unlockRoutes,
-    blockRoutes
+    blockRoutes,
+    checkDoesRoleHasPermission
   };
   return <RouteContext.Provider value={values}>{children}</RouteContext.Provider>;
 };
