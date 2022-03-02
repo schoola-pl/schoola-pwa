@@ -6,16 +6,24 @@ import Person from 'components/atoms/Person/Person';
 import Interests from 'components/atoms/Interests/Interests';
 import Links from 'components/molecules/Links/Links';
 import { useSelector } from 'react-redux';
-import { storeRoot, useGetInterestedsQuery } from 'store';
+import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
 
 const Home: React.FC = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
-  const { findInterested, socials } = useUser();
+  const { findInterested } = useUser();
   const [image, setImage] = useState('');
   const interesteds = useGetInterestedsQuery({});
+  const socials = useGetSocialsQuery(
+    {
+      userId: user?.TextSocials || null
+    },
+    {
+      refetchOnMountOrArgChange: true
+    }
+  );
 
   useEffect(() => {
     if (user) {
@@ -37,7 +45,7 @@ const Home: React.FC = () => {
       </Grid>
       <div>
         <Interests interests={findInterested(user.TextInteresteds.split(';'), interesteds.data)} />
-        {socials.length > 0 && <Links socials={socials} />}
+        {socials.data && socials.data?.length > 0 && <Links socials={socials.data} />}
       </div>
     </Wrapper>
   );

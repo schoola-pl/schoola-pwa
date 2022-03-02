@@ -67,7 +67,6 @@ interface UserContextTypes {
   >;
   deleteUser: (userId: number, count?: number) => void;
   deleteUsers: (users: Partial<authUser>[] | number[], actualCount: number) => void;
-  socials: { id: number; platform: string; url: string }[];
   addSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
   deleteSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
 }
@@ -103,7 +102,6 @@ const UserContext = createContext<UserContextTypes>({
   deleteUsers: () => {
     throw new Error('UserContext is not initialized');
   },
-  socials: [],
   addSocial: () => {
     throw new Error('UserContext is not initialized');
   },
@@ -123,14 +121,9 @@ export const UserProvider: React.FC = ({ children }) => {
   const [deleteUserMethod] = useRemoveUserMutation();
   const [updateCount] = useUpdateSchoolCountMutation();
   const [updateSocials] = useUpdateSocialMutation();
-  const userSocials = useGetSocialsQuery(
-    {
-      userId: user?.TextSocials || null
-    },
-    {
-      refetchOnMountOrArgChange: true
-    }
-  );
+  const userSocials = useGetSocialsQuery({
+    userId: user?.TextSocials || null
+  });
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -369,7 +362,6 @@ export const UserProvider: React.FC = ({ children }) => {
     addNewUser,
     deleteUser,
     deleteUsers,
-    socials: userSocials.data || [],
     addSocial,
     deleteSocial
   };
