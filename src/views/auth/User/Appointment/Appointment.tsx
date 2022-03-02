@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PageWrapper, StyledCalendar, Wrapper, InnerWrapper } from './Appointment.styles';
 import { format } from 'date-fns';
+import UserHours from 'components/molecules/UserHours/UserHours';
 import pl from 'date-fns/locale/pl';
 import './styles.css';
 
@@ -22,7 +23,16 @@ const Appointment = () => {
         onChange={onChange}
         value={value}
       />
-      <div>hello</div>
+      <Wrapper>
+        <InnerWrapper>
+          <h1>Godziny</h1>
+          <select name="" id="">
+            <option value="">Marzena Jarosz</option>
+            <option value="">Krzysztof Golonka</option>
+          </select>
+        </InnerWrapper>
+        <UserHours />
+      </Wrapper>
     </PageWrapper>
   );
 };

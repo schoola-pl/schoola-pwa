@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
-import Button from 'components/atoms/Button/Button';
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -31,7 +30,7 @@ export const StyledCalendar = styled(Calendar)`
 `;
 
 export const Wrapper = styled.div`
-  width: 90%;
+  width: 105%;
   height: 24.5rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
@@ -42,38 +41,25 @@ export const Wrapper = styled.div`
 `;
 
 export const InnerWrapper = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
-  h1 {
-    margin-right: 6rem;
-    font-weight: ${({ theme }) => theme.fontWeight.medium};
-  }
-  button {
+
+  select {
+    padding: 0.5rem;
     border: none;
     border-radius: 1rem;
-    color: white;
-    height: 4rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    font-size: ${({ theme }) => theme.fontSize.xs};
-    background-color: ${({ theme }) => theme.colors.accentBlue};
+    background-color: #f7f8fa;
+  }
+
+  h1 {
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
   }
 `;
 
 export const ModalWrapper = styled.div`
   display: flex;
-`;
-
-export const CancelButton = styled(Button)`
-  margin-left: 1rem;
-  background-color: ${({ theme }) => theme.colors.accentRed};
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.accentRed};
-    opacity: 0.5;
-  }
 `;
