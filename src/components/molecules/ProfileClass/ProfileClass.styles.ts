@@ -80,4 +80,8 @@ export const Flex = styled.div`
   @media (min-width: 390px) {
     transform: translateY(-18%);
   }
+
+  h1 {
+    padding-right: 1rem;
+  }
 `;
