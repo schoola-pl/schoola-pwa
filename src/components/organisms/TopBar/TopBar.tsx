@@ -26,7 +26,7 @@ const TopBar = () => {
       <Logo>schoola</Logo>
       <InnerWrapper>
         <NotificationList />
-        <StyledSidebarLink as={Link} to="profile/settings" icon={SettingsIcon} />
+        <StyledSidebarLink as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );
