@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { storeRoot } from 'store';
 
 const GreetWrapper = styled.div`
   display: flex;
@@ -40,17 +43,25 @@ const MeetParagraph = styled.p`
   }
 `;
 
-const PsychoGreet = () => (
-  <GreetWrapper>
-    <InnerWrapper>
-      <h1>
-        Dzień dobry <strong>Maciej!</strong>
-      </h1>
-      <MeetParagraph>
-        Masz dzisiaj <strong>3</strong> spotkań
-      </MeetParagraph>
-    </InnerWrapper>
-  </GreetWrapper>
-);
+interface props {
+  meetingsCount: number;
+}
+
+const PsychoGreet: React.FC<props> = ({ meetingsCount }) => {
+  const user = useSelector((state: storeRoot) => state.user);
+
+  return (
+    <GreetWrapper>
+      <InnerWrapper>
+        <h1>
+          Dzień dobry <strong>{user?.first_name || 'użytkowniku'}</strong>!
+        </h1>
+        <MeetParagraph>
+          Masz dzisiaj <strong>{meetingsCount}</strong> spotkań
+        </MeetParagraph>
+      </InnerWrapper>
+    </GreetWrapper>
+  );
+};
 
 export default PsychoGreet;

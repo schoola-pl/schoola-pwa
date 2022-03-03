@@ -1,5 +1,4 @@
 import { Header, MeetingWrapper, PageWrapper } from './DayPage.styles';
-import Meeting from 'components/molecules/Meeting/Meeting';
 import { useParams } from 'react-router';
 import { translateDayToPolish } from 'helpers/week';
 import { upperFirstLetter } from 'helpers/text';
@@ -47,9 +46,9 @@ const DayPage = () => {
         <h3>{upperFirstLetter(translateDayToPolish(dayName || 'poniedziałek'))}</h3>
       </Header>
       <MeetingWrapper>
-        {meetings.map(({ meetHour, nameClass, user, email }) => (
-          <Meeting meetHour={meetHour} user={user} email={email} nameClass={nameClass} />
-        ))}
+        {/*{meetings.map(({ meetHour, nameClass, user, email }) => (*/}
+        {/*  <Meeting meetHour={meetHour} user={user} />*/}
+        {/*))}*/}
       </MeetingWrapper>
     </PageWrapper>
   );
