@@ -23,7 +23,7 @@ const PsychoRoutes = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/week" element={<WeekPage />} />
-          <Route path="/week/:weekId" element={<DayPage />} />
+          <Route path="/week/:dayName" element={<DayPage />} />
         </Routes>
       )}
     </PsychoTemplate>

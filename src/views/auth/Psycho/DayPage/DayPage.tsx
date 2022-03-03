@@ -1,5 +1,8 @@
-import { MeetingWrapper, PageWrapper } from './DayPage.styles';
+import { Header, MeetingWrapper, PageWrapper } from './DayPage.styles';
 import Meeting from 'components/molecules/Meeting/Meeting';
+import { useParams } from 'react-router';
+import { translateDayToPolish } from 'helpers/week';
+import { upperFirstLetter } from 'helpers/text';
 
 const meetings = [
   {
@@ -34,14 +37,22 @@ const meetings = [
   }
 ];
 
-const DayPage = () => (
-  <PageWrapper>
-    <MeetingWrapper>
-      {meetings.map(({ meetHour, nameClass, user, email }) => (
-        <Meeting meetHour={meetHour} user={user} email={email} nameClass={nameClass} />
-      ))}
-    </MeetingWrapper>
-  </PageWrapper>
-);
+const DayPage = () => {
+  const { dayName } = useParams();
+
+  return (
+    <PageWrapper>
+      <Header>
+        <p>Spotkania na dzień: </p>
+        <h3>{upperFirstLetter(translateDayToPolish(dayName || 'poniedziałek'))}</h3>
+      </Header>
+      <MeetingWrapper>
+        {meetings.map(({ meetHour, nameClass, user, email }) => (
+          <Meeting meetHour={meetHour} user={user} email={email} nameClass={nameClass} />
+        ))}
+      </MeetingWrapper>
+    </PageWrapper>
+  );
+};
 
 export default DayPage;
