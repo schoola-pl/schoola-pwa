@@ -16,7 +16,8 @@ const middlewares = [
   InterestedsAPI.middleware,
   SpottedAPI.middleware,
   PostsAPI.middleware,
-  SocialsAPI.middleware
+  SocialsAPI.middleware,
+  MeetingsAPI.middleware
 ];
 
 const store = configureStore({
