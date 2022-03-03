@@ -9,7 +9,7 @@ export const PageWrapper = styled.div`
   align-items: center;
 `;
 
-export const FPWrapper = styled.div`
+export const Wrapper = styled.div<{ email?: boolean }>`
   background-color: white;
   width: 100%;
   height: 32rem;
@@ -17,16 +17,19 @@ export const FPWrapper = styled.div`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   padding-top: 1rem;
   padding-left: 2rem;
+  margin-bottom: 5rem;
 
   form {
     display: flex;
     align-items: center;
     flex-direction: column;
+    transform: translateY(${({ email }) => (email ? '10%' : '0')});
   }
 `;
 
-export const SubmitButton = styled(Button)`
+export const SubmitButton = styled(Button)<{ email?: boolean }>`
   margin-right: 1.5rem;
+  transform: translateY(${({ email }) => (email ? '75%' : 0)});
 `;
 
 export const InputWrapper = styled.div`

@@ -1,26 +1,22 @@
 import { Wrapper, InputWrapper, SubmitButton } from '../Settings.styles';
 
-const ChangePassword = () => {
+const ChangeEmail = () => {
   return (
-    <Wrapper>
-      <h1>Zmień hasło</h1>
+    <Wrapper email={true}>
+      <h1>Zmień e-mail</h1>
       <form action="">
         <InputWrapper>
           <label htmlFor="">Obecne hasło</label>
-          <input type="password" />
+          <input type="e-mail" />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="">Nowe hasło</label>
           <input type="password" />
         </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="">Potwierdź hasło</label>
-          <input type="password" />
-        </InputWrapper>
-        <SubmitButton>Potwierdź</SubmitButton>
+        <SubmitButton email={true}>Potwierdź</SubmitButton>
       </form>
     </Wrapper>
   );
 };
 
-export default ChangePassword;
+export default ChangeEmail;
