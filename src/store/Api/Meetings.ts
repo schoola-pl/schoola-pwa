@@ -25,7 +25,7 @@ export const MeetingsAPI = createApi({
         });
       },
       query: (args) => ({
-        url: `/mettings?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*`,
+        url: `/mettings?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*&sort=start`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
