@@ -60,24 +60,24 @@ export const DayLink = styled(Link)`
 export const Week = styled.div`
   width: 100%;
   display: flex;
-  padding-left: 2rem;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 2rem;
+
+  & > p {
+    font-size: 1.7rem;
+    margin: 0;
+  }
 `;
 
 export const WeekWrapper = styled.div`
   color: white;
-  height: 5rem;
-  border-radius: 1rem;
-  width: 11rem;
-  margin-bottom: 2.5rem;
+  border-radius: 0.7rem;
+  padding: 0.8rem 1rem;
   font-size: ${({ theme }) => theme.fontSize.s};
   background-color: ${({ theme }) => theme.colors.accentBlue};
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  p {
-    transform: translateY(-10%);
-  }
+  margin-left: 1rem;
 `;

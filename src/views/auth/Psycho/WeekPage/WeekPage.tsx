@@ -8,10 +8,9 @@ const WeekPage = () => {
   return (
     <PageWrapper>
       <Week>
+        <p>Aktualny tydzień</p>
         <WeekWrapper>
-          <p>
-            {weekStart} - {weekEnd}
-          </p>
+          {weekStart} - {weekEnd}
         </WeekWrapper>
       </Week>
       <MeetingWrapper>
