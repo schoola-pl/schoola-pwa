@@ -7,6 +7,7 @@ import SpottedAPI from './Api/Spotted';
 import PostsAPI from './Api/Post';
 import SocialsAPI from './Api/Social';
 import userSlice from './Slices/User';
+import MeetingsAPI from 'store/Api/Meetings';
 
 const middlewares = [
   AuthAPI.middleware,
@@ -27,7 +28,8 @@ const store = configureStore({
     [InterestedsAPI.reducerPath]: InterestedsAPI.reducer,
     [SpottedAPI.reducerPath]: SpottedAPI.reducer,
     [PostsAPI.reducerPath]: PostsAPI.reducer,
-    [SocialsAPI.reducerPath]: SocialsAPI.reducer
+    [SocialsAPI.reducerPath]: SocialsAPI.reducer,
+    [MeetingsAPI.reducerPath]: MeetingsAPI.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares)
 });
@@ -43,4 +45,5 @@ export * from './Api/Post';
 export * from './Api/Interesteds';
 export * from './Api/Social';
 export * from './Slices/User';
+export * from './Api/Meetings';
 export default store;
