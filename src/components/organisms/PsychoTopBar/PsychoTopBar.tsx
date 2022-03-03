@@ -1,5 +1,6 @@
+import { upperFirstLetter } from 'helpers/text';
 import React from 'react';
-import { Wrapper, Logo, DateWrapper, Day } from './PsychoTopBar.styles';
+import { DateWrapper, Day, Logo, Wrapper } from './PsychoTopBar.styles';
 
 interface Props {
   number: number;
@@ -16,7 +17,7 @@ const PsychoTopBar: React.FC<Props> = ({ number, day, month, year }) => (
       <div>
         <Day>{day}</Day>
         <p>
-          {month} {year}
+          {upperFirstLetter(month)} {year}
         </p>
       </div>
     </DateWrapper>
