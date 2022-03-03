@@ -7,6 +7,12 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.accentBlue};
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
 `;
 
 export const Wrapper = styled.div<{ email?: boolean }>`

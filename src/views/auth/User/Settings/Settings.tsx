@@ -7,6 +7,7 @@ const Settings = () => {
     <PageWrapper>
       <ChangePassword />
       <ChangeEmail />
+      <a href="mailto:schoolacontact@gmail.com">Zgłoś problem</a>
     </PageWrapper>
   );
 };
