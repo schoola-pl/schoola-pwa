@@ -3,7 +3,6 @@ import Calendar from 'react-calendar';
 import Button from 'components/atoms/Button/Button';
 
 export const PageWrapper = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

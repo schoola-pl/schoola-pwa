@@ -6,16 +6,13 @@ import React from 'react';
 import pl from 'date-fns/locale/pl';
 
 const Wrapper = styled.div`
-  margin-top: 10rem;
-  z-index: -1;
+  overflow-x: hidden;
   overflow-y: auto !important;
-
-  @media (min-height: 740px) {
-    height: 75vh;
-  }
+  max-height: 100vh;
+  padding: 11.5rem 1rem;
 
   ::-webkit-scrollbar {
-    background-color: transparent;
+    display: none;
   }
 `;
 
