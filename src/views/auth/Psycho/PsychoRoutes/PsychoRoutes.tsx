@@ -7,6 +7,7 @@ import TodayPage from 'views/auth/Psycho/TodayPage/TodayPage';
 import ProfilePage from 'views/auth/Psycho/ProfilePage/ProfilePage';
 import CalendarPage from 'views/auth/Psycho/CalendarPage/CalendarPage';
 import WeekPage from 'views/auth/Psycho/WeekPage/WeekPage';
+import DayPage from 'views/auth/Psycho/DayPage/DayPage';
 
 const PsychoRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -22,6 +23,7 @@ const PsychoRoutes = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/week" element={<WeekPage />} />
+          <Route path="/week/:weekId" element={<DayPage />} />
         </Routes>
       )}
     </PsychoTemplate>
