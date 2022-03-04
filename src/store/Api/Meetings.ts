@@ -34,7 +34,7 @@ export const MeetingsAPI = createApi({
     getMeetingsCount: builder.query<number, { pId: strapiRequestType; date?: string }>({
       transformResponse: (response: multiResponse) => response.data.length,
       query: (args) => ({
-        url: `/mettings?filters[pId][$eq]=${args.pId}&fields[0]=id${args.date && `&filters[date][$eq]=${args.date}`}`,
+        url: `/mettings?filters[pId][$eq]=${args.pId}&fields[0]=id${args.date ? `&filters[date][$eq]=${args.date}` : ''}`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
