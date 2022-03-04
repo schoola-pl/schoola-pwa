@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { storeRoot, useGetMeetingsForDayQuery } from 'store';
 import Meeting from 'components/molecules/Meeting/Meeting';
 import React from 'react';
+import Info from 'components/atoms/Info/Info';
 
 const meetings = [
   {
@@ -59,9 +60,11 @@ const DayPage = () => {
       </Header>
       <MeetingWrapper>
         {meetings.isLoading || !meetings.data ? (
-          <p>Wczytywanie...</p>
+          <Info>Wczytywanie...</Info>
+        ) : meetings.data.length !== 0 ? (
+          meetings.data.map(({ start, user }) => <Meeting key={start} meetHour={start} user={user} />)
         ) : (
-          meetings.data.map(({ start, user }) => <Meeting meetHour={start} user={user} />)
+          <Info>Brak spotkań na ten dzień!</Info>
         )}
       </MeetingWrapper>
     </PageWrapper>
