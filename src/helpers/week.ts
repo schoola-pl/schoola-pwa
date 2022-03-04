@@ -1,6 +1,8 @@
-export const translateDayToPolish = (day: string) => {
+import { endOfWeek, format, startOfWeek } from 'date-fns';
+
+export const translateDayToPolish = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') => {
   const preparedDay = day.toLowerCase();
-  switch (day) {
+  switch (preparedDay) {
     case 'monday':
       return 'poniedziałek';
     case 'tuesday':
@@ -20,8 +22,9 @@ export const translateDayToPolish = (day: string) => {
   }
 };
 
-export const translateDayToEnglish = (day: string) => {
-  switch (day) {
+export const translateDayToEnglish = (day: 'poniedziałek' | 'wtorek' | 'środa' | 'czwartek' | 'piątek' | 'sobota' | 'niedziela') => {
+  const preparedDay = day.toLowerCase();
+  switch (preparedDay) {
     case 'poniedziałek':
       return 'monday';
     case 'wtorek':
@@ -38,5 +41,24 @@ export const translateDayToEnglish = (day: string) => {
       return 'sunday';
     default:
       return 'unknown';
+  }
+};
+
+const ISOpattern = 'yyyy-MM-dd';
+export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') => {
+  const preparedDay = day.toLowerCase();
+  const days: { [key: string]: 0 | 1 | 2 | 3 | 4 | 5 | 6 } = {
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 1,
+    sunday: 2
+  };
+  if (preparedDay === 'saturday' || preparedDay === 'sunday') {
+    return format(endOfWeek(new Date(), { weekStartsOn: days[preparedDay] }), ISOpattern);
+  } else {
+    return format(startOfWeek(new Date(), { weekStartsOn: days[preparedDay] }), ISOpattern);
   }
 };
