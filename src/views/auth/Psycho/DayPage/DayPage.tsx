@@ -38,12 +38,15 @@ const meetings = [
 
 const DayPage = () => {
   const { dayName } = useParams();
+  const dayPolish = upperFirstLetter(
+    translateDayToPolish((dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') || 'monday')
+  );
 
   return (
     <PageWrapper>
       <Header>
         <p>Spotkania na dzień: </p>
-        <h3>{upperFirstLetter(translateDayToPolish(dayName || 'poniedziałek'))}</h3>
+        <h3>{dayPolish}</h3>
       </Header>
       <MeetingWrapper>
         {/*{meetings.map(({ meetHour, nameClass, user, email }) => (*/}
