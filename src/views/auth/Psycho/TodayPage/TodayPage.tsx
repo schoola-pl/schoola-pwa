@@ -3,6 +3,7 @@ import PsychoGreet from 'components/molecules/PsychoGreet/PsychoGreet';
 import { storeRoot, useGetMeetingsForDayQuery } from 'store';
 import { useSelector } from 'react-redux';
 import Meeting from 'components/molecules/Meeting/Meeting';
+import Info from 'components/atoms/Info/Info';
 
 const TodayPage = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -13,17 +14,17 @@ const TodayPage = () => {
 
   return (
     <PageWrapper>
+      <PsychoGreet />
       {meetings.isLoading || !meetings.data ? (
-        <p>Wczytywanie...</p>
+        <Info>Wczytywanie...</Info>
+      ) : meetings.data.length > 0 ? (
+        <MeetingWrapper>
+          {meetings.data.map(({ start, user }) => (
+            <Meeting meetHour={start} user={user} />
+          ))}
+        </MeetingWrapper>
       ) : (
-        <>
-          <PsychoGreet meetingsCount={meetings.data.length} />
-          <MeetingWrapper>
-            {meetings.data.map(({ start, user }) => (
-              <Meeting meetHour={start} user={user} />
-            ))}
-          </MeetingWrapper>
-        </>
+        <Info>Dzisiaj masz już wolne! 😎</Info>
       )}
     </PageWrapper>
   );

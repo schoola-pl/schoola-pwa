@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { storeRoot } from 'store';
+import { storeRoot, useGetMeetingsCountQuery } from 'store';
 
 const GreetWrapper = styled.div`
   display: flex;
@@ -43,12 +43,12 @@ const MeetParagraph = styled.p`
   }
 `;
 
-interface props {
-  meetingsCount: number;
-}
-
-const PsychoGreet: React.FC<props> = ({ meetingsCount }) => {
+const PsychoGreet: React.FC = () => {
   const user = useSelector((state: storeRoot) => state.user);
+  const count = useGetMeetingsCountQuery({
+    pId: user?.id || null,
+    date: new Date().toISOString().slice(0, 10)
+  });
 
   return (
     <GreetWrapper>
@@ -57,7 +57,7 @@ const PsychoGreet: React.FC<props> = ({ meetingsCount }) => {
           Dzień dobry <strong>{user?.first_name || 'użytkowniku'}</strong>!
         </h1>
         <MeetParagraph>
-          Masz dzisiaj <strong>{meetingsCount}</strong> spotkań
+          Masz dzisiaj <strong>{count.data}</strong> spotkań
         </MeetParagraph>
       </InnerWrapper>
     </GreetWrapper>
