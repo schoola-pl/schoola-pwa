@@ -61,7 +61,7 @@ const DayPage = () => {
       <MeetingWrapper>
         {meetings.isLoading || !meetings.data ? (
           <Info>Wczytywanie...</Info>
-        ) : meetings.data.length !== 0 ? (
+        ) : meetings.data.length > 0 ? (
           meetings.data.map(({ start, user }) => <Meeting key={start} meetHour={start} user={user} />)
         ) : (
           <Info>Brak spotkań na ten dzień!</Info>
