@@ -1,7 +1,11 @@
 import { Header, MeetingWrapper, PageWrapper } from './DayPage.styles';
 import { useParams } from 'react-router';
-import { translateDayToPolish } from 'helpers/week';
+import { getDayOfWeek, translateDayToPolish } from 'helpers/week';
 import { upperFirstLetter } from 'helpers/text';
+import { useSelector } from 'react-redux';
+import { storeRoot, useGetMeetingsForDayQuery } from 'store';
+import Meeting from 'components/molecules/Meeting/Meeting';
+import React from 'react';
 
 const meetings = [
   {
@@ -38,9 +42,14 @@ const meetings = [
 
 const DayPage = () => {
   const { dayName } = useParams();
-  const dayPolish = upperFirstLetter(
-    translateDayToPolish((dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') || 'monday')
-  );
+  const preparedDayName = dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+  const dayISO = getDayOfWeek(preparedDayName);
+  const dayPolish = upperFirstLetter(translateDayToPolish(preparedDayName || 'monday'));
+  const user = useSelector((state: storeRoot) => state.user);
+  const meetings = useGetMeetingsForDayQuery({
+    pId: user?.id || null,
+    date: dayISO
+  });
 
   return (
     <PageWrapper>
@@ -49,9 +58,11 @@ const DayPage = () => {
         <h3>{dayPolish}</h3>
       </Header>
       <MeetingWrapper>
-        {/*{meetings.map(({ meetHour, nameClass, user, email }) => (*/}
-        {/*  <Meeting meetHour={meetHour} user={user} />*/}
-        {/*))}*/}
+        {meetings.isLoading || !meetings.data ? (
+          <p>Wczytywanie...</p>
+        ) : (
+          meetings.data.map(({ start, user }) => <Meeting meetHour={start} user={user} />)
+        )}
       </MeetingWrapper>
     </PageWrapper>
   );
