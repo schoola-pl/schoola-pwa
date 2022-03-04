@@ -30,9 +30,18 @@ export const MeetingsAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    getMeetingsCount: builder.query<number, { pId: strapiRequestType; date?: string }>({
+      transformResponse: (response: multiResponse) => response.data.length,
+      query: (args) => ({
+        url: `/mettings?filters[pId][$eq]=${args.pId}&fields[0]=id${args.date && `&filters[date][$eq]=${args.date}`}`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
     })
   })
 });
 
-export const { useGetMeetingsForDayQuery } = MeetingsAPI;
+export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery } = MeetingsAPI;
 export default MeetingsAPI;
