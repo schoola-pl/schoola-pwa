@@ -20,7 +20,7 @@ import {
 import { nanoid } from '@reduxjs/toolkit';
 import { getRoleFromText } from 'helpers/roles';
 import { useClass } from 'hooks/useClass';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export interface preparedUserInterface {
   username: string;
@@ -45,7 +45,7 @@ interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
   updateSettings: (settings: Partial<authUser>, userId?: number) => void;
-  resetPassword: (newPassword: string) => void;
+  resetPassword: (newPassword: string, code?: string) => void | Promise<AxiosResponse>;
   addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
   findInterested: (
@@ -67,7 +67,6 @@ interface UserContextTypes {
   >;
   deleteUser: (userId: number, count?: number) => void;
   deleteUsers: (users: Partial<authUser>[] | number[], actualCount: number) => void;
-  socials: { id: number; platform: string; url: string }[];
   addSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
   deleteSocial: (link: { platform: string; url: string }, currentLinks?: { platform: string; url: string }[]) => void;
 }
@@ -103,7 +102,6 @@ const UserContext = createContext<UserContextTypes>({
   deleteUsers: () => {
     throw new Error('UserContext is not initialized');
   },
-  socials: [],
   addSocial: () => {
     throw new Error('UserContext is not initialized');
   },
@@ -123,14 +121,9 @@ export const UserProvider: React.FC = ({ children }) => {
   const [deleteUserMethod] = useRemoveUserMutation();
   const [updateCount] = useUpdateSchoolCountMutation();
   const [updateSocials] = useUpdateSocialMutation();
-  const userSocials = useGetSocialsQuery(
-    {
-      userId: user?.TextSocials || null
-    },
-    {
-      refetchOnMountOrArgChange: true
-    }
-  );
+  const userSocials = useGetSocialsQuery({
+    userId: user?.TextSocials || null
+  });
 
   // This method logs the user out and removes the JWT from the local storage
   const logout = () => {
@@ -325,9 +318,15 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method resets the user password in the database
-  const resetPassword = (newPassword: string) => {
+  const resetPassword = (newPassword: string, code?: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
-      updateUserDatabase({ id: user?.id || null, data: { password: newPassword } });
+      if (!code) updateUserDatabase({ id: user?.id || null, data: { password: newPassword } });
+      else
+        return axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/reset-password`, {
+          code,
+          password: newPassword,
+          passwordConfirmation: newPassword
+        });
     }
   };
 
@@ -363,7 +362,6 @@ export const UserProvider: React.FC = ({ children }) => {
     addNewUser,
     deleteUser,
     deleteUsers,
-    socials: userSocials.data || [],
     addSocial,
     deleteSocial
   };
