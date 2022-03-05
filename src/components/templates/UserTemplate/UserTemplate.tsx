@@ -6,7 +6,7 @@ import React from 'react';
 const Wrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto !important;
-  max-height: 95vh;
+  max-height: 100vh;
   padding: 11.5rem 2.5rem;
 
   ::-webkit-scrollbar {

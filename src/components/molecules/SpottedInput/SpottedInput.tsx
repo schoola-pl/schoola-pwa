@@ -33,7 +33,7 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+    <div>
       {studentInfo && <StudentInfo>{studentInfo}</StudentInfo>}
       <Wrapper onSubmit={handleSubmit(handleAddSpott)}>
         <InputWrapper>

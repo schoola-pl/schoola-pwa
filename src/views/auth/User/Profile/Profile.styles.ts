@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  transform: translateY(-5%);
 `;
 
 export const Grid = styled.div`

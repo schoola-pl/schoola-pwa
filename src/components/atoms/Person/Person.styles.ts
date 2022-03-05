@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-  height: 30%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 1rem 1.2rem 1.5rem;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -28,7 +27,7 @@ export const ContentWrapper = styled.div`
 export const UserInfoWrapper = styled.div`
   overflow: hidden;
   display: grid;
-  grid-template-rows: 70% 30%;
+  grid-template-rows: 1fr auto;
   border-radius: 2rem;
   height: 24rem;
   background-color: white;
