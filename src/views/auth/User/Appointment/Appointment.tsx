@@ -53,7 +53,7 @@ const Appointment = () => {
             {!selectedPsycho ? (
               <Info>Najpierw wybierz psychologa!</Info>
             ) : (
-              <UserHours psychoId={selectedPsycho} setActiveHour={setSelectedHour} activeHour={selectedHour} />
+              <UserHours psychoId={selectedPsycho} date={selectedDate} setActiveHour={setSelectedHour} activeHour={selectedHour} />
             )}
             {selectedHour && selectedPsycho && <button onClick={handleBookMeeting}>Poproś o spotkanie</button>}
           </>
