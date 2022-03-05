@@ -3,15 +3,18 @@ import ToggleSwitch from 'components/atoms/ToggleSwitch/ToggleSwitch';
 import { DayTimeWrapper, DayWrapper, Heading } from './Day.styles';
 import { useModal } from 'hooks/useModal';
 import DayModal from 'components/molecules/DayModal/DayModal';
+import defaultHours from 'assets/globals/working-hours';
+import { translateDayToPolish } from 'helpers/week';
+import { upperFirstLetter } from 'helpers/text';
 
 interface Props {
-  dayName: string;
+  dayName: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
   setDaysConfig: React.Dispatch<React.SetStateAction<{ day: string; start: string; end: string }[]>>;
 }
 
 const defaultWorkHours = {
-  start: '08:00',
-  end: '16:00'
+  start: defaultHours[0],
+  end: defaultHours[defaultHours.length - 1]
 };
 
 const Day: React.FC<Props> = ({ dayName, setDaysConfig }) => {
@@ -49,7 +52,7 @@ const Day: React.FC<Props> = ({ dayName, setDaysConfig }) => {
     <DayWrapper>
       <div>
         <ToggleSwitch onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setToggle(ev.target?.checked)} />
-        <Heading>{dayName}</Heading>
+        <Heading>{upperFirstLetter(translateDayToPolish(dayName))}</Heading>
       </div>
       {toggle ? (
         <DayTimeWrapper>
