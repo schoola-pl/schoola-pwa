@@ -57,7 +57,7 @@ const PsychoGreet: React.FC = () => {
           Dzień dobry <strong>{user?.first_name || 'użytkowniku'}</strong>!
         </h1>
         <MeetParagraph>
-          Masz dzisiaj <strong>{count.data}</strong> spotkań
+          Masz dzisiaj <strong>{count.isLoading ? 'Pobieram...' : count.data}</strong> spotkań
         </MeetParagraph>
       </InnerWrapper>
     </GreetWrapper>
