@@ -37,7 +37,14 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
       {studentInfo && <StudentInfo>{studentInfo}</StudentInfo>}
       <Wrapper onSubmit={handleSubmit(handleAddSpott)}>
         <InputWrapper>
-          <StyledInput type="text" placeholder="Napisz wiadomość" {...register('message', { required: true })} />
+          <StyledInput
+            type="text"
+            placeholder="Napisz wiadomość"
+            {...register('message', {
+              required: true,
+              maxLength: 50
+            })}
+          />
         </InputWrapper>
         <MessageActionWrapper>
           <p>Wysyłanie wiadomości jest w pełni</p>
