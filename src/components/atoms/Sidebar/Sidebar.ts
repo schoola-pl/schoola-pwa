@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Sidebar = styled.div`
-  z-index: 99999999999;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
