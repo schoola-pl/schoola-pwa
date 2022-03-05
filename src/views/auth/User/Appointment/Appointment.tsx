@@ -5,6 +5,7 @@ import UserHours from 'components/molecules/UserHours/UserHours';
 import pl from 'date-fns/locale/pl';
 import './styles.css';
 import Info from 'components/atoms/Info/Info';
+import PsychoList from 'components/molecules/PsychoList/PsychoList';
 
 const Appointment = () => {
   const [value, onChange] = useState(new Date());
@@ -47,13 +48,7 @@ const Appointment = () => {
           <>
             <InnerWrapper>
               <h1>Godziny</h1>
-              <select onChange={handleChangePsycho}>
-                <option value="" selected disabled hidden>
-                  Wybierz psychologa
-                </option>
-                <option value="21">Marzena Jarosz</option>
-                <option value="12">Krzysztof Golonka</option>
-              </select>
+              <PsychoList handleChangePsycho={handleChangePsycho} />
             </InnerWrapper>
             {!selectedPsycho ? (
               <Info>Najpierw wybierz psychologa!</Info>
