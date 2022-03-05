@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getJWT } from 'helpers/jwt';
-import { multiResponse, strapiRequestType } from 'types/strapi';
+import { multiResponse, oneResponse, strapiRequestType } from 'types/strapi';
 import { authUser } from 'types/auth';
 
 export const MeetingsAPI = createApi({
@@ -8,19 +8,23 @@ export const MeetingsAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
+  tagTypes: ['getMeetingsForDay'],
   endpoints: (builder) => ({
     getMeetingsForDay: builder.query<
-      { id: number; date: string; isDone: boolean; start: string; user: authUser }[],
+      { id: number; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
       { pId: strapiRequestType; date: string }
     >({
-      transformResponse: (response: multiResponse<{ date: string; isDone: boolean; start: string; user: { data: { attributes: authUser } } }>) => {
+      providesTags: ['getMeetingsForDay'],
+      transformResponse: (
+        response: multiResponse<{ date: string; isDone: boolean; start: string; user: { data: { attributes: authUser; id: string } } }>
+      ) => {
         const data = response.data;
         return data.map((item) => {
           const { id, attributes } = item;
           return {
             id,
             ...attributes,
-            user: attributes.user.data.attributes
+            user: { ...attributes.user.data.attributes, id: attributes.user.data.id, meetingId: id }
           };
         });
       },
@@ -39,9 +43,20 @@ export const MeetingsAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    deleteMeeting: builder.mutation<number, { id: number }>({
+      invalidatesTags: ['getMeetingsForDay'],
+      transformResponse: (response: oneResponse) => response.data.id,
+      query: (args) => ({
+        url: `/mettings/${args.id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
     })
   })
 });
 
-export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery } = MeetingsAPI;
+export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useDeleteMeetingMutation } = MeetingsAPI;
 export default MeetingsAPI;
