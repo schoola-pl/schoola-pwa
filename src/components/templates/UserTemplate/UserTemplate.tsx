@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto !important;
   max-height: 100vh;
-  padding: 11.5rem 2.5rem;
+  padding: 10.5rem 2.5rem 12rem;
 
   ::-webkit-scrollbar {
     display: none;
