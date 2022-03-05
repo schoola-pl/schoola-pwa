@@ -12,6 +12,8 @@ export const getPathForRole = (role: string) => {
       return pathsPrepared.schoolAdmin;
     case roles.moderator:
       return `${pathsPrepared.student}home`;
+    case roles.psycho:
+      return pathsPrepared.psycho;
     default:
       return `${pathsPrepared.student}home`;
   }
@@ -23,6 +25,8 @@ export const getRoleFromText = (textRole: string) => {
       return 1;
     case roles.moderator:
       return 4;
+    case roles.psycho:
+      return 5;
     default:
       return 3;
   }

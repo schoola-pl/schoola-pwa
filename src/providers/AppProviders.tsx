@@ -11,6 +11,7 @@ import { ModalProvider } from 'hooks/useModal';
 import { SpottedProvider } from 'hooks/useSpotted';
 import { PostProvider } from 'hooks/usePost';
 import { AvatarProvider } from 'hooks/useAvatar';
+import { MeetingProvider } from 'hooks/useMeeting';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
@@ -21,13 +22,15 @@ const AppProviders: React.FC = ({ children }) => {
             <PostProvider>
               <SpottedProvider>
                 <ModalProvider>
-                  <RouteProvider>
-                    <ClassProvider>
-                      <UserProvider>
-                        <StyleProvider>{children}</StyleProvider>
-                      </UserProvider>
-                    </ClassProvider>
-                  </RouteProvider>
+                  <MeetingProvider>
+                    <RouteProvider>
+                      <ClassProvider>
+                        <UserProvider>
+                          <StyleProvider>{children}</StyleProvider>
+                        </UserProvider>
+                      </ClassProvider>
+                    </RouteProvider>
+                  </MeetingProvider>
                 </ModalProvider>
               </SpottedProvider>
             </PostProvider>

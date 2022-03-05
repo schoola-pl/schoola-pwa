@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Info, PageWrapper } from './Spotted.styles';
+import { PageWrapper } from './Spotted.styles';
+import Info from 'components/atoms/Info/Info';
 import Post from 'components/organisms/Post/Post';
 import SpottedInput from 'components/molecules/SpottedInput/SpottedInput';
 import { useSelector } from 'react-redux';

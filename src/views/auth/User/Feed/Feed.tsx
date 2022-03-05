@@ -12,7 +12,7 @@ import { baseBody, multiResponse, oneResponse } from 'types/strapi';
 import { getJWT } from 'helpers/jwt';
 import { authUser } from 'types/auth';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
-import { Info } from 'views/auth/User/Spotted/Spotted.styles';
+import Info from 'components/atoms/Info/Info';
 
 const Feed = () => {
   const [posts, setPosts] = useState<
