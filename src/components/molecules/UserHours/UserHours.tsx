@@ -23,8 +23,8 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
       if (obj.day === format(new Date(date), 'EEEE').toLowerCase()) {
         return envHours.map((hour) => {
           if (
-            parseISO(`2022-01-01 ${hour}`) < parseISO(`2022-01-01 ${obj.end}`) &&
-            parseISO(`2022-01-01 ${hour}`) > parseISO(`2022-01-01 ${obj.start}`)
+            parseISO(`2022-01-01 ${hour}`) <= parseISO(`2022-01-01 ${obj.end}`) &&
+            parseISO(`2022-01-01 ${hour}`) >= parseISO(`2022-01-01 ${obj.start}`)
           ) {
             return (
               <Hour key={hour} isActive={activeHour === hour}>
