@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, StyledButton, StyledInput, StyledLink, StyledLogo, Wrapper } from './Login.styles';
+import { Form, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
@@ -10,17 +10,16 @@ import { useNavigate } from 'react-router';
 import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
 import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
+import Logo from 'components/atoms/Logo/Logo';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
   const { unlockRoutes } = useRoutesControl();
   const navigate = useNavigate();
 
-  const {
-    register,
-    formState: { errors: formError },
-    handleSubmit
-  } = useForm();
+  const { register, handleSubmit, watch } = useForm();
+  const loginInput = watch('login');
+  const passwordInput = watch('password');
 
   useEffect(() => {
     if (getJWT()) {
@@ -47,41 +46,36 @@ const Login: React.FC = () => {
   return (
     <Wrapper>
       <AuthCard>
-        <StyledLogo />
+        <Logo />
         <Form onSubmit={handleSubmit(handleLogin)}>
           <StyledInput
             type="text"
             placeholder="Login lub email"
             data-cy="login-username"
-            error={!!formError.login || isError}
             {...register('login', {
               required: true,
               minLength: 2
             })}
           />
-          {formError.login && <ErrorParagraph>Podaj poprawny login!</ErrorParagraph>}
           <StyledInput
             type="password"
             placeholder="Hasło"
             data-cy="login-password"
-            error={!!formError.password || isError}
             {...register('password', {
               required: true,
               minLength: 6
             })}
           />
-          {formError.password && <ErrorParagraph>Podaj poprawne hasło!</ErrorParagraph>}
-          <StyledButton error={isError} type="submit" data-cy="login-button">
-            {!isLoading && !isError ? (
+          <StyledButton isDisabled={!loginInput || !passwordInput} type="submit" data-cy="login-button">
+            {!isLoading ? (
               'Zaloguj się'
-            ) : !isError && isLoading ? (
+            ) : (
               <>
                 Logowanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
               </>
-            ) : (
-              'Spróbuj ponownie!'
             )}
           </StyledButton>
+          {isError && <ErrorParagraph>Podano niepoprawny login lub hasło!</ErrorParagraph>}
           <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
         </Form>
       </AuthCard>

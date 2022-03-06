@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Logo from 'components/atoms/Logo/Logo';
 import Button from 'components/atoms/Button/Button';
 import Input from 'components/atoms/Input/Input';
 import { Link } from 'react-router-dom';
@@ -12,10 +11,6 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export const StyledLogo = styled(Logo)`
-  margin-top: 12rem;
-`;
-
 export const Form = styled.form`
   margin-top: 2.5rem;
   display: flex;
@@ -24,18 +19,10 @@ export const Form = styled.form`
   flex-direction: column;
 `;
 
-export const StyledButton = styled(Button)<{ error?: boolean }>`
-  margin-top: 2rem;
-
-  ${({ error, theme }) =>
-    error &&
-    `
-    background-color: ${theme.colors.accentRed};
-    color: ${theme.colors.lightBrown};
-    &:hover {
-      background-color: ${theme.colors.accentRedDark};
-    }
-  `}
+export const StyledButton = styled(Button)`
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
 `;
 
 export const StyledInput = styled(Input)`
@@ -45,6 +32,6 @@ export const StyledInput = styled(Input)`
 export const StyledLink = styled(Link)`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.accentBlue};
-  text-decoration: none;
+  text-decoration: underline;
   padding-top: 1.5rem;
 `;

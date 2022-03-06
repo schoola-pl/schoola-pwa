@@ -4,7 +4,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
   text-decoration: none;
   padding: 0;
   background: ${({ theme }) => theme.colors.accentGreen};
@@ -14,7 +14,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   border-radius: 50px;
   font-size: 16px;
   font-weight: 500;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, opacity 0.3s;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.lightGreen};
@@ -24,11 +24,10 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   ${({ isDisabled, theme }) =>
     isDisabled &&
     `
-  background: ${theme.colors.lightGrey};
+    opacity: 0.6;
   pointer-events: none;
   &:hover {
-  cursor: not-allowed;
-    background: ${theme.colors.selectedItemGrey};
+    cursor: not-allowed;
   }
    `};
 
