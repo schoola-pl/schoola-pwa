@@ -31,7 +31,7 @@ export const SpottedAPI = createApi({
     >({
       providesTags: ['comments'],
       query: (args) => ({
-        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author`,
+        url: `/spotteds?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.spottedId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author&pagination[pageSize]=100`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
