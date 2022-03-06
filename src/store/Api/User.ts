@@ -14,7 +14,7 @@ export const UserAPI = createApi({
     getUsers: builder.query<authUser[], { schoolId: strapiRequestType; role?: string }>({
       providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
-        url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${args.schoolId}`,
+        url: `/users?${args.role ? `filters[TextRole][$eq]=${args.role}&` : ''}filters[schoolId][$eq]=${args.schoolId}&pagination[pageSize]=100`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
@@ -45,7 +45,7 @@ export const UserAPI = createApi({
     >({
       providesTags: ['removeUser', 'update', 'addUser'],
       query: (args) => ({
-        url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole`,
+        url: `/classes?populate[users][fields][0]=blocked&populate[users][fields][1]=first_name&populate[users][fields][2]=last_name&filters[schoolId][$eq]=${args.schoolId}&fields[0]=classLevel&fields[1]=className&filters[classLevel]=${args.classLevel}&filters[className]=${args.className}&populate[users][fields]=birthday&populate[users][fields]=TextRole&pagination[pageSize]=60`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
