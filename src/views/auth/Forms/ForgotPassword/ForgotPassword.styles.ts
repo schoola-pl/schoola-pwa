@@ -28,6 +28,5 @@ export const StyledInput = styled(Input)`
 export const StyledLink = styled(Link)`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.accentBlue};
-  text-decoration: none;
-  padding-top: 1.5rem;
+  text-decoration: underline;
 `;
