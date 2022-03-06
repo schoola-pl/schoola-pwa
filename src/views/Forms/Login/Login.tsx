@@ -7,7 +7,7 @@ import { useRoutesControl } from 'hooks/useRoutesControl';
 import { getJWT } from 'helpers/jwt';
 import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
-import ErrorParagraph from '../../../../components/atoms/ErrorParagraph/ErrorParagraph';
+import ErrorParagraph from '../../../components/atoms/ErrorParagraph/ErrorParagraph';
 import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
 import Logo from 'components/atoms/Logo/Logo';

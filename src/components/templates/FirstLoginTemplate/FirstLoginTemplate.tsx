@@ -2,12 +2,12 @@ import { Animated, WelcomeButton, Wrapper } from './FirstLoginTemplate.styles';
 import StepCircles from 'components/molecules/StepCircles/StepCircles';
 import ArrowIcon from 'assets/icons/ArrowIcon.svg';
 import React, { useState } from 'react';
-import Welcome from 'views/auth/User/FirstLoginPages/Welcome/Welcome';
-import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
-import Hobbies from 'views/auth/User/FirstLoginPages/Hobbies/Hobbies';
-import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
-import PhotoPage from 'views/auth/User/FirstLoginPages/PhotoPage/PhotoPage';
-import LinksPage from 'views/auth/User/FirstLoginPages/LinksPage/LinksPage';
+import Welcome from 'views/User/FirstLoginPages/Welcome/Welcome';
+import DataPage from 'views/User/FirstLoginPages/DataPage/DataPage';
+import Hobbies from 'views/User/FirstLoginPages/Hobbies/Hobbies';
+import FinishPage from 'views/User/FirstLoginPages/FinishPage/FinishPage';
+import PhotoPage from 'views/User/FirstLoginPages/PhotoPage/PhotoPage';
+import LinksPage from 'views/User/FirstLoginPages/LinksPage/LinksPage';
 
 const FirstLoginTemplate: React.FC = () => {
   const [counter, setCounter] = useState(0);

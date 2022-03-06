@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from '../views/auth/Forms/Login/Login';
+import Login from '../views/Forms/Login/Login';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
-import Profile from 'views/auth/User/Profile/Profile';
-import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
-import PsychoRoutes from 'views/auth/Psycho/PsychoRoutes/PsychoRoutes';
+import Profile from 'views/User/Profile/Profile';
+import ForgotPassword from 'views/Forms/ForgotPassword/ForgotPassword';
+import PsychoRoutes from './PsychoRoutes/PsychoRoutes';
 
 interface routesInterface {
   // Path to component

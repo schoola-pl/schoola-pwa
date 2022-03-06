@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Wrapper } from 'views/auth/User/Profile/Profile.styles';
+import { Grid, Wrapper } from 'views/User/Profile/Profile.styles';
 import ProfileClass from 'components/molecules/ProfileClass/ProfileClass';
 import Roles from 'components/atoms/Roles/Roles';
 import Person from 'components/atoms/Person/Person';

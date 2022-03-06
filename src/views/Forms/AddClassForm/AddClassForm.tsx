@@ -9,7 +9,7 @@ import { Label, StyledForm, Wrapper } from './AddClassForm.styles';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
 import restore from 'assets/icons/restore.png';
-import { Select } from 'views/auth/SchoolAdmin/AddClass/AddClass.styles';
+import { Select } from 'views/SchoolAdmin/AddClass/AddClass.styles';
 import Loader from 'components/atoms/Loader/Loader';
 
 interface props {

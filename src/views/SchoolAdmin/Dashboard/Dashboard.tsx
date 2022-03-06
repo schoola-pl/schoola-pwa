@@ -6,7 +6,7 @@ import ClassesCard from 'components/organisms/ClassesCard/ClassesCard';
 import React from 'react';
 import { storeRoot, useGetClassesCountQuery, useGetUsersCountQuery } from 'store';
 import { useSelector } from 'react-redux';
-import Loading from '../../../../components/molecules/Loading/Loading';
+import Loading from '../../../components/molecules/Loading/Loading';
 
 const Dashboard: React.FC = () => {
   const user = useSelector((store: storeRoot) => store.user);

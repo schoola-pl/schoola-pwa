@@ -1,8 +1,8 @@
 import { ClassHeading, Grid, Heading, PeopleCard, PeopleForm, ScrollBar, Wrapper } from './AddClass.styles';
 import { useClass } from 'hooks/useClass';
-import UserRecord from '../../../../components/molecules/UserRecord/UserRecord';
+import UserRecord from '../../../components/molecules/UserRecord/UserRecord';
 import { useState } from 'react';
-import AddClassForm from 'views/auth/Forms/AddClassForm/AddClassForm';
+import AddClassForm from 'views/Forms/AddClassForm/AddClassForm';
 
 const AddClass = () => {
   const { className, users } = useClass();

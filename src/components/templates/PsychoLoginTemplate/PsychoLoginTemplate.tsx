@@ -2,10 +2,10 @@ import { Animated, WelcomeButton, Wrapper } from './PsychoLoginTemplate.styles';
 import StepCircles from 'components/molecules/StepCircles/StepCircles';
 import ArrowIcon from 'assets/icons/ArrowIcon.svg';
 import React, { useState } from 'react';
-import Welcome from 'views/auth/User/FirstLoginPages/Welcome/Welcome';
-import DataPage from 'views/auth/User/FirstLoginPages/DataPage/DataPage';
-import FinishPage from 'views/auth/User/FirstLoginPages/FinishPage/FinishPage';
-import TimeSetupPage from 'views/auth/Psycho/FirstLoginPages/TimeSetupPage/TimeSetupPage';
+import Welcome from 'views/User/FirstLoginPages/Welcome/Welcome';
+import DataPage from 'views/User/FirstLoginPages/DataPage/DataPage';
+import FinishPage from 'views/User/FirstLoginPages/FinishPage/FinishPage';
+import TimeSetupPage from 'views/Psycho/FirstLoginPages/TimeSetupPage/TimeSetupPage';
 
 const PsychoLoginTemplate: React.FC = () => {
   const [counter, setCounter] = useState(0);
