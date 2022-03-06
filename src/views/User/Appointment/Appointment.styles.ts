@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
+import Button from 'components/atoms/Button/Button';
 
 export const PageWrapper = styled.div`
   display: grid;
@@ -45,5 +46,16 @@ export const InnerWrapper = styled.div`
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.medium};
+  }
+`;
+
+export const StyledButton = styled(Button)`
+  margin: 1rem 0 1rem;
+  width: 20rem;
+  background-color: ${({ theme }) => theme.colors.accentBlue};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+    opacity: 0.9;
   }
 `;
