@@ -12,7 +12,6 @@ const SidebarLink = styled.button<{ icon: string }>`
   background-size: 75%;
   background-position: center;
   cursor: pointer;
-  margin: 1rem;
 `;
 
 export default SidebarLink;
