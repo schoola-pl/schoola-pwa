@@ -43,5 +43,6 @@ export const Hour = styled.div<{ isCanceled?: boolean; isActive?: boolean }>`
 export const HoursWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 1rem;
   grid-gap: 2.5rem;
 `;
