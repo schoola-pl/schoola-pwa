@@ -76,8 +76,8 @@ const Login: React.FC = () => {
             )}
           </StyledButton>
           {isError && <ErrorParagraph>Podano niepoprawny login lub hasło!</ErrorParagraph>}
-          <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
         </Form>
+        <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
       </AuthCard>
     </Wrapper>
   );

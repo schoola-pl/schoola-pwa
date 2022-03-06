@@ -17,6 +17,7 @@ export const Form = styled.form`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding-inline: 5rem;
 `;
 
 export const StyledButton = styled(Button)`
