@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router';
 interface props {
   role: string;
   title: string;
+  isStudent?: boolean;
 }
 
 interface roleUser {
@@ -22,7 +23,7 @@ interface roleUser {
   TextClassName: string;
 }
 
-const RoleSection: React.FC<props> = ({ role, title }) => {
+const RoleSection: React.FC<props> = ({ role, title, isStudent }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const roles = useGetUsersQuery({
     role,
@@ -56,9 +57,14 @@ const RoleSection: React.FC<props> = ({ role, title }) => {
             data.map(({ first_name, last_name, TextClassName }) => {
               return (
                 <RoleRecord
-                  onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}#${first_name.toLowerCase()}-${last_name.toLowerCase()}`)}
+                  onClick={() =>
+                    isStudent
+                      ? navigate(`/school-admin/manage/classes/${TextClassName}#${first_name.toLowerCase()}-${last_name.toLowerCase()}`)
+                      : null
+                  }
                 >
                   {first_name} {last_name}
+                  {isStudent && <span>{TextClassName}</span>}
                 </RoleRecord>
               );
             })
