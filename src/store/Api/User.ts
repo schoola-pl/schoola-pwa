@@ -113,6 +113,7 @@ export const UserAPI = createApi({
 });
 
 export const {
+  useGetUserQuery,
   useGetUsersQuery,
   useGetUsersCountQuery,
   useAddUserToClassMutation,

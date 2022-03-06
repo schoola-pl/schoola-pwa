@@ -10,6 +10,14 @@ export const MeetingsAPI = createApi({
   }),
   tagTypes: ['getMeetingsForDay'],
   endpoints: (builder) => ({
+    getPsychos: builder.query<authUser[], unknown>({
+      query: () => ({
+        url: `/users?filters[TextRole][$eq]=Psycho`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
     getMeetingsForDay: builder.query<
       { id: number; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
       { pId: strapiRequestType; date: string }
@@ -55,9 +63,24 @@ export const MeetingsAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    bookMeeting: builder.mutation<number, { user: number; date: string; start: string; pId: string }>({
+      query: (body) => ({
+        url: `/mettings`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
     })
   })
 });
 
-export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useDeleteMeetingMutation } = MeetingsAPI;
+export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useBookMeetingMutation, useDeleteMeetingMutation, useGetPsychosQuery } =
+  MeetingsAPI;
 export default MeetingsAPI;

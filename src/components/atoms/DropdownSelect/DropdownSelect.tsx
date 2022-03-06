@@ -2,8 +2,7 @@ import { StyledButton, StyledList } from './DropdownSelect.styles';
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useSelect } from 'downshift';
 import React, { useEffect } from 'react';
-
-const items: string[] = ['8:00', '8:55', '9:50', '10:55', '11:50', '12:45', '13:40', '14:30', '15:20', '16:00'];
+import items from 'assets/globals/working-hours';
 
 const stateReducer = (state: any, actionAndChanges: any) => {
   const { type, changes } = actionAndChanges;

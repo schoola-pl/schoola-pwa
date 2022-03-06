@@ -7,7 +7,9 @@ interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+type daysType = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
+
+const days: daysType[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
 const TimeSetupPage: React.FC<props> = ({ setReadyState }) => {
   const [daysConfig, setDaysConfig] = useState<{ day: string; start: string; end: string }[]>([]);
