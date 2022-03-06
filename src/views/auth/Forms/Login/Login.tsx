@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, StyledLink, StyledButton, StyledInput, StyledLogo, Wrapper } from './Login.styles';
+import { Form, StyledButton, StyledInput, StyledLink, StyledLogo, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
         <Form onSubmit={handleSubmit(handleLogin)}>
           <StyledInput
             type="text"
-            placeholder="Login"
+            placeholder="Login lub email"
             data-cy="login-username"
             error={!!formError.login || isError}
             {...register('login', {
