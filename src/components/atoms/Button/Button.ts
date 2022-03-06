@@ -6,9 +6,9 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   align-items: center;
   color: white;
   text-decoration: none;
-  padding: 0;
   background: ${({ theme }) => theme.colors.accentGreen};
-  width: 220px;
+  width: 100%;
+  padding: 0 1rem;
   height: 47px;
   border: none;
   border-radius: 50px;
@@ -21,7 +21,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
     cursor: pointer;
   }
 
-  ${({ isDisabled, theme }) =>
+  ${({ isDisabled }) =>
     isDisabled &&
     `
     opacity: 0.6;
