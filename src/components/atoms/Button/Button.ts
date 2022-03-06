@@ -8,7 +8,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   text-decoration: none;
   background: ${({ theme }) => theme.colors.accentGreen};
   width: 100%;
-  padding: 0 1rem;
+  padding: 0 2.5rem;
   height: 47px;
   border: none;
   border-radius: 50px;
@@ -51,8 +51,8 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   border-radius: 15px;
   
   * {
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   }
 `}
 `;
