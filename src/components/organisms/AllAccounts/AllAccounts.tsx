@@ -106,7 +106,11 @@ const AllAccounts: React.FC = () => {
                 borderBottom: '2px solid #eceff7'
               }}
             >
-              Wyniki wyszukiwania frazy: <span id="cut">{phrase}</span>
+              Wyniki wyszukiwania{' '}
+              <span id="cut">
+                Znaleziono <u>{results.filter(({ TextRole }) => TextRole === roles.moderator || TextRole === roles.student).length} wyników</u> dla
+                podanej frazy
+              </span>
             </h1>
             <SearchRecords>
               {results.length > 0 ? (
