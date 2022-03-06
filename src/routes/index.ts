@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '../views/Forms/Login/Login';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
-import Profile from 'views/User/Profile/Profile';
+import UserRoutes from './UserRoutes/UserRoutes';
 import ForgotPassword from 'views/Forms/ForgotPassword/ForgotPassword';
 import PsychoRoutes from './PsychoRoutes/PsychoRoutes';
 
@@ -45,7 +45,7 @@ const loginRoute = paths.login;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Profile, isProtected: true, role: [roles.student, roles.moderator] },
+  { path: paths.student, Component: UserRoutes, isProtected: true, role: [roles.student, roles.moderator] },
   { path: paths.psycho, Component: PsychoRoutes, isProtected: true, role: roles.psycho },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];

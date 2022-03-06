@@ -23,7 +23,7 @@ const UserRoutes = () => {
         <UserTemplate>
           <Routes>
             <Route path="/" element={<Navigate to="profile" />} />
-            <Route path="/home" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
             <Route path="/spotted/comments" element={<Navigate to="/student/spotted" />} />
