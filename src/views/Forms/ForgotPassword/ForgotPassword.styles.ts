@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Logo from 'components/atoms/Logo/Logo';
 import Input from 'components/atoms/Input/Input';
 import { Link } from 'react-router-dom';
 
@@ -10,8 +9,6 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-export const StyledLogo = styled(Logo)``;
 
 export const Form = styled.form`
   display: flex;

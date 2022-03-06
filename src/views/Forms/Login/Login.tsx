@@ -46,7 +46,10 @@ const Login: React.FC = () => {
   return (
     <Wrapper>
       <AuthCard>
-        <Logo />
+        <div>
+          <Logo />
+          <p>Zaloguj się na swoje konto!</p>
+        </div>
         <Form onSubmit={handleSubmit(handleLogin)}>
           <StyledInput
             type="text"
