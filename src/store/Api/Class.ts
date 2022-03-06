@@ -12,7 +12,7 @@ export const ClassAPI = createApi({
     getClassesCount: builder.query<multiResponse, { schoolId: strapiRequestType }>({
       providesTags: ['classes'],
       query: (args) => ({
-        url: `/classes?fields[0]=id&filters[schoolId][$eq]=${args.schoolId}`,
+        url: `/classes?fields[0]=id&filters[schoolId][$eq]=${args.schoolId}&pagination[pageSize]=30`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
