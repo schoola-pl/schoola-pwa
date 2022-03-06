@@ -23,7 +23,7 @@ export const Card = styled.div<{ isRestore?: boolean }>`
     isRestore &&
     `
     border: 0;
-    box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+    box-shadow: 0 2px 15px -7px rgba(0, 0, 0, 0.3);
   background-color: white;
   padding: 2rem;
 `}
