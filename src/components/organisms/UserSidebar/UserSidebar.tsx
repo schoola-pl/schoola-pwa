@@ -9,7 +9,7 @@ const UserSidebar = () => {
   return (
     <Sidebar>
       <ul>
-        <StyledListItem name="Profil" to="/student/home">
+        <StyledListItem name="Profil" to="/student/profile">
           <StyledSidebarLink icon={UserIcon} />
         </StyledListItem>
         <StyledListItem name="Wizyta" to="/student/appointment">
