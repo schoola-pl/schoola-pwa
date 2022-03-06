@@ -6,15 +6,15 @@ export const PasswordForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 1rem;
+  align-items: center;
+  width: 100%;
 `;
 
 export const Card = styled.div<{ isRestore?: boolean }>`
   display: flex;
   border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   border-radius: 2rem;
-  height: 58rem;
-  margin: 2rem;
+  padding: 2rem;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -22,6 +22,8 @@ export const Card = styled.div<{ isRestore?: boolean }>`
   ${({ isRestore }) =>
     isRestore &&
     `
+    border: 0;
+    box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   background-color: white;
   padding: 2rem;
 `}
@@ -29,22 +31,22 @@ export const Card = styled.div<{ isRestore?: boolean }>`
 
 export const CardHeading = styled.h1`
   text-align: left;
-  margin-top: 0.5rem;
-  padding: 0 0 0 3rem;
-  transform: translateY(30%);
+  margin-left: 1rem;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
+`;
+
+export const StyledInput = styled(Input)`
+  width: 75%;
 `;
 
 export const Label = styled.label`
   font-size: ${({ theme }) => theme.fontSize.s};
-  margin: 1.5rem 0 1.5rem 0.5rem;
+  margin: 2rem 0 0.5rem 0.5rem;
+  display: block;
+  width: 75%;
 `;
 
 export const SubmitButton = styled(Button)`
   margin-top: 3.5rem;
-  transform: translateY(-30%);
-`;
-
-export const StyledInput = styled(Input)`
-  width: 40rem;
+  width: 75%;
 `;

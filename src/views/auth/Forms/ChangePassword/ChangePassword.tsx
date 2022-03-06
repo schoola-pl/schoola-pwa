@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useUser } from 'hooks/useUser';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import { useNavigate } from 'react-router';
+import Loader from 'components/atoms/Loader/Loader';
 
 interface props {
   isRestore?: string;
@@ -15,8 +16,13 @@ const ChangePassword: React.FC<props> = ({ isRestore }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    watch
   } = useForm();
+
+  const pass1Field = watch('newPassword');
+  const pass2Field = watch('newPasswordVerify');
+
   const [isSame, setIsSame] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setError] = useState(false);
@@ -55,16 +61,22 @@ const ChangePassword: React.FC<props> = ({ isRestore }) => {
               pattern: /(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g
             })}
           />
-          {errors.newPassword && (
-            <ErrorParagraph style={{ marginLeft: '2rem', marginTop: '1rem' }}>Hasło nie spełnia warunków dobrego hasła!</ErrorParagraph>
-          )}
           <Label htmlFor="newPassword">Powtórz nowe hasło</Label>
-          <StyledInput type="password" error={isSame} {...register('newPasswordVerify', { required: true })} />
-          {isSame && <ErrorParagraph style={{ marginLeft: '2rem', marginTop: '1rem' }}>Hasła nie są takie same</ErrorParagraph>}
+          <StyledInput type="password" {...register('newPasswordVerify', { required: true })} />
         </PasswordForm>
-        <SubmitButton isDanger={isError} isDisabled={isLoading || isSuccess}>
-          {!isSuccess ? (!isError ? (!isLoading ? 'Zmień hasło' : 'Zmienianie...') : 'Podano zły token!') : 'Zmieniono hasło!'}
+        <SubmitButton isDisabled={isLoading || !pass1Field || !pass2Field}>
+          {!isLoading && !isSuccess ? (
+            'Zmień hasło'
+          ) : isSuccess ? (
+            'Zmieniono hasło!'
+          ) : (
+            <>
+              Zmienianie danych... <Loader style={{ marginLeft: '1rem' }} fitContent />
+            </>
+          )}
         </SubmitButton>
+        {errors.newPassword && <ErrorParagraph style={{ marginTop: '0.5rem' }}>Hasło nie spełnia warunków dobrego hasła!</ErrorParagraph>}
+        {isSame && <ErrorParagraph style={{ marginTop: '0.5rem' }}>Hasła nie są takie same</ErrorParagraph>}
       </Card>
     </div>
   );

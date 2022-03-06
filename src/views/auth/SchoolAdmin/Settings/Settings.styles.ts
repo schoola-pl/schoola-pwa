@@ -16,15 +16,12 @@ export const Heading = styled.h1`
 
 export const CardWrapper = styled.div`
   border-radius: 1rem;
-  height: 85%;
-  width: 95%;
-  margin-left: 3rem;
+  padding: 1rem 2rem;
+  margin: 1rem 3rem;
   background-color: white;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 10% 90%;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-
-  @media (min-height: 900px) {
-    height: 70%;
-  }
+  grid-gap: 2rem;
 `;
