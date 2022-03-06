@@ -11,7 +11,7 @@ const PsychoList: React.FC<props> = ({ handleChangePsycho }) => {
   return (
     <select onChange={handleChangePsycho}>
       <option value="" selected disabled hidden>
-        {psychos.isLoading ? 'Pobieram dane...' : 'Wybierz psychologa'}
+        {psychos.isLoading ? 'Pobieram dane...' : psychos.data && psychos.data.length > 0 ? 'Wybierz psychologa' : 'Brak psychologów!'}
       </option>
       {psychos.data &&
         psychos.data.map((psycho) =>
