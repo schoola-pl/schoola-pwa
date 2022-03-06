@@ -14,11 +14,13 @@ const PsychoList: React.FC<props> = ({ handleChangePsycho }) => {
         {psychos.isLoading ? 'Pobieram dane...' : 'Wybierz psychologa'}
       </option>
       {psychos.data &&
-        psychos.data.map((psycho) => (
-          <option key={psycho.id} value={psycho.id}>
-            {psycho.first_name} {psycho.last_name}
-          </option>
-        ))}
+        psychos.data.map((psycho) =>
+          psycho.working_hours ? (
+            <option key={psycho.id} value={psycho.id}>
+              {psycho.first_name} {psycho.last_name}
+            </option>
+          ) : null
+        )}
     </select>
   );
 };
