@@ -63,9 +63,24 @@ export const MeetingsAPI = createApi({
           Authorization: `Bearer ${getJWT()}`
         }
       })
+    }),
+    bookMeeting: builder.mutation<number, { user: number; date: string; start: string; pId: string }>({
+      query: (body) => ({
+        url: `/mettings`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
     })
   })
 });
 
-export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useDeleteMeetingMutation, useGetPsychosQuery } = MeetingsAPI;
+export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useBookMeetingMutation, useDeleteMeetingMutation, useGetPsychosQuery } =
+  MeetingsAPI;
 export default MeetingsAPI;
