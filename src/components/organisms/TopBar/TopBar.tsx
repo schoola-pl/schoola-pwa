@@ -33,9 +33,6 @@ const TopBar = () => {
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <NotificationList />
         <SidebarLink as={Link} to="profile/settings" icon={SettingsIcon} />
-        <UserPicture>
-          <img src={image} alt={`Personal image`} />
-        </UserPicture>
       </InnerWrapper>
     </Wrapper>
   );

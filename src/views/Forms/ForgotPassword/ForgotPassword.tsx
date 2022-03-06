@@ -2,10 +2,10 @@ import { Form, StyledInput, StyledLink, StyledLogo, Wrapper } from './ForgotPass
 import Button from 'components/atoms/Button/Button';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import axios, { AxiosError } from 'axios';
-import ChangePassword from 'views/auth/Forms/ChangePassword/ChangePassword';
+import ChangePassword from 'views/Forms/ChangePassword/ChangePassword';
 import Loader from 'components/atoms/Loader/Loader';
 
 const ForgotPassword = () => {

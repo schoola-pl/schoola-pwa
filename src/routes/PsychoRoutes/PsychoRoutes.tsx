@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import PsychoLoginTemplate from 'components/templates/PsychoLoginTemplate/PsychoLoginTemplate';
 import { Navigate, Route, Routes } from 'react-router';
-import TodayPage from 'views/auth/Psycho/TodayPage/TodayPage';
-import ProfilePage from 'views/auth/Psycho/ProfilePage/ProfilePage';
-import CalendarPage from 'views/auth/Psycho/CalendarPage/CalendarPage';
-import WeekPage from 'views/auth/Psycho/WeekPage/WeekPage';
-import DayPage from 'views/auth/Psycho/DayPage/DayPage';
+import TodayPage from 'views/Psycho/TodayPage/TodayPage';
+import ProfilePage from 'views/Psycho/ProfilePage/ProfilePage';
+import CalendarPage from 'views/Psycho/CalendarPage/CalendarPage';
+import WeekPage from 'views/Psycho/WeekPage/WeekPage';
+import DayPage from 'views/Psycho/DayPage/DayPage';
 
 const PsychoRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);

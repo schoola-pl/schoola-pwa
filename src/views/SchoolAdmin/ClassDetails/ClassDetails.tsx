@@ -4,7 +4,7 @@ import StudentDetail from 'components/molecules/StudentDetail/StudentDetail';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetUsersByClassQuery } from 'store';
-import Loading from '../../../../components/molecules/Loading/Loading';
+import Loading from '../../../components/molecules/Loading/Loading';
 import { useEffect } from 'react';
 import ClassDetailsHeader from 'components/organisms/ClassDetailsHeader/ClassDetailsHeader';
 import { useClass } from 'hooks/useClass';

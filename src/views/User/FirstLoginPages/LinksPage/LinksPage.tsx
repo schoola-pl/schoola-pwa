@@ -3,7 +3,7 @@ import AddIcon from 'assets/icons/AddIcon.svg';
 import { Form, LinkWrapper, StyledButton, StyledInput, StyledSelect, Wrapper } from './Links.styles';
 import { useForm } from 'react-hook-form';
 import { useUser } from 'hooks/useUser';
-import { options } from 'views/auth/User/FirstLoginPages/LinksPage/options';
+import { options } from 'views/User/FirstLoginPages/LinksPage/options';
 
 interface props {
   setReadyState: React.Dispatch<React.SetStateAction<boolean>>;

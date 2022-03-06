@@ -1,18 +1,18 @@
 import UserTemplate from 'components/templates/UserTemplate/UserTemplate';
 import { Routes } from 'react-router-dom';
 import { Navigate, Route } from 'react-router';
-import Appointment from 'views/auth/User/Appointment/Appointment';
-import Spotted from 'views/auth/User/Spotted/Spotted';
-import Feed from 'views/auth/User/Feed/Feed';
-import Settings from 'views/auth/User/Settings/Settings';
+import Appointment from 'views/User/Appointment/Appointment';
+import Spotted from 'views/User/Spotted/Spotted';
+import Feed from 'views/User/Feed/Feed';
+import Settings from 'views/User/Settings/Settings';
 import Error404 from 'views/Error404/Error404';
-import Home from 'views/auth/User/Home/Home';
+import Profile from 'views/User/Profile/Profile';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
-import CommentSection from 'views/auth/User/CommentSection/CommentSection';
+import CommentSection from 'views/User/CommentSection/CommentSection';
 
-const Profile = () => {
+const UserRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
 
   return (
@@ -22,8 +22,8 @@ const Profile = () => {
       ) : (
         <UserTemplate>
           <Routes>
-            <Route path="/" element={<Navigate to="home" />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Navigate to="profile" />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
             <Route path="/spotted/comments" element={<Navigate to="/student/spotted" />} />
@@ -40,4 +40,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserRoutes;

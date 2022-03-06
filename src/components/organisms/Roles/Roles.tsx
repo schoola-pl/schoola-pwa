@@ -1,4 +1,4 @@
-import { ClassesWrapper } from 'views/auth/SchoolAdmin/ManageClasses/ManageClasses.styles';
+import { ClassesWrapper } from 'views/SchoolAdmin/ManageClasses/ManageClasses.styles';
 import RoleSection from 'components/molecules/RoleSection/RoleSection';
 import { theme } from 'assets/styles/theme';
 

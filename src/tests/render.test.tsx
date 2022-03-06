@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Profile from 'views/auth/User/Profile/Profile';
+import Profile from 'views/User/Profile/Profile';
 
 it('Renders application', () => {
   render(<Profile />);
