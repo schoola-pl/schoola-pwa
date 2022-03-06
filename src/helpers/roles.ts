@@ -11,11 +11,11 @@ export const getPathForRole = (role: string) => {
     case roles.schoolAdmin:
       return pathsPrepared.schoolAdmin;
     case roles.moderator:
-      return `${pathsPrepared.student}home`;
+      return `${pathsPrepared.student}feed`;
     case roles.psycho:
       return pathsPrepared.psycho;
     default:
-      return `${pathsPrepared.student}home`;
+      return `${pathsPrepared.student}feed`;
   }
 };
 
