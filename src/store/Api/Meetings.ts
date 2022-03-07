@@ -19,12 +19,12 @@ export const MeetingsAPI = createApi({
       })
     }),
     getMeetingsForDay: builder.query<
-      { id: number; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
+      { id: number; pId: string; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
       { pId: strapiRequestType; date: string }
     >({
       providesTags: ['getMeetingsForDay'],
       transformResponse: (
-        response: multiResponse<{ date: string; isDone: boolean; start: string; user: { data: { attributes: authUser; id: string } } }>
+        response: multiResponse<{ date: string; pId: string; isDone: boolean; start: string; user: { data: { attributes: authUser; id: string } } }>
       ) => {
         const data = response.data;
         return data.map((item) => {
