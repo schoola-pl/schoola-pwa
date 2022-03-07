@@ -24,9 +24,7 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
   const isNotBooked = (hour: string): boolean => {
     if (meetingsForDay.data) {
       const meetings = meetingsForDay.data;
-      console.log(meetings, hour);
       const meetingsForHour = meetings.filter((meeting) => meeting.start === hour);
-      console.log(meetingsForHour);
       return meetingsForHour.length === 0;
     }
     return false;
