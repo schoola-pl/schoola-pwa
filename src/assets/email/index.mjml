@@ -15,13 +15,24 @@
         </mj-column>
       </mj-group>
     </mj-section>
+    <!-- End of copyright  #f7f8fa-->
     <mj-section background-color="#FFFFFF">
       <mj-group>
-        <mj-column>
-          <mj-text> </mj-text>
+        <mj-column background-color="#FFFFFF">
+          <mj-text font-size="20px" align="center" font-weight="bold">Potrzebujesz zmienić hasła?</mj-text>
         </mj-column>
       </mj-group>
     </mj-section>
-    <!-- End of copyright -->
+    <mj-section background-color="#f7f8fa">
+      <mj-group>
+        <mj-column background-color="#f7f8fa">
+          <mj-text font-size="13px" padding="20px" align="center"
+            >Gdybyś wysłał zlecenie zmiany hasła do FBI, wymagaliby odcisku palca, ale my na szczęście tego nie wymagamy. Po prostu kliknij w przycisk
+            poniżej! 🙂</mj-text
+          >
+          <mj-button background-color="#55AB67" border-radius="30px" href="link do odzyskania hasła">Chcę odzyskać hasło</mj-button>
+        </mj-column>
+      </mj-group>
+    </mj-section>
   </mj-body>
 </mjml>

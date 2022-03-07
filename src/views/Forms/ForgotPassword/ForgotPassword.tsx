@@ -1,4 +1,4 @@
-import { Form, StyledInput, StyledLink, StyledLogo, Wrapper } from './ForgotPassword.styles';
+import { Form, StyledInput, StyledLink, Wrapper } from './ForgotPassword.styles';
 import Button from 'components/atoms/Button/Button';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import axios, { AxiosError } from 'axios';
 import ChangePassword from 'views/Forms/ChangePassword/ChangePassword';
 import Loader from 'components/atoms/Loader/Loader';
+import Logo from 'components/atoms/Logo/Logo';
 
 const ForgotPassword = () => {
   const {
@@ -45,7 +46,10 @@ const ForgotPassword = () => {
     <Wrapper>
       {!codeSecret ? (
         <AuthCard>
-          <StyledLogo />
+          <div>
+            <Logo />
+            <p>Zresetuj hasło jednym kliknięciem!</p>
+          </div>
           <Form onSubmit={handleSubmit(handleRestoreEmail)}>
             <StyledInput
               placeholder="Podaj swój email"
