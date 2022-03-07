@@ -18,7 +18,9 @@ export const Wrapper = styled.div<accountType>`
   display: ${({ accountType }) => (accountType === 'spottedAdmin' ? 'block' : 'none')};
 `;
 
-export const NotificationButton = styled(StyledSidebarLink)``;
+export const NotificationButton = styled(StyledSidebarLink)`
+  margin: 0;
+`;
 export const NotificationWrapper = styled.div<Props>`
   display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
   position: absolute;
