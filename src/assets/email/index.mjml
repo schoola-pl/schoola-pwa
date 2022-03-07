@@ -1,0 +1,16 @@
+<mjml>
+  <mj-head>
+    <mj-breakpoint width="600px" />
+    <mj-font name="Poppins" href="https://fonts.googleapis.com/css?family=Poppins" />
+    <mj-attributes>
+      <mj-all color="black" font-family="Poppins" background-color="#f1efe5" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text> Hello, world!</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
