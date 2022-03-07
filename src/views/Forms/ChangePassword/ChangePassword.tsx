@@ -69,6 +69,8 @@ const ChangePassword: React.FC<props> = ({ isRestore }) => {
             'Zmień hasło'
           ) : isSuccess ? (
             'Zmieniono hasło!'
+          ) : isError && isRestore ? (
+            'Podany zły token!'
           ) : (
             <>
               Zmienianie danych... <Loader style={{ marginLeft: '1rem' }} fitContent />
