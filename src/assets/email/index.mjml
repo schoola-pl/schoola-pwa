@@ -7,10 +7,21 @@
     </mj-attributes>
   </mj-head>
   <mj-body>
+    <!-- Copyright -->
     <mj-section>
-      <mj-column>
-        <mj-text> Hello, world!</mj-text>
-      </mj-column>
+      <mj-group>
+        <mj-column>
+          <mj-text align="center" padding="5px 0" font-size="12px" line-height="18px">copyright schoola.pl</mj-text>
+        </mj-column>
+      </mj-group>
     </mj-section>
+    <mj-section background-color="#FFFFFF">
+      <mj-group>
+        <mj-column>
+          <mj-text> </mj-text>
+        </mj-column>
+      </mj-group>
+    </mj-section>
+    <!-- End of copyright -->
   </mj-body>
 </mjml>

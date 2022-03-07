@@ -9,8 +9,8 @@ const UserSidebar = () => {
   return (
     <Sidebar>
       <ul>
-        <StyledListItem name="Profil" to="/student/profile">
-          <StyledSidebarLink icon={UserIcon} />
+        <StyledListItem name="Feed" to="/student/feed">
+          <StyledSidebarLink icon={FeedIcon} />
         </StyledListItem>
         <StyledListItem name="Wizyta" to="/student/appointment">
           <StyledSidebarLink icon={AppointmentIcon} />
@@ -18,8 +18,8 @@ const UserSidebar = () => {
         <StyledListItem name="Spotted" to="/student/spotted">
           <StyledSidebarLink icon={SpottedIcon} />
         </StyledListItem>
-        <StyledListItem name="Feed" to="/student/feed">
-          <StyledSidebarLink icon={FeedIcon} />
+        <StyledListItem name="Profil" to="/student/profile">
+          <StyledSidebarLink icon={UserIcon} />
         </StyledListItem>
       </ul>
     </Sidebar>
