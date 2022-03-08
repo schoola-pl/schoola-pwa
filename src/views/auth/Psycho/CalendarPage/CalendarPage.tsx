@@ -7,8 +7,10 @@ import './styles.css';
 import { format } from 'date-fns';
 import pl from 'date-fns/locale/pl';
 import { addDays, addMonths } from 'helpers/date';
+import Info from 'components/atoms/Info/Info';
 
 const CalendarPage = () => {
+  const [selectedDate, setDate] = useState<string>('');
   const [value, onChange] = useState(new Date());
   const { openModal, closeModal } = useModal();
   const setActive = (day: string) => {
@@ -16,6 +18,8 @@ const CalendarPage = () => {
     if (activeButtons.length >= 1) activeButtons.forEach((button) => button.classList.remove('button-active'));
     const element: any = document.querySelector('[aria-label="' + day + '"]');
     element.classList.add('button-active');
+    const dateISO = format(new Date(day), 'yyyy-MM-dd');
+    setDate(dateISO);
   };
   return (
     <PageWrapper>
@@ -28,25 +32,31 @@ const CalendarPage = () => {
         value={value}
       />
       <Wrapper>
-        <InnerWrapper>
-          <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-            <h1>Godziny</h1>
-            <button
-              onClick={() =>
-                openModal(
-                  <ModalWrapper>
-                    <Button onClick={closeModal}>Akceptuj zmiany</Button>
-                    <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                  </ModalWrapper>,
-                  'Odwołaj - 10.03'
-                )
-              }
-            >
-              Odwołaj obecność
-            </button>
-          </div>
-        </InnerWrapper>
-        <Hours />
+        {!selectedDate ? (
+          <Info>Wybierz najpierw datę, która ciebie interesuje!</Info>
+        ) : (
+          <>
+            <InnerWrapper>
+              <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                <h1>Godziny</h1>
+                <button
+                  onClick={() =>
+                    openModal(
+                      <ModalWrapper>
+                        <Button onClick={closeModal}>Akceptuj zmiany</Button>
+                        <CancelButton onClick={closeModal}>Anuluj</CancelButton>
+                      </ModalWrapper>,
+                      'Odwołaj - 10.03'
+                    )
+                  }
+                >
+                  Odwołaj obecność
+                </button>
+              </div>
+            </InnerWrapper>
+            <Hours date={selectedDate} />
+          </>
+        )}
       </Wrapper>
     </PageWrapper>
   );

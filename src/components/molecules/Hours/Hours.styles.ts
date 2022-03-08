@@ -21,6 +21,7 @@ export const Hour = styled.div<{ isCanceled?: boolean }>`
     height: 2.3rem;
     width: 2.3rem;
     background-color: #fcb3b0;
+    pointer-events: ${({ isCanceled }) => (isCanceled ? 'none' : 'all')};
 
     &::after {
       content: 'x';
