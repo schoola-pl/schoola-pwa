@@ -34,4 +34,5 @@ export const HoursWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2.5rem;
+  margin-top: 1rem;
 `;

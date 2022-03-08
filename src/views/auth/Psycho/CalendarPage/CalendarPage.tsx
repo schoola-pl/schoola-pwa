@@ -6,6 +6,7 @@ import Hours from 'components/molecules/Hours/Hours';
 import './styles.css';
 import { format } from 'date-fns';
 import pl from 'date-fns/locale/pl';
+import { addDays, addMonths } from 'helpers/date';
 
 const CalendarPage = () => {
   const [value, onChange] = useState(new Date());
@@ -21,27 +22,29 @@ const CalendarPage = () => {
       <StyledCalendar
         onClickDay={(e) => setActive(format(e, 'd MMMM yyyy', { locale: pl }))}
         locale="pl"
-        minDate={new Date(2022, 1, 1)}
-        maxDate={new Date(2022, 6, 12)}
+        minDate={addDays(1)}
+        maxDate={addMonths(1)}
         onChange={onChange}
         value={value}
       />
       <Wrapper>
         <InnerWrapper>
-          <h1>Godziny</h1>
-          <button
-            onClick={() =>
-              openModal(
-                <ModalWrapper>
-                  <Button onClick={closeModal}>Akceptuj zmiany</Button>
-                  <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                </ModalWrapper>,
-                'Odwołaj - 10.03'
-              )
-            }
-          >
-            Odwołaj obecność
-          </button>
+          <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+            <h1>Godziny</h1>
+            <button
+              onClick={() =>
+                openModal(
+                  <ModalWrapper>
+                    <Button onClick={closeModal}>Akceptuj zmiany</Button>
+                    <CancelButton onClick={closeModal}>Anuluj</CancelButton>
+                  </ModalWrapper>,
+                  'Odwołaj - 10.03'
+                )
+              }
+            >
+              Odwołaj obecność
+            </button>
+          </div>
         </InnerWrapper>
         <Hours />
       </Wrapper>
