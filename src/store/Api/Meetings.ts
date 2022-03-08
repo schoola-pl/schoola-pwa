@@ -19,12 +19,12 @@ export const MeetingsAPI = createApi({
       })
     }),
     getMeetingsForDay: builder.query<
-      { id: number; pId: string; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
+      { id: number; pId: string; date: string; start: string; user: authUser & { meetingId: number } }[],
       { pId: strapiRequestType; date: string }
     >({
       providesTags: ['getMeetingsForDay'],
       transformResponse: (
-        response: multiResponse<{ date: string; pId: string; isDone: boolean; start: string; user: { data: { attributes: authUser; id: string } } }>
+        response: multiResponse<{ date: string; pId: string; start: string; user: { data: { attributes: authUser; id: string } } }>
       ) => {
         const data = response.data;
         return data.map((item) => {
@@ -38,6 +38,24 @@ export const MeetingsAPI = createApi({
       },
       query: (args) => ({
         url: `/mettings?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*&sort=start`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
+    getMeetingsException: builder.query<{ id: number; pId: string; date: string; hour: string }[], { pId: strapiRequestType; date: string }>({
+      transformResponse: (response: multiResponse<{ date: string; pId: string; hour: string }>) => {
+        const data = response.data;
+        return data.map((item) => {
+          const { id, attributes } = item;
+          return {
+            id,
+            ...attributes
+          };
+        });
+      },
+      query: (args) => ({
+        url: `/psycho-exceptions?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*&sort=hour`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
@@ -81,6 +99,12 @@ export const MeetingsAPI = createApi({
   })
 });
 
-export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useBookMeetingMutation, useDeleteMeetingMutation, useGetPsychosQuery } =
-  MeetingsAPI;
+export const {
+  useGetMeetingsForDayQuery,
+  useGetMeetingsExceptionQuery,
+  useGetMeetingsCountQuery,
+  useBookMeetingMutation,
+  useDeleteMeetingMutation,
+  useGetPsychosQuery
+} = MeetingsAPI;
 export default MeetingsAPI;
