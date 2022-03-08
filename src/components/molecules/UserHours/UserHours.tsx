@@ -1,6 +1,6 @@
 import { Hour, HoursWrapper } from './UserHours.styles';
 import React from 'react';
-import { useGetMeetingsForDayQuery, useGetUserQuery } from 'store';
+import { useGetMeetingsExceptionQuery, useGetMeetingsForDayQuery, useGetUserQuery } from 'store';
 import { format, parseISO } from 'date-fns';
 import envHours from 'assets/globals/working-hours';
 import Info from 'components/atoms/Info/Info';
@@ -20,11 +20,24 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
     pId: psychoId,
     date
   });
+  const meetingsException = useGetMeetingsExceptionQuery({
+    pId: psychoId,
+    date
+  });
 
   const isNotBooked = (hour: string): boolean => {
     if (meetingsForDay.data) {
       const meetings = meetingsForDay.data;
       const meetingsForHour = meetings.filter((meeting) => meeting.start === hour);
+      return meetingsForHour.length === 0;
+    }
+    return false;
+  };
+
+  const hasNoException = (hour: string): boolean => {
+    if (meetingsException.data) {
+      const meetings = meetingsException.data;
+      const meetingsForHour = meetings.filter((meeting) => meeting.hour === hour);
       return meetingsForHour.length === 0;
     }
     return false;
@@ -38,7 +51,8 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
           if (
             parseISO(`2022-01-01 ${hour}`) <= parseISO(`2022-01-01 ${obj.end}`) &&
             parseISO(`2022-01-01 ${hour}`) >= parseISO(`2022-01-01 ${obj.start}`) &&
-            isNotBooked(hour)
+            isNotBooked(hour) &&
+            hasNoException(hour)
           ) {
             return (
               <Hour key={hour} isActive={activeHour === hour}>
