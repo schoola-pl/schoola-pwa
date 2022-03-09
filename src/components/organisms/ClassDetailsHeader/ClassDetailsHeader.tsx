@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading, Paragraph, Paragraphs, Wrapper } from './ClassDetailsHeader.styles';
-import ManageButtons from 'views/auth/Forms/ManageButtons/ManageButtons';
+import ManageButtons from 'views/Forms/ManageButtons/ManageButtons';
 import { useGetUsersCountQuery, useRemoveClassMutation } from 'store';
 import { useModal } from 'hooks/useModal';
 import { useUser } from 'hooks/useUser';

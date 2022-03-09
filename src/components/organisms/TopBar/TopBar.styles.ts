@@ -16,10 +16,11 @@ export const Wrapper = styled.div`
   z-index: 999999;
   background-color: ${({ theme }) => theme.colors.lightBrown};
   top: 0;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding-inline: 3rem;
 `;
 export const UserPicture = styled.div`
   border-radius: 50%;
@@ -38,15 +39,19 @@ export const UserPicture = styled.div`
 `;
 
 export const InnerWrapper = styled.div`
-  margin-left: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  & > *:not(:first-child) {
+    display: block;
+    margin-left: 1rem !important;
+  }
 `;
 
 // export const StyledSidebarLink = styled(SidebarLink)``;
 
 export const GoBack = styled(SidebarLink)<{ isComments?: boolean }>`
-  transform: translateX(50%);
   display: ${({ isComments }) => (isComments ? 'flex' : 'none')};
+  margin: 0;
 `;

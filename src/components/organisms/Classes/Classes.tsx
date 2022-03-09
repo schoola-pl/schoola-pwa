@@ -1,5 +1,5 @@
 import ClassCard from 'components/molecules/ClassCard/ClassCard';
-import { AmountWrapper, ClassesWrapper } from 'views/auth/SchoolAdmin/ManageClasses/ManageClasses.styles';
+import { AmountWrapper, ClassesWrapper } from 'views/SchoolAdmin/ManageClasses/ManageClasses.styles';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetClassesCountQuery } from 'store';
 

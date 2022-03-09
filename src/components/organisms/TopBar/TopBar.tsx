@@ -1,4 +1,4 @@
-import { GoBack, InnerWrapper, Logo, UserPicture, Wrapper } from './TopBar.styles';
+import { GoBack, InnerWrapper, Logo, Wrapper } from './TopBar.styles';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -32,10 +32,7 @@ const TopBar = () => {
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <NotificationList />
-        <SidebarLink as={Link} to="profile/settings" icon={SettingsIcon} />
-        <UserPicture>
-          <img src={image} alt={`Personal image`} />
-        </UserPicture>
+        <SidebarLink style={{ margin: 0 }} as={Link} to="profile/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );

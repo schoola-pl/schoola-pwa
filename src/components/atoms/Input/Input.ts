@@ -9,6 +9,7 @@ const Input = styled.input<{ error?: boolean; small?: boolean }>`
   resize: none;
   border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   transition: border 0.3s linear;
+  width: 100%;
 
   &:focus {
     outline: none;

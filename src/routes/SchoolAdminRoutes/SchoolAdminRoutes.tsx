@@ -1,16 +1,16 @@
 import AdminSidebar from 'components/organisms/SchoolAdminSidebar/SchoolAdminSidebar';
-import { Wrapper } from './SchoolAdminTemplate.styles';
+import { Wrapper } from './SchoolAdminRoutes.styles';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import ManageClasses from '../../../views/SchoolAdmin/ManageClasses/ManageClasses';
-import Dashboard from '../../../views/SchoolAdmin/Dashboard/Dashboard';
-import AddClass from '../../../views/SchoolAdmin/AddClass/AddClass';
-import ClassDetails from '../../../views/SchoolAdmin/ClassDetails/ClassDetails';
-import Error404 from '../../../views/Error404/Error404';
-import Settings from '../../../views/SchoolAdmin/Settings/Settings';
+import ManageClasses from 'views/SchoolAdmin/ManageClasses/ManageClasses';
+import Dashboard from 'views/SchoolAdmin/Dashboard/Dashboard';
+import ClassDetails from 'views/SchoolAdmin/ClassDetails/ClassDetails';
+import AddClass from 'views/SchoolAdmin/AddClass/AddClass';
+import Error404 from 'views/Error404/Error404';
+import Settings from 'views/SchoolAdmin/Settings/Settings';
 import TooSmallScreen from 'components/organisms/TooSmallScreen/TooSmallScreen';
 
-const SchoolAdminTemplate: React.FC = () => {
+const SchoolAdminRoutes: React.FC = () => {
   return window.innerWidth < 1360 ? (
     <TooSmallScreen />
   ) : (
@@ -30,4 +30,4 @@ const SchoolAdminTemplate: React.FC = () => {
   );
 };
 
-export default SchoolAdminTemplate;
+export default SchoolAdminRoutes;

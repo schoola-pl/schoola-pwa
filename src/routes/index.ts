@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from '../views/auth/Forms/Login/Login';
+import Login from '../views/Forms/Login/Login';
 import SchoolAdminTemplate from '../components/templates/SchoolAdminTemplate/SchoolAdminTemplate';
-import Profile from 'views/auth/User/Profile/Profile';
-import ForgotPassword from 'views/auth/Forms/ForgotPassword/ForgotPassword';
-import PsychoRoutes from 'views/auth/Psycho/PsychoRoutes/PsychoRoutes';
+import UserRoutes from './UserRoutes/UserRoutes';
+import ForgotPassword from 'views/Forms/ForgotPassword/ForgotPassword';
+import PsychoRoutes from './PsychoRoutes/PsychoRoutes';
 
 interface routesInterface {
   // Path to component
@@ -45,7 +45,7 @@ const loginRoute = paths.login;
 const routes: routesInterface[] = [
   { path: loginRoute, Component: Login, isProtected: false, role: roles.public },
   { path: '/forgot-password', Component: ForgotPassword, isProtected: false, role: roles.public },
-  { path: paths.student, Component: Profile, isProtected: true, role: [roles.student, roles.moderator] },
+  { path: paths.student, Component: UserRoutes, isProtected: true, role: [roles.student, roles.moderator] },
   { path: paths.psycho, Component: PsychoRoutes, isProtected: true, role: roles.psycho },
   { path: paths.schoolAdmin, Component: SchoolAdminTemplate, isProtected: true, role: roles.schoolAdmin }
 ];

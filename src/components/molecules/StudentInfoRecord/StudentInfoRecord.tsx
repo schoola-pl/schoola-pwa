@@ -4,7 +4,7 @@ import blueStudent from '../../../assets/icons/BlueStudent.svg';
 import EditIcon from '../../../assets/icons/EditIcon.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.svg';
 import Input from '../../atoms/Input/Input';
-import { Select } from 'views/auth/SchoolAdmin/AddClass/AddClass.styles';
+import { Select } from 'views/SchoolAdmin/AddClass/AddClass.styles';
 import { useForm } from 'react-hook-form';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
