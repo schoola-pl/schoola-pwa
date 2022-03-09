@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hour, HoursWrapper } from './Hours.styles';
-import { storeRoot, useGetMeetingsExceptionQuery } from 'store';
+import { storeRoot, useAddExceptionMutation, useGetMeetingsExceptionQuery } from 'store';
 import { format, parseISO } from 'date-fns';
 import envHours from 'assets/globals/working-hours';
 import Info from 'components/atoms/Info/Info';
@@ -12,6 +12,7 @@ interface props {
 
 const Hours: React.FC<props> = ({ date }) => {
   const psycho = useSelector((state: storeRoot) => state.user);
+  const [addException] = useAddExceptionMutation();
   const meetingsException = useGetMeetingsExceptionQuery({
     pId: psycho?.id || null,
     date
@@ -26,6 +27,16 @@ const Hours: React.FC<props> = ({ date }) => {
     return false;
   };
 
+  const handleAddException = (hour: string) => {
+    if (!psycho) return;
+    const newException = {
+      pId: String(psycho.id),
+      date,
+      hour
+    };
+    addException(newException);
+  };
+
   const printHours = () => {
     if (!psycho || !psycho.working_hours) return;
     const hours = psycho.working_hours.map((obj) => {
@@ -38,7 +49,7 @@ const Hours: React.FC<props> = ({ date }) => {
             return (
               <Hour key={hour} isCanceled={!hasNoException(hour)}>
                 {hour}
-                <button onClick={() => console.log('Odwołaj godzinę')} />
+                <button onClick={() => handleAddException(hour)} />
               </Hour>
             );
           }
