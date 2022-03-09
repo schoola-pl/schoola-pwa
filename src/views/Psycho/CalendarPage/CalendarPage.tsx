@@ -1,7 +1,5 @@
-import { CancelButton, InnerWrapper, ModalWrapper, PageWrapper, StyledCalendar, Wrapper } from './CalendarPage.styles';
+import { InnerWrapper, PageWrapper, StyledCalendar, Wrapper } from './CalendarPage.styles';
 import { useState } from 'react';
-import { useModal } from 'hooks/useModal';
-import Button from 'components/atoms/Button/Button';
 import Hours from 'components/molecules/Hours/Hours';
 import './styles.css';
 import { format } from 'date-fns';
@@ -20,7 +18,6 @@ const removeActiveButtons = () => getActiveButtons().forEach((button) => button.
 const CalendarPage = () => {
   const [selectedDate, setDate] = useState<string>('');
   const [value, onChange] = useState(new Date());
-  const { openModal, closeModal } = useModal();
 
   const setActive = (day: Date) => {
     if (getActiveButtons().length >= 1) removeActiveButtons();
@@ -40,19 +37,6 @@ const CalendarPage = () => {
             <InnerWrapper>
               <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                 <h1>Godziny</h1>
-                <button
-                  onClick={() =>
-                    openModal(
-                      <ModalWrapper>
-                        <Button onClick={closeModal}>Akceptuj zmiany</Button>
-                        <CancelButton onClick={closeModal}>Anuluj</CancelButton>
-                      </ModalWrapper>,
-                      'Odwołaj - 10.03'
-                    )
-                  }
-                >
-                  Odwołaj obecność
-                </button>
               </div>
             </InnerWrapper>
             <Hours date={selectedDate} />
