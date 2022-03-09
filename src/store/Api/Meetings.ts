@@ -8,7 +8,7 @@ export const MeetingsAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['getMeetingsForDay'],
+  tagTypes: ['getMeetingsForDay', 'getExceptions'],
   endpoints: (builder) => ({
     getPsychos: builder.query<authUser[], unknown>({
       query: () => ({
@@ -44,6 +44,7 @@ export const MeetingsAPI = createApi({
       })
     }),
     getMeetingsException: builder.query<{ id: number; pId: string; date: string; hour: string }[], { pId: strapiRequestType; date: string }>({
+      providesTags: ['getExceptions'],
       transformResponse: (response: multiResponse<{ date: string; pId: string; hour: string }>) => {
         const data = response.data;
         return data.map((item) => {
@@ -95,6 +96,22 @@ export const MeetingsAPI = createApi({
           }
         }
       })
+    }),
+    addException: builder.mutation<number, { date: string; hour: string; pId: string }>({
+      invalidatesTags: ['getExceptions'],
+      transformResponse: (response: oneResponse) => response.data.id,
+      query: (body) => ({
+        url: `/psycho-exceptions`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
     })
   })
 });
@@ -105,6 +122,7 @@ export const {
   useGetMeetingsCountQuery,
   useBookMeetingMutation,
   useDeleteMeetingMutation,
-  useGetPsychosQuery
+  useGetPsychosQuery,
+  useAddExceptionMutation
 } = MeetingsAPI;
 export default MeetingsAPI;
