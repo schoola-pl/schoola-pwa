@@ -57,8 +57,8 @@ const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => 
                 <Label htmlFor="date">Data urodzenia</Label>
                 <StyledInput type="date" {...register('birthday', { required: true })} />
                 <ModalButtonsWrapper>
+                  <Button style={{ marginRight: '1rem' }}>Dodaj ucznia</Button>
                   <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
-                  <Button style={{ marginLeft: '1rem' }}>Dodaj ucznia</Button>
                 </ModalButtonsWrapper>
               </StyledForm>
             </ModalInfoWrapper>,

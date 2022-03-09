@@ -63,16 +63,16 @@ const Meeting: React.FC<Props> = ({ meetHour, user }) => {
                     Czy aby na pewno usunąć spotkanie z uczniem {user.first_name} {user.last_name}, dzisiaj o godzinie {meetHour}?
                   </p>
                   <ModalButtonsWrapper>
-                    <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
                     <Button
                       onClick={() => {
                         deleteMeeting(user.meetingId);
                         closeModal();
                       }}
-                      style={{ marginLeft: '1rem' }}
+                      style={{ marginRight: '1rem' }}
                     >
                       Usuń
                     </Button>
+                    <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
                   </ModalButtonsWrapper>
                 </ModalInfoWrapper>,
                 'Czy chcesz usunąć to spotkanie?'
