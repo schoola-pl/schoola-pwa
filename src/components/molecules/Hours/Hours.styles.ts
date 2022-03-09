@@ -21,6 +21,7 @@ export const Hour = styled.div<{ isCanceled?: boolean }>`
     height: 2.3rem;
     width: 2.3rem;
     background-color: #fcb3b0;
+    pointer-events: ${({ isCanceled }) => (isCanceled ? 'none' : 'all')};
 
     &::after {
       content: 'x';
@@ -34,4 +35,5 @@ export const HoursWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2.5rem;
+  margin-top: 1rem;
 `;

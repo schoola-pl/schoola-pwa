@@ -8,7 +8,7 @@ export const MeetingsAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
-  tagTypes: ['getMeetingsForDay'],
+  tagTypes: ['getMeetingsForDay', 'getExceptions'],
   endpoints: (builder) => ({
     getPsychos: builder.query<authUser[], unknown>({
       query: () => ({
@@ -19,12 +19,12 @@ export const MeetingsAPI = createApi({
       })
     }),
     getMeetingsForDay: builder.query<
-      { id: number; date: string; isDone: boolean; start: string; user: authUser & { meetingId: number } }[],
+      { id: number; pId: string; date: string; start: string; user: authUser & { meetingId: number } }[],
       { pId: strapiRequestType; date: string }
     >({
       providesTags: ['getMeetingsForDay'],
       transformResponse: (
-        response: multiResponse<{ date: string; isDone: boolean; start: string; user: { data: { attributes: authUser; id: string } } }>
+        response: multiResponse<{ date: string; pId: string; start: string; user: { data: { attributes: authUser; id: string } } }>
       ) => {
         const data = response.data;
         return data.map((item) => {
@@ -38,6 +38,25 @@ export const MeetingsAPI = createApi({
       },
       query: (args) => ({
         url: `/mettings?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*&sort=start`,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      })
+    }),
+    getMeetingsException: builder.query<{ id: number; pId: string; date: string; hour: string }[], { pId: strapiRequestType; date: string }>({
+      providesTags: ['getExceptions'],
+      transformResponse: (response: multiResponse<{ date: string; pId: string; hour: string }>) => {
+        const data = response.data;
+        return data.map((item) => {
+          const { id, attributes } = item;
+          return {
+            id,
+            ...attributes
+          };
+        });
+      },
+      query: (args) => ({
+        url: `/psycho-exceptions?filters[pId][$eq]=${args.pId}&filters[date][$eq]=${args.date}&populate=*&sort=hour`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
@@ -77,10 +96,33 @@ export const MeetingsAPI = createApi({
           }
         }
       })
+    }),
+    addException: builder.mutation<number, { date: string; hour: string; pId: string }>({
+      invalidatesTags: ['getExceptions'],
+      transformResponse: (response: oneResponse) => response.data.id,
+      query: (body) => ({
+        url: `/psycho-exceptions`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        },
+        body: {
+          data: {
+            ...body
+          }
+        }
+      })
     })
   })
 });
 
-export const { useGetMeetingsForDayQuery, useGetMeetingsCountQuery, useBookMeetingMutation, useDeleteMeetingMutation, useGetPsychosQuery } =
-  MeetingsAPI;
+export const {
+  useGetMeetingsForDayQuery,
+  useGetMeetingsExceptionQuery,
+  useGetMeetingsCountQuery,
+  useBookMeetingMutation,
+  useDeleteMeetingMutation,
+  useGetPsychosQuery,
+  useAddExceptionMutation
+} = MeetingsAPI;
 export default MeetingsAPI;
