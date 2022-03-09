@@ -32,7 +32,7 @@ const TopBar = () => {
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <NotificationList />
-        <SidebarLink style={{ margin: 0 }} as={Link} to="profile/settings" icon={SettingsIcon} />
+        <SidebarLink style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );
