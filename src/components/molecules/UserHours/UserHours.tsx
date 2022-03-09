@@ -64,7 +64,8 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
         });
       }
     });
-    const preparedHours = hours.filter((obj) => obj !== undefined);
+    const preHours = hours.filter((hour) => hour !== undefined);
+    const preparedHours = preHours[0]?.filter((obj) => obj !== undefined) || [];
     return preparedHours.length > 0 ? hours : <Info style={{ width: '100%', textAlign: 'center', gridColumn: '1 / 3' }}>Psycholog nieobecny</Info>;
   };
 
