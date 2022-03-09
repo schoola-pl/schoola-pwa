@@ -19,6 +19,9 @@ import CancelIcon from 'assets/icons/CancelIcon.png';
 import MailIcon from 'assets/icons/MailIcon.svg';
 import { authUser } from 'types/auth';
 import { useMeeting } from 'hooks/useMeeting';
+import { useModal } from 'hooks/useModal';
+import Button from 'components/atoms/Button/Button';
+import { CancelAddingStudent, ModalButtonsWrapper, ModalInfoWrapper } from 'views/Forms/ManageButtons/ManageButtons.styles';
 
 interface Props {
   meetHour: string;
@@ -27,6 +30,7 @@ interface Props {
 
 const Meeting: React.FC<Props> = ({ meetHour, user }) => {
   const { deleteMeeting } = useMeeting();
+  const { openModal, closeModal } = useModal();
 
   return (
     <>
@@ -50,7 +54,31 @@ const Meeting: React.FC<Props> = ({ meetHour, user }) => {
         </InfoWrapper>
         <BoxWrapper>
           <EditBox icon={AcceptIcon} onClick={() => deleteMeeting(user.meetingId)} />
-          <DeleteBox icon={CancelIcon} onClick={() => deleteMeeting(user.meetingId)} />
+          <DeleteBox
+            icon={CancelIcon}
+            onClick={() =>
+              openModal(
+                <ModalInfoWrapper>
+                  <p style={{ fontSize: '1.3rem' }}>
+                    Czy aby na pewno usunąć spotkanie z uczniem {user.first_name} {user.last_name}, dzisiaj o godzinie {meetHour}?
+                  </p>
+                  <ModalButtonsWrapper>
+                    <CancelAddingStudent onClick={closeModal}>Anuluj</CancelAddingStudent>
+                    <Button
+                      onClick={() => {
+                        deleteMeeting(user.meetingId);
+                        closeModal();
+                      }}
+                      style={{ marginLeft: '1rem' }}
+                    >
+                      Usuń
+                    </Button>
+                  </ModalButtonsWrapper>
+                </ModalInfoWrapper>,
+                'Czy chcesz usunąć to spotkanie?'
+              )
+            }
+          />
         </BoxWrapper>
       </Wrapper>
     </>
