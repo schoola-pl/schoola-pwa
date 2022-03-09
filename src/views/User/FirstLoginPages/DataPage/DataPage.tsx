@@ -85,7 +85,18 @@ const DataPage: React.FC<props> = ({ setReadyState }) => {
           <LawWrapper>
             <LawCheckbox type="checkbox" {...register('lawCheckbox', { required: true })} disabled={isSuccess} />
             <LawLabel htmlFor="law-stuff">
-              Akceptuję <Statute href="#" /> i <PrivacyPolicy href="#" />
+              Akceptuję{' '}
+              <Statute
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://mcusercontent.com/37d42ea39057bd19a6e145ae5/files/00677c65-acf7-0bce-0887-bc6ad7ff5b2f/RA.pdf"
+              />{' '}
+              i{' '}
+              <PrivacyPolicy
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://mcusercontent.com/37d42ea39057bd19a6e145ae5/files/89fad581-ca06-baf3-7b3e-26f902be009e/PPA.pdf"
+              />
             </LawLabel>
           </LawWrapper>
           {errors.lawCheckbox && (
