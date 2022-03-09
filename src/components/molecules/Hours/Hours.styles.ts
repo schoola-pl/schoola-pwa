@@ -36,4 +36,19 @@ export const HoursWrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2.5rem;
   margin-top: 1rem;
+
+  button#exception {
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    height: 4rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSize.xs};
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+    position: absolute;
+    right: 4rem;
+    top: 2rem;
+  }
 `;
