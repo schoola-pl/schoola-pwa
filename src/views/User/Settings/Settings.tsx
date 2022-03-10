@@ -5,8 +5,8 @@ import ChangeEmail from 'views/User/Settings/ChangeEmail/ChangeEmail';
 const Settings = () => {
   return (
     <PageWrapper>
-      <ChangePassword />
       <ChangeEmail />
+      <ChangePassword />
       <a href="mailto:schoolacontact@gmail.com">Zgłoś problem</a>
     </PageWrapper>
   );
