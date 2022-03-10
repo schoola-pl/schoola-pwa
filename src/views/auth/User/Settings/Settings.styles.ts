@@ -62,3 +62,13 @@ export const InputWrapper = styled.div`
     }
   }
 `;
+
+export const LogoutButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.accentRed};
+  transform: translateY(70%);
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentRed};
+    opacity: 0.9;
+  }
+`;
