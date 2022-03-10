@@ -1,19 +1,19 @@
-import { Wrapper, InputWrapper, SubmitButton } from '../Settings.styles';
+import { InputWrapper, SubmitButton, Wrapper } from '../Settings.styles';
+import { storeRoot } from 'store';
+import { useSelector } from 'react-redux';
 
 const ChangeEmail = () => {
+  const user = useSelector((state: storeRoot) => state.user);
+
   return (
     <Wrapper email={true}>
       <h1>Zmień e-mail</h1>
-      <form action="">
+      <form>
         <InputWrapper>
-          <label htmlFor="">Obecne hasło</label>
-          <input type="e-mail" />
+          <label htmlFor="new-email">Nowy adres</label>
+          <input type="e-mail" id="new-email" placeholder={user?.email || 'brak'} />
         </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="">Nowe hasło</label>
-          <input type="password" />
-        </InputWrapper>
-        <SubmitButton email={true}>Potwierdź</SubmitButton>
+        <SubmitButton email={true}>Zmień</SubmitButton>
       </form>
     </Wrapper>
   );

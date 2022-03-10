@@ -1,23 +1,23 @@
-import { Wrapper, InputWrapper, SubmitButton } from '../Settings.styles';
+import { InputWrapper, SubmitButton, Wrapper } from '../Settings.styles';
 
 const ChangePassword = () => {
   return (
     <Wrapper>
       <h1>Zmień hasło</h1>
-      <form action="">
+      <form>
         <InputWrapper>
-          <label htmlFor="">Obecne hasło</label>
-          <input type="password" />
+          <label htmlFor="old-pass">Obecne hasło</label>
+          <input type="password" id="old-pass" />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="">Nowe hasło</label>
-          <input type="password" />
+          <label htmlFor="new-pass">Nowe hasło</label>
+          <input type="password" id="new-pass" />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="">Potwierdź hasło</label>
-          <input type="password" />
+          <label htmlFor="new-pass-verify">Potwierdź nowe hasło</label>
+          <input type="password" id="new-pass-verify" />
         </InputWrapper>
-        <SubmitButton>Potwierdź</SubmitButton>
+        <SubmitButton>Zmień</SubmitButton>
       </form>
     </Wrapper>
   );

@@ -48,6 +48,7 @@ export const InputWrapper = styled.div`
   label {
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.regular};
+    margin-bottom: 0.2rem;
   }
 
   input {
