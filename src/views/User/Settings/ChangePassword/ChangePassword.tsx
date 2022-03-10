@@ -18,27 +18,33 @@ const ChangePassword = () => {
   const newPass = watch('newPass');
   const confirmPass = watch('confirmPass');
 
-  const { checkPassword } = useUser();
+  const { checkPassword, resetPassword } = useUser();
 
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   const handleChangePassword = async ({ oldPass, newPass, confirmPass }: { oldPass: string; newPass: string; confirmPass: string }) => {
     setError('');
-    setLoading(true);
-    if (newPass !== confirmPass) {
-      setError('Nowe hasło nie jest takie samo w dwóch polach!');
+    try {
+      setLoading(true);
+      if (newPass !== confirmPass) {
+        setError('Nowe hasło nie jest takie samo w dwóch polach!');
+        setLoading(false);
+        return;
+      }
+      const isValid = await checkPassword(oldPass);
+      if (!isValid) {
+        setError('Stare hasło jest nieprawidłowe!');
+        setLoading(false);
+        return;
+      }
+      await resetPassword(newPass);
+      reset();
       setLoading(false);
-      return;
-    }
-    const isValid = await checkPassword(oldPass);
-    if (!isValid) {
-      setError('Stare hasło jest nieprawidłowe!');
+    } catch (e) {
+      setError('Wystąpił błąd podczas zmiany hasła!');
       setLoading(false);
-      return;
     }
-    reset();
-    setLoading(false);
   };
 
   return (
