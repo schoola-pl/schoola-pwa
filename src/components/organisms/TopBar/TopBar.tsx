@@ -17,14 +17,14 @@ const TopBar = () => {
   const [image, setImage] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      (async () => {
-        const image = await getAvatarById(user?.avatar, 'thumbnail');
-        setImage(image);
-      })();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     (async () => {
+  //       const image = await getAvatarById(user?.avatar, 'thumbnail');
+  //       setImage(image);
+  //     })();
+  //   }
+  // }, [user]);
 
   return (
     <Wrapper>

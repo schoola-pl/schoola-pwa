@@ -21,6 +21,24 @@ export const Wrapper = styled.div<accountType>`
 export const NotificationButton = styled(StyledSidebarLink)`
   margin: 0;
 `;
+
+export const NotificationButtonWrapper = styled.div<{ isVisible: boolean }>`
+  position: relative;
+
+  div {
+    position: absolute;
+    border-radius: 2rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: ${({ theme }) => theme.colors.accentRed};
+    transform: translate(175%, 30%);
+    color: white;
+    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
 export const NotificationWrapper = styled.div<Props>`
   display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
   position: absolute;
