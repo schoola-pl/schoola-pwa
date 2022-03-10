@@ -2,6 +2,7 @@ import { InputWrapper, SubmitButton, Wrapper } from '../Settings.styles';
 import { storeRoot } from 'store';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useUser } from 'hooks/useUser';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 
 const ChangeEmail = () => {
@@ -16,7 +17,10 @@ const ChangeEmail = () => {
 
   const emailField = watch('email');
 
+  const { updateSettings } = useUser();
+
   const handleChangeEmail = ({ email }: { email: string }) => {
+    updateSettings({ email });
     reset();
   };
 
