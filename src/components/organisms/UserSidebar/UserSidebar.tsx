@@ -1,15 +1,16 @@
-import { StyledList, StyledListItem, StyledSidebarLink, Wrapper } from './UserSidebar.styles';
+import { StyledListItem, StyledSidebarLink } from './UserSidebar.styles';
 import UserIcon from 'assets/icons/UserSidebarIcons/UserIcon.svg';
 import AppointmentIcon from 'assets/icons/UserSidebarIcons/AppointmentIcon.svg';
 import SpottedIcon from 'assets/icons/UserSidebarIcons/SpottedIcon.svg';
 import FeedIcon from 'assets/icons/UserSidebarIcons/FeedIcon.svg';
+import Sidebar from 'components/atoms/Sidebar/Sidebar';
 
 const UserSidebar = () => {
   return (
-    <Wrapper>
-      <StyledList key="808879786">
-        <StyledListItem name="Profil" to="/student/home">
-          <StyledSidebarLink icon={UserIcon} />
+    <Sidebar>
+      <ul>
+        <StyledListItem name="Feed" to="/student/feed">
+          <StyledSidebarLink icon={FeedIcon} />
         </StyledListItem>
         <StyledListItem name="Wizyta" to="/student/appointment">
           <StyledSidebarLink icon={AppointmentIcon} />
@@ -17,11 +18,11 @@ const UserSidebar = () => {
         <StyledListItem name="Spotted" to="/student/spotted">
           <StyledSidebarLink icon={SpottedIcon} />
         </StyledListItem>
-        <StyledListItem name="Feed" to="/student/feed">
-          <StyledSidebarLink icon={FeedIcon} />
+        <StyledListItem name="Profil" to="/student/profile">
+          <StyledSidebarLink icon={UserIcon} />
         </StyledListItem>
-      </StyledList>
-    </Wrapper>
+      </ul>
+    </Sidebar>
   );
 };
 

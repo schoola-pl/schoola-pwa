@@ -4,31 +4,30 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
   text-decoration: none;
-  padding: 0;
   background: ${({ theme }) => theme.colors.accentGreen};
-  width: 220px;
+  width: 100%;
+  padding: 0 2.5rem;
   height: 47px;
   border: none;
   border-radius: 50px;
   font-size: 16px;
   font-weight: 500;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, opacity 0.3s;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.lightGreen};
     cursor: pointer;
   }
 
-  ${({ isDisabled, theme }) =>
+  ${({ isDisabled }) =>
     isDisabled &&
     `
-  background: ${theme.colors.lightGrey};
+    opacity: 0.6;
   pointer-events: none;
   &:hover {
-  cursor: not-allowed;
-    background: ${theme.colors.selectedItemGrey};
+    cursor: not-allowed;
   }
    `};
 
@@ -52,8 +51,8 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   border-radius: 15px;
   
   * {
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   }
 `}
 `;

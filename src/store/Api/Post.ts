@@ -23,7 +23,7 @@ export const PostsAPI = createApi({
     >({
       providesTags: ['comments'],
       query: (args) => ({
-        url: `/posts?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.postId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author&populate[author][fields]=*`,
+        url: `/posts?filters[schoolId][$eq]=${args.schoolId}&filters[id][$eq]=${args.postId}&populate[comments][sort][0]=createdAt:desc&populate[comments][fields]=*&populate[likes][populate]=userIds&populate[comments][populate]=author&populate[author][fields]=*&pagination[pageSize]=100`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }

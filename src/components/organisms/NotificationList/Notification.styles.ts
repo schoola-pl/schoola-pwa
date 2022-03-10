@@ -19,7 +19,7 @@ export const Wrapper = styled.div<accountType>`
 `;
 
 export const NotificationButton = styled(StyledSidebarLink)`
-  transform: translateX(25%);
+  margin: 0;
 `;
 export const NotificationWrapper = styled.div<Props>`
   display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};

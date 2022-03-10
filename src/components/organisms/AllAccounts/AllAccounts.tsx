@@ -6,6 +6,7 @@ import { SearchRecord, SearchRecords, Wrapper } from './AllAccounts.styles';
 import Loading from 'components/molecules/Loading/Loading';
 import { copy } from 'helpers/copy';
 import { useNavigate } from 'react-router';
+import { roles } from 'routes';
 
 interface resultType {
   id: string;
@@ -105,19 +106,23 @@ const AllAccounts: React.FC = () => {
                 borderBottom: '2px solid #eceff7'
               }}
             >
-              Wyniki wyszukiwania frazy: <span id="cut">{phrase}</span>
+              Wyniki wyszukiwania{' '}
+              <span id="cut">
+                Znaleziono <u>{results.filter(({ TextRole }) => TextRole === roles.moderator || TextRole === roles.student).length} wyników</u> dla
+                podanej frazy
+              </span>
             </h1>
             <SearchRecords>
               {results.length > 0 ? (
                 results.map(({ id, first_name, last_name, TextRole, TextClassName }) => {
-                  if (TextRole === 'School Admin') return null;
+                  if (TextRole !== roles.moderator && TextRole !== roles.student) return null;
                   return (
                     <SearchRecord
                       key={id}
                       onClick={() => navigate(`/school-admin/manage/classes/${TextClassName}#${first_name.toLowerCase()}-${last_name.toLowerCase()}`)}
                     >
                       <h1>{`${first_name} ${last_name}`}</h1>
-                      <p>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
+                      <p>{TextRole === roles.student ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
                       <span>{TextClassName}</span>
                     </SearchRecord>
                   );

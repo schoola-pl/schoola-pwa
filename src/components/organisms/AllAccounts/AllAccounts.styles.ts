@@ -31,7 +31,14 @@ export const Wrapper = styled.div`
       display: block;
       font-size: 1.7rem;
       max-width: 80%;
+      color: black;
+      opacity: 0.7;
       margin-bottom: 1.2rem;
+
+      u {
+        color: ${({ theme }) => theme.colors.accentGreen};
+        text-decoration: none;
+      }
     }
 
     & > h1 {

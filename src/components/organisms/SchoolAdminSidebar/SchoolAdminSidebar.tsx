@@ -20,16 +20,20 @@ const AdminSidebar = () => {
     <Wrapper>
       <Logo>schoola</Logo>
       <StyledList>
-        {links.map(({ path, name, icon }) => (
-          <StyledListItem key={path} to={path}>
-            <SidebarLink tabIndex={-1} icon={icon} />
-            <StyledParagraph>{name}</StyledParagraph>
+        <div>
+          {links.map(({ path, name, icon }) => (
+            <StyledListItem key={path} to={path}>
+              <SidebarLink tabIndex={-1} icon={icon} />
+              <StyledParagraph>{name}</StyledParagraph>
+            </StyledListItem>
+          ))}
+        </div>
+        <div>
+          <StyledListItem key={'logout'} onClick={logout} to={'/'} isDanger>
+            <SidebarLink tabIndex={-1} icon={LogoutIcon} />
+            <StyledParagraph>Wyloguj się</StyledParagraph>
           </StyledListItem>
-        ))}
-        <StyledListItem key={'logout'} onClick={logout} to={'/'} isDanger>
-          <SidebarLink tabIndex={-1} icon={LogoutIcon} />
-          <StyledParagraph>Wyloguj się</StyledParagraph>
-        </StyledListItem>
+        </div>
       </StyledList>
     </Wrapper>
   );

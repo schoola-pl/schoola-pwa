@@ -30,6 +30,14 @@ export const RoleRecord = styled.div`
     height: 60%;
     background-color: ${({ theme }) => theme.colors.accentGreen};
   }
+
+  span {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem;
+  }
 `;
 
 export const EmptyParagraph = styled.p`

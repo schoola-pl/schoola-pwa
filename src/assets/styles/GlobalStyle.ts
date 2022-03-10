@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
-  a, button, textarea {
+  a, button, textarea, input, select {
     font-family: 'Poppins', sans-serif
   }
 `;

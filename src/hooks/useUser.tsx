@@ -3,7 +3,7 @@ import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { settingsType } from 'types/school';
+
 import {
   addUser as addUserStore,
   removeUser,
@@ -44,7 +44,8 @@ export interface preparedUserInterface {
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
-  updateSettings: (settings: settingsType, userId?: number) => void;
+  updateSettings: (settings: Partial<authUser>, userId?: number) => void;
+  checkPassword: (password: string) => Promise<boolean>;
   resetPassword: (newPassword: string, code?: string) => void | Promise<AxiosResponse>;
   addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
@@ -88,6 +89,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   updateSettings: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  checkPassword: () => {
     throw new Error('UserContext is not initialized');
   },
   resetPassword: () => {
@@ -201,14 +205,14 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method updates the user settings in the redux store & database
-  const updateSettings = (settings: settingsType, userId?: number) => {
+  const updateSettings = (settings: Partial<authUser>, userId?: number) => {
     if (settings.email !== '' || settings.first_name !== '' || settings.last_name !== '' || settings.Birthday !== '' || settings.TextRole !== '') {
-      const tempObj: { [key: string]: string | boolean } = {};
+      const tempObj: { [key: string]: unknown } = {};
       const settingsArray = Object.entries(settings);
       const role = getRoleFromText(settings.TextRole || user?.TextRole || '');
       settingsArray.forEach(([key, value]) => {
-        if (value !== '') {
-          if (typeof value !== 'boolean' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
+        if (value && value !== '') {
+          if (typeof value === 'string' && (key === 'first_name' || key === 'last_name')) value = value.charAt(0).toUpperCase() + value.slice(1);
           tempObj[key] = value;
         }
       });
@@ -317,6 +321,21 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method checks does password is valid
+  const checkPassword = async (password: string) => {
+    if (!user) return false;
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/local`, {
+        identifier: user.username,
+        password
+      });
+      const { status } = res;
+      return status === 200;
+    } catch (error) {
+      return false;
+    }
+  };
+
   // This method resets the user password in the database
   const resetPassword = (newPassword: string, code?: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
@@ -353,6 +372,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const values = {
     logout,
+    checkPassword,
     resetPassword,
     updateUserState,
     updateSettings,

@@ -2,12 +2,12 @@ import AdminSidebar from 'components/organisms/SchoolAdminSidebar/SchoolAdminSid
 import { Wrapper } from './SchoolAdminTemplate.styles';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import ManageClasses from '../../../views/auth/SchoolAdmin/ManageClasses/ManageClasses';
-import Dashboard from '../../../views/auth/SchoolAdmin/Dashboard/Dashboard';
-import AddClass from '../../../views/auth/SchoolAdmin/AddClass/AddClass';
-import ClassDetails from '../../../views/auth/SchoolAdmin/ClassDetails/ClassDetails';
+import ManageClasses from '../../../views/SchoolAdmin/ManageClasses/ManageClasses';
+import Dashboard from '../../../views/SchoolAdmin/Dashboard/Dashboard';
+import AddClass from '../../../views/SchoolAdmin/AddClass/AddClass';
+import ClassDetails from '../../../views/SchoolAdmin/ClassDetails/ClassDetails';
 import Error404 from '../../../views/Error404/Error404';
-import Settings from '../../../views/auth/SchoolAdmin/Settings/Settings';
+import Settings from '../../../views/SchoolAdmin/Settings/Settings';
 import TooSmallScreen from 'components/organisms/TooSmallScreen/TooSmallScreen';
 
 const SchoolAdminTemplate: React.FC = () => {

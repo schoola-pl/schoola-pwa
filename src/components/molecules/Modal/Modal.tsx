@@ -4,13 +4,12 @@ import ReactDOM from 'react-dom';
 
 const Modal: React.FC<{ title?: string }> = ({ children, title }) => {
   return ReactDOM.createPortal(
-    <>
-      <Backdrop />
+    <Backdrop>
       <Wrapper>
         {title && <Title>{title}</Title>}
         {children}
       </Wrapper>
-    </>,
+    </Backdrop>,
     document.body
   );
 };

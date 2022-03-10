@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const Logo = styled.h1`
-  margin-top: 6.5rem;
+  margin-bottom: 4rem;
   font-size: ${({ theme }) => theme.fontSize.xl};
 
   &::after {
@@ -14,10 +14,8 @@ export const Logo = styled.h1`
 
 export const Wrapper = styled.nav`
   height: 100vh;
-  width: 95%;
-  padding: 0;
-  left: 0;
-  top: 0;
+  width: 100%;
+  padding: 3rem 0;
   display: flex;
   background-color: ${({ theme }) => theme.colors.lightBrown};
   flex-direction: column;
@@ -26,36 +24,36 @@ export const Wrapper = styled.nav`
 `;
 
 export const StyledList = styled.ul`
-  margin: 2.5rem 0 0 0;
-  padding: 0;
+  height: 100%;
   list-style: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  position: relative;
-  left: 0;
+  justify-content: space-between;
 
-  @media (min-width: 1300px) {
-    margin-top: 5rem;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 const easing = 'cubic-bezier(0.645, 0.045, 0.355, 1)';
 export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
-  display: flex;
-  height: 8rem;
-  width: 18rem;
+  display: grid;
+  grid-template-columns: 37% 43%;
+  grid-template-rows: 1fr;
   align-items: center;
+  width: 85%;
   text-decoration: none;
-  margin-top: 2rem;
   color: black;
   position: relative;
   left: 0;
   opacity: 0.8;
   transition: opacity 0.2s ${easing};
 
-  &:last-child {
-    margin-top: 20rem;
+  &:not(:first-child) {
+    margin-top: 2rem;
   }
 
   &::after {
@@ -88,17 +86,8 @@ export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
       opacity: 1;
     }
   }
-
-  @media (min-width: 1750px) {
-    width: 22rem;
-    margin-top: 3.5rem;
-
-    &:last-child {
-      margin-top: 30rem;
-    }
-  }
 `;
 
 export const StyledParagraph = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.s};
+  font-size: 1.5rem;
 `;
