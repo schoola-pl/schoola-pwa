@@ -67,7 +67,6 @@ export const InputWrapper = styled.div`
 
 export const LogoutButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.accentRed};
-  transform: translateY(50%);
   margin-bottom: 2rem;
 
   &:hover {

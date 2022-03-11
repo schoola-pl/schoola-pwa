@@ -1,4 +1,4 @@
-import { PageWrapper, LogoutButton } from './Settings.styles';
+import { LogoutButton, PageWrapper } from './Settings.styles';
 import ChangePassword from 'views/User/Settings/ChangePassword/ChangePassword';
 import ChangeEmail from 'views/User/Settings/ChangeEmail/ChangeEmail';
 import { useUser } from 'hooks/useUser';
@@ -9,8 +9,8 @@ const Settings = () => {
     <PageWrapper>
       <ChangeEmail />
       <ChangePassword />
-      <a href="mailto:schoolacontact@gmail.com">Zgłoś problem</a>
       <LogoutButton onClick={logout}>Wyloguj się</LogoutButton>
+      <a href="mailto:schoolacontact@gmail.com">Zgłoś problem</a>
     </PageWrapper>
   );
 };
