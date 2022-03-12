@@ -49,5 +49,7 @@ export const ErrorDiv = styled.div<Props>`
 
 export const StyledButton = styled(Button)`
   margin-bottom: 7.5rem;
+  width: min(300px, 100%);
+  margin-inline: 1.5rem;
   padding: 2rem;
 `;
