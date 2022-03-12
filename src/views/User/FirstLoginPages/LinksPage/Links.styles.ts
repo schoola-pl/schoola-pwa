@@ -27,6 +27,7 @@ export const StyledInput = styled.input`
   border-radius: 1rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   outline: none;
+  width: 20rem;
 `;
 
 export const StyledSelect = styled.select`
