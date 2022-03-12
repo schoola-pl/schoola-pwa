@@ -22,16 +22,19 @@ export const NotificationButton = styled(StyledSidebarLink)`
   margin: 0;
 `;
 
-export const NotificationButtonWrapper = styled.div<{ isVisible: boolean }>`
+export const NotificationButtonWrapper = styled.div<{ isVisible: boolean; notificationCounter: number }>`
   position: relative;
 
-  div {
+  &::before {
+    content: ${({ notificationCounter }) => (notificationCounter > 0 ? `"${notificationCounter}"` : '')};
+    display: ${({ notificationCounter }) => (notificationCounter > 0 ? `1` : '0')};
     position: absolute;
+    top: 0.7rem;
+    right: 1rem;
     border-radius: 2rem;
     height: 1.5rem;
     width: 1.5rem;
     background-color: ${({ theme }) => theme.colors.accentRed};
-    transform: translate(175%, 30%);
     color: white;
     display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     align-items: center;
