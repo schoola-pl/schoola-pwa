@@ -7,7 +7,7 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   color: white;
   text-decoration: none;
   background: ${({ theme }) => theme.colors.accentGreen};
-  width: 100%;
+  width: 90%;
   padding: 0 2.5rem;
   height: 47px;
   border: none;
