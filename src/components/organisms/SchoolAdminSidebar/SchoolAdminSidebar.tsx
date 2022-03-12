@@ -1,16 +1,17 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Logo, StyledList, StyledListItem, StyledParagraph, Wrapper } from './SchoolAdminSidebar.styles';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import LogoutIcon from 'assets/icons/LogoutIcon.png';
-import React from 'react';
 import { useUser } from 'hooks/useUser';
 
 const links: { path: string; name: string; icon: string }[] = [
   { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
   { path: '/school-admin/manage/classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
-  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' }
+  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Twoje konto' }
 ];
 
 const AdminSidebar = () => {
@@ -18,7 +19,9 @@ const AdminSidebar = () => {
 
   return (
     <Wrapper>
-      <Logo>schoola</Logo>
+      <Logo as={Link} to="/school-admin/">
+        schoola
+      </Logo>
       <StyledList>
         <div>
           {links.map(({ path, name, icon }) => (
