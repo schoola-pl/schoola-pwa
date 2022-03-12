@@ -4,6 +4,7 @@
 describe('Auth routes | Schoola App', () => {
   beforeEach(() => {
     cy.visit('/');
+    localStorage.clear();
   });
 
   it("Should redirect to '/login' if user isn't authenticated", () => {
@@ -13,8 +14,8 @@ describe('Auth routes | Schoola App', () => {
   it("Should redirect to '/school-admin' if School Admin is authenticated", () => {
     cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.findByPlaceholderText(/login/i).type('test_admin');
-    cy.findByPlaceholderText(/hasło/i).type('Admin321!');
-    cy.findByText(/zaloguj/i).click();
+    cy.findByPlaceholderText(/hasło/i).type('Admin123!');
+    cy.findByText('Zaloguj się').click();
     cy.wait('@login').then(() => {
       cy.url().should('include', '/school-admin');
     });
@@ -23,8 +24,8 @@ describe('Auth routes | Schoola App', () => {
   it("Should redirect to '/login' if role hasn't permissions to visit a path", () => {
     cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.findByPlaceholderText(/login/i).type('test_admin');
-    cy.findByPlaceholderText(/hasło/i).type('Admin321!');
-    cy.findByText(/zaloguj/i).click();
+    cy.findByPlaceholderText(/hasło/i).type('Admin123!');
+    cy.findByText('Zaloguj się').click();
     cy.wait('@login').then(() => {
       cy.url().should('include', '/school-admin');
       cy.visit('/student');
@@ -45,6 +46,20 @@ describe('Auth routes | Schoola App', () => {
       .should('be.visible')
       .click();
     cy.findByPlaceholderText(/login/i).should('exist');
+  });
+
+  it('Checks does system remember who is logged in', () => {
+    cy.intercept('POST', `${Cypress.env('API_URL')}/auth/local`).as('login');
+    cy.findByPlaceholderText(/login/i).type('test_admin');
+    cy.findByPlaceholderText(/hasło/i).type('Admin123!');
+    cy.findByText('Zaloguj się').click();
+    cy.wait('@login').then(() => {
+      assert.isNotNull(localStorage.getItem('role'));
+      assert.equal(localStorage.getItem('role'), 'School Admin');
+      cy.url().should('include', '/school-admin');
+      cy.visit('/');
+      cy.url().should('include', '/school-admin');
+    });
   });
 });
 
