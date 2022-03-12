@@ -30,7 +30,7 @@
             >Gdybyś wysłał zlecenie zmiany hasła do FBI, wymagaliby odcisku palca, ale my na szczęście tego nie wymagamy. Po prostu kliknij w przycisk
             poniżej! 🙂</mj-text
           >
-          <mj-button background-color="#55AB67" border-radius="30px" href="link do odzyskania hasła">Chcę odzyskać hasło</mj-button>
+          <mj-button background-color="#55AB67" border-radius="30px" href="https://app.schoola.pl/forgot-password?code=<%= TOKEN %>">Chcę odzyskać hasło!</mj-button>
         </mj-column>
       </mj-group>
     </mj-section>

@@ -7,12 +7,15 @@ import TodayPage from 'views/Psycho/TodayPage/TodayPage';
 import CalendarPage from 'views/Psycho/CalendarPage/CalendarPage';
 import WeekPage from 'views/Psycho/WeekPage/WeekPage';
 import DayPage from 'views/Psycho/DayPage/DayPage';
+import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
 import Settings from 'views/User/Settings/Settings';
 
 const PsychoRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
 
-  return (
+  return window.innerWidth > 550 ? (
+    <TooBigScreen />
+  ) : (
     <PsychoTemplate>
       {user && !user.confirmed ? (
         <PsychoLoginTemplate />

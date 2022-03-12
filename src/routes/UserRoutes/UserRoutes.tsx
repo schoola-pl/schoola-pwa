@@ -11,11 +11,14 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 import CommentSection from 'views/User/CommentSection/CommentSection';
+import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
 
 const UserRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
 
-  return (
+  return window.innerWidth > 550 ? (
+    <TooBigScreen />
+  ) : (
     <>
       {user && !user.confirmed ? (
         <FirstLoginTemplate />
