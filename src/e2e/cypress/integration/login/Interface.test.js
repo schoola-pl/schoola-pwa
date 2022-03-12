@@ -36,8 +36,8 @@ describe('Login interface | Schoola App', () => {
     cy.get(login.button).should('not.have.css', 'opacity', '1');
     cy.get(login.button).should('have.css', 'opacity', '0.6');
     // Focused
-    cy.get(login.username).click().type('0').should('have.css', 'border-color', hexToRGB(colors.active));
-    cy.get(login.password).click().type('0').should('have.css', 'border-color', hexToRGB(colors.active));
+    cy.get(login.username).click().type('0oooo').should('have.css', 'border-color', hexToRGB(colors.active));
+    cy.get(login.password).click().type('0oooooooo').should('have.css', 'border-color', hexToRGB(colors.active));
   });
 
   it('Checks does form reacts with errors', () => {
