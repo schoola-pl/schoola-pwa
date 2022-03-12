@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const Logo = styled.h1`
-  margin-bottom: 4rem;
+  margin-bottom: 7rem;
   font-size: ${({ theme }) => theme.fontSize.xl};
+  text-decoration: none;
+  color: black;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 
   &::after {
     content: '.';
