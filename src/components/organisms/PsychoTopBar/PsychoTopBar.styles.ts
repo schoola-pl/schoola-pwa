@@ -13,8 +13,11 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightBrown};
 `;
 
-export const Logo = styled.button`
+export const Logo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
+  text-decoration: none;
+  color: black;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 
   &::after {
     content: '.';
