@@ -11,7 +11,7 @@ import { useUser } from 'hooks/useUser';
 const links: { path: string; name: string; icon: string }[] = [
   { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
   { path: '/school-admin/manage/classes', icon: AddUserIcon, name: 'Zarządzaj użytkownikami' },
-  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Ustawienia' }
+  { path: '/school-admin/settings', icon: SettingsIcon, name: 'Twoje konto' }
 ];
 
 const AdminSidebar = () => {
