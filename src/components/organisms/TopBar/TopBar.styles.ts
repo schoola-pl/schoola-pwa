@@ -3,7 +3,9 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Logo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
-
+  text-decoration: none;
+  color: black;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   &::after {
     content: '.';
     font-size: ${({ theme }) => theme.fontSize.l};
@@ -20,6 +22,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 1.5rem;
   padding-inline: 3rem;
 `;
 export const UserPicture = styled.div`

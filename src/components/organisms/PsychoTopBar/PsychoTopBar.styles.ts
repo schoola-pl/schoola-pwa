@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightBrown};
 `;
 
-export const Logo = styled.h1`
+export const Logo = styled.button`
   font-size: ${({ theme }) => theme.fontSize.l};
 
   &::after {

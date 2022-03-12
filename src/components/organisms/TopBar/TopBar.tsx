@@ -28,7 +28,9 @@ const TopBar = () => {
 
   return (
     <Wrapper>
-      <Logo>schoola</Logo>
+      <Logo as={Link} to="/student/feed">
+        schoola
+      </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <NotificationList />

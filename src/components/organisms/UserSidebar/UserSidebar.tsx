@@ -12,11 +12,11 @@ const UserSidebar = () => {
         <StyledListItem name="Feed" to="/student/feed">
           <StyledSidebarLink icon={FeedIcon} />
         </StyledListItem>
-        <StyledListItem name="Wizyta" to="/student/appointment">
-          <StyledSidebarLink icon={AppointmentIcon} />
-        </StyledListItem>
         <StyledListItem name="Spotted" to="/student/spotted">
           <StyledSidebarLink icon={SpottedIcon} />
+        </StyledListItem>
+        <StyledListItem name="Wizyta" to="/student/appointment">
+          <StyledSidebarLink icon={AppointmentIcon} />
         </StyledListItem>
         <StyledListItem name="Profil" to="/student/profile">
           <StyledSidebarLink icon={UserIcon} />
