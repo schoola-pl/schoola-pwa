@@ -44,6 +44,7 @@ export interface preparedUserInterface {
 interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
+  checkEmail: (email: string) => Promise<boolean>;
   updateSettings: (settings: Partial<authUser>, userId?: number) => void;
   checkPassword: (password: string) => Promise<boolean>;
   resetPassword: (newPassword: string, code?: string) => void | Promise<AxiosResponse>;
@@ -86,6 +87,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  checkEmail: () => {
     throw new Error('UserContext is not initialized');
   },
   updateSettings: () => {
@@ -202,6 +206,19 @@ export const UserProvider: React.FC = ({ children }) => {
     if (user && getJWT()) {
       dispatch(addUserStore({ user }));
     } else logout();
+  };
+
+  const checkEmail = async (email: string) => {
+    try {
+      const res = await axios.get<{ email: string }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[email]=${email}`, {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      });
+      return res.data.length === 0;
+    } catch (err) {
+      return false;
+    }
   };
 
   // This method updates the user settings in the redux store & database
@@ -374,6 +391,7 @@ export const UserProvider: React.FC = ({ children }) => {
     logout,
     checkPassword,
     resetPassword,
+    checkEmail,
     updateUserState,
     updateSettings,
     addInterested,

@@ -4,8 +4,12 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useUser } from 'hooks/useUser';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
+import { useState } from 'react';
+import Loader from 'components/atoms/Loader/Loader';
 
 const ChangeEmail = () => {
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const user = useSelector((state: storeRoot) => state.user);
   const {
     register,
@@ -17,11 +21,23 @@ const ChangeEmail = () => {
 
   const emailField = watch('email');
 
-  const { updateSettings } = useUser();
+  const { updateSettings, checkEmail } = useUser();
 
-  const handleChangeEmail = ({ email }: { email: string }) => {
-    updateSettings({ email });
-    reset();
+  const handleChangeEmail = async ({ email }: { email: string }) => {
+    setLoading(true);
+    setError('');
+    try {
+      const isNotTaken = await checkEmail(email);
+      console.log(isNotTaken);
+      if (isNotTaken) {
+        updateSettings({ email });
+        reset();
+      } else setError('Ten adres jest już zajęty!');
+      setLoading(false);
+    } catch (err) {
+      setError('Coś poszło nie tak!');
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,9 +58,16 @@ const ChangeEmail = () => {
           />
         </InputWrapper>
         <SubmitButton isDisabled={!emailField} email={true}>
-          Zmień
+          {!isLoading ? (
+            'Zmień'
+          ) : (
+            <>
+              Zmieniam... <Loader style={{ marginLeft: '1rem' }} fitContent />
+            </>
+          )}
         </SubmitButton>
         {errors.email && <ErrorParagraph style={{ marginTop: '0.5rem' }}>Podaj poprawny adres e-mail</ErrorParagraph>}
+        {error && <ErrorParagraph style={{ marginTop: '0.5rem' }}>{error}</ErrorParagraph>}
       </form>
     </Wrapper>
   );

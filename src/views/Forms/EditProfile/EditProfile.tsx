@@ -8,9 +8,11 @@ import { authUser } from 'types/auth';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 
 const EditProfile = () => {
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const user = useSelector((state: storeRoot) => state.user);
-  const { updateSettings } = useUser();
+  const { updateSettings, checkEmail } = useUser();
   const {
     register,
     handleSubmit,
@@ -24,10 +26,24 @@ const EditProfile = () => {
   const field3 = watch('last_name');
   const field4 = watch('Birthday');
 
-  const handleChangeSettings = (settings: Partial<authUser>) => {
-    updateSettings(settings);
-    setIsSuccess(true);
-    reset();
+  const handleChangeSettings = async (settings: Partial<authUser>) => {
+    setError('');
+    setLoading(true);
+    const email = settings.email;
+
+    if (!email) {
+      updateSettings(settings);
+      setIsSuccess(true);
+      reset();
+    } else {
+      const isEmailNotTaken = await checkEmail(email);
+      if (isEmailNotTaken) {
+        updateSettings(settings);
+        setIsSuccess(true);
+        reset();
+      } else setError('Podany adres jest już zajęty!');
+    }
+    setLoading(false);
   };
 
   return (
@@ -54,8 +70,11 @@ const EditProfile = () => {
           </Label>
           <StyledInput type="date" {...register('Birthday')} />
         </EditProfileForm>
-        <SubmitButton isDisabled={!field1 && !field2 && !field3 && !field4}>{!isSuccess ? 'Zmień dane' : 'Zmieniono dane!'}</SubmitButton>
+        <SubmitButton isDisabled={!field1 && !field2 && !field3 && !field4}>
+          {!isSuccess ? (!isLoading ? 'Zmień dane' : 'Zmienianie danych...') : 'Zmieniono dane!'}
+        </SubmitButton>
         {errors.email && <ErrorParagraph style={{ marginTop: '0.5rem' }}>Podaj poprawny adres email!</ErrorParagraph>}
+        {error && <ErrorParagraph style={{ marginTop: '0.5rem' }}>{error}</ErrorParagraph>}
       </Card>
     </div>
   );
