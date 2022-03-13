@@ -1,8 +1,8 @@
 import { StyledListItem, StyledSidebarLink } from './PsychoSidebar.styles';
 import TodayIcon from 'assets/icons/TodayIcon.svg';
 import AppointmentIcon from 'assets/icons/UserSidebarIcons/AppointmentIcon.svg';
-import UserIcon from 'assets/icons/UserSidebarIcons/UserIcon.svg';
 import WeekIcon from 'assets/icons/WeekIcon.svg';
+import SettingsIcon from 'assets/icons/UserSidebarIcons/SettingsGreenIcon.svg';
 import Sidebar from 'components/atoms/Sidebar/Sidebar';
 
 const PsychoSidebar = () => (
@@ -17,8 +17,8 @@ const PsychoSidebar = () => (
       <StyledListItem name="Kalendarz" to="/psycho/calendar">
         <StyledSidebarLink icon={AppointmentIcon} />
       </StyledListItem>
-      <StyledListItem name="Profil" to="/psycho/profile">
-        <StyledSidebarLink icon={UserIcon} />
+      <StyledListItem name="Ustawienia" to="/psycho/settings">
+        <StyledSidebarLink icon={SettingsIcon} />
       </StyledListItem>
     </ul>
   </Sidebar>

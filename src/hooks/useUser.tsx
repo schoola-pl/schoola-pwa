@@ -46,6 +46,7 @@ interface UserContextTypes {
   logout: () => void;
   checkEmail: (email: string) => Promise<boolean>;
   updateSettings: (settings: Partial<authUser>, userId?: number) => void;
+  checkPassword: (password: string) => Promise<boolean>;
   resetPassword: (newPassword: string, code?: string) => void | Promise<AxiosResponse>;
   addInterested: (interested: { id: number }) => void;
   removeInterested: (id: number) => void;
@@ -92,6 +93,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   updateSettings: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  checkPassword: () => {
     throw new Error('UserContext is not initialized');
   },
   resetPassword: () => {
@@ -334,6 +338,21 @@ export const UserProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method checks does password is valid
+  const checkPassword = async (password: string) => {
+    if (!user) return false;
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/local`, {
+        identifier: user.username,
+        password
+      });
+      const { status } = res;
+      return status === 200;
+    } catch (error) {
+      return false;
+    }
+  };
+
   // This method resets the user password in the database
   const resetPassword = (newPassword: string, code?: string) => {
     if (newPassword.match(/(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g)) {
@@ -370,6 +389,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const values = {
     logout,
+    checkPassword,
     resetPassword,
     checkEmail,
     updateUserState,
