@@ -4,7 +4,7 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 export const Wrapper = styled.form`
   border-radius: 2rem;
   width: 100%;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   background-color: white;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   display: grid;
@@ -83,13 +83,13 @@ const fadeInInformation = keyframes`
     transform: translate(-50%, -40px);
   }
   to {
-    transform: translate(-50%, -5px);
+    transform: translate(-50%, -11.5px);
   }
 `;
 
 const fadeOutInformation = keyframes`
   from {
-    transform: translate(-50%, -5px);
+    transform: translate(-50%, -11.5px);
   }
   to {
     transform: translate(-50%, -40px);
