@@ -69,4 +69,4 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   );
 };
 
-export default FeedInput;
+export default React.memo(FeedInput);

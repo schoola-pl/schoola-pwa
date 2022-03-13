@@ -74,4 +74,4 @@ const Heart: React.FC<Props> = ({
   );
 };
 
-export default Heart;
+export default React.memo(Heart);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 import DotsMenuIcon from 'assets/icons/DotsMenuIcon.svg';
-import QuestionMark from 'assets/icons/QuestionMark.png';
 import CommentIcon from 'assets/icons/CommentIcon.svg';
 import SendIcon from 'assets/icons/SendIcon.svg';
 import Heart from 'components/atoms/Heart/Heart';
@@ -9,15 +8,13 @@ import {
   ActionsWrapper,
   InfoWrapper,
   LikeWrapper,
-  ProfilePicture,
   QuestionInfo,
   QuestionInnerWrapper,
   QuestionWrapper,
+  SendMessageButton,
   StyledComments,
   StyledInput,
-  StyledPicture,
-  ToggleMenu,
-  SendMessageButton
+  ToggleMenu
 } from './Post.styles';
 import { formatDistance } from 'date-fns';
 import { pl } from 'date-fns/locale';
@@ -30,6 +27,7 @@ import { useSpotted } from 'hooks/useSpotted';
 import { usePost } from 'hooks/usePost';
 import { authUser } from 'types/auth';
 import { useAvatar } from 'hooks/useAvatar';
+import ProfilePicture from 'components/molecules/ProfilePicture/ProfilePicture';
 
 interface props {
   qId: number;
@@ -112,11 +110,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   return (
     <QuestionWrapper ref={ref}>
       <InfoWrapper>
-        <StyledPicture random={Math.ceil(Math.random() * 5)}>
-          <ProfilePicture isSpotted={isSpotted}>
-            <img src={image || QuestionMark} alt={`${postOwner?.first_name}'s photo`} />
-          </ProfilePicture>
-        </StyledPicture>
+        <ProfilePicture isSpotted={isSpotted} postOwner={postOwner} image={image} />
         <QuestionInfo>
           <p>{formatDistance(new Date(date), new Date(), { addSuffix: true, locale: pl })}</p>
           <h1>{postOwner ? `${postOwner.first_name} ${postOwner.last_name} | ${postOwner.TextClassName}` : 'Ktoś zadał pytanie:'}</h1>
@@ -161,4 +155,4 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   );
 });
 
-export default Post;
+export default React.memo(Post);
