@@ -1,17 +1,33 @@
-import StyleProvider from 'providers/StyleProvider';
-import { Routes, Route } from 'react-router-dom';
-import { routes } from 'routes';
-import HomeView from 'views/HomeView';
-import AdminLogin from 'views/auth/Admin/AdminLogin/AdminLogin';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { useAppLoading } from 'hooks/useAppLoading';
+import AppLoader from '../components/molecules/AppLoader/AppLoader';
+import routes from '../routes';
+import ProtectedRoute from '../providers/ProtectedRoute';
+import Error404 from 'views/Error404/Error404';
+import Modal from 'components/molecules/Modal/Modal';
+import { useModal } from 'hooks/useModal';
 
-const Root = () => {
+const Root: React.FC = () => {
+  const { isAppLoading, appLoadingText } = useAppLoading();
+  const { isOpen, modalTitle, modalContent } = useModal();
+
   return (
-    <StyleProvider>
+    <>
+      {isAppLoading && <AppLoader loadingText={appLoadingText} />}
       <Routes>
-        <Route path={routes.home} element={<HomeView />} />
-        <Route path={routes.admLogin} element={<AdminLogin />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        {routes.map((route) => {
+          return route.isProtected ? (
+            <Route key={route.path} element={<ProtectedRoute role={route.role} Element={route.Component} />} path={route.path} />
+          ) : (
+            <Route key={route.path} element={<route.Component />} path={route.path} />
+          );
+        })}
+        <Route path="*" element={<Error404 />} />
       </Routes>
-    </StyleProvider>
+      {isOpen && <Modal title={modalTitle}>{modalContent}</Modal>}
+    </>
   );
 };
 
