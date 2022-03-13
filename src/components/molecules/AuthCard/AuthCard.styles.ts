@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: min(100%, 400px);
+  width: 34rem;
   min-height: 450px;
   padding-block: 40px;
   background-color: white;
@@ -12,6 +12,10 @@ export const Wrapper = styled.div`
   grid-template-rows: 25% 65% 10%;
   align-items: center;
   justify-items: center;
+
+  @media (min-width: 435px) {
+    width: min(100%, 400px);
+  }
 
   & > div {
     display: flex;

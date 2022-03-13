@@ -116,6 +116,7 @@ export const LikeWrapper = styled.div`
 export const StyledInput = styled.input`
   border-radius: 1rem;
   padding: 0.5rem;
+  width: 17rem;
   background-color: #f7f8fa;
   border: 2px solid ${({ theme }) => theme.colors.lightGrey};
   margin-right: 0.5rem;

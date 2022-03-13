@@ -20,6 +20,7 @@ export const Form = styled.form`
 export const StyledInput = styled(Input)`
   margin-bottom: 2rem;
   margin-top: 4rem;
+  width: 90%;
 `;
 
 export const StyledLink = styled(Link)`
