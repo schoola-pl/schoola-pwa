@@ -210,12 +210,12 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const checkEmail = async (email: string) => {
     try {
-      const res = await axios.get<{ data: { email: string }[] }>(`${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[email]=${email}`, {
+      const res = await axios.get<{ email: string }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[email]=${email}`, {
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }
       });
-      return res.data?.data.length === 0;
+      return res.data.length === 0;
     } catch (err) {
       return false;
     }
