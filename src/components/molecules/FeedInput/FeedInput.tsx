@@ -56,7 +56,7 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
     <InputWrapper onSubmit={handleSubmit(handleAddPost)}>
       <StyledPicture>
         <ProfilePicture>
-          <img src={image} alt={'Personal image'} />
+          <img src={image} alt={`${user?.first_name}'s image`} />
         </ProfilePicture>
       </StyledPicture>
       <StyledInput
