@@ -33,7 +33,7 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
   };
 
   return (
-    <>
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
       {studentInfo && <StudentInfo>{studentInfo}</StudentInfo>}
       <Wrapper onSubmit={handleSubmit(handleAddSpott)}>
         <InputWrapper>
@@ -55,7 +55,7 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
           )}
         </MessageActionWrapper>
       </Wrapper>
-    </>
+    </div>
   );
 };
 

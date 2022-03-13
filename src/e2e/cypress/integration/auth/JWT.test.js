@@ -10,8 +10,8 @@ describe('Auth JWT | Schoola App', () => {
     cy.visit('/');
     localStorage.removeItem(token);
     assert.isNull(localStorage.getItem(token));
-    cy.findByPlaceholderText('Login').type('test_admin');
-    cy.findByPlaceholderText('Hasło').type('Admin321!');
+    cy.findByPlaceholderText(/login/i).type('test_admin');
+    cy.findByPlaceholderText(/hasło/i).type('Admin123!');
     cy.get('button').first().click();
   });
 
