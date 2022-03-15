@@ -2,7 +2,10 @@ import styled from 'styled-components';
 import Calendar from 'react-calendar';
 
 export const PageWrapper = styled.div`
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   margin-top: -2rem;
   padding-inline: 2rem;
   grid-template-rows: 1fr auto;
@@ -29,6 +32,7 @@ export const Wrapper = styled.div`
   padding: 2rem 4rem;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
 
 export const InnerWrapper = styled.div`

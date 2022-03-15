@@ -50,6 +50,7 @@ const Appointment = () => {
     setSelectedHour(null);
     setSelectedDate(null);
     removeActiveButtons();
+    alert('Spotkanie zarezerwowane!');
   };
 
   return (

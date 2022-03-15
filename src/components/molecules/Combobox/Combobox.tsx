@@ -11,6 +11,7 @@ interface props {
 
 const hobbiesLimit = 5;
 const Combobox: React.FC<props> = ({ setReadyState }) => {
+  const [isVisible, setVisibility] = useState(false);
   const { addInterested, removeInterested } = useUser();
   const interesteds = useGetInterestedsQuery({});
   const getIdFromName = (name: string) => interesteds.data?.find((item) => item.name === name)?.id;
