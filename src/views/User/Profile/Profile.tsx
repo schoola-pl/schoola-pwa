@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
+import NoLinks from 'components/atoms/NoLinks/NoLinks';
 
 const Home: React.FC = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
       </Grid>
       <div>
         <Interests interests={findInterested(user.TextInteresteds.split(';'), interesteds.data)} />
-        {socials.data && socials.data?.length > 0 && <Links socials={socials.data} />}
+        {socials.data && socials.data?.length > 0 ? <Links socials={socials.data} /> : <NoLinks />}
       </div>
     </Wrapper>
   );

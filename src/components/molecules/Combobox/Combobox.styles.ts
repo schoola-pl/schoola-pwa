@@ -1,3 +1,4 @@
+import { theme } from 'assets/styles/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -8,34 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const StyledCombobox = styled.div`
-  width: 300px;
-`;
-
-export const StyledInputWrapper = styled.div`
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-  position: relative;
-  width: 100%;
-  border: white;
-  border-radius: 2.5rem;
-  padding: 1px;
-
-  input {
-    background-color: white;
-    padding: 2rem;
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-size: 1.5rem;
-    border-radius: 2rem;
-
-    &:placeholder {
-      font-size: 1rem;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
+  width: 80%;
 `;
 
 export const StyledDropdownToggle = styled.button`
@@ -65,16 +39,50 @@ export const StyledSelectedItem = styled.span`
   }
 `;
 
+export const StyledInputWrapper = styled.div`
+  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
+  position: relative;
+  width: 100%;
+  border: white;
+  border-radius: 5rem;
+  padding: 1px;
+  height: 6rem;
+
+  // @media (min-height: 730px) {
+  //   margin-bottom: 7.5rem;
+  // }
+
+  input {
+    background-color: white;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 2rem;
+
+    &:placeholder {
+      font-size: 1rem;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
 export const StyledList = styled.ul`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   list-style: none;
-  width: 300px;
+  width: 295px;
   position: absolute;
   background-color: white;
   border-radius: 2rem;
   overflow-y: scroll;
-  max-height: 25rem;
+  max-height: 15rem;
   padding: 0;
+  margin-top: 3.5rem;
+
 
   li {
     border: 1px solid #f7f8fa;
@@ -92,4 +100,13 @@ export const StyledList = styled.ul`
 export const StyledHeading = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   font-size: ${({ theme }) => theme.fontSize.l};
+`;
+
+export const TestWrapper = styled.div`
+  // position: relative;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: 100%;
+  // justify-content: space-between;
 `;
