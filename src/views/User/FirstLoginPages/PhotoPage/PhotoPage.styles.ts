@@ -33,6 +33,7 @@ export const StyledInput = styled.input`
   margin-bottom: 1rem;
   position: relative;
   width: 90%;
+  height: 3.8rem;
 
   ::file-selector-button {
     color: black;
