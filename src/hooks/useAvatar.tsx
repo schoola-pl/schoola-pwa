@@ -62,8 +62,7 @@ export const AvatarProvider: React.FC = ({ children }) => {
         }
       }
     );
-    const imageUrl = response.data.formats[size || 'medium'].url;
-    return `${process.env.REACT_APP_UPLOADS_BASE}${imageUrl}`;
+    return response.data.formats[size || 'medium'].url;
   };
   const values = {
     saveAvatar,
