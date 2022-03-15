@@ -1,4 +1,3 @@
-import { theme } from 'assets/styles/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -48,10 +47,6 @@ export const StyledInputWrapper = styled.div`
   padding: 1px;
   height: 6rem;
 
-  // @media (min-height: 730px) {
-  //   margin-bottom: 7.5rem;
-  // }
-
   input {
     background-color: white;
     padding: 2rem;
@@ -100,13 +95,4 @@ export const StyledList = styled.ul`
 export const StyledHeading = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   font-size: ${({ theme }) => theme.fontSize.l};
-`;
-
-export const TestWrapper = styled.div`
-  // position: relative;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // width: 100%;
-  // justify-content: space-between;
 `;
