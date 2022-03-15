@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 
   textarea {
     height: 10rem;
-    width: 100%;
+    width: 90%;
     border-radius: 2rem;
     padding: 1rem;
     border: none;
@@ -32,10 +32,12 @@ export const StyledInput = styled.input`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   margin-bottom: 1rem;
   position: relative;
+  width: 90%;
 
   ::file-selector-button {
     color: black;
     padding: 1rem;
     border: none;
+    border-radius: 2rem;
   }
 `;
