@@ -67,7 +67,7 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
           <option value="Student">Uczeń</option>
           <option value="Moderator">Samorząd Uczniowski</option>
         </Select>
-        <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
+        <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: false })} disabled={isSuccess} />
         <Button isIcon isDisabled={isSuccess}>
           {!isLoading ? '+' : <Loader fitContent />}
         </Button>
