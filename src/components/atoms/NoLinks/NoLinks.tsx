@@ -1,8 +1,9 @@
-import { LinkWrapper, LinksHeading } from './NoLinks.styles';
+import { LinkWrapper, LinksHeading, MediaWrapper } from './NoLinks.styles';
 
 const NoLinks = () => (
   <LinkWrapper>
     <LinksHeading>Linki społecznościowe</LinksHeading>
+    <MediaWrapper>Brak linków społecznościowych!</MediaWrapper>
   </LinkWrapper>
 );
 
