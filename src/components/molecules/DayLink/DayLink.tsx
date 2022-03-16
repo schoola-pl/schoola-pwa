@@ -6,7 +6,7 @@ import { storeRoot, useGetMeetingsCountQuery } from 'store';
 import { useSelector } from 'react-redux';
 
 interface props {
-  name: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+  name: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
 }
 
 const DayLink: React.FC<props> = ({ name }) => {
