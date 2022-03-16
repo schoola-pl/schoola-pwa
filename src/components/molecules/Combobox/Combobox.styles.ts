@@ -39,7 +39,6 @@ export const StyledSelectedItem = styled.span`
 `;
 
 export const StyledInputWrapper = styled.div`
-  box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   position: relative;
   width: 100%;
   border: white;
@@ -69,14 +68,14 @@ export const StyledInputWrapper = styled.div`
 export const StyledList = styled.ul`
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   list-style: none;
-  width: 295px;
+  width: 100%;
   position: absolute;
+  top: 100%;
   background-color: white;
   border-radius: 2rem;
   overflow-y: scroll;
   max-height: 15rem;
   padding: 0;
-  margin-top: 3.5rem;
 
 
   li {

@@ -11,7 +11,6 @@ interface props {
 
 const hobbiesLimit = 5;
 const Combobox: React.FC<props> = ({ setReadyState }) => {
-  const [isVisible, setVisibility] = useState(false);
   const { addInterested, removeInterested } = useUser();
   const interesteds = useGetInterestedsQuery({});
   const getIdFromName = (name: string) => interesteds.data?.find((item) => item.name === name)?.id;
@@ -94,31 +93,31 @@ const Combobox: React.FC<props> = ({ setReadyState }) => {
             <StyledDropdownToggle {...getToggleButtonProps()} aria-label={'toggle menu'}>
               👇
             </StyledDropdownToggle>
+            <StyledList {...getMenuProps()}>
+              {interesteds.isLoading ? (
+                <p>loading...</p>
+              ) : isOpen ? (
+                getFilteredItems().map((item, index) => (
+                  <li
+                    style={
+                      highlightedIndex === index
+                        ? {
+                            backgroundColor: theme.colors.accentGreen,
+                            paddingLeft: '1.5rem',
+                            color: 'white'
+                          }
+                        : {}
+                    }
+                    key={`${item}${index}`}
+                    {...getItemProps({ item, index })}
+                  >
+                    {item}
+                  </li>
+                ))
+              ) : null}
+            </StyledList>
           </div>
         </StyledInputWrapper>
-        <StyledList {...getMenuProps()}>
-          {interesteds.isLoading ? (
-            <p>loading...</p>
-          ) : isOpen ? (
-            getFilteredItems().map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? {
-                        backgroundColor: theme.colors.accentGreen,
-                        paddingLeft: '1.5rem',
-                        color: 'white'
-                      }
-                    : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
-              >
-                {item}
-              </li>
-            ))
-          ) : null}
-        </StyledList>
       </StyledCombobox>
     </Wrapper>
   );
