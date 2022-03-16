@@ -38,7 +38,7 @@ const Login: React.FC = () => {
 
   const handleLogin = async ({ login, password }: { login: string; password: string }) => {
     loginProtocol({
-      identifier: login,
+      identifier: login.toLowerCase(),
       password
     });
   };
