@@ -277,7 +277,7 @@ export const UserProvider: React.FC = ({ children }) => {
               id
             }
           ],
-          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
+          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${String(id)}` : String(id)
         }
       });
     }
