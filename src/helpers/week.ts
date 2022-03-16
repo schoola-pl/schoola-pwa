@@ -1,4 +1,4 @@
-import { endOfWeek, format, startOfWeek } from 'date-fns';
+import { eachDayOfInterval, endOfWeek, format, startOfWeek } from 'date-fns';
 
 export const translateDayToPolish = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') => {
   const preparedDay = day.toLowerCase();
@@ -45,20 +45,19 @@ export const translateDayToEnglish = (day: 'poniedziałek' | 'wtorek' | 'środa'
 };
 
 const ISOpattern = 'yyyy-MM-dd';
-export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday') => {
-  const preparedDay = day.toLowerCase();
+export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday') => {
   const days: { [key: string]: 0 | 1 | 2 | 3 | 4 | 5 | 6 } = {
     monday: 1,
     tuesday: 2,
     wednesday: 3,
     thursday: 4,
-    friday: 5,
-    saturday: 1,
-    sunday: 2
+    friday: 5
   };
-  if (preparedDay === 'saturday' || preparedDay === 'sunday') {
-    return format(endOfWeek(new Date(), { weekStartsOn: days[preparedDay] }), ISOpattern);
-  } else {
-    return format(startOfWeek(new Date(), { weekStartsOn: days[preparedDay] }), ISOpattern);
-  }
+  const start = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const end = endOfWeek(new Date(), { weekStartsOn: 1 });
+  const result = eachDayOfInterval({
+    start,
+    end
+  });
+  return format(result[days[day] - 1], ISOpattern);
 };

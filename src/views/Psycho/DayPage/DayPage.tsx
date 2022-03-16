@@ -8,42 +8,9 @@ import Meeting from 'components/molecules/Meeting/Meeting';
 import React from 'react';
 import Info from 'components/atoms/Info/Info';
 
-const meetings = [
-  {
-    meetHour: '8:00',
-    nameClass: '3RE',
-    user: 'Krzysztof Jaruzel',
-    email: 'krzysiek@gmail.com'
-  },
-  {
-    meetHour: '8:55',
-    nameClass: '2A',
-    user: 'Tadeusz Romanow',
-    email: 'tadeusz@gmail.com'
-  },
-  {
-    meetHour: '9:50',
-    nameClass: '3B',
-    user: 'Jarek Tomaszewski',
-    email: 'tadeusz@gmail.com'
-  },
-  {
-    meetHour: '10:55',
-    nameClass: '3B',
-    user: 'Jarek Tomaszewski',
-    email: 'tadeusz@gmail.com'
-  },
-  {
-    meetHour: '11:50',
-    nameClass: '3B',
-    user: 'Jarek Tomaszewski',
-    email: 'tadeusz@gmail.com'
-  }
-];
-
 const DayPage = () => {
   const { dayName } = useParams();
-  const preparedDayName = dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+  const preparedDayName = dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
   const dayISO = getDayOfWeek(preparedDayName);
   const dayPolish = upperFirstLetter(translateDayToPolish(preparedDayName || 'monday'));
   const user = useSelector((state: storeRoot) => state.user);
