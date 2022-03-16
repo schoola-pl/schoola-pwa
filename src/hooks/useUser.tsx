@@ -276,14 +276,15 @@ export const UserProvider: React.FC = ({ children }) => {
     if (user?.id) {
       const currentInterestedIDs = user.TextInteresteds;
       let currentInterested;
+      const stringId = String(id);
       if (currentInterestedIDs) {
-        if (currentInterestedIDs.includes(String(id))) return;
         currentInterested = currentInterestedIDs.split(';').map((item) => ({ id: item }));
+        if (currentInterested.includes({ id: stringId })) return;
       }
       dispatch(
         updateUser({
           updated: {
-            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
+            TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${stringId}` : stringId
           }
         })
       );
@@ -296,7 +297,7 @@ export const UserProvider: React.FC = ({ children }) => {
               id
             }
           ],
-          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${id}` : String(id)
+          TextInteresteds: currentInterestedIDs ? `${currentInterestedIDs};${stringId}` : stringId
         }
       });
     }

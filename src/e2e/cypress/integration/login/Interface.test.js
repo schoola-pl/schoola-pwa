@@ -16,43 +16,42 @@ const login = {
 
 describe('Login interface | Schoola App', () => {
   before(() => {
-    localStorage.removeItem('jwt');
+    localStorage.clear();
     cy.visit('/');
   });
 
   it('Checks if the login interface is displayed', () => {
     cy.findByText('schoola').should('be.visible');
+    cy.findByText('Zaloguj się na swoje konto!').should('be.visible');
     cy.get(login.username).should('be.visible');
     cy.get(login.password).should('be.visible');
     cy.get(login.button).should('be.visible');
   });
 
-  it('Checks have inputs right border color', () => {
+  it('Checks is button & inputs have states', () => {
     // Normal inputs
     cy.get(login.username).should('have.css', 'border-color', hexToRGB(colors.inactive));
     cy.get(login.password).should('have.css', 'border-color', hexToRGB(colors.inactive));
-    // // Focused inputs
-    cy.get(login.username).click().type('o').should('have.css', 'border-color', hexToRGB(colors.active));
-    cy.get(login.password).click().type('o').should('have.css', 'border-color', hexToRGB(colors.active));
-    // Gets error border color
-    cy.get(login.button).click();
-    // ----------------------
-    cy.get(login.username).should('not.have.css', 'border-color', hexToRGB(colors.inactive));
-    cy.get(login.password).should('not.have.css', 'border-color', hexToRGB(colors.inactive));
-    cy.get(login.username).should('have.css', 'border-color', hexToRGB(colors.error));
-    cy.get(login.password).should('have.css', 'border-color', hexToRGB(colors.error));
+    // Inactive button
+    cy.get(login.button).should('not.have.css', 'opacity', '1');
+    cy.get(login.button).should('have.css', 'opacity', '0.6');
+    // Focused
+    cy.get(login.username).click().type('0oooo').should('have.css', 'border-color', hexToRGB(colors.active));
+    cy.get(login.password).click().type('0oooooooo').should('have.css', 'border-color', hexToRGB(colors.active));
   });
 
-  it('Checks does button react with errors', () => {
-    cy.get(login.button).should('not.have.css', 'border-color', hexToRGB(colors.error));
-    cy.get(login.button).click().should('have.text', 'Zaloguj się');
-    cy.get(login.button).should('not.have.css', 'border-color', hexToRGB(colors.error));
-
-    cy.get(login.username).type('daadskodsaodksao');
-    cy.get(login.password).type('sdffsdsfdfdfdsfs');
+  it('Checks does form reacts with errors', () => {
+    cy.get(login.username).clear();
+    cy.get(login.password).clear();
+    cy.findByText('Podano niepoprawny login lub hasło!').should('not.exist');
+    const loginValue = `Cypress-test-login-${Math.round(Math.random() * 1000)}`;
+    const passValue = `Cypress-test-password-${Math.round(Math.random() * 1000)}`;
+    cy.get(login.username).type(loginValue);
+    cy.get(login.password).type(passValue);
     cy.get(login.button).click();
-    cy.get(login.button).should('not.have.css', 'background-color', hexToRGB(colors.error));
-    cy.get(login.button).click().should('have.text', 'Spróbuj ponownie!');
+    cy.findByText('Podano niepoprawny login lub hasło!').should('exist');
+    cy.get(login.username).should('have.value', loginValue);
+    cy.get(login.password).should('have.value', passValue);
   });
 });
 

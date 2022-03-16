@@ -16,21 +16,33 @@ const DataPage: React.FC<props> = ({ setReadyState }) => {
     formState: { errors }
   } = useForm();
   const [isSame, setIsSame] = useState(false);
+  const [isLoading, setLoadingState] = useState(false);
+  const [error, setError] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
-  const { resetPassword, updateSettings } = useUser();
+  const { resetPassword, updateSettings, checkEmail } = useUser();
 
   useEffect(() => {
     setReadyState(false);
   }, []);
 
-  const handleChangeData = ({ newEmail, newPassword, newPasswordVerify }: { [key: string]: string }) => {
+  const handleChangeData = async ({ newEmail, newPassword, newPasswordVerify }: { [key: string]: string }) => {
+    setError('');
     if (isSuccess) return;
     if (newPassword !== newPasswordVerify) return setIsSame(true);
+    setLoadingState(true);
     setIsSame(false);
-    resetPassword(newPassword);
-    updateSettings({ email: newEmail });
-    setIsSuccess(true);
-    setReadyState(true);
+    try {
+      const isEmailNotTaken = await checkEmail(newEmail);
+      if (isEmailNotTaken) {
+        resetPassword(newPassword);
+        updateSettings({ email: newEmail });
+        setIsSuccess(true);
+        setReadyState(true);
+      } else setError('Ten adres email jest zajęty!');
+    } catch (err) {
+      setError('Coś poszło nie tak...');
+    }
+    setLoadingState(false);
   };
 
   return (
@@ -50,7 +62,8 @@ const DataPage: React.FC<props> = ({ setReadyState }) => {
             })}
             disabled={isSuccess}
           />
-          {errors.newEmail && <ErrorParagraph style={{ marginLeft: '2rem', marginTop: '1rem' }}>E-mail nie jest poprawny!</ErrorParagraph>}
+          {errors.newEmail && <ErrorParagraph style={{ marginLeft: '2rem', marginTop: '0.5rem' }}>E-mail nie jest poprawny!</ErrorParagraph>}
+          {error && <ErrorParagraph style={{ marginLeft: '2rem', marginTop: '0.5rem' }}>{error}</ErrorParagraph>}
         </div>
         <div>
           <Label htmlFor="newPassword">Nowe hasło</Label>
@@ -108,9 +121,9 @@ const DataPage: React.FC<props> = ({ setReadyState }) => {
             width: '100%',
             marginTop: '1rem'
           }}
-          isDisabled={isSuccess}
+          isDisabled={isSuccess || isLoading}
         >
-          {!isSuccess ? 'Zmień dane' : 'Zmieniono dane!'}
+          {!isSuccess ? (!isLoading ? 'Zmień dane' : 'Zmieniam dane...') : 'Zmieniono dane!'}
         </Button>
       </Form>
     </FormWrapper>
