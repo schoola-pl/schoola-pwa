@@ -10,9 +10,9 @@ export const MeetingsAPI = createApi({
   }),
   tagTypes: ['getMeetingsForDay', 'getExceptions'],
   endpoints: (builder) => ({
-    getPsychos: builder.query<authUser[], unknown>({
-      query: () => ({
-        url: `/users?filters[TextRole][$eq]=Psycho`,
+    getPsychos: builder.query<authUser[], { schoolId: strapiRequestType }>({
+      query: (args) => ({
+        url: `/users?filters[TextRole][$eq]=Psycho&filters[schoolId][$eq]=${args.schoolId}`,
         headers: {
           Authorization: `Bearer ${getJWT()}`
         }

@@ -1,12 +1,16 @@
 import React from 'react';
-import { useGetPsychosQuery } from 'store';
+import { storeRoot, useGetPsychosQuery } from 'store';
+import { useSelector } from 'react-redux';
 
 interface props {
   handleChangePsycho: (e: any) => void;
 }
 
 const PsychoList: React.FC<props> = ({ handleChangePsycho }) => {
-  const psychos = useGetPsychosQuery({});
+  const user = useSelector((state: storeRoot) => state.user);
+  const psychos = useGetPsychosQuery({
+    schoolId: user?.schoolId || null
+  });
 
   return (
     <select onChange={handleChangePsycho}>
