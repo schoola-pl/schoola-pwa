@@ -2,6 +2,7 @@ import { upperFirstLetter } from 'helpers/text';
 import React from 'react';
 import { DateWrapper, Day, Logo, Wrapper } from './PsychoTopBar.styles';
 import { Link } from 'react-router-dom';
+
 interface Props {
   number: number;
   day: string;
