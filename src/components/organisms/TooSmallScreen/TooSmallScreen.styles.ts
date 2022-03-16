@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from 'components/atoms/Button/Button';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -25,5 +26,23 @@ export const Wrapper = styled.div`
     margin-top: 1rem;
     letter-spacing: 0.2rem;
     font-size: 1.5rem;
+  }
+
+  div {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 55%;
+  }
+`;
+
+export const LogoutButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.accentRed};
+  margin-left: 2rem;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accentRed};
+    opacity: 0.9;
   }
 `;

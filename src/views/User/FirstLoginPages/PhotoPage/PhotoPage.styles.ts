@@ -1,3 +1,4 @@
+import { theme } from 'assets/styles/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -36,9 +37,11 @@ export const StyledInput = styled.input`
   height: 3.8rem;
 
   ::file-selector-button {
+    height: 100%;
     color: black;
     padding: 1rem;
     border: none;
     border-radius: 2rem;
+    background-color: ${({ theme }) => theme.colors.accentBlue};
   }
 `;
