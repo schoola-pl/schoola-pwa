@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface AvatarContextTypes {
   saveAvatar: (photo: FormData) => Promise<void>;
-  getAvatarById: (id?: string, size?: 'thumbnail' | 'small' | 'medium' | 'large') => Promise<string>;
+  getAvatarById: (id?: string) => Promise<string>;
   uploadProgress: number;
 }
 
@@ -53,7 +53,7 @@ export const AvatarProvider: React.FC = ({ children }) => {
     }
   };
 
-  const getAvatarById = async (id?: string, size?: 'thumbnail' | 'small' | 'medium' | 'large') => {
+  const getAvatarById = async (id?: string) => {
     const response = await axios.get<{ formats: { [key: string]: { url: string } } }>(
       `${process.env.REACT_APP_BACKEND_BASE_URL}/upload/files/${id || user?.avatar}`,
       {
@@ -62,7 +62,7 @@ export const AvatarProvider: React.FC = ({ children }) => {
         }
       }
     );
-    return response.data.formats[size || 'medium'].url;
+    return response.data.formats['thumbnail'].url;
   };
   const values = {
     saveAvatar,
