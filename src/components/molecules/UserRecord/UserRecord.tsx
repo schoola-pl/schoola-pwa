@@ -23,16 +23,19 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { addNewUser } = useUser();
+  const { addNewUser, checkUsername } = useUser();
 
   const saveUser = async (tempUser: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
     setIsLoading(true);
-    const newUser = await addNewUser(tempUser);
-    if (newUser) {
-      setIsSuccess(true);
-      setNewUser(newUser);
-      setAddedUser((prev: number[]) => [...prev, newUser.id]);
-    }
+    const isUsernameNotTaken = await checkUsername(`${tempUser.name.toLowerCase().split(' ').join('_')}`);
+    if (isUsernameNotTaken) {
+      const newUser = await addNewUser(tempUser);
+      if (newUser) {
+        setIsSuccess(true);
+        setNewUser(newUser);
+        setAddedUser((prev: number[]) => [...prev, newUser.id]);
+      }
+    } else alert('Użytkownik o takich danych już istnieje!');
     setIsLoading(false);
   };
 
@@ -49,33 +52,35 @@ const UserRecord: React.FC<props> = ({ index: i, setAddedUser }) => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
-        <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
-        <Input
-          type="text"
-          placeholder="Imię i nazwisko"
-          error={errors.name}
-          {...registerUser('name', {
-            required: true,
-            // eslint-disable-next-line
-            pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
-          })}
-          disabled={isSuccess}
-        />
-        <Select {...registerUser('TextRole', { required: true })} disabled={isSuccess}>
-          <option value="Student">Uczeń</option>
-          <option value="Moderator">Samorząd Uczniowski</option>
-        </Select>
-        <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
-        <Button isIcon isDisabled={isSuccess}>
-          {!isLoading ? '+' : <Loader fitContent />}
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <PeopleWrapper as={'form'} onSubmit={handleSaveUser(saveUser)}>
+          <h1 style={{ color: isSuccess ? 'green' : undefined }}>{i + 1}.</h1>
+          <Input
+            type="text"
+            placeholder="Imię i nazwisko"
+            error={errors.name}
+            {...registerUser('name', {
+              required: true,
+              // eslint-disable-next-line
+              pattern: /\b([A-ZÀ-ÿ][a-z 'AaĄąBbCcĆćDdEeĘęFfGgHhIiJjKkLlŁłMmNnŃńOoÓóPpRrSsŚśTtUuWwYyZzŹźŻż]+[ ]*)+/gm
+            })}
+            disabled={isSuccess}
+          />
+          <Select {...registerUser('TextRole', { required: true })} disabled={isSuccess}>
+            <option value="Student">Uczeń</option>
+            <option value="Moderator">Samorząd Uczniowski</option>
+          </Select>
+          <Input type="date" placeholder="urodziny" error={errors.birthday} {...registerUser('birthday', { required: true })} disabled={isSuccess} />
+          <Button isIcon isDisabled={isSuccess}>
+            {!isLoading ? '+' : <Loader fitContent />}
+          </Button>
+        </PeopleWrapper>
+        <Button isIcon onClick={copyUserPasses} isDisabled={!isSuccess}>
+          {!isCopied ? 'Kopiuj' : 'Gotowe!'}
         </Button>
-      </PeopleWrapper>
-      <Button isIcon onClick={copyUserPasses} isDisabled={!isSuccess}>
-        {!isCopied ? 'Kopiuj' : 'Gotowe!'}
-      </Button>
-    </div>
+      </div>
+    </>
   );
 };
 

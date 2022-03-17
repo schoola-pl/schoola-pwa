@@ -45,6 +45,7 @@ interface UserContextTypes {
   updateUserState: (user: authUser) => void;
   logout: () => void;
   checkEmail: (email: string) => Promise<boolean>;
+  checkUsername: (username: string) => Promise<boolean>;
   updateSettings: (settings: Partial<authUser>, userId?: number) => void;
   checkPassword: (password: string) => Promise<boolean>;
   resetPassword: (newPassword: string, code?: string) => void | Promise<AxiosResponse>;
@@ -87,6 +88,9 @@ const UserContext = createContext<UserContextTypes>({
     throw new Error('UserContext is not initialized');
   },
   logout: () => {
+    throw new Error('UserContext is not initialized');
+  },
+  checkUsername: () => {
     throw new Error('UserContext is not initialized');
   },
   checkEmail: () => {
@@ -138,6 +142,20 @@ export const UserProvider: React.FC = ({ children }) => {
     removeJWT();
     dispatch(removeUser({}));
     navigate('/login');
+  };
+
+  // This method checks is username already taken
+  const checkUsername = async (username: string) => {
+    try {
+      const res = await axios.get<{ email: string }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[username]=${username}`, {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`
+        }
+      });
+      return res.data.length === 0;
+    } catch (err) {
+      return false;
+    }
   };
 
   // This method adds new user
@@ -208,6 +226,7 @@ export const UserProvider: React.FC = ({ children }) => {
     } else logout();
   };
 
+  // This method checks is email already taken
   const checkEmail = async (email: string) => {
     try {
       const res = await axios.get<{ email: string }[]>(`${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[email]=${email}`, {
@@ -390,9 +409,10 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const values = {
     logout,
+    checkEmail,
+    checkUsername,
     checkPassword,
     resetPassword,
-    checkEmail,
     updateUserState,
     updateSettings,
     addInterested,
