@@ -2,7 +2,7 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 
 const cypressEmail = `${Math.round(Math.random() * 100)}@cypress.test`;
-describe('Forgot password (send) | Schoola App', () => {
+describe(`Forgot password (send) | ${Cypress.env('APP_NAME')}`, () => {
   before(() => {
     localStorage.clear();
     cy.visit('/forgot-password');

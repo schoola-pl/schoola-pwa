@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/await-async-query */
 /* eslint-disable testing-library/prefer-screen-queries */
 
-describe('Auth routes | Schoola App', () => {
+describe(`Auth routes | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     cy.visit('/');
     localStorage.clear();

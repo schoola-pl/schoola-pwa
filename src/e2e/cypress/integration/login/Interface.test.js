@@ -14,7 +14,7 @@ const login = {
   button: '[data-cy=login-button]'
 };
 
-describe('Login interface | Schoola App', () => {
+describe(`Login interface | ${Cypress.env('APP_NAME')}`, () => {
   before(() => {
     localStorage.clear();
     cy.visit('/');

@@ -3,7 +3,7 @@
 
 const token = 'jwt';
 
-describe('Auth JWT | Schoola App', () => {
+describe(`Auth JWT | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     cy.intercept(`${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.intercept(`${Cypress.env('API_URL')}/users/me`).as('get-me');
