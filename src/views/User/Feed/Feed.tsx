@@ -13,6 +13,7 @@ import { getJWT } from 'helpers/jwt';
 import { authUser } from 'types/auth';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
 import Info from 'components/atoms/Info/Info';
+import ReloadWidget from '../../../components/atoms/ReloadWidget/ReloadWidget';
 
 const Feed = () => {
   const [posts, setPosts] = useState<
@@ -143,6 +144,7 @@ const Feed = () => {
             />
           );
         })}
+      <ReloadWidget />
     </PageWrapper>
   );
 };

@@ -9,6 +9,7 @@ import axios, { AxiosResponse } from 'axios';
 import { getJWT } from 'helpers/jwt';
 import { baseBody, multiResponse, multiResponseWithoutPagination, oneResponse } from 'types/strapi';
 import InfiniteScrollLoading from 'components/atoms/InfiniteScrollLoading/InfiniteScrollLoading';
+import ReloadWidget from '../../../components/atoms/ReloadWidget/ReloadWidget';
 
 const Spotted = () => {
   const [posts, setPosts] = useState<
@@ -147,6 +148,7 @@ const Spotted = () => {
             );
           }
         )}
+      <ReloadWidget />
     </PageWrapper>
   );
 };
