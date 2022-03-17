@@ -6,6 +6,7 @@ import Comment from 'components/organisms/Comment/Comment';
 import Loading from 'components/molecules/Loading/Loading';
 import { theme } from 'assets/styles/theme';
 import Post from 'components/organisms/Post/Post';
+import ReloadWidget from 'components/atoms/ReloadWidget/ReloadWidget';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -114,6 +115,7 @@ const CommentSection = () => {
           Nikt jeszcze nie skomentował tego posta. <br /> Bądź pierwszy!
         </p>
       )}
+      <ReloadWidget />
     </SectionWrapper>
   );
 };

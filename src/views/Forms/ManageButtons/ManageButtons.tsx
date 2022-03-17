@@ -28,9 +28,11 @@ interface props {
 const ManageButtons: React.FC<props> = ({ className, deleteClass, classId }) => {
   const { openModal, closeModal } = useModal();
   const { register, handleSubmit, reset } = useForm();
-  const { addNewUser } = useUser();
+  const { addNewUser, checkUsername } = useUser();
 
   const handleAddUser = async (data: { name: string; birthday: string; TextRole: string; first_name: string; last_name: string }) => {
+    const isUsernameNotTaken = await checkUsername(data.name.split(' ').join('_').toLowerCase());
+    if (!isUsernameNotTaken) return alert('Użytkownik o podanych danych już istnieje!');
     closeModal();
     const createdUser = await addNewUser(data, classId, className);
     const { login, password, name } = createdUser as { login: string; password: string; name: string };

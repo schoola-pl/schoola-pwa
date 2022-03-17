@@ -30,7 +30,7 @@ const Comment: React.FC<Props> = ({ cId, isSpotted, profilePicture, name, date, 
   useEffect(() => {
     if (profilePicture) {
       (async () => {
-        const image = await getAvatarById(profilePicture, 'thumbnail');
+        const image = await getAvatarById(profilePicture);
         setImage(image);
       })();
     }

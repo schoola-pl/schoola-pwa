@@ -85,7 +85,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   useEffect(() => {
     if (!isSpotted && postOwner) {
       (async () => {
-        const image = await getAvatarById(postOwner?.avatar, 'thumbnail');
+        const image = await getAvatarById(postOwner?.avatar);
         setImage(image);
       })();
     }

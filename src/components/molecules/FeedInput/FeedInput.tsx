@@ -38,7 +38,7 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   useEffect(() => {
     if (user) {
       (async () => {
-        const image = await getAvatarById(user?.avatar, 'thumbnail');
+        const image = await getAvatarById(user?.avatar);
         setImage(image);
       })();
     }

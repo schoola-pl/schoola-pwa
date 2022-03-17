@@ -29,11 +29,15 @@ export const Wrapper = styled.div`
   }
 
   div {
-    margin-top: 2rem;
+    margin-top: 5rem;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 55%;
+    justify-content: center;
+    width: 100%;
+
+    button {
+      width: min(300px, 100%);
+    }
   }
 `;
 
