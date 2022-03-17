@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import AcceptIcon from 'assets/icons/AcceptIcon.png';
 import CancelIcon from 'assets/icons/CancelIcon.png';
 import { useUser } from 'hooks/useUser';
+import { roles } from 'routes';
 
 interface props {
   info: {
@@ -33,22 +34,28 @@ const StudentInfoRecord: React.FC<props> = ({
 }) => {
   const [isEdit, setEditState] = useState(false);
   const { register, handleSubmit } = useForm();
-  const { updateSettings, deleteUser } = useUser();
+  const { updateSettings, deleteUser, checkUsername } = useUser();
 
-  const handleEditUser = (data: { name: string; Birthday: string; TextRole: string }) => {
+  const handleEditUser = async (data: { name: string; Birthday: string; TextRole: string }) => {
     const first_name = data.name.split(' ')[0] || '';
     const last_name = data.name.split(' ')[1] || '';
-    updateSettings(
-      {
-        first_name: first_name.charAt(0).toUpperCase() + first_name.slice(1),
-        last_name: last_name.charAt(0).toUpperCase() + last_name.slice(1),
-        Birthday: data.Birthday,
-        TextRole: data.TextRole,
-        username: data.name.toLowerCase().split(' ').join('_')
-      },
-      id
-    );
-    setEditState(false);
+    const username = data.name.toLowerCase().split(' ').join('_');
+
+    const isUsernameNotTaken = await checkUsername(username);
+
+    if (isUsernameNotTaken) {
+      updateSettings(
+        {
+          first_name: first_name.charAt(0).toUpperCase() + first_name.slice(1),
+          last_name: last_name.charAt(0).toUpperCase() + last_name.slice(1),
+          Birthday: data.Birthday,
+          TextRole: data.TextRole,
+          username
+        },
+        id
+      );
+      setEditState(false);
+    } else alert('Użytkownik o takich danych już istnieje!');
   };
 
   return (
@@ -65,10 +72,10 @@ const StudentInfoRecord: React.FC<props> = ({
         <Role>{TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</Role>
       ) : (
         <Select small {...register('TextRole')}>
-          <option value="Student" selected={TextRole === 'Student'}>
+          <option value="Student" selected={TextRole === roles.student}>
             Uczeń
           </option>
-          <option value="Moderator" selected={TextRole !== 'Student'}>
+          <option value="Moderator" selected={TextRole === roles.moderator}>
             Samorząd Uczniowski
           </option>
         </Select>
