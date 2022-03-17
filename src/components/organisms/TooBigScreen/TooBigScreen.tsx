@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, LogoutButton } from './TooBigScreen.styles';
+import { LogoutButton, Wrapper } from './TooBigScreen.styles';
 import Button from 'components/atoms/Button/Button';
 import { useUser } from 'hooks/useUser';
 
