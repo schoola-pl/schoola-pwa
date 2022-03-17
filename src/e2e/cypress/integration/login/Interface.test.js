@@ -21,7 +21,6 @@ describe('Login interface | Schoola App', () => {
   });
 
   it('Checks if the login interface is displayed', () => {
-    cy.findByText('schoola').should('be.visible');
     cy.findByText('Zaloguj się na swoje konto!').should('be.visible');
     cy.get(login.username).should('be.visible');
     cy.get(login.password).should('be.visible');
