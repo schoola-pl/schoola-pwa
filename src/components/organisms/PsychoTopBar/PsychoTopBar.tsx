@@ -13,7 +13,7 @@ const PsychoTopBar: React.FC<Props> = ({ number, day, month, year }) => {
   return (
     <Wrapper>
       <Logo as={Link} to="/psycho/today">
-        schoolaa
+        schoola
       </Logo>
       <DateWrapper>
         <h1>{number}</h1>
