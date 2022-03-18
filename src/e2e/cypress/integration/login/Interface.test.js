@@ -20,8 +20,11 @@ describe(`Login interface | ${Cypress.env('APP_NAME')}`, () => {
     cy.visit('/');
   });
 
-  it('Checks if the login interface is displayed correctly', () => {
+  it('Checks has view info about localization', () => {
     cy.findByText('Zaloguj się na swoje konto!').should('be.visible');
+  });
+
+  it('Checks if the login interface is displayed correctly', () => {
     cy.get(login.username).should('be.visible');
     cy.get(login.password).should('be.visible');
     cy.get(login.button).should('be.visible');
