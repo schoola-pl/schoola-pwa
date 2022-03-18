@@ -75,7 +75,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               // content until all client tabs are closed.
               // console.log('New content is available and will be used when all ' + 'tabs for this page are closed. See https://cra.link/PWA.');
 
-              toast.info(`Update available! To update, close all windows and reopen.`, {
+              toast.info(`Aktualizacja dostępna! Aby zaktualizować aplikację, zamknij przeglądarkę i uruchom ponownie!.`, {
                 toastId: 'appUpdateAvailable', // Prevent duplicate toasts
                 onClick: () => window.close(), // Closes windows on click
                 autoClose: false // Prevents toast from auto closing
