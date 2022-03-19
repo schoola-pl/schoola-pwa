@@ -10,7 +10,14 @@ const FinishPage: React.FC = () => {
     <Wrapper>
       <h1>Wszystko gotowe!</h1>
       <IconDiv icon={FinishIcon} />
-      <StyledButton onClick={() => updateSettings({ confirmed: true })}>Przejdź do aplikacji!</StyledButton>
+      <StyledButton
+        onClick={() => {
+          localStorage.removeItem('counter');
+          updateSettings({ confirmed: true });
+        }}
+      >
+        Przejdź do aplikacji!
+      </StyledButton>
     </Wrapper>
   );
 };
