@@ -2,6 +2,7 @@ import { IconDiv, StyledButton, Wrapper } from './FinishPage.styles';
 import FinishIcon from 'assets/icons/FinishIcon.svg';
 import { useUser } from 'hooks/useUser';
 import React from 'react';
+import { counterItemName } from '../../../../components/templates/FirstLoginTemplate/FirstLoginTemplate';
 
 const FinishPage: React.FC = () => {
   const { updateSettings } = useUser();
@@ -12,7 +13,7 @@ const FinishPage: React.FC = () => {
       <IconDiv icon={FinishIcon} />
       <StyledButton
         onClick={() => {
-          localStorage.removeItem('counter');
+          localStorage.removeItem(counterItemName);
           updateSettings({ confirmed: true });
         }}
       >
