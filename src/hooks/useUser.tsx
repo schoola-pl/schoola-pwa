@@ -164,7 +164,8 @@ export const UserProvider: React.FC = ({ children }) => {
     customClassId?: number,
     customClassName?: string
   ) => {
-    if (isLoading || !usersCount.data?.data) return;
+    if (isLoading || !usersCount.data?.data || !user) return;
+    const schoolId = user.schoolId;
     const dividedName = userData.name.split(' ');
     userData.first_name = dividedName[0];
     userData.last_name = dividedName[1];
@@ -194,7 +195,7 @@ export const UserProvider: React.FC = ({ children }) => {
       blocked: false,
       Birthday: new Date(userData.birthday).toISOString(),
       avatar: null,
-      schoolId: user?.schoolId || null,
+      schoolId,
       TextRole: userData.TextRole,
       TextClassName: customClassName || className.split(' ')[1],
       role: getRoleFromText(userData?.TextRole || 'Student'),
@@ -207,9 +208,14 @@ export const UserProvider: React.FC = ({ children }) => {
     const {
       data: { id }
     } = response as { data: { id: string } };
+    const actualCount = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/schools?fields[0]=totalUsers&filters[id][$eq]=${schoolId}`, {
+      headers: {
+        Authorization: `Bearer ${getJWT()}`
+      }
+    });
     addToSchoolCount({
-      schoolId: user?.schoolId || null,
-      totalUsers: usersCount.data.data[0].attributes.totalUsers + 1
+      schoolId,
+      totalUsers: actualCount.data.data[0].attributes.totalUsers + 1
     });
     return {
       id: parseInt(id),
@@ -387,14 +393,20 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   // This method deletes the user from the database
-  const deleteUser = (userId: number, count?: number) => {
-    if (!usersCount.data?.data) return;
+  const deleteUser = async (userId: number, count?: number) => {
+    if (!user) return;
+    const schoolId = user.schoolId;
+    const actualCount = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/schools?fields[0]=totalUsers&filters[id][$eq]=${schoolId}`, {
+      headers: {
+        Authorization: `Bearer ${getJWT()}`
+      }
+    });
     deleteUserMethod({
       id: userId
     });
     updateCount({
-      schoolId: user?.schoolId || null,
-      totalUsers: (count || usersCount.data.data[0].attributes.totalUsers) - 1
+      schoolId,
+      totalUsers: (count || actualCount.data.data[0].attributes.totalUsers) - 1
     });
   };
 
