@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
   a, button, textarea, input, select {
     font-family: 'Poppins', sans-serif
   }
+
+  .Toastify {
+    font-size: 1.3rem;
+  }
 `;
 
 export default GlobalStyle;
