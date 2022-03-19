@@ -45,7 +45,7 @@ export const translateDayToEnglish = (day: 'poniedziałek' | 'wtorek' | 'środa'
 };
 
 const ISOpattern = 'yyyy-MM-dd';
-export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday') => {
+export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday', date?: Date) => {
   const days: { [key: string]: 0 | 1 | 2 | 3 | 4 | 5 | 6 } = {
     monday: 1,
     tuesday: 2,
@@ -53,8 +53,8 @@ export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday
     thursday: 4,
     friday: 5
   };
-  const start = startOfWeek(new Date(), { weekStartsOn: 1 });
-  const end = endOfWeek(new Date(), { weekStartsOn: 1 });
+  const start = startOfWeek(date || new Date(), { weekStartsOn: 1 });
+  const end = endOfWeek(date || new Date(), { weekStartsOn: 1 });
   const result = eachDayOfInterval({
     start,
     end
