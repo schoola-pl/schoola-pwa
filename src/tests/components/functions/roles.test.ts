@@ -1,13 +1,13 @@
-import { getPathForRole, getRoleFromText } from 'helpers/roles';
+import { getPathForRole, getRoleFromLocalStorage, getRoleFromText } from 'helpers/roles';
 
 describe('Functions > roles', () => {
   it('Checks if the redirectPaths function returns the correct path for a given role', () => {
-    expect(getPathForRole('Student')).toBe('/student/');
+    expect(getPathForRole('Student')).toBe('/student/feed');
     expect(getPathForRole('School Admin')).toBe('/school-admin/');
-    expect(getPathForRole('Incorrect role')).toBe('/student/');
+    expect(getPathForRole('Incorrect role')).toBe('/student/feed');
   });
   it('Checks if the redirectPaths function returns the correct path when input is wrong', () => {
-    const correctResponse = '/student/';
+    const correctResponse = '/student/feed';
     expect(getPathForRole(`${null}`)).toBe(correctResponse);
     expect(getPathForRole(`${undefined}`)).toBe(correctResponse);
     expect(getPathForRole(`${Math.random()}`)).toBe(correctResponse);
@@ -24,5 +24,14 @@ describe('Functions > roles', () => {
     expect(getRoleFromText(`${null}`)).toBe(correctResponse);
     expect(getRoleFromText(`${undefined}`)).toBe(correctResponse);
     expect(getRoleFromText(`${Math.random()}`)).toBe(correctResponse);
+  });
+
+  it('Checks if the getRoleFromLocalStorage is worked good', () => {
+    localStorage.clear();
+    expect(getRoleFromLocalStorage()).not.toBe('Student');
+    localStorage.setItem('role', 'Student');
+    expect(getRoleFromLocalStorage()).toBe('Student');
+    localStorage.setItem('role', 'School Admin');
+    expect(getRoleFromLocalStorage()).toBe('School Admin');
   });
 });

@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import Profile from 'views/User/Profile/Profile';
+import { render, screen } from 'test-utils';
+import Root from '../views/Root';
 
 it('Renders application', () => {
-  render(<Profile />);
-  expect(screen.getByText('Hello World!')).toBeInTheDocument();
+  render(<Root />);
+  expect(screen.getAllByText(/zaloguj się/i)[0]).toBeInTheDocument();
 });
