@@ -75,10 +75,13 @@ function registerValidSW(swUrl: string, config?: Config) {
               // content until all client tabs are closed.
               // console.log('New content is available and will be used when all ' + 'tabs for this page are closed. See https://cra.link/PWA.');
 
-              toast.info(`Aktualizacja dostępna! Aby zaktualizować aplikację, zamknij przeglądarkę i uruchom ponownie!.`, {
+              toast.info(`Aktualizacja dostępna! Aby zaktualizować, musisz kliknąć we mnie i uruchomić aplikację ponownie.`, {
                 toastId: 'appUpdateAvailable', // Prevent duplicate toasts
                 onClick: () => window.close(), // Closes windows on click
-                autoClose: false // Prevents toast from auto closing
+                autoClose: false,
+                position: 'bottom-left',
+                hideProgressBar: true,
+                draggable: true
               });
 
               // Execute callback
