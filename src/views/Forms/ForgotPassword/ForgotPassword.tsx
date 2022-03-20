@@ -72,7 +72,7 @@ const ForgotPassword = () => {
               )}
             </Button>
             {error && (
-              <ErrorParagraph>{error === 404 || error === 400 ? 'Nie znaleziono takie adresu!' : 'Wystąpił nieoczekiwany błąd!'}</ErrorParagraph>
+              <ErrorParagraph>{error === 404 || error === 400 ? 'Nie znaleziono takiego adresu!' : 'Wystąpił nieoczekiwany błąd!'}</ErrorParagraph>
             )}
             {errors.email && <ErrorParagraph>Podaj prawidłowy adres email!</ErrorParagraph>}
           </Form>

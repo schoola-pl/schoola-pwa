@@ -14,21 +14,33 @@ const login = {
   button: '[data-cy=login-button]'
 };
 
-describe('Login interface | Schoola App', () => {
+describe(`Login interface | ${Cypress.env('APP_NAME')}`, () => {
   before(() => {
     localStorage.clear();
     cy.visit('/');
   });
 
-  it('Checks if the login interface is displayed', () => {
-    cy.findByText('schoola').should('be.visible');
+  it('Checks has view info about localization', () => {
     cy.findByText('Zaloguj się na swoje konto!').should('be.visible');
+  });
+
+  it('Checks if the login interface is displayed correctly', () => {
     cy.get(login.username).should('be.visible');
     cy.get(login.password).should('be.visible');
     cy.get(login.button).should('be.visible');
   });
 
+  it('Checks forgot-password CTA', () => {
+    cy.findByText('Nie pamiętasz hasła?').should('be.visible');
+    cy.url().should('include', '/login');
+    cy.findByText('Nie pamiętasz hasła?').click();
+    cy.url().should('not.include', '/login');
+    cy.url().should('include', '/forgot-password');
+    cy.findByText('Nie pamiętasz hasła?').should('not.exist');
+  });
+
   it('Checks is button & inputs have states', () => {
+    cy.visit('/login');
     // Normal inputs
     cy.get(login.username).should('have.css', 'border-color', hexToRGB(colors.inactive));
     cy.get(login.password).should('have.css', 'border-color', hexToRGB(colors.inactive));

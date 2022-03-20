@@ -1,17 +1,12 @@
 /* eslint-disable testing-library/await-async-query */
 /* eslint-disable testing-library/prefer-screen-queries */
 
-const randomUser = {
-  login: `cypress-user-${Math.random() * 1000}`,
-  password: `cypress-password-${Math.random() * 1000}`
-};
-
 const schoolAdmin = {
   login: 'test_admin',
   password: 'Admin321!'
 };
 
-describe('Login protocols | Schoola App', () => {
+describe(`Login protocols | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     localStorage.removeItem('jwt');
     cy.visit('/');
