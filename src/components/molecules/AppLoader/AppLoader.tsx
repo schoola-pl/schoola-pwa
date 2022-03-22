@@ -8,7 +8,7 @@ interface props {
 
 const AppLoader: React.FC<props> = ({ loadingText }) => {
   return (
-    <Background>
+    <Background data-testid="app-loader">
       <Loader />
       <Text>{loadingText}</Text>
     </Background>
