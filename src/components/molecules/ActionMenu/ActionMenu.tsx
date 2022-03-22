@@ -16,7 +16,7 @@ const ActionMenu: React.FC<Props> = ({ isOpened, isComment, isLoading, ...rest }
   return (
     <Wrapper isComment={isComment} isOpened={isOpened}>
       {user?.TextRole === 'Moderator' ? (
-        <ActionButton data-testid={`feed-post-${user?.username || ''}-menu-delete`} {...rest}>
+        <ActionButton data-testid={`feed-post-menu-delete`} {...rest}>
           {!isLoading ? 'Usuń' : 'Usuwanie...'}
         </ActionButton>
       ) : (

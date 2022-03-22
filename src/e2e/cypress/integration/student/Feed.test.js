@@ -13,7 +13,7 @@ describe(`Student's feed | ${Cypress.env('APP_NAME')}`, () => {
 
   after(() => {
     cy.findByTestId('feed-post-test_user-menu').click();
-    cy.findByTestId('feed-post-test_user-menu-delete').click();
+    cy.findByTestId('feed-post-menu-delete').click();
   });
 
   const doesPostExist = () => {

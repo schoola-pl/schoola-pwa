@@ -108,7 +108,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   };
 
   return (
-    <QuestionWrapper ref={ref} data-testid={`feed-post-${postOwner?.username || ''}`}>
+    <QuestionWrapper ref={ref} data-testid={postOwner ? `feed-post-${postOwner?.username}` : 'spotted-post'}>
       <InfoWrapper>
         <ProfilePicture isSpotted={isSpotted} postOwner={postOwner} image={image} />
         <QuestionInfo>
@@ -118,7 +118,11 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         {!isComment && user?.TextRole !== 'Student' && (
           <div>
             <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
-            <ToggleMenu data-testid={`feed-post-${postOwner?.username || ''}-menu`} icon={DotsMenuIcon} onClick={handleToggleMenu} />
+            <ToggleMenu
+              data-testid={postOwner ? `feed-post-${postOwner?.username || ''}-menu` : 'spotted-menu'}
+              icon={DotsMenuIcon}
+              onClick={handleToggleMenu}
+            />
           </div>
         )}
       </InfoWrapper>
