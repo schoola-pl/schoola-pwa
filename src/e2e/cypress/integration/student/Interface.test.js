@@ -1,12 +1,12 @@
 /* eslint-disable testing-library/await-async-query */
 /* eslint-disable testing-library/prefer-screen-queries */
 
-describe(`Student interface | ${Cypress.env('APP_NAME')}`, () => {
+describe(`Student's interface | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     localStorage.clear();
     cy.visit('/');
     cy.findByPlaceholderText(/login/i).type('test_user');
-    cy.findByPlaceholderText(/hasło/i).type('Kuba2007!');
+    cy.findByPlaceholderText(/hasło/i).type('Cypress123!');
     cy.findByText('Zaloguj się').click();
     cy.viewport(450, 750);
   });

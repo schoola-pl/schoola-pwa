@@ -108,7 +108,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   };
 
   return (
-    <QuestionWrapper ref={ref}>
+    <QuestionWrapper ref={ref} data-testid={`feed-post-${postOwner?.username || ''}`}>
       <InfoWrapper>
         <ProfilePicture isSpotted={isSpotted} postOwner={postOwner} image={image} />
         <QuestionInfo>
@@ -118,7 +118,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         {!isComment && user?.TextRole !== 'Student' && (
           <div>
             <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
-            <ToggleMenu icon={DotsMenuIcon} onClick={handleToggleMenu} />
+            <ToggleMenu data-testid={`feed-post-${postOwner?.username || ''}-menu`} icon={DotsMenuIcon} onClick={handleToggleMenu} />
           </div>
         )}
       </InfoWrapper>
@@ -126,16 +126,22 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         <p>{content}</p>
       </QuestionInnerWrapper>
       <ActionsWrapper>
-        <LikeWrapper>
+        <LikeWrapper data-testid={`feed-post-${postOwner?.username || ''}-likes`}>
           <Heart likes={likes} />
         </LikeWrapper>
         {!isComment ? (
-          <StyledComments as={Link} to={`comments/${qId}`} data-comments-count={comments}>
+          <StyledComments
+            data-testid={`feed-post-${postOwner?.username || ''}-comments`}
+            as={Link}
+            to={`comments/${qId}`}
+            data-comments-count={comments}
+          >
             <SidebarLink icon={CommentIcon} />
           </StyledComments>
         ) : (
           <form onSubmit={handleSubmit(handleAddComment)}>
             <StyledInput
+              data-testid="feed-post-comments-input"
               type="text"
               disabled={isPostQueryLoading || isSpottedQueryLoading}
               placeholder={
@@ -147,7 +153,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
               }
               {...register('message', { required: true })}
             />
-            <SendMessageButton type="submit" icon={SendIcon} />
+            <SendMessageButton type="submit" data-testid="feed-post-comments-send" icon={SendIcon} />
           </form>
         )}
       </ActionsWrapper>
