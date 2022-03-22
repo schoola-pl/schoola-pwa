@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
+import { Form, InputWrapper, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
@@ -62,16 +62,18 @@ const Login: React.FC = () => {
               minLength: 2
             })}
           />
-          {icon}
-          <StyledInput
-            type="password"
-            placeholder="Hasło"
-            data-cy="login-password"
-            {...register('password', {
-              required: true,
-              minLength: 6
-            })}
-          />
+          <InputWrapper>
+            <input
+              type={inputType}
+              placeholder="Hasło"
+              data-cy="login-password"
+              {...register('password', {
+                required: true,
+                minLength: 6
+              })}
+            />
+            {icon}
+          </InputWrapper>
           <StyledButton isDisabled={!loginInput || !passwordInput} type="submit" data-cy="login-button">
             {!isLoading ? (
               'Zaloguj się'

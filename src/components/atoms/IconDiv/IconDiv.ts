@@ -4,11 +4,12 @@ const IconDiv = styled.div<{ icon: string }>`
   background-image: url(${({ icon }) => icon});
   background-repeat: no-repeat;
   background-color: transparent;
-  background-size: 75%;
+  background-size: 100%;
   background-position: center;
   cursor: pointer;
-  height: 4rem;
-  width: 4rem;
+  position: absolute;
+  right: 10%;
+  padding: 1.3rem;
   border: none;
 `;
 

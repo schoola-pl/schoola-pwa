@@ -10,8 +10,10 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 25% 65% 10%;
+  place-items: center;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
+  margin: 0;
 
   @media (min-width: 435px) {
     width: min(100%, 400px);
