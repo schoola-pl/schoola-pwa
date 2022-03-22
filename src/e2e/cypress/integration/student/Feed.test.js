@@ -27,14 +27,14 @@ describe(`Student's feed | ${Cypress.env('APP_NAME')}`, () => {
     cy.findByTestId('comments-section').should('contain', message);
   };
 
-  it('Checks does user can post on the feed', () => {
+  it('Checks can user post on the feed', () => {
     cy.findByTestId('feed-wrapper').should('exist');
     cy.findByTestId('feed-input').should('be.visible').type('Test post');
     cy.findByTestId('feed-send').click();
     doesPostExist();
   });
 
-  it('Checks does user can add comment in post', () => {
+  it('Checks can user add comment in post', () => {
     cy.findByTestId('feed-post-comments-input').should('not.exist');
     cy.findByTestId('feed-post-test_user-comments').click();
     writeComment('Test comment');
