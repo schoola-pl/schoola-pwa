@@ -5,8 +5,8 @@ describe(`Student's interface | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     localStorage.clear();
     cy.visit('/');
-    cy.findByPlaceholderText(/login/i).type('test_user');
-    cy.findByPlaceholderText(/hasło/i).type('Cypress123!');
+    cy.findByPlaceholderText(/login/i).type(Cypress.env('PROFILE_USER_LOGIN'));
+    cy.findByPlaceholderText(/hasło/i).type(Cypress.env('PROFILE_USER_PASSWORD'));
     cy.findByText('Zaloguj się').click();
     cy.viewport(450, 750);
   });
