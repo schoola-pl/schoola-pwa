@@ -11,20 +11,16 @@ describe(`Student's feed | ${Cypress.env('APP_NAME')}`, () => {
     cy.viewport(450, 750);
   });
 
-  after(() => {
-    cy.findByTestId('feed-post-test_user-menu').click();
-    cy.findByTestId('feed-post-menu-delete').click();
-  });
-
   const doesPostExist = () => {
-    const record = cy.findByTestId('feed-post-test_user').should('exist').should('be.visible');
+    cy.wait(1000);
+    const record = cy.findAllByTestId('post-wrapper').first().should('exist').should('be.visible');
     record.should('contain', 'Test post');
   };
 
   const writeComment = (message) => {
-    cy.findByTestId('feed-post-comments-input').type(message);
-    cy.findByTestId('feed-post-comments-send').click();
-    cy.findByTestId('comments-section').should('contain', message);
+    cy.findAllByTestId('comments-input').first().type(message);
+    cy.findAllByTestId('comments-send').first().click();
+    cy.findAllByTestId('comments-section').first().should('contain', message);
   };
 
   it('Checks can user post on the feed', () => {
@@ -35,21 +31,26 @@ describe(`Student's feed | ${Cypress.env('APP_NAME')}`, () => {
   });
 
   it('Checks can user add comment in post', () => {
-    cy.findByTestId('feed-post-comments-input').should('not.exist');
-    cy.findByTestId('feed-post-test_user-comments').click();
+    cy.findByTestId('comments-section').should('not.exist');
+    cy.findAllByTestId('post-comments-btn').first().click();
     writeComment('Test comment');
-    cy.findByTestId('feed-post-comments-input').should('be.visible');
+    cy.findByTestId('comments-section').should('be.visible');
   });
 
   it('Checks do counters work', () => {
     doesPostExist();
     // Comments counter
-    cy.findByTestId('feed-post-test_user-comments').should('have.attr', 'data-comments-count', '1');
+    cy.findAllByTestId('post-comments-btn').first().should('have.attr', 'data-comments-count', '1');
     // Likes counter
-    cy.findByTestId('feed-post-test_user-likes').findByRole('button').click();
-    cy.findByTestId('feed-post-test_user-likes').should('contain', '1');
+    cy.findAllByTestId('post-likes').first().findByRole('button').click();
+    cy.findAllByTestId('post-likes').first().should('contain', '1');
+    // App reload
     cy.findByTestId('reload-btn').click();
-    cy.findByTestId('feed-post-test_user-likes').should('contain', '1');
+    // Again check does counter work
+    cy.findAllByTestId('post-likes').first().should('contain', '1');
+    // Clean up after test
+    cy.findAllByTestId('post-menu').first().click();
+    cy.findAllByTestId('post-menu-delete').first().click();
   });
 });
 

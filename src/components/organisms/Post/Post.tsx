@@ -108,7 +108,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
   };
 
   return (
-    <QuestionWrapper ref={ref} data-testid={postOwner ? `feed-post-${postOwner?.username}` : 'spotted-post'}>
+    <QuestionWrapper ref={ref} data-testid={'post-wrapper'}>
       <InfoWrapper>
         <ProfilePicture isSpotted={isSpotted} postOwner={postOwner} image={image} />
         <QuestionInfo>
@@ -118,11 +118,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         {!isComment && user?.TextRole !== 'Student' && (
           <div>
             <ActionMenu isOpened={isOpened} onClick={handleDeleteQuestion} isLoading={isPostLoading} />
-            <ToggleMenu
-              data-testid={postOwner ? `feed-post-${postOwner?.username || ''}-menu` : 'spotted-menu'}
-              icon={DotsMenuIcon}
-              onClick={handleToggleMenu}
-            />
+            <ToggleMenu data-testid={'post-menu'} icon={DotsMenuIcon} onClick={handleToggleMenu} />
           </div>
         )}
       </InfoWrapper>
@@ -130,22 +126,17 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
         <p>{content}</p>
       </QuestionInnerWrapper>
       <ActionsWrapper>
-        <LikeWrapper data-testid={`feed-post-${postOwner?.username || ''}-likes`}>
+        <LikeWrapper data-testid={'post-likes'}>
           <Heart likes={likes} />
         </LikeWrapper>
         {!isComment ? (
-          <StyledComments
-            data-testid={`feed-post-${postOwner?.username || ''}-comments`}
-            as={Link}
-            to={`comments/${qId}`}
-            data-comments-count={comments}
-          >
+          <StyledComments data-testid={'post-comments-btn'} as={Link} to={`comments/${qId}`} data-comments-count={comments}>
             <SidebarLink icon={CommentIcon} />
           </StyledComments>
         ) : (
           <form onSubmit={handleSubmit(handleAddComment)}>
             <StyledInput
-              data-testid="feed-post-comments-input"
+              data-testid="comments-input"
               type="text"
               disabled={isPostQueryLoading || isSpottedQueryLoading}
               placeholder={
@@ -157,7 +148,7 @@ const Post = React.forwardRef<HTMLDivElement, props>(({ qId, postOwner, isSpotte
               }
               {...register('message', { required: true })}
             />
-            <SendMessageButton type="submit" data-testid="feed-post-comments-send" icon={SendIcon} />
+            <SendMessageButton type="submit" data-testid="comments-send" icon={SendIcon} />
           </form>
         )}
       </ActionsWrapper>
