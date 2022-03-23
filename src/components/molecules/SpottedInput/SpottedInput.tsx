@@ -33,12 +33,12 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
   };
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden' }}>
+    <div data-testid="spotted-wrapper" style={{ position: 'relative', overflow: 'hidden' }}>
       {studentInfo && <StudentInfo>{studentInfo}</StudentInfo>}
       <Wrapper onSubmit={handleSubmit(handleAddSpott)}>
         <InputWrapper>
           <StyledInput
-            data-testid="spotted-add-input"
+            data-testid="spotted-input"
             type="text"
             placeholder="Napisz wiadomość"
             {...register('message', {
@@ -50,7 +50,7 @@ const AskQuestionInput: React.FC<props> = ({ resetSpotted }) => {
         <MessageActionWrapper>
           <p>Wysyłanie wiadomości jest w pełni</p>
           {!isLoading ? (
-            <SendMessageButton data-testid="spotted-add-btn" icon={SendIcon} disabled={isLoading || !!studentInfo} />
+            <SendMessageButton data-testid="spotted-send" icon={SendIcon} disabled={isLoading || !!studentInfo} />
           ) : (
             <Loader fitContent bgColor="white" size="35px 35px" />
           )}
