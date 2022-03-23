@@ -54,6 +54,7 @@ describe(`Auth routes | ${Cypress.env('APP_NAME')}`, () => {
     cy.findByPlaceholderText(/hasło/i).type('Admin123!');
     cy.findByText('Zaloguj się').click();
     cy.wait('@login').then(() => {
+      cy.wait(2000);
       assert.isNotNull(localStorage.getItem('role'));
       assert.equal(localStorage.getItem('role'), 'School Admin');
       cy.url().should('include', '/school-admin');
