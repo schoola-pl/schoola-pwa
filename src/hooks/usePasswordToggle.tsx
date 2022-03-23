@@ -8,7 +8,7 @@ const usePasswordToggle = () => {
 
   const inputType = isVisible ? 'text' : 'password';
 
-  const icon = <IconDiv as="button" onClick={() => setVisibility(!isVisible)} icon={isVisible ? HideIcon : ShowIcon} />;
+  const icon = <IconDiv as="button" type="button" onClick={() => setVisibility(!isVisible)} icon={isVisible ? HideIcon : ShowIcon} />;
 
   return { inputType, icon };
 };
