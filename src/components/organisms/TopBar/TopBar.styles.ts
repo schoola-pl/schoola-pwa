@@ -21,38 +21,31 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 1.5rem;
-  padding-inline: 3rem;
+  justify-content: space-around;
+  padding: 1rem;
 `;
-export const UserPicture = styled.div`
-  border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// export const UserPicture = styled.div`
+//   border-radius: 50%;
+//   width: 5rem;
+//   height: 5rem;
+//   position: relative;
+//   overflow: hidden;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  img {
-    min-width: 100%;
-    min-height: 100%;
-  }
-`;
+//   img {
+//     min-width: 100%;
+//     min-height: 100%;
+//   }
+// `;
 
 export const InnerWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  & > *:not(:first-child) {
-    display: block;
-    margin-left: 1rem !important;
-  }
+  margin-left: 10rem;
 `;
-
-// export const StyledSidebarLink = styled(SidebarLink)``;
 
 export const GoBack = styled(SidebarLink)<{ isComments?: boolean }>`
   display: ${({ isComments }) => (isComments ? 'flex' : 'none')};
