@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 1rem;
+  padding-top: 1rem;
 `;
 
 export const StyledInput = styled.input<{ isVisible?: boolean }>`

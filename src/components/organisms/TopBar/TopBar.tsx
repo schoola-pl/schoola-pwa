@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { GoBack, SearchLink, InnerWrapper, Logo, Wrapper, SettingsLink } from './TopBar.styles';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,9 +7,9 @@ import SearchIcon from 'assets/icons/SearchIcon.svg';
 
 const TopBar = () => {
   const url = window.location.pathname;
-  const isComments = url.includes('/comments');
+  const isComments = url.includes('/comments') || url.includes('/search');
   const isSettings = url.includes('/profile');
-  const isSocialView = url.includes('/feed') || url.includes('spotted');
+  const isSocialView = url.includes('/feed') || url.includes('/spotted') || !url.includes('comments');
   const navigate = useNavigate();
 
   return (
@@ -20,7 +19,7 @@ const TopBar = () => {
       </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
-        <SearchLink icon={SearchIcon} isSocialView={isSocialView} />
+        <SearchLink icon={SearchIcon} as={Link} to="/student/search" isSocialView={isSocialView} />
         <NotificationList />
         <SettingsLink isSettings={isSettings} style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
