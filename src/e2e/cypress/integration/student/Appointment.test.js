@@ -22,9 +22,9 @@ describe(`Student's appointment | ${Cypress.env('APP_NAME')}`, () => {
   it('Checks can user book a meeting', () => {
     cy.findByTestId('appointment-wrapper').should('be.visible').should('contain', 'Aby kontynuować, wybierz termin w kalendarzu!');
     if (preparedDate.getDay() === 6) {
-      preparedDate = addDays(preparedDate + 2);
+      preparedDate = addDays(3);
     } else if (preparedDate.getDay() === 0) {
-      preparedDate = addDays(preparedDate + 1);
+      preparedDate = addDays(2);
     }
     const formattedDate = format(preparedDate, 'd MMMM yyyy', { locale: pl });
     cy.findByLabelText(formattedDate).click();
