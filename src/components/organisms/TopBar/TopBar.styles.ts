@@ -3,6 +3,7 @@ import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
 
 export const Logo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
+  padding-left: 1rem;
   text-decoration: none;
   color: black;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
@@ -19,10 +20,11 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightBrown};
   top: 0;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 50% 50%;
   align-items: center;
-  justify-content: space-around;
   padding-top: 1rem;
+  padding: 1.5rem;
 `;
 
 export const StyledInput = styled.input<{ isVisible?: boolean }>`

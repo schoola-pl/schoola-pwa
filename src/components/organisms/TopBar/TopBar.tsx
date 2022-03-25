@@ -9,7 +9,7 @@ const TopBar = () => {
   const url = window.location.pathname;
   const isComments = url.includes('/comments') || url.includes('/search');
   const isSettings = url.includes('/profile');
-  const isSocialView = url.includes('/feed') || url.includes('/spotted') || !url.includes('comments');
+  const isSocialView = url.includes('/feed') || url.includes('/spotted');
   const navigate = useNavigate();
 
   return (
