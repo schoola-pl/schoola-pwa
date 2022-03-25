@@ -31,7 +31,7 @@ describe(`Student's interface | ${Cypress.env('APP_NAME')}`, () => {
     checkRoute('appointment', 'feed');
   });
 
-  it('Checks does notification buttons work', () => {
+  it('Checks does notification button work', () => {
     cy.findByText('Powiadomienia').should('not.be.visible');
     cy.findByTestId('notification-btn').click();
     cy.findByText('Powiadomienia').should('be.visible');
@@ -47,6 +47,16 @@ describe(`Student's interface | ${Cypress.env('APP_NAME')}`, () => {
     checkRoute('feed', 'profile');
     cy.findByTestId('logo').should('be.visible').click();
     cy.url().should('include', '/feed');
+  });
+
+  it('Checks is profile correctly displayed', () => {
+    checkRoute('feed', 'profile');
+    cy.findByTestId('profile-role').should('contain', 'Samorząd');
+    cy.findByTestId('profile-name').should('contain', 'Cypress Tester');
+    cy.findByTestId('profile-interests').should('be.visible');
+    cy.findByTestId('profile-links').should('not.exist');
+    cy.findByTestId('profile-no-links').should('exist');
+    cy.findByTestId('profile-description').should('not.exist');
   });
 });
 

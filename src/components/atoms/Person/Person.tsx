@@ -13,8 +13,8 @@ const Person: React.FC<Props> = ({ userName, userProfilePicture, description }) 
         <Picture src={userProfilePicture} alt={userName} />
       </div>
       <ContentWrapper>
-        <h1>{userName}</h1>
-        {description && <p>{description}</p>}
+        <h1 data-testid="profile-name">{userName}</h1>
+        {description && <p data-testid="profile-description">{description}</p>}
       </ContentWrapper>
     </UserInfoWrapper>
   );
