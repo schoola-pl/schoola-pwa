@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InnerWrapper, PageWrapper, StyledCalendar, Wrapper, StyledButton } from './Appointment.styles';
+import { InnerWrapper, PageWrapper, StyledButton, StyledCalendar, Wrapper } from './Appointment.styles';
 import { format } from 'date-fns';
 import UserHours from 'components/molecules/UserHours/UserHours';
 import pl from 'date-fns/locale/pl';
@@ -56,7 +56,7 @@ const Appointment = () => {
   return (
     <PageWrapper>
       <StyledCalendar onClickDay={(e) => setActive(e)} locale="pl" minDate={addDays(1)} maxDate={addMonths(1)} onChange={onChange} value={value} />
-      <Wrapper>
+      <Wrapper data-testid="appointment-wrapper">
         {!selectedDate ? (
           <Info>Aby kontynuować, wybierz termin w kalendarzu!</Info>
         ) : (
@@ -70,7 +70,11 @@ const Appointment = () => {
             ) : (
               <UserHours psychoId={selectedPsycho} date={selectedDate} setActiveHour={setSelectedHour} activeHour={selectedHour} />
             )}
-            {selectedHour && selectedPsycho && <StyledButton onClick={handleBookMeeting}>Umów spotkanie</StyledButton>}
+            {selectedHour && selectedPsycho && (
+              <StyledButton data-testid="appointment-send" onClick={handleBookMeeting}>
+                Umów spotkanie
+              </StyledButton>
+            )}
           </>
         )}
       </Wrapper>

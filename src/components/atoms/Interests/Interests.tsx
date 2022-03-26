@@ -8,7 +8,7 @@ interface Props {
 const Interests: React.FC<Props> = ({ interests }) => (
   <InterestSectionWrapper>
     <InterestHeading>Zainteresowania</InterestHeading>
-    <InterestWrapper>
+    <InterestWrapper data-testid="profile-interests">
       {Array.isArray(interests) ? (
         interests.map((interest) => <Interest key={interest.id}>{interest.name}</Interest>)
       ) : (

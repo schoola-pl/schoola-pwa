@@ -20,7 +20,7 @@ const NotificationList: React.FC = () => {
   return (
     <Wrapper accountType="spottedAdmin">
       <NotificationButtonWrapper isVisible={isVisible} notificationCounter={proposals.data?.data?.length || 0}>
-        <NotificationButton onClick={handleOpenMenu} icon={NotificationIcon} />
+        <NotificationButton onClick={handleOpenMenu} icon={NotificationIcon} data-testid="notification-btn" />
       </NotificationButtonWrapper>
       <NotificationWrapper isOpen={isOpen}>
         <Heading>Powiadomienia</Heading>

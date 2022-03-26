@@ -8,7 +8,7 @@ const Roles: React.FC<Props> = ({ role }) => (
   <RoleWrapper>
     <div>
       <p>Rola:</p>
-      <h1>{role}</h1>
+      <h1 data-testid="profile-role">{role}</h1>
     </div>
   </RoleWrapper>
 );

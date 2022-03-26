@@ -1,7 +1,7 @@
-import { LinkWrapper, LinksHeading, MediaWrapper } from './NoLinks.styles';
+import { LinksHeading, LinkWrapper, MediaWrapper } from './NoLinks.styles';
 
 const NoLinks = () => (
-  <LinkWrapper>
+  <LinkWrapper data-testid="profile-no-links">
     <LinksHeading>Linki społecznościowe</LinksHeading>
     <MediaWrapper>Brak linków społecznościowych!</MediaWrapper>
   </LinkWrapper>

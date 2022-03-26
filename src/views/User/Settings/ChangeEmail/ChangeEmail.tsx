@@ -41,7 +41,7 @@ const ChangeEmail = () => {
   };
 
   return (
-    <Wrapper email={true}>
+    <Wrapper data-testid="settings-wrapper" email={true}>
       <h1>Zmień e-mail</h1>
       <form onSubmit={handleSubmit(handleChangeEmail)}>
         <InputWrapper>
@@ -49,6 +49,7 @@ const ChangeEmail = () => {
           <input
             type="e-mail"
             id="new-email"
+            data-testid="settings-email-input"
             placeholder={user?.email || 'brak'}
             {...register('email', {
               required: true,
@@ -57,7 +58,7 @@ const ChangeEmail = () => {
             })}
           />
         </InputWrapper>
-        <SubmitButton isDisabled={!emailField} email={true}>
+        <SubmitButton isDisabled={!emailField} email={true} data-testid="settings-email-btn">
           {!isLoading ? (
             'Zmień'
           ) : (

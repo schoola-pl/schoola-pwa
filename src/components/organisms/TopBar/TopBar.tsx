@@ -12,13 +12,13 @@ const TopBar = () => {
 
   return (
     <Wrapper>
-      <Logo as={Link} to="/student/feed">
+      <Logo data-testid="logo" as={Link} to="/student/feed">
         schoola
       </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <NotificationList />
-        <SidebarLink style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
+        <SidebarLink style={{ margin: 0 }} as={Link} data-testid="settings" to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );
