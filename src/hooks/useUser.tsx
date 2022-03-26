@@ -3,7 +3,6 @@ import { authUser } from 'types/auth';
 import { getJWT, removeJWT } from 'helpers/jwt';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-
 import {
   addUser as addUserStore,
   removeUser,
