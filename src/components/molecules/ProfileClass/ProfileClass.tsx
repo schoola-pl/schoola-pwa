@@ -1,4 +1,5 @@
 import { ClassWrapper, Flex } from './ProfileClass.styles';
+import React from 'react';
 
 interface Props {
   userClass: string;
