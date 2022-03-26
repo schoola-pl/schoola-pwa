@@ -44,6 +44,7 @@ export const SettingsLink = styled(SidebarLink)<{ isSettings?: boolean }>`
 
 export const SearchLink = styled(SidebarLink)<{ isSocialView?: boolean }>`
   display: ${({ isSocialView }) => (isSocialView ? 'block' : 'none')};
+  margin: 0;
 `;
 
 // export const UserPicture = styled.div`
