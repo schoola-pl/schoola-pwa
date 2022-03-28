@@ -1,0 +1,80 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "communiteAuthIdentityPool",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "commun23019b38",
+    "userPoolName": "communiteAuthUserPool",
+    "autoVerifiedAttributes": [
+      "phone_number"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "birthdate",
+      "family_name",
+      "given_name",
+      "name"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "email",
+      "middle_name",
+      "preferred_username",
+      "picture",
+      "birthdate",
+      "family_name",
+      "given_name",
+      "name"
+    ],
+    "userpoolClientReadAttributes": [
+      "birthdate",
+      "email",
+      "family_name",
+      "given_name",
+      "name",
+      "preferred_username",
+      "picture",
+      "email_verified"
+    ],
+    "userpoolClientLambdaRole": "commun23019b38_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "sharedId": "23019b38",
+    "resourceName": "communiteAuth",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "manual",
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": true,
+    "triggers": {
+      "PostConfirmation": [
+        "add-to-group"
+      ]
+    },
+    "hostedUI": false,
+    "userPoolGroupList": [
+      "Admin",
+      "SchoolAdmin",
+      "StudentCouncilChairman",
+      "StudentCouncil",
+      "RadioStation",
+      "Redaction",
+      "Student"
+    ],
+    "adminQueryGroup": "SchoolAdmin",
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}

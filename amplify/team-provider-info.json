@@ -9,7 +9,25 @@
       "UnauthRoleName": "amplify-communitebackend-dev-134759-unauthRole",
       "StackName": "amplify-communitebackend-dev-134759",
       "StackId": "arn:aws:cloudformation:eu-central-1:164668608195:stack/amplify-communitebackend-dev-134759/c2f1d7a0-adc3-11ec-9279-0a4d3345bed8",
-      "AmplifyAppId": "dkrkf4vdq0xl5"
+      "AmplifyAppId": "dkrkf4vdq0xl5",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-communitebackend-dev-134759-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "communiteAuth": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "communiteAuthPostConfirmation": {
+          "GROUP": "Student",
+          "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
+          "s3Key": "amplify-builds/communiteAuthPostConfirmation-796547654b6a63487a42-build.zip"
+        },
+        "AdminQueries9f9a303e": {
+          "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
+          "s3Key": "amplify-builds/AdminQueries9f9a303e-61586f5077796b4f7672-build.zip"
+        }
+      }
     }
   }
 }
