@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import IconDiv from 'components/atoms/IconDiv/IconDiv';
+import SearchIcon from 'assets/icons/SearchIcon.svg';
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -7,35 +9,95 @@ export const PageWrapper = styled.div`
   align-items: center;
 `;
 
-const SearchInput = styled.input`
-  width: 90%;
+const SearchInputWrapper = styled.div`
+  width: 95%;
   padding: 1.2rem;
   border: none;
-  border-radius: 2.5rem;
+  border-radius: 3rem;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
   outline: none;
-  margin-bottom: 1rem;
+  background-color: white;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+
+  input {
+    outline: none;
+    border: none;
+  }
 `;
 
 const ResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
 `;
 
-const StudentResult = styled.div`
+const StudentResultWrapper = styled.div`
   background-color: white;
-  height: 5rem;
+  box-shadow: ${({ theme }) => theme.innerStyles.box};
+  height: 7.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &::after {
+    content: '>';
+    font-size: 2rem;
+    margin-left: 5rem;
+  }
+
+  h1 {
+    margin: 0.75rem;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
+    border-right: 3px solid ${({ theme }) => theme.colors.accentBlue};
+  }
+`;
+
+const StyledIconDiv = styled(IconDiv)`
+  margin-right: 1.5rem;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    text-transform: none;
+    border: none !important;
+    font-size: ${({ theme }) => theme.fontSize.s};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+  }
+
+  p {
+    color: grey;
+    margin: 0;
+  }
 `;
 
 const Search = () => {
   return (
     <PageWrapper>
-      <SearchInput placeholder="Wyszukaj ucznia, klasę etc." />
+      <SearchInputWrapper>
+        <input type="search" placeholder="Wyszukaj ucznia, klasę etc." />
+        <StyledIconDiv icon={SearchIcon} />
+      </SearchInputWrapper>
       <ResultsWrapper>
-        <StudentResult>Student</StudentResult>
-        <StudentResult>Student</StudentResult>
-        <StudentResult>Student</StudentResult>
+        <StudentResultWrapper>
+          <h1>3d</h1>
+          <InfoWrapper>
+            <h1>Janusz Piechociński</h1>
+            <p>Uczeń</p>
+          </InfoWrapper>
+        </StudentResultWrapper>
       </ResultsWrapper>
     </PageWrapper>
   );
