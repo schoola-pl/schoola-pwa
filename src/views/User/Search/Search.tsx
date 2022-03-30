@@ -24,8 +24,6 @@ const Search = () => {
     return data.filter((item: any) => item.firstName.toLowerCase().includes(searchTerm));
   };
 
-  console.log(searchTerm.length);
-
   return (
     <PageWrapper>
       <SearchInputWrapper>
@@ -39,15 +37,7 @@ const Search = () => {
         <StyledIconDiv icon={SearchIcon} />
       </SearchInputWrapper>
       <ResultsWrapper>
-        {searchTerm.length === 0 ? (
-          <p>Wpisz frazę aby wyszukać ucznia, klasę, rolę itp.</p>
-        ) : (
-          searchData
-            .filter((user) => user.firstName.toLowerCase().includes(searchTerm))
-            .map(({ TextClassName, id, Role, firstName, lastName }) => (
-              <UserSearchRecord key={id} TextClassName={TextClassName} Role={Role} firstName={firstName} lastName={lastName} />
-            ))
-        )}
+        <UserSearchRecord data={search(searchData)} />
       </ResultsWrapper>
     </PageWrapper>
   );

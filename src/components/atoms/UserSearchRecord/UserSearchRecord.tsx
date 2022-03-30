@@ -1,23 +1,26 @@
 import { InfoWrapper, StudentResultWrapper } from './UserSearchRecord.styles';
 
 interface Props {
-  TextClassName?: string;
-  Role?: string;
-  firstName?: string;
-  lastName?: string;
+  data: any;
 }
 
-const UserSearchRecord: React.FC<Props> = ({ TextClassName, Role, firstName, lastName }) => {
+// TextClassName, Role, firstName, lastName
+
+const UserSearchRecord: React.FC<Props> = ({ data }) => {
   return (
-    <StudentResultWrapper>
-      <h1>{TextClassName}</h1>
-      <InfoWrapper>
-        <h1>
-          {firstName} {lastName}
-        </h1>
-        <p>{Role}</p>
-      </InfoWrapper>
-    </StudentResultWrapper>
+    <>
+      {data.map((user: any) => (
+        <StudentResultWrapper key={user.id}>
+          <h1>{user.TextClassName}</h1>
+          <InfoWrapper>
+            <h1>
+              {user.firstName} {user.lastName}
+            </h1>
+            <p>{user.Role}</p>
+          </InfoWrapper>
+        </StudentResultWrapper>
+      ))}
+    </>
   );
 };
 
