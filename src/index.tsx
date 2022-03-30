@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import AppProviders from 'providers/AppProviders';
 import Root from './views/Root';
+// AWS Amplify stack
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+
+Amplify.configure(aws_exports);
 
 // Sentry.init({
 //   dsn: 'https://a76924e51a3940e399841d3c9895b1e1@o1079673.ingest.sentry.io/6124408',
