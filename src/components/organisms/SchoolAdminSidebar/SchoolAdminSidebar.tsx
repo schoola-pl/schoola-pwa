@@ -6,7 +6,7 @@ import AddUserIcon from 'assets/icons/AddUserIcon.png';
 import DashboardIcon from 'assets/icons/DashboardIcon.png';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import LogoutIcon from 'assets/icons/LogoutIcon.png';
-import { useUser } from 'hooks/useUser';
+import { useAuth } from '../../../hooks/useAuth';
 
 const links: { path: string; name: string; icon: string }[] = [
   { path: '/school-admin/', icon: DashboardIcon, name: 'Tablica' },
@@ -15,7 +15,7 @@ const links: { path: string; name: string; icon: string }[] = [
 ];
 
 const AdminSidebar = () => {
-  const { logout } = useUser();
+  const { signOut } = useAuth();
 
   return (
     <Wrapper>
@@ -32,7 +32,7 @@ const AdminSidebar = () => {
           ))}
         </div>
         <div>
-          <StyledListItem key={'logout'} onClick={logout} to={'/'} isDanger>
+          <StyledListItem as="div" key={'logout'} onClick={signOut} isDanger>
             <SidebarLink tabIndex={-1} icon={LogoutIcon} />
             <StyledParagraph>Wyloguj się</StyledParagraph>
           </StyledListItem>
