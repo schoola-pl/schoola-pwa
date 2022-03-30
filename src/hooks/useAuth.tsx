@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router';
 import { dashboardRoute, roles } from 'routes';
 import { Auth, authUser, Hub } from 'aws-amplify';
 import { getPathForRole } from '../helpers/roles';
+import { ErrorResponse, SuccessResponse } from '../types/responses';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
-  signIn: ({ username, password }: { username: string; password: string }) => Promise<any>;
-  signOut: () => Promise<any>;
+  signIn: ({ username, password }: { username: string; password: string }) => Promise<SuccessResponse | ErrorResponse>;
+  signOut: () => Promise<SuccessResponse | ErrorResponse>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
@@ -125,10 +126,11 @@ export const AuthProvider: React.FC = ({ children }) => {
         message: 'Successfully signed in!'
       };
     } catch (error) {
-      if (!(error instanceof Error)) return 'error';
+      let message = 'Something went wrong';
+      if (error instanceof Error) message = error.message;
       return {
         success: false,
-        message: error.message
+        message
       };
     }
   };
@@ -142,10 +144,11 @@ export const AuthProvider: React.FC = ({ children }) => {
         message: 'Successfully signed out!'
       };
     } catch (error) {
-      if (!(error instanceof Error)) return 'error';
+      let message = 'Something went wrong';
+      if (error instanceof Error) message = error.message;
       return {
         success: false,
-        message: error.message
+        message
       };
     }
   };
