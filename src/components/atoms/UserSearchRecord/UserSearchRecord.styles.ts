@@ -6,9 +6,10 @@ export const StudentResultWrapper = styled.div`
   height: 7.5rem;
   margin-bottom: 1.5rem;
   border-radius: 2rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 55% 50%;
+  white-space: nowrap;
   align-items: center;
-  justify-content: flex-start;
 
   &::after {
     content: '>';

@@ -11,21 +11,27 @@ interface Props {
 }
 
 const searchData = [
-  { TextClassName: '3A', Role: 'Uczeń', firstName: 'Tadeusz', lastName: 'Norek' },
-  { TextClassName: '3B', Role: 'Samorząd Uczniowski', firstName: 'Jarek', lastName: 'Tadek' },
-  { TextClassName: '1B', Role: 'Uczeń', firstName: 'Krzysztof', lastName: 'Ibisz' },
-  { TextClassName: '2D', Role: 'Uczeń', firstName: 'Tomaszenko', lastName: 'Jarenosz' },
-  { TextClassName: '1D', Role: 'Uczeń', firstName: 'Miroslav', lastName: 'Klose' }
+  { id: 1, TextClassName: '3A', Role: 'Uczeń', firstName: 'Tadeusz', lastName: 'Norek' },
+  { id: 2, TextClassName: '3B', Role: 'Samorząd Uczniowski', firstName: 'Jarek', lastName: 'Tadek' },
+  { id: 3, TextClassName: '1B', Role: 'Uczeń', firstName: 'Krzysztof', lastName: 'Ibisz' },
+  { id: 4, TextClassName: '2D', Role: 'Uczeń', firstName: 'Tomaszenko', lastName: 'Jarenosz' },
+  { id: 5, TextClassName: '1D', Role: 'Uczeń', firstName: 'Miroslav', lastName: 'Klose' }
 ];
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const search = (data: any) => {
+    return data.filter((item: any) => item.firstName.toLowerCase().includes(searchTerm));
+  };
+
+  console.log(searchTerm.length);
+
   return (
     <PageWrapper>
       <SearchInputWrapper>
         <input
           type="search"
-          placeholder="Wyszukaj ucznia, klasę etc."
+          placeholder="Szukaj"
           onChange={(e) => {
             setSearchTerm(e.target.value);
           }}
@@ -33,11 +39,15 @@ const Search = () => {
         <StyledIconDiv icon={SearchIcon} />
       </SearchInputWrapper>
       <ResultsWrapper>
-        {searchData
-          .filter((user) => user.firstName.toLowerCase().includes(searchTerm))
-          .map(({ TextClassName, Role, firstName, lastName }) => (
-            <UserSearchRecord TextClassName={TextClassName} Role={Role} firstName={firstName} lastName={lastName} />
-          ))}
+        {searchTerm.length === 0 ? (
+          <p>Wpisz frazę aby wyszukać ucznia, klasę, rolę itp.</p>
+        ) : (
+          searchData
+            .filter((user) => user.firstName.toLowerCase().includes(searchTerm))
+            .map(({ TextClassName, id, Role, firstName, lastName }) => (
+              <UserSearchRecord key={id} TextClassName={TextClassName} Role={Role} firstName={firstName} lastName={lastName} />
+            ))
+        )}
       </ResultsWrapper>
     </PageWrapper>
   );
