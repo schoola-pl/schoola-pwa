@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { storeRoot } from 'store';
-import { useRoutesControl } from 'hooks/useRoutesControl';
-import { useAppLoading } from 'hooks/useAppLoading';
+import React, { useEffect } from 'react';
+import { useAuth } from 'hooks/useAuth';
+import { loginRoute } from '../routes';
+import { useNavigate } from 'react-router';
+import { useAppLoading } from '../hooks/useAppLoading';
 
 interface props {
   Element: React.FC;
@@ -10,42 +10,19 @@ interface props {
 }
 
 const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
-  const user = useSelector((state: storeRoot) => state.user);
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const { checkUser, blockRoutes, checkDoesRoleHasPermission } = useRoutesControl();
+  const { currentUser, checkDoesRoleHasPermission } = useAuth();
   const { setAppLoading } = useAppLoading();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      // Checks is user logged in
-      setAppLoading(true);
-      if (await checkUser()) {
-        setAuthenticated(true);
-      } else {
-        setAuthenticated(false);
-        blockRoutes();
-      }
-    })();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    // Checks is user object exists
-    if (user && isAuthenticated) {
-      // Checks is user blocked
-      if (!user.blocked) {
-        // Checks if user has permission to access route
-        if (!checkDoesRoleHasPermission(role, user?.TextRole)) {
-          blockRoutes();
-        } else {
-          setAppLoading(false);
-        }
-      } else {
-        blockRoutes();
-      }
+    setAppLoading(true);
+    console.log('currentUser', currentUser);
+    if (!currentUser || !checkDoesRoleHasPermission(role, currentUser.role)) {
+      setAppLoading(false);
+      navigate(loginRoute);
     }
-    // eslint-disable-next-line
-  }, [user, isAuthenticated]);
+    setAppLoading(false);
+  }, [currentUser]);
 
   return <Element />;
 };
