@@ -7,6 +7,7 @@ import { getPathForRole } from '../helpers/roles';
 interface AuthContextTypes {
   currentUser: authUser | null;
   signIn: ({ username, password }: { username: string; password: string }) => Promise<any>;
+  signOut: () => Promise<any>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
@@ -14,6 +15,9 @@ const AuthContext = createContext<AuthContextTypes>({
   currentUser: null,
   signIn: () => {
     throw new Error('AuthContext.signIn is not implemented');
+  },
+  signOut: () => {
+    throw new Error('AuthContext.signOut is not implemented');
   },
   checkDoesRoleHasPermission: () => {
     throw new Error('AuthContext.checkDoesRoleHasPermission is not implemented');
@@ -126,6 +130,24 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
+  // This method is used to sign out the user
+  const signOut = async () => {
+    try {
+      await Auth.signOut();
+      setCurrentUser(null);
+      return {
+        success: true,
+        message: 'Successfully signed out!'
+      };
+    } catch (error) {
+      if (!(error instanceof Error)) return 'error';
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  };
+
   // This method checks does user has permission to access the route (by his role name)
   const checkDoesRoleHasPermission = (entitledRole: string | string[], actualRole: string) => {
     if (actualRole === roles.authenticated) return true;
@@ -140,6 +162,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const values = {
     currentUser,
     signIn,
+    signOut,
     checkDoesRoleHasPermission
   };
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
