@@ -21,7 +21,14 @@ const searchData = [
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const search = (data: any) => {
-    return data.filter((item: any) => item.firstName.toLowerCase().includes(searchTerm));
+    return data.filter(
+      (item: any) =>
+        item.firstName.toLowerCase().includes(searchTerm) ||
+        item.lastName.toLowerCase().includes(searchTerm) ||
+        item.firstName.toLowerCase().includes(searchTerm) ||
+        item.Role.toLowerCase().includes(searchTerm) ||
+        item.TextClassName.toLowerCase().includes(searchTerm)
+    );
   };
 
   return (
