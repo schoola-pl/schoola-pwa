@@ -13,6 +13,7 @@ import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLog
 import CommentSection from 'views/User/CommentSection/CommentSection';
 import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
 import Search from 'views/User/Search/Search';
+import SearchProfileView from 'views/User/SearchProfileView/SearchProfileView';
 
 const UserRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -36,6 +37,7 @@ const UserRoutes = () => {
             <Route path="/feed/comments" element={<Navigate to="/student/spotted" />} />
             <Route path="/feed/comments/:commentsId" element={<CommentSection />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/profile/:id" element={<SearchProfileView />} />
             <Route path="/search" element={<Search />} />
             <Route path="*" element={<Error404 />} />
           </Routes>

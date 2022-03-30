@@ -10,6 +10,7 @@ export const StudentResultWrapper = styled.div`
   grid-template-columns: 20% 55% 50%;
   white-space: nowrap;
   align-items: center;
+  text-decoration: none;
 
   &::after {
     content: '>';
@@ -19,6 +20,7 @@ export const StudentResultWrapper = styled.div`
 
   h1 {
     margin: 0.75rem;
+    color: black;
     padding: 1rem;
     text-transform: uppercase;
     font-weight: ${({ theme }) => theme.fontWeight.medium};

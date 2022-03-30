@@ -1,16 +1,15 @@
 import { InfoWrapper, StudentResultWrapper } from './UserSearchRecord.styles';
+import { Link } from 'react-router-dom';
 
 interface Props {
   data: any;
 }
 
-// TextClassName, Role, firstName, lastName
-
 const UserSearchRecord: React.FC<Props> = ({ data }) => {
   return (
     <>
       {data.map((user: any) => (
-        <StudentResultWrapper key={user.id}>
+        <StudentResultWrapper as={Link} to="/student/profile/:id" key={user.id}>
           <h1>{user.TextClassName}</h1>
           <InfoWrapper>
             <h1>
