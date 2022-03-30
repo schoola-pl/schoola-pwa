@@ -44,7 +44,7 @@ const Search = () => {
         <StyledIconDiv icon={SearchIcon} />
       </SearchInputWrapper>
       <ResultsWrapper>
-        <UserSearchRecord data={search(searchData)} />
+        {searchTerm.length === 0 ? <p>Wyszukaj klasę, osobę, rolę osoby w szkole etc.</p> : <UserSearchRecord data={search(searchData)} />}
       </ResultsWrapper>
     </PageWrapper>
   );
