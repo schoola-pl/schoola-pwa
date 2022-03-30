@@ -78,6 +78,9 @@ export const AuthProvider: React.FC = ({ children }) => {
           navigate(getPathForRole(user.role));
         } else navigate(dashboardRoute.replaceAll('*', ''));
         break;
+      case 'signOut':
+        setCurrentUser(null);
+        break;
       // case 'signIn_failure':
       //   console.log('Sign in failure');
       //   break;
@@ -134,7 +137,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signOut = async () => {
     try {
       await Auth.signOut();
-      setCurrentUser(null);
       return {
         success: true,
         message: 'Successfully signed out!'
