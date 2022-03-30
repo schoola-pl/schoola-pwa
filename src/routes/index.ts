@@ -32,7 +32,7 @@ export const roles: { [key: string]: string } = {
   public: 'none',
   authenticated: 'any',
   student: 'Student',
-  schoolAdmin: 'School Admin',
+  schoolAdmin: 'SchoolAdmin',
   moderator: 'Moderator',
   psycho: 'Psycho'
 };
