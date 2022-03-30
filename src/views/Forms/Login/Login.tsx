@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
-import { useLoginMutation } from 'store';
-import { useRoutesControl } from 'hooks/useRoutesControl';
-import { getJWT } from 'helpers/jwt';
+import { useAuth } from 'hooks/useAuth';
 import { dashboardRoute } from 'routes';
 import { useNavigate } from 'react-router';
-import ErrorParagraph from '../../../components/atoms/ErrorParagraph/ErrorParagraph';
 import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
 import Logo from 'components/atoms/Logo/Logo';
+import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
+import { useAppLoading } from '../../../hooks/useAppLoading';
 
 const Login: React.FC = () => {
-  const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
-  const { unlockRoutes } = useRoutesControl();
+  const { currentUser, signIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { setAppLoading, updateLoadingText } = useAppLoading();
+  const [isError, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const { register, handleSubmit, watch } = useForm();
@@ -22,25 +23,25 @@ const Login: React.FC = () => {
   const passwordInput = watch('password');
 
   useEffect(() => {
-    if (getJWT()) {
-      const lsRole = getRoleFromLocalStorage();
-      if (lsRole) {
-        navigate(getPathForRole(lsRole));
+    if (currentUser) {
+      setAppLoading(true);
+      updateLoadingText('Sprawdzam lokalizację...');
+      const role = getRoleFromLocalStorage();
+      if (role) {
+        setAppLoading(false);
+        navigate(getPathForRole(role));
       } else {
+        setAppLoading(false);
         navigate(dashboardRoute.replaceAll('*', ''));
       }
-    } else if (isSuccess && data) {
-      unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
-      localStorage.setItem('role', data.user.TextRole);
     }
-    // eslint-disable-next-line
-  }, [data]);
+  }, [currentUser]);
 
   const handleLogin = async ({ login, password }: { login: string; password: string }) => {
-    loginProtocol({
-      identifier: login.toLowerCase(),
-      password
-    });
+    setIsLoading(true);
+    const response = await signIn({ username: login, password });
+    if (!response.success) setError('Podano niepoprawny login lub hasło!');
+    setIsLoading(false);
   };
 
   return (
@@ -78,7 +79,7 @@ const Login: React.FC = () => {
               </>
             )}
           </StyledButton>
-          {isError && <ErrorParagraph>Podano niepoprawny login lub hasło!</ErrorParagraph>}
+          {isError && <ErrorParagraph>{isError}</ErrorParagraph>}
         </Form>
         <StyledLink to="/forgot-password">Nie pamiętasz hasła?</StyledLink>
       </AuthCard>
