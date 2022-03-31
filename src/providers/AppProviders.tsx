@@ -19,10 +19,10 @@ const AppProviders: React.FC = ({ children }) => {
       <Provider store={store}>
         <AvatarProvider>
           <AppLoadingProvider>
-            <AuthProvider>
-              <PostProvider>
-                <SpottedProvider>
-                  <ModalProvider>
+            <ModalProvider>
+              <AuthProvider>
+                <PostProvider>
+                  <SpottedProvider>
                     <MeetingProvider>
                       <ClassProvider>
                         <UserProvider>
@@ -30,10 +30,10 @@ const AppProviders: React.FC = ({ children }) => {
                         </UserProvider>
                       </ClassProvider>
                     </MeetingProvider>
-                  </ModalProvider>
-                </SpottedProvider>
-              </PostProvider>
-            </AuthProvider>
+                  </SpottedProvider>
+                </PostProvider>
+              </AuthProvider>
+            </ModalProvider>
           </AppLoadingProvider>
         </AvatarProvider>
       </Provider>
