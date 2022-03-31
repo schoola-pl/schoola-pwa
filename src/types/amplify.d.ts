@@ -17,7 +17,8 @@ declare module 'aws-amplify' {
   export const Auth: {
     currentAuthenticatedUser(): Promise<authUser & { signInUserSession: { idToken: { payload: { 'cognito:groups': string[] } } } }>;
     currentSession(): Promise<any>;
-    signIn({ username: string, password: string }): Promise<any>;
+    completeNewPassword(user: any, newPassword: string, requiredAttributes: any): Promise<any>;
+    signIn({ username, password }: { username: string; password: string }): Promise<any>;
     signOut(): Promise<any>;
     signUp(username: string, password: string, attributes: any): Promise<any>;
     verifyCurrentSession(): Promise<any>;
