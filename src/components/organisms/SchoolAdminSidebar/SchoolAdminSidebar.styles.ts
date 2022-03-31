@@ -43,6 +43,7 @@ export const StyledList = styled.ul`
 
 const easing = 'cubic-bezier(0.645, 0.045, 0.355, 1)';
 export const StyledListItem = styled(NavLink)<{ isDanger?: boolean }>`
+  cursor: pointer;
   display: grid;
   grid-template-columns: 37% 43%;
   grid-template-rows: 1fr;
