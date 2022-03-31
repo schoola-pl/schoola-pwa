@@ -13,6 +13,7 @@ export const StudentResultWrapper = styled.div`
   text-decoration: none;
 
   &::after {
+    color: black;
     content: '>';
     font-size: 2rem;
     margin-left: 4rem;
