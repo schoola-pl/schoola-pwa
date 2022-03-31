@@ -4,6 +4,8 @@ import { dashboardRoute, roles } from 'routes';
 import { Auth, authUser, Hub } from 'aws-amplify';
 import { getPathForRole } from '../helpers/roles';
 import { ErrorResponse, SuccessResponse } from '../types/responses';
+import { useModal } from './useModal';
+import ForcePasswordChangeModal from '../components/molecules/ForcePasswordChangeModal/ForcePasswordChangeModal';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
@@ -28,6 +30,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   // --- METHODS, VALUES FROM ANOTHER HOOKS ---
 
   const navigate = useNavigate();
+  const { openModal, closeModal } = useModal();
 
   // --- END METHODS, VALUES FROM ANOTHER HOOKS ---
 
@@ -66,7 +69,40 @@ export const AuthProvider: React.FC = ({ children }) => {
     return user;
   };
 
-  // --- SWITCHES FOR HUB ---
+  // --- SWITCHES ---
+
+  const challengeSwitch = async (challenge: string, args?: any) => {
+    switch (challenge) {
+      case 'NEW_PASSWORD_REQUIRED':
+        interface passwordResetAttributes {
+          resetMethod: (newPassword: string, requiredAttributes: any) => void;
+          requiredAttributes: string[];
+        }
+
+        // This hook will return all information required for reset the password
+        const useGetPasswordResetAttributes = (): passwordResetAttributes => {
+          return {
+            // This method will reset the password
+            resetMethod: async (newPassword: string, requiredAttributes: any) => {
+              await Auth.completeNewPassword(args.user, newPassword, requiredAttributes).then(() => {
+                closeModal();
+              });
+            },
+            // This value is an array with the required attributes
+            requiredAttributes: args.requiredAttributes
+          };
+        };
+
+        // Modal to reset the password
+        openModal(
+          <ForcePasswordChangeModal useGetPasswordResetAttributes={useGetPasswordResetAttributes} />,
+          args.requiredAttributes.length > 0 ? 'Uzupełnij brakujące dane' : 'Zresetuj hasło'
+        );
+        break;
+      default:
+        break;
+    }
+  };
 
   const authSwitch = async ({ payload: { event } }: { payload: { event: string } }) => {
     switch (event) {
@@ -90,7 +126,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  // --- END SWITCHES FOR HUB ---
+  // --- END SWITCHES ---
 
   // --- HUB LISTENERS ---
 
@@ -117,10 +153,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   // This method is used to sign in the user
   const signIn = async ({ username, password }: { username: string; password: string }) => {
     try {
-      await Auth.signIn({
+      const user = await Auth.signIn({
         username,
         password
       });
+      const { challengeName, challengeParam } = user;
+      if (challengeName && challengeParam)
+        await challengeSwitch(challengeName, {
+          user,
+          requiredAttributes: challengeParam.requiredAttributes
+        });
       return {
         success: true,
         message: 'Successfully signed in!'
