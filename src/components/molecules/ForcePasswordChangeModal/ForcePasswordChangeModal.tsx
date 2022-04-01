@@ -1,36 +1,12 @@
 import Button from 'components/atoms/Button/Button';
-import Info from 'components/atoms/Info/Info';
 import Input from 'components/atoms/Input/Input';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
 import Dash from 'components/atoms/Dash/Dash';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import Loader from 'components/atoms/Loader/Loader';
 import { upperFirstLetter } from '../../../helpers/text';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem;
-`;
-
-const StyledInfo = styled(Info)`
-  margin-top: 0.5rem;
-`;
-const Form = styled.form`
-  padding: 1rem;
-  margin-block: 2.5rem;
-
-  & > *:not(:first-child) {
-    margin-top: 1rem;
-  }
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
+import { Form, StyledInfo, Wrapper } from './ForcePasswordChangeModal.styles';
 
 interface props {
   useGetPasswordResetAttributes: () => {
