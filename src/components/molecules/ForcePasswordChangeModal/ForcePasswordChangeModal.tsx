@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Dash from 'components/atoms/Dash/Dash';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import Loader from 'components/atoms/Loader/Loader';
+import { upperFirstLetter } from '../../../helpers/text';
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,10 +50,22 @@ const ForcePasswordChangeModal: React.FC<props> = ({ useGetPasswordResetAttribut
 
   const { resetMethod, requiredAttributes } = useGetPasswordResetAttributes();
 
-  const handleChangePassword = async ({ password, password_verify, ...rest }: { [key: string]: string }) => {
+  const handleChangePassword = async ({ password, password_verify, name }: { [key: string]: string }) => {
     if (password !== password_verify) setError('Hasła nie są takie same!');
+    let requiredAttributes = {};
+    if (name) {
+      // Prepare requiredAttributes (object) to send
+      const first_name = upperFirstLetter(name.split(' ')[0]);
+      const last_name = upperFirstLetter(name.split(' ')[1]);
+      requiredAttributes = {
+        name: `${first_name} ${last_name}`,
+        given_name: first_name,
+        family_name: last_name
+      };
+    }
     setLoading(true);
-    await resetMethod(password, { ...rest });
+    // Send new password to server (with another attributes)
+    await resetMethod(password, { ...requiredAttributes });
     setLoading(false);
   };
 
@@ -75,10 +88,20 @@ const ForcePasswordChangeModal: React.FC<props> = ({ useGetPasswordResetAttribut
           </ErrorParagraph>
         )}
         {requiredAttributes.length > 0 && <Dash style={{ marginTop: '1rem', width: '90%' }} />}
-        {requiredAttributes.map((attribute, index) => (
-          <Input key={index} type="text" placeholder={`${attribute}`} {...register(`${attribute}`, { required: true })} />
-        ))}
+        {requiredAttributes.includes('name') && (
+          <Input
+            type="text"
+            placeholder="Imię i nazwisko"
+            {...register('name', {
+              required: true,
+              pattern: /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{2,} [a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{2,}$/g
+            })}
+          />
+        )}
+        {errors.name && <ErrorParagraph style={{ width: '100%' }}>Format imienia i nazwiska jest nieprawidłowy!</ErrorParagraph>}
         <Button
+          type="submit"
+          isDisabled={isLoading}
           style={{
             width: '100%',
             marginTop: '2rem'
