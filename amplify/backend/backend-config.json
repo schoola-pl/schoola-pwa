@@ -73,6 +73,16 @@
           ]
         }
       ]
+    },
+    "communitePreCreateUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "communiteAuthPreSignUp": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "api": {

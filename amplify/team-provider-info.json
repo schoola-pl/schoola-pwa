@@ -13,20 +13,27 @@
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-communitebackend-dev-134759-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
-      "auth": {
-        "communiteAuth": {},
-        "userPoolGroups": {}
-      },
       "function": {
         "communiteAuthPostConfirmation": {
-          "GROUP": "Student",
           "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
           "s3Key": "amplify-builds/communiteAuthPostConfirmation-796547654b6a63487a42-build.zip"
         },
         "AdminQueries9f9a303e": {
           "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
           "s3Key": "amplify-builds/AdminQueries9f9a303e-61586f5077796b4f7672-build.zip"
+        },
+        "communitePreCreateUser": {
+          "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
+          "s3Key": "amplify-builds/communitePreCreateUser-6f4f764f737279463236-build.zip"
+        },
+        "communiteAuthPreSignUp": {
+          "deploymentBucketName": "amplify-communitebackend-dev-134759-deployment",
+          "s3Key": "amplify-builds/communiteAuthPreSignUp-38642f61445545734f34-build.zip"
         }
+      },
+      "auth": {
+        "userPoolGroups": {},
+        "communiteAuth": {}
       }
     }
   }
