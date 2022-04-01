@@ -54,7 +54,7 @@ const Login: React.FC = () => {
         <Form onSubmit={handleSubmit(handleLogin)}>
           <StyledInput
             type="text"
-            placeholder="Login lub email"
+            placeholder="Login"
             data-cy="login-username"
             {...register('login', {
               required: true,
