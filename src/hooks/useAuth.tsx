@@ -3,19 +3,27 @@ import { useNavigate } from 'react-router';
 import { dashboardRoute, roles } from 'routes';
 import { Auth, authUser, Hub } from 'aws-amplify';
 import { getPathForRole } from '../helpers/roles';
-import { ErrorResponse, SuccessResponse } from '../types/responses';
+import { Response } from '../types/responses';
 import { useModal } from './useModal';
 import ForcePasswordChangeModal from '../components/molecules/ForcePasswordChangeModal/ForcePasswordChangeModal';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
-  signIn: ({ username, password }: { username: string; password: string }) => Promise<SuccessResponse | ErrorResponse>;
-  signOut: () => Promise<SuccessResponse | ErrorResponse>;
+  resetPassword: (username: string) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
+  resetPasswordSubmit: (username: string, code: string, password: string) => Promise<Response>;
+  signIn: ({ username, password }: { username: string; password: string }) => Promise<Response>;
+  signOut: () => Promise<Response>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextTypes>({
   currentUser: null,
+  resetPassword: () => {
+    throw new Error('useResetPassword is not implemented');
+  },
+  resetPasswordSubmit: () => {
+    throw new Error('useResetPasswordSubmit is not implemented');
+  },
   signIn: () => {
     throw new Error('AuthContext.signIn is not implemented');
   },
@@ -150,6 +158,58 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // --- USER METHODS ---
 
+  // It sends a code required for password reset
+  const resetPassword = async (username: string) => {
+    try {
+      // Send the code to the user
+      const {
+        CodeDeliveryDetails: { AttributeName, Destination }
+      } = await Auth.forgotPassword(username);
+      return {
+        success: true,
+        message: 'Wysłano kod weryfikacyjny!',
+        data: {
+          // Additional information about delivery
+          delivered_by: {
+            name: AttributeName,
+            value: Destination
+          }
+        }
+      };
+    } catch (error) {
+      let message = 'Coś poszło nie tak';
+      const AWSError = String(error) as string;
+      const __type = AWSError.split(':')[0];
+      if (__type) message = __type;
+      if (message === 'UserNotFoundException') message = 'Podany użytkownik nie istnieje!';
+      else if (message === 'LimitExceededException') message = 'Wyczerpano limit wysłanych linków resetujących hasło. Spróbuj ponownie później!';
+      else if (message === 'InvalidParameterException') message = 'Podany użytkownik jest źle skonfigurowany!';
+      else message = 'Coś poszło nie tak';
+      return {
+        success: false,
+        message
+      };
+    }
+  };
+
+  // It resets the password with the code
+  const resetPasswordSubmit = async (username: string, code: string, password: string) => {
+    try {
+      await Auth.forgotPasswordSubmit(username, code, password);
+      return {
+        success: true,
+        message: 'Successfully reset password!'
+      };
+    } catch (error) {
+      let message = 'Something went wrong';
+      if (error instanceof Error) message = error.message;
+      return {
+        success: false,
+        message
+      };
+    }
+  };
+
   // This method is used to sign in the user
   const signIn = async ({ username, password }: { username: string; password: string }) => {
     try {
@@ -208,6 +268,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const values = {
     currentUser,
+    resetPassword,
+    resetPasswordSubmit,
     signIn,
     signOut,
     checkDoesRoleHasPermission
