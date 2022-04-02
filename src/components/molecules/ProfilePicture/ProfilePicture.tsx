@@ -17,7 +17,7 @@ const ProfilePictureComponent: React.FC<{
   const navigate = useNavigate();
 
   return (
-    <StyledPicture random={Math.ceil(Math.random() * 5)} onClick={() => (!isSpotted ? navigate(`/student/profile/${postOwner?.id}`) : null)}>
+    <StyledPicture random={Math.ceil(Math.random() * 5)} onClick={() => (!isSpotted ? navigate(`/student/profiles/${postOwner?.id}`) : null)}>
       <Wrapper isSpotted={isSpotted}>
         <img src={image || QuestionMark} alt={`${postOwner?.first_name}'s photo`} />
       </Wrapper>

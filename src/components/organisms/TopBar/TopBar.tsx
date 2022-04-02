@@ -7,7 +7,7 @@ import SearchIcon from 'assets/icons/SearchIcon.svg';
 
 const TopBar = () => {
   const url = window.location.pathname;
-  const isComments = url.includes('/comments') || url.includes('/search') || url.includes('/settings');
+  const isComments = url.includes('/comments') || url.includes('/search') || url.includes('/settings') || url.includes('/profiles');
   const isProfile = url.includes('/profile/me');
   const navigate = useNavigate();
 

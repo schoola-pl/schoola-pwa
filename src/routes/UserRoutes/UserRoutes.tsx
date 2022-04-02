@@ -29,7 +29,7 @@ const UserRoutes = () => {
           <Routes>
             <Route path="/" element={<Navigate to="profile" />} />
             <Route path="/profile/me" element={<Profile />} />
-            <Route path="/profile/:userId" element={<SearchProfileView />} />
+            <Route path="/profiles/:userId" element={<SearchProfileView />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
             <Route path="/spotted/comments" element={<Navigate to="/student/spotted" />} />

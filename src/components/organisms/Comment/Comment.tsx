@@ -53,7 +53,7 @@ const Comment: React.FC<Props> = ({ cId, uId, isSpotted, profilePicture, name, d
   return (
     <CommentWrapper>
       <InfoWrapper>
-        <StyledPicture random={Math.ceil(Math.random() * 5)} onClick={() => navigate(`/student/profile/${uId}`)}>
+        <StyledPicture random={Math.ceil(Math.random() * 5)} onClick={() => navigate(`/student/profiles/${uId}`)}>
           <ProfilePicture>
             <img src={image} alt={`${name.split(' ')[0]}'s photo`} />
           </ProfilePicture>
