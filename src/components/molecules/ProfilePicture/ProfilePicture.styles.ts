@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-export const StyledPicture = styled.div<{ random?: number }>`
+export const StyledPicture = styled.div<{ random?: number; onClick?: any }>`
   height: 5rem;
   width: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   border-radius: 10rem;
   background: linear-gradient(
     ${({ random }) => (random ? `${((Math.ceil(Math.random() * 360) * random) / random) * 2}deg` : `${Math.ceil(Math.random() * 360)}deg`)},

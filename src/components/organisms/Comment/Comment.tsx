@@ -7,9 +7,11 @@ import { pl } from 'date-fns/locale';
 import { storeRoot, useDeletePostCommentMutation, useDeleteSpottedCommentMutation } from 'store';
 import { useSelector } from 'react-redux';
 import { useAvatar } from 'hooks/useAvatar';
+import { useNavigate } from 'react-router';
 
 interface Props {
   cId: number;
+  uId: string;
   profilePicture: string;
   name: string;
   isSpotted: boolean;
@@ -18,11 +20,12 @@ interface Props {
   content: string;
 }
 
-const Comment: React.FC<Props> = ({ cId, isSpotted, profilePicture, name, date, content }) => {
+const Comment: React.FC<Props> = ({ cId, uId, isSpotted, profilePicture, name, date, content }) => {
   const [isOpened, setMenuOpen] = useState(false);
   const [isCommentLoading, setCommentLoading] = useState(false);
   const [deletePostComment] = useDeletePostCommentMutation();
   const [deleteSpottedComment] = useDeleteSpottedCommentMutation();
+  const navigate = useNavigate();
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
   const [image, setImage] = useState('');
@@ -50,7 +53,7 @@ const Comment: React.FC<Props> = ({ cId, isSpotted, profilePicture, name, date, 
   return (
     <CommentWrapper>
       <InfoWrapper>
-        <StyledPicture random={Math.ceil(Math.random() * 5)}>
+        <StyledPicture random={Math.ceil(Math.random() * 5)} onClick={() => navigate(`/student/profile/${uId}`)}>
           <ProfilePicture>
             <img src={image} alt={`${name.split(' ')[0]}'s photo`} />
           </ProfilePicture>

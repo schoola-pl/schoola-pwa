@@ -25,7 +25,6 @@ import { useSelector } from 'react-redux';
 import ActionMenu from 'components/molecules/ActionMenu/ActionMenu';
 import { useSpotted } from 'hooks/useSpotted';
 import { usePost } from 'hooks/usePost';
-import { authUser } from 'types/auth';
 import { useAvatar } from 'hooks/useAvatar';
 import ProfilePicture from 'components/molecules/ProfilePicture/ProfilePicture';
 
@@ -36,7 +35,13 @@ interface props {
   content: string;
   comments: number;
   isSpotted: boolean;
-  postOwner?: authUser;
+  postOwner?: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+    TextClassName: string;
+  };
   isComment: boolean;
   resetFn?: () => void;
   likes: {
