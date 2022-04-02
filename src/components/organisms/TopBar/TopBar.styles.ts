@@ -38,12 +38,12 @@ export const StyledInput = styled.input<{ isVisible?: boolean }>`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
 `;
 
-export const SettingsLink = styled(SidebarLink)<{ isSettings?: boolean }>`
-  display: ${({ isSettings }) => (isSettings ? 'block' : 'none')};
+export const SettingsLink = styled(SidebarLink)<{ isProfile?: boolean }>`
+  display: ${({ isProfile }) => (isProfile ? 'block' : 'none')};
 `;
 
-export const SearchLink = styled(SidebarLink)<{ isSocialView?: boolean }>`
-  display: ${({ isSocialView }) => (isSocialView ? 'block' : 'none')};
+export const SearchLink = styled(SidebarLink)<{ isComments?: boolean; isProfile?: boolean }>`
+  display: ${({ isComments, isProfile }) => (isProfile || isComments ? 'none' : 'block')};
   margin: 0;
 `;
 

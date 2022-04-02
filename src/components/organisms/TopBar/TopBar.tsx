@@ -8,8 +8,7 @@ import SearchIcon from 'assets/icons/SearchIcon.svg';
 const TopBar = () => {
   const url = window.location.pathname;
   const isComments = url.includes('/comments') || url.includes('/search');
-  const isSettings = url.includes('/profile');
-  const isSocialView = url.includes('/feed') || url.includes('/spotted');
+  const isProfile = url.includes('/profile');
   const navigate = useNavigate();
 
   return (
@@ -19,9 +18,9 @@ const TopBar = () => {
       </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
-        <SearchLink icon={SearchIcon} as={Link} to="/student/search" isSocialView={isSocialView} />
+        <SearchLink icon={SearchIcon} as={Link} to="/student/search" isProfile={isProfile} isComments={isComments} />
         <NotificationList />
-        <SettingsLink isSettings={isSettings} style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
+        <SettingsLink isProfile={isProfile} style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );
