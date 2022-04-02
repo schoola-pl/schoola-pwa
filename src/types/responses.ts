@@ -1,6 +1,5 @@
-export type SuccessResponse = {
+export type Response<T = {}> = {
   success: boolean;
   message: string;
+  data?: T;
 };
-
-export type ErrorResponse = SuccessResponse;
