@@ -23,6 +23,10 @@ export const Wrapper = styled.div<{ isSpotted?: boolean }>`
   border: none;
   overflow: hidden;
 
+  &:hover {
+    cursor: ${({ isSpotted }) => (!isSpotted ? 'pointer' : 'default')};
+  }
+
   img {
     min-width: 100%;
     background-color: white;

@@ -31,6 +31,10 @@ export const StyledPicture = styled.div<{ random?: number }>`
     rgba(91, 117, 166, 1) 0%,
     rgba(85, 171, 103, 1) 100%
   );
+
+  &:hover {
+    cursor: pointer !important;
+  }
 `;
 
 interface Props {
