@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledPicture = styled.div<{ random?: number; onClick?: any }>`
+export const StyledPicture = styled.div<{ isSpotted?: boolean; random?: number; onClick?: any }>`
   height: 5rem;
   width: 5rem;
   display: flex;
@@ -14,6 +14,10 @@ export const StyledPicture = styled.div<{ random?: number; onClick?: any }>`
     rgba(91, 117, 166, 1) 0%,
     rgba(85, 171, 103, 1) 100%
   );
+
+  &:hover {
+    cursor: ${({ isSpotted }) => (!isSpotted ? 'pointer' : 'default')};
+  }
 `;
 
 export const Wrapper = styled.div<{ isSpotted?: boolean }>`
