@@ -10,8 +10,13 @@ import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
 import NoLinks from 'components/atoms/NoLinks/NoLinks';
+import { authUser } from '../../../types/auth';
 
-const Home: React.FC = () => {
+interface props {
+  customUser?: authUser;
+}
+
+const Profile: React.FC<props> = ({ customUser }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
   const { findInterested } = useUser();
@@ -19,7 +24,7 @@ const Home: React.FC = () => {
   const interesteds = useGetInterestedsQuery({});
   const socials = useGetSocialsQuery(
     {
-      userId: user?.TextSocials || null
+      userId: customUser?.TextSocials || user?.TextSocials || null
     },
     {
       refetchOnMountOrArgChange: true
@@ -27,29 +32,33 @@ const Home: React.FC = () => {
   );
 
   useEffect(() => {
-    if (user) {
+    if (customUser || user) {
       (async () => {
-        const avatar = await getAvatarById(user.avatar);
+        const avatar = await getAvatarById(customUser?.avatar || user?.avatar);
         setImage(avatar);
       })();
     }
-  }, [user]);
+  }, [customUser, user]);
 
-  if (!user || !interesteds.data) return <p>Pobieranie danych...</p>;
+  if (!user || !interesteds.data || !image) return <p>Pobieranie danych...</p>;
 
   return (
     <Wrapper>
       <Grid>
-        <ProfileClass userClass={user.TextClassName} />
-        <Roles role={user.TextRole === 'Moderator' ? 'Samorząd' : 'Uczeń'} />
-        <Person userName={`${user.first_name} ${user.last_name}`} userProfilePicture={image} description={user.description} />
+        <ProfileClass userClass={customUser?.TextClassName || user.TextClassName} />
+        <Roles role={(customUser?.TextRole || user.TextRole) === 'Moderator' ? 'Samorząd' : 'Uczeń'} />
+        <Person
+          userName={`${customUser?.first_name || user.first_name} ${customUser?.last_name || user.last_name}`}
+          userProfilePicture={image}
+          description={customUser?.description || user.description}
+        />
       </Grid>
       <div>
-        <Interests interests={findInterested(user.TextInteresteds.split(';'), interesteds.data)} />
+        <Interests interests={findInterested(customUser?.TextInteresteds.split(';') || user.TextInteresteds.split(';'), interesteds.data)} />
         {socials.data && socials.data?.length > 0 ? <Links socials={socials.data} /> : <NoLinks />}
       </div>
     </Wrapper>
   );
 };
 
-export default Home;
+export default Profile;
