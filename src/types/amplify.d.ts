@@ -22,6 +22,8 @@ declare module 'aws-amplify' {
     signOut(): Promise<any>;
     signUp(username: string, password: string, attributes: any): Promise<any>;
     verifyCurrentSession(): Promise<any>;
+    forgotPassword(username: string): Promise<{ CodeDeliveryDetails: { AttributeName: string; DeliveryMedium: string; Destination: string } }>;
+    forgotPasswordSubmit(username: string, code: string, password: string): Promise<any>;
   };
 
   export const Hub: {
