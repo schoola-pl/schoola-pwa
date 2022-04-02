@@ -2,85 +2,139 @@ import { Form, StyledInput, StyledLink, Wrapper } from './ForgotPassword.styles'
 import Button from 'components/atoms/Button/Button';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
-import axios, { AxiosError } from 'axios';
-import ChangePassword from 'views/Forms/ChangePassword/ChangePassword';
 import Loader from 'components/atoms/Loader/Loader';
 import Logo from 'components/atoms/Logo/Logo';
+import { useAuth } from '../../../hooks/useAuth';
 
 const ForgotPassword = () => {
+  // Component states
+  const [isLoading, setIsLoading] = useState(false);
+  const [cachedUsername, setUsername] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [deliveredBy, setDelivery] = useState<null | { name: string; value: string }>(null);
+
+  // Hooks
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    watch
+    reset: resetFields,
+    watch,
+    formState: { errors }
   } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<number | null>(null);
-  const [codeSecret, setCodeSecret] = useState<string>('');
+  const { resetPassword, resetPasswordSubmit } = useAuth();
 
-  const emailField = watch('email');
+  // Inputs which are included in the form are registered here
+  const usernameField = watch('username');
+  const codeField = watch('code');
+  const passwordField = watch('password');
 
-  const handleRestoreEmail = async ({ email }: { email: string }) => {
+  // Form submit handler
+  const handleRestoreEmail = async ({ username, code, password }: { username: string; code: string; password: string }) => {
+    // Clean & configure states before other actions
     setError(null);
     setIsLoading(true);
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/forgot-password`, { email });
-      if (response.status === 200) setIsSuccess(true);
-    } catch (err) {
-      const error = err as AxiosError;
-      setError(error.response?.status || 500);
+
+    // Check if the form has been called once before
+    if (!deliveredBy) {
+      // Send verification link to the specified user
+      const res = await resetPassword(username);
+      // Check if the request was successful
+      if (!res.success && !res?.data?.delivered_by) setError(res.message);
+      else {
+        // Set states
+        setDelivery(res?.data?.delivered_by || { name: 'Error', value: 'Wystąpił problem z dostarczycielem!' });
+        setUsername(username);
+      }
+      // Reset all fields in the form
+      resetFields();
+    } else {
+      // Send the new password to the server (with verification code)
+      const res = await resetPasswordSubmit(cachedUsername, code, password);
+      if (!res.success) setError(res.message);
+      else setIsSuccess(true);
     }
+    // Cleanup states after function call
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) setCodeSecret(code);
-  }, []);
-
   return (
     <Wrapper>
-      {!codeSecret ? (
-        <AuthCard>
-          <div>
-            <Logo />
-            <p>Zresetuj hasło jednym kliknięciem!</p>
-          </div>
-          <Form onSubmit={handleSubmit(handleRestoreEmail)}>
-            <StyledInput
-              placeholder="Podaj swój email"
-              disabled={isSuccess}
-              {...register('email', {
-                required: true,
-                pattern:
-                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
-              })}
-            />
-            <Button isDisabled={isSuccess || !emailField} style={{ marginBottom: '0.5rem' }}>
-              {!isLoading && !isSuccess ? (
-                'Resetuj hasło'
-              ) : isSuccess ? (
-                "Sprawdź email'a!"
-              ) : (
-                <>
-                  Wysyłanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
-                </>
-              )}
-            </Button>
-            {error && (
-              <ErrorParagraph>{error === 404 || error === 400 ? 'Nie znaleziono takiego adresu!' : 'Wystąpił nieoczekiwany błąd!'}</ErrorParagraph>
-            )}
-            {errors.email && <ErrorParagraph>Podaj prawidłowy adres email!</ErrorParagraph>}
-          </Form>
-          <StyledLink to="/login">Masz już konto?</StyledLink>
-        </AuthCard>
-      ) : (
-        <ChangePassword isRestore={codeSecret} />
-      )}
+      <AuthCard>
+        <div>
+          <Logo />
+          <p>Zresetuj hasło kilkoma kliknięciami!</p>
+        </div>
+        <Form onSubmit={handleSubmit(handleRestoreEmail)}>
+          {!deliveredBy ? (
+            <>
+              <StyledInput
+                placeholder="Twój login"
+                {...register('username', {
+                  required: true
+                })}
+              />
+              <Button isDisabled={isLoading || !usernameField} style={{ marginBottom: '0.5rem' }}>
+                {!isLoading ? (
+                  'Wyślij link'
+                ) : (
+                  <>
+                    Wysyłanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
+                  </>
+                )}
+              </Button>
+            </>
+          ) : (
+            <>
+              <StyledInput
+                placeholder="Kod weryfikacyjny"
+                disabled={isSuccess}
+                {...register('code', {
+                  required: true
+                })}
+              />
+              <StyledInput
+                style={{ marginTop: '0.2rem' }}
+                placeholder="Nowe hasło"
+                type="password"
+                disabled={isSuccess}
+                {...register('password', {
+                  required: true,
+                  pattern: /(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g
+                })}
+              />
+              <Button isDisabled={isLoading || !codeField || !passwordField || isSuccess} style={{ marginBottom: '0.5rem' }}>
+                {!isLoading ? (
+                  !isSuccess ? (
+                    'Zresetuj hasło'
+                  ) : (
+                    'Zresetowano hasło!'
+                  )
+                ) : (
+                  <>
+                    Wysyłanie... <Loader style={{ marginLeft: '1rem' }} fitContent />
+                  </>
+                )}
+              </Button>
+            </>
+          )}
+          {error && <ErrorParagraph style={{ textAlign: 'center', marginTop: '0.5rem' }}>{error}</ErrorParagraph>}
+          {errors.password && (
+            <ErrorParagraph style={{ textAlign: 'center', marginTop: '0.5rem' }}>Hasło nie spełnia warunków dobrego hasła!</ErrorParagraph>
+          )}
+        </Form>
+        {!deliveredBy || isSuccess ? (
+          <StyledLink to="/login">{!isSuccess ? 'Masz już konto?' : 'Powrót na stronę logowania'}</StyledLink>
+        ) : (
+          <p style={{ fontSize: '1.4rem', paddingInline: '3rem', textAlign: 'center' }}>
+            {deliveredBy?.name === 'phone_number'
+              ? `Na numer ${deliveredBy?.value} została wysłana wiadomość z linkiem do zmiany hasła!`
+              : `Na adres ${deliveredBy?.value} został wysłany link do zmiany hasła!`}
+          </p>
+        )}
+      </AuthCard>
     </Wrapper>
   );
 };
