@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     // Check if the form has been called once before
     if (!deliveredBy) {
       // Send verification link to the specified user
-      const res = await resetPassword(username);
+      const res = await resetPassword({ username });
       // Check if the request was successful
       if (!res.success && !res?.data?.delivered_by) setError(res.message);
       else {
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
       resetFields();
     } else {
       // Send the new password to the server (with verification code)
-      const res = await resetPasswordSubmit(cachedUsername, code, password);
+      const res = await resetPasswordSubmit({ username: cachedUsername, code, password });
       if (!res.success) setError(res.message);
       else setIsSuccess(true);
     }

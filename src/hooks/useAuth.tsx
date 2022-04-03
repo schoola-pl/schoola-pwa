@@ -6,13 +6,14 @@ import { getPathForRole } from '../helpers/roles';
 import { Response } from '../types/responses';
 import { useModal } from './useModal';
 import ForcePasswordChangeModal from '../components/molecules/ForcePasswordChangeModal/ForcePasswordChangeModal';
+import { withAsyncResponseHandler } from '../helpers/errorHandler';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
-  resetPassword: (username: string) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
-  resetPasswordSubmit: (username: string, code: string, password: string) => Promise<Response>;
+  resetPassword: ({ username }: { username: string }) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
+  resetPasswordSubmit: ({ username, password, code }: { username: string; code: string; password: string }) => Promise<Response>;
   signIn: ({ username, password }: { username: string; password: string }) => Promise<Response>;
-  signOut: () => Promise<Response>;
+  signOut: ({}: any) => Promise<Response>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
 
@@ -159,60 +160,50 @@ export const AuthProvider: React.FC = ({ children }) => {
   // --- USER METHODS ---
 
   // It sends a code required for password reset
-  const resetPassword = async (username: string) => {
-    try {
+  const resetPassword = withAsyncResponseHandler<{ username: string }, { delivered_by: { name: string; value: string } }>(
+    async ({ username }) => {
       // Send the code to the user
       const {
         CodeDeliveryDetails: { AttributeName, Destination }
       } = await Auth.forgotPassword(username);
       return {
-        success: true,
-        message: 'Wysłano kod weryfikacyjny!',
-        data: {
-          // Additional information about delivery
-          delivered_by: {
-            name: AttributeName,
-            value: Destination
-          }
+        delivered_by: {
+          name: AttributeName,
+          value: Destination
         }
       };
-    } catch (error) {
-      let message = 'Coś poszło nie tak';
-      const AWSError = String(error) as string;
-      const __type = AWSError.split(':')[0];
-      if (__type) message = __type;
-      if (message === 'UserNotFoundException') message = 'Podany użytkownik nie istnieje!';
-      else if (message === 'LimitExceededException') message = 'Wyczerpano limit wysłanych linków resetujących hasło. Spróbuj ponownie później!';
-      else if (message === 'InvalidParameterException') message = 'Podany użytkownik jest źle skonfigurowany!';
-      else message = 'Coś poszło nie tak';
-      return {
-        success: false,
-        message
-      };
+    },
+    {
+      success: 'Pomyślnie wysłano kod resetujący hasło',
+      errors: {
+        UserNotFoundException: 'Nie znaleziono użytkownika!',
+        InvalidParameterException: 'Podany użytkownik jest źle skonfigurowany!',
+        LimitExceededException: 'Limit wysyłania kodów resetujących hasło został przekroczony!'
+      }
     }
-  };
+  );
 
   // It resets the password with the code
-  const resetPasswordSubmit = async (username: string, code: string, password: string) => {
-    try {
-      await Auth.forgotPasswordSubmit(username, code, password);
-      return {
-        success: true,
-        message: 'Successfully reset password!'
-      };
-    } catch (error) {
-      let message = 'Something went wrong';
-      if (error instanceof Error) message = error.message;
-      return {
-        success: false,
-        message
-      };
+  const resetPasswordSubmit = withAsyncResponseHandler<{ username: string; code: string; password: string }>(
+    async ({ username, code, password }) => {
+      const res = await Auth.forgotPasswordSubmit(username, code, password);
+      console.log(res);
+    },
+    {
+      success: 'Pomyślnie zresetowano hasło',
+      errors: {
+        CodeMismatchException: 'Kod jest nieprawidłowy!',
+        ExpiredCodeException: 'Kod jest przeterminowany!',
+        InvalidParameterException: 'Podany użytkownik jest źle skonfigurowany!',
+        ResourceNotFoundException: 'Nie znaleziono użytkownika!',
+        LimitExceededException: 'Limit operacji został przekroczony, spróbuj ponownie później!'
+      }
     }
-  };
+  );
 
   // This method is used to sign in the user
-  const signIn = async ({ username, password }: { username: string; password: string }) => {
-    try {
+  const signIn = withAsyncResponseHandler<{ username: string; password: string }>(
+    async ({ username, password }) => {
       const user = await Auth.signIn({
         username,
         password
@@ -223,37 +214,28 @@ export const AuthProvider: React.FC = ({ children }) => {
           user,
           requiredAttributes: challengeParam.requiredAttributes
         });
-      return {
-        success: true,
-        message: 'Successfully signed in!'
-      };
-    } catch (error) {
-      let message = 'Something went wrong';
-      if (error instanceof Error) message = error.message;
-      return {
-        success: false,
-        message
-      };
+    },
+    {
+      success: 'Pomyślnie zalogowano',
+      errors: {
+        UserNotFoundException: 'Podano niepoprawne dane logowania!',
+        NotAuthorizedException: 'Podano niepoprawne dane logowania!'
+      }
     }
-  };
+  );
 
   // This method is used to sign out the user
-  const signOut = async () => {
-    try {
+  const signOut = withAsyncResponseHandler<any, any>(
+    async () => {
       await Auth.signOut();
-      return {
-        success: true,
-        message: 'Successfully signed out!'
-      };
-    } catch (error) {
-      let message = 'Something went wrong';
-      if (error instanceof Error) message = error.message;
-      return {
-        success: false,
-        message
-      };
+    },
+    {
+      success: 'Pomyślnie wylogowano',
+      errors: {
+        InvalidParameterException: 'Podany użytkownik jest źle skonfigurowany!'
+      }
     }
-  };
+  );
 
   // This method checks does user has permission to access the route (by his role name)
   const checkDoesRoleHasPermission = (entitledRole: string | string[], actualRole: string) => {
