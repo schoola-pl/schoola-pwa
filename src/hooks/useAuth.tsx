@@ -186,8 +186,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   // It resets the password with the code
   const resetPasswordSubmit = withAsyncResponseHandler<{ username: string; code: string; password: string }>(
     async ({ username, code, password }) => {
-      const res = await Auth.forgotPasswordSubmit(username, code, password);
-      console.log(res);
+      await Auth.forgotPasswordSubmit(username, code, password);
     },
     {
       success: 'Pomyślnie zresetowano hasło',
