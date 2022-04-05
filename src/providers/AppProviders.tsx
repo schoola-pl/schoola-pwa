@@ -12,30 +12,33 @@ import { PostProvider } from 'hooks/usePost';
 import { AvatarProvider } from 'hooks/useAvatar';
 import { MeetingProvider } from 'hooks/useMeeting';
 import { AuthProvider } from '../hooks/useAuth';
+import { NotificationProvider } from '../hooks/useNotification';
 
 const AppProviders: React.FC = ({ children }) => {
   return (
     <Router>
       <Provider store={store}>
-        <AvatarProvider>
-          <AppLoadingProvider>
-            <ModalProvider>
-              <AuthProvider>
-                <PostProvider>
-                  <SpottedProvider>
-                    <MeetingProvider>
-                      <ClassProvider>
-                        <UserProvider>
-                          <StyleProvider>{children}</StyleProvider>
-                        </UserProvider>
-                      </ClassProvider>
-                    </MeetingProvider>
-                  </SpottedProvider>
-                </PostProvider>
-              </AuthProvider>
-            </ModalProvider>
-          </AppLoadingProvider>
-        </AvatarProvider>
+        <NotificationProvider>
+          <AvatarProvider>
+            <AppLoadingProvider>
+              <ModalProvider>
+                <AuthProvider>
+                  <PostProvider>
+                    <SpottedProvider>
+                      <MeetingProvider>
+                        <ClassProvider>
+                          <UserProvider>
+                            <StyleProvider>{children}</StyleProvider>
+                          </UserProvider>
+                        </ClassProvider>
+                      </MeetingProvider>
+                    </SpottedProvider>
+                  </PostProvider>
+                </AuthProvider>
+              </ModalProvider>
+            </AppLoadingProvider>
+          </AvatarProvider>
+        </NotificationProvider>
       </Provider>
     </Router>
   );
