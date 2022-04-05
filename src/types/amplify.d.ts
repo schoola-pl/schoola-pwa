@@ -10,6 +10,7 @@ declare module 'aws-amplify' {
       given_name: string;
       family_name: string;
       birthdate: string;
+      'custom:isConfigured': string;
       sub: string;
     };
   };
@@ -22,6 +23,7 @@ declare module 'aws-amplify' {
     signOut(): Promise<any>;
     signUp(username: string, password: string, attributes: any): Promise<any>;
     verifyCurrentSession(): Promise<any>;
+    updateUserAttributes(user: authUser, attributes: { [key: string]: string | number }): Promise<any>;
     forgotPassword(username: string): Promise<{ CodeDeliveryDetails: { AttributeName: string; DeliveryMedium: string; Destination: string } }>;
     forgotPasswordSubmit(username: string, code: string, password: string): Promise<any>;
   };
