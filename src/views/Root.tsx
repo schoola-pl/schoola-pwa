@@ -7,8 +7,8 @@ import ProtectedRoute from '../providers/ProtectedRoute';
 import Error404 from 'views/Error404/Error404';
 import Modal from 'components/molecules/Modal/Modal';
 import { useModal } from 'hooks/useModal';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotificationContainer from '../components/organisms/NotificationContainer/NotificationContainer';
 
 const Root: React.FC = () => {
   const { isAppLoading, appLoadingText } = useAppLoading();
@@ -29,17 +29,7 @@ const Root: React.FC = () => {
         <Route path="*" element={<Error404 />} />
       </Routes>
       {isOpen && <Modal title={modalTitle}>{modalContent}</Modal>}
-      <ToastContainer
-        position="bottom-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <NotificationContainer />
     </>
   );
 };
