@@ -55,11 +55,6 @@
     }
   },
   "function": {
-    "communiteAuthPostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "AdminQueries9f9a303e": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
@@ -73,16 +68,6 @@
           ]
         }
       ]
-    },
-    "communitePreCreateUser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "communiteAuthPreSignUp": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "api": {
