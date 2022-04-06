@@ -20,7 +20,7 @@ export const StudentResultWrapper = styled.div`
   }
 
   h1 {
-    margin: 0.75rem;
+    margin: 0.5rem;
     color: black;
     padding: 1rem;
     text-transform: uppercase;
