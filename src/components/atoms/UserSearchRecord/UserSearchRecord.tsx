@@ -10,7 +10,7 @@ const UserSearchRecord: React.FC<Props> = ({ data }) => {
   return (
     <>
       {data.map((user: any) => (
-        <StudentResultWrapper as={Link} to={`/student/profile/${user.id}`} key={user.id}>
+        <StudentResultWrapper as={Link} to={`/student/profiles/${user.id}`} key={user.id}>
           <h1>{user.TextClassName}</h1>
           <InfoWrapper>
             <h1>
