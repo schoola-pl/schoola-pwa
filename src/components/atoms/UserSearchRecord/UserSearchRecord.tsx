@@ -1,5 +1,6 @@
 import { InfoWrapper, StudentResultWrapper } from './UserSearchRecord.styles';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 interface Props {
   data: any;
@@ -9,13 +10,13 @@ const UserSearchRecord: React.FC<Props> = ({ data }) => {
   return (
     <>
       {data.map((user: any) => (
-        <StudentResultWrapper as={Link} to="/student/profile/:id" key={user.id}>
+        <StudentResultWrapper as={Link} to={`/student/profile/${user.id}`} key={user.id}>
           <h1>{user.TextClassName}</h1>
           <InfoWrapper>
             <h1>
-              {user.firstName} {user.lastName}
+              {user.first_name} {user.last_name}
             </h1>
-            <p>{user.Role}</p>
+            <p>{user.TextRole === 'Student' ? 'Uczeń' : 'Samorząd Uczniowski'}</p>
           </InfoWrapper>
         </StudentResultWrapper>
       ))}

@@ -1,27 +1,38 @@
-import { PageWrapper, StyledIconDiv, ResultsWrapper, SearchInputWrapper } from './Search.styles';
+import { PageWrapper, ResultsWrapper, SearchInputWrapper, StyledIconDiv } from './Search.styles';
 import { useState } from 'react';
 import SearchIcon from 'assets/icons/SearchIcon.svg';
 import UserSearchRecord from 'components/atoms/UserSearchRecord/UserSearchRecord';
-
-const searchData = [
-  { id: 1, TextClassName: '3A', Role: 'Uczeń', firstName: 'Tadeusz', lastName: 'Norek' },
-  { id: 2, TextClassName: '3B', Role: 'Samorząd Uczniowski', firstName: 'Jarek', lastName: 'Tadek' },
-  { id: 3, TextClassName: '1B', Role: 'Uczeń', firstName: 'Krzysztof', lastName: 'Ibisz' },
-  { id: 4, TextClassName: '2D', Role: 'Uczeń', firstName: 'Tomaszenko', lastName: 'Jarenosz' },
-  { id: 5, TextClassName: '1D', Role: 'Uczeń', firstName: 'Miroslav', lastName: 'Klose' }
-];
+import { storeRoot } from '../../../store';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { getJWT } from '../../../helpers/jwt';
+import { debounce } from 'lodash';
+import { upperFirstLetter } from '../../../helpers/text';
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const search = (data: any) => {
-    return data.filter(
-      (item: any) =>
-        item.firstName.toLowerCase().includes(searchTerm) ||
-        item.lastName.toLowerCase().includes(searchTerm) ||
-        item.firstName.toLowerCase().includes(searchTerm) ||
-        item.Role.toLowerCase().includes(searchTerm) ||
-        item.TextClassName.toLowerCase().includes(searchTerm)
-    );
+  const [searchResults, setSearchResults] = useState([]);
+  const user = useSelector((state: storeRoot) => state.user);
+
+  const search = (searchTerm: string) => {
+    const first_name = searchTerm.split(' ')[0];
+    const last_name = searchTerm.split(' ')[1];
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/users?filters[TextRole][$eq]=Student&filters[TextRole][$eq]=Moderator&filters[schoolId][$eq]=${
+          user?.schoolId || ''
+        }&pagination[pageSize]=100&filters[first_name][$eq]=${upperFirstLetter(first_name)}${
+          last_name ? `&filters[last_name][$eq]=${upperFirstLetter(last_name)}` : ''
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${getJWT()}`
+          }
+        }
+      )
+      .then((res) => {
+        const preparedResults = res.data.filter((user: any) => user.confirmed === true);
+        setSearchResults(preparedResults);
+      });
   };
 
   return (
@@ -30,14 +41,20 @@ const Search = () => {
         <input
           type="search"
           placeholder="Szukaj"
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
+          onChange={debounce((e) => {
+            search(e.target.value);
+          }, 1000)}
         />
         <StyledIconDiv icon={SearchIcon} />
       </SearchInputWrapper>
       <ResultsWrapper>
-        {searchTerm.length === 0 ? <p>Wyszukaj klasę, osobę, rolę osoby w szkole etc.</p> : <UserSearchRecord data={search(searchData)} />}
+        {!searchResults ? (
+          <p>Wpisz pełne imię (możesz też nazwisko) osoby, którą chcesz znaleźć!</p>
+        ) : searchResults.length > 0 ? (
+          <UserSearchRecord data={searchResults} />
+        ) : (
+          <p>Brak wyników!</p>
+        )}
       </ResultsWrapper>
     </PageWrapper>
   );
