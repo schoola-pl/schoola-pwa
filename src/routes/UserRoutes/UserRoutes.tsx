@@ -27,8 +27,8 @@ const UserRoutes = () => {
       ) : (
         <UserTemplate>
           <Routes>
-            <Route path="/" element={<Navigate to="profile" />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Navigate to="profile/me" />} />
+            <Route path="/profile/me" element={<Profile />} />
             <Route path="/profiles/:userId" element={<SearchProfileView />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
