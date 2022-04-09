@@ -32,7 +32,7 @@ const AdminSidebar = () => {
           ))}
         </div>
         <div>
-          <StyledListItem as="div" key={'logout'} onClick={signOut} isDanger>
+          <StyledListItem as="div" key={'logout'} onClick={() => signOut({})} isDanger>
             <SidebarLink tabIndex={-1} icon={LogoutIcon} />
             <StyledParagraph>Wyloguj się</StyledParagraph>
           </StyledListItem>

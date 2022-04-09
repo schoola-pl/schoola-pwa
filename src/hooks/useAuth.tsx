@@ -1,21 +1,24 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { dashboardRoute, roles } from 'routes';
+import { loginRoute, roles } from 'routes';
 import { Auth, authUser, Hub } from 'aws-amplify';
 import { getPathForRole } from '../helpers/roles';
 import { Response } from '../types/responses';
 import { useModal } from './useModal';
 import ForcePasswordChangeModal from '../components/molecules/ForcePasswordChangeModal/ForcePasswordChangeModal';
-import { withAsyncResponseHandler } from '../helpers/errorHandler';
+import { withAsyncResponseHandler } from '../helpers/responseHandler';
+import { useNotification } from './useNotification';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
   resetPassword: ({ username }: { username: string }) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
   resetPasswordSubmit: ({ username, password, code }: { username: string; code: string; password: string }) => Promise<Response>;
   signIn: ({ username, password }: { username: string; password: string }) => Promise<Response>;
-  signOut: ({}: any) => Promise<Response>;
+  signOut: ({ global }: { global?: boolean }) => Promise<Response>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
 }
+
+const requiredUserAttributes = ['custom:isConfigured', 'birthdate'];
 
 const AuthContext = createContext<AuthContextTypes>({
   currentUser: null,
@@ -40,6 +43,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
+  const { notifyUser } = useNotification();
 
   // --- END METHODS, VALUES FROM ANOTHER HOOKS ---
 
@@ -49,33 +53,48 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // --- END STATES ---
 
+  // Build user object from Cognito User object
+  const buildAuthUserObject = (data: any): authUser => {
+    const {
+      username,
+      attributes,
+      signInUserSession: {
+        idToken: { payload }
+      }
+    } = data;
+
+    // Build user object by authUser type
+    return {
+      username,
+      attributes,
+      role: payload['cognito:groups'][0]
+    };
+  };
+
   // Get the User information from AWS API
   const getCurrentUser = async (): Promise<authUser | null> => {
     try {
-      // It gets the current user
-      const {
-        username,
-        attributes,
-        signInUserSession: {
-          idToken: { payload }
-        }
-      } = await Auth.currentAuthenticatedUser();
-      return {
-        username,
-        attributes,
-        role: payload['cognito:groups'][0]
-      };
+      // It gets & returns the current user
+      return await Auth.currentAuthenticatedUser();
     } catch {
       // currentAuthenticatedUser throws an Error if not signed in
       return null;
     }
   };
 
-  // Get the User information from AWS API & set the state
-  const saveCurrentUser = async (): Promise<authUser | null> => {
-    const user = await getCurrentUser();
-    if (user) setCurrentUser(user);
-    return user;
+  // Check does the user is configured or not
+  const checkIsUserConfigured = (user?: authUser) => {
+    // Choose whose user is the current user
+    const validUser = user || currentUser;
+    if (!validUser) return false;
+    const { attributes, role } = validUser;
+    // Check if the user has role
+    if (!role) return false;
+    // Check if the user has all the required attributes
+    const preparedAttributes = requiredUserAttributes.map((attr) => {
+      return attributes.hasOwnProperty(attr);
+    });
+    return preparedAttributes.every((attr) => attr);
   };
 
   // --- SWITCHES ---
@@ -113,19 +132,40 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  const authSwitch = async ({ payload: { event } }: { payload: { event: string } }) => {
+  const authSwitch = ({ payload: { event, data } }: { payload: { event: string; data: any } }) => {
     switch (event) {
       case 'signIn':
-        const user = await saveCurrentUser();
+        // Build user object from Cognito User object
+        const user = buildAuthUserObject(data);
         if (user) {
-          // Save the current role to the LocalStorage
-          localStorage.setItem('role', user.role);
-          // Navigate to good path
-          navigate(getPathForRole(user.role));
-        } else navigate(dashboardRoute.replaceAll('*', ''));
+          // It checks does user is configured
+          const isConfigured = checkIsUserConfigured(user);
+          if (isConfigured) {
+            // Add user object to state
+            setCurrentUser(user);
+            // Save the current role to the LocalStorage
+            localStorage.setItem('role', user.role);
+            // Navigate to good path
+            navigate(getPathForRole(user.role));
+          } else {
+            // Display error message about non configured user
+            notifyUser({
+              value: 'Twoje konto zostało niepoprawnie skonfigurowane! Prosimy o kontakt z administratorem.',
+              type: 'error',
+              level: 3
+            });
+            // Sign out the user
+            Auth.signOut({ global: true });
+          }
+        } else navigate(loginRoute);
         break;
       case 'signOut':
+        // Cleanup states
         setCurrentUser(null);
+        // Navigate to login page
+        setTimeout(() => {
+          navigate(loginRoute);
+        }, 500);
         break;
       // case 'signIn_failure':
       //   console.log('Sign in failure');
@@ -149,7 +189,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     // One-time actions
     (async () => {
       // Get & save the current user
-      await saveCurrentUser();
+      const user = await getCurrentUser();
+      setCurrentUser(user);
     })();
     // Cleanup the listeners
     return () => Hub.remove('auth', authSwitch);
@@ -224,9 +265,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   );
 
   // This method is used to sign out the user
-  const signOut = withAsyncResponseHandler<any, any>(
-    async () => {
-      await Auth.signOut();
+  const signOut = withAsyncResponseHandler<{ global?: boolean }>(
+    async ({ global = false }) => {
+      await Auth.signOut({ global });
     },
     {
       success: 'Pomyślnie wylogowano',

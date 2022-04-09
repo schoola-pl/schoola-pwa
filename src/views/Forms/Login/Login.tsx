@@ -9,12 +9,10 @@ import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
 import Logo from 'components/atoms/Logo/Logo';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
-import { useAppLoading } from '../../../hooks/useAppLoading';
 
 const Login: React.FC = () => {
   const { currentUser, signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const { setAppLoading, updateLoadingText } = useAppLoading();
   const [isError, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -23,19 +21,17 @@ const Login: React.FC = () => {
   const passwordInput = watch('password');
 
   useEffect(() => {
+    // It checks does user is logged in
     if (currentUser) {
-      setAppLoading(true);
-      updateLoadingText('Sprawdzam lokalizację...');
       const role = getRoleFromLocalStorage();
+      // And redirects him to right place
       if (role) {
-        setAppLoading(false);
         navigate(getPathForRole(role));
       } else {
-        setAppLoading(false);
         navigate(dashboardRoute.replaceAll('*', ''));
       }
     }
-  }, [currentUser]);
+  }, []);
 
   const handleLogin = async ({ login, password }: { login: string; password: string }) => {
     setIsLoading(true);

@@ -20,7 +20,7 @@ declare module 'aws-amplify' {
     currentSession(): Promise<any>;
     completeNewPassword(user: any, newPassword: string, requiredAttributes: any): Promise<any>;
     signIn({ username, password }: { username: string; password: string }): Promise<any>;
-    signOut(): Promise<any>;
+    signOut({ global }?: { global?: boolean }): Promise<any>;
     signUp(username: string, password: string, attributes: any): Promise<any>;
     verifyCurrentSession(): Promise<any>;
     updateUserAttributes(user: authUser, attributes: { [key: string]: string | number }): Promise<any>;
