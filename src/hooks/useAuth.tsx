@@ -54,6 +54,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   // --- STATES ---
 
   const [currentUser, setCurrentUser] = useState<null | authUser>(null);
+  const [currentCognitoUser, setCognitoUser] = useState<any>(null);
 
   // --- END STATES ---
 
@@ -84,6 +85,21 @@ export const AuthProvider: React.FC = ({ children }) => {
       // currentAuthenticatedUser throws an Error if not signed in
       return null;
     }
+  };
+
+  // Get the User information from AWS API & save them in the state
+  const saveCurrentUser = async () => {
+    const user = await getCurrentUser();
+    if (user) {
+      setCognitoUser(user);
+      setCurrentUser(buildAuthUserObject(user));
+    }
+  };
+
+  // Update the User information locally
+  const updateSession = async () => {
+    await Auth.currentSession();
+    await saveCurrentUser();
   };
 
   // Check does the user is configured or not
@@ -145,6 +161,8 @@ export const AuthProvider: React.FC = ({ children }) => {
           // It checks does user is configured
           const isConfigured = checkIsUserConfigured(user);
           if (isConfigured) {
+            // Add original user object to state
+            setCognitoUser(data);
             // Add user object to state
             setCurrentUser(user);
             // Save the current role to the LocalStorage
@@ -183,13 +201,16 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // --- USE EFFECTS ---
 
+  // Use effect to get the current user
   useEffect(() => {
-    // One-time actions
     (async () => {
       // Get & save the current user
-      const user = await getCurrentUser();
-      if (user) setCurrentUser(buildAuthUserObject(user));
+      await saveCurrentUser();
     })();
+  }, []);
+
+  // Use effect to listen to the auth events
+  useEffect(() => {
     // Initialize listeners
     Hub.listen('auth', authSwitch);
     // Cleanup the listeners
@@ -279,9 +300,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const updateAttributes = withAsyncResponseHandler<{ attributes: { [key: string]: string | number } }>(
     async ({ attributes }) => {
-      if (!currentUser) throw new Error('User is not signed in');
-      const res = await Auth.updateUserAttributes(currentUser, attributes);
-      console.log(res);
+      // Check if the user is signed in
+      if (!currentCognitoUser) throw new Error('User is not signed in');
+      // Update attributes (server-side)
+      await Auth.updateUserAttributes(currentCognitoUser, attributes);
+      // Update attributes (client-side)
+      await updateSession();
     },
     {
       success: 'Pomyślnie zaktualizowano dane użytkownika',
