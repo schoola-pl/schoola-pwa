@@ -28,17 +28,6 @@ export const Wrapper = styled.div`
   p {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     margin: 0;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2.5rem;
-
-    button {
-      margin-inline: 1.5rem;
-      width: fit-content;
-    }
+    letter-spacing: 1px;
   }
 `;
