@@ -137,7 +137,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const authSwitch = async ({ payload: { event, data } }: { payload: { event: string; data: any } }) => {
-    console.log('Wywołałem event: ', event);
     switch (event) {
       case 'signIn':
         // Build user object from Cognito User object
@@ -189,7 +188,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     (async () => {
       // Get & save the current user
       const user = await getCurrentUser();
-      setCurrentUser(user);
+      if (user) setCurrentUser(buildAuthUserObject(user));
     })();
     // Initialize listeners
     Hub.listen('auth', authSwitch);
@@ -245,7 +244,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   // This method is used to sign in the user
   const signIn = withAsyncResponseHandler<{ username: string; password: string }>(
     async ({ username, password }) => {
-      console.log('Wywołuję!');
       const user = await Auth.signIn({
         username,
         password

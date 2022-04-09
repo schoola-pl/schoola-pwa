@@ -17,7 +17,6 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
   useEffect(() => {
     if (!currentUser) {
       // Check does user exist
-      notifyUser({ value: 'Aby korzystać z aplikacji, musisz się zalogować!', type: 'error', level: 1 });
       navigate(loginRoute);
     } else if (!checkDoesRoleHasPermission(role, currentUser.role)) {
       // Check does user has permissions

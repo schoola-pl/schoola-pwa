@@ -31,7 +31,7 @@ const Login: React.FC = () => {
         navigate(dashboardRoute.replaceAll('*', ''));
       }
     }
-  }, []);
+  }, [currentUser]);
 
   const handleLogin = async ({ login, password }: { login: string; password: string }) => {
     setIsLoading(true);
