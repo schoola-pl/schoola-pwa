@@ -1,11 +1,10 @@
 import React from 'react';
 import { LogoutButton, Wrapper } from './TooBigScreen.styles';
 import Button from 'components/atoms/Button/Button';
-import { useUser } from 'hooks/useUser';
+import { useAuth } from '../../../hooks/useAuth';
 
 const TooBigScreen: React.FC = () => {
-  const reload = () => window.location.reload();
-  const { logout } = useUser();
+  const { signOut } = useAuth();
 
   return (
     <Wrapper>
@@ -14,8 +13,8 @@ const TooBigScreen: React.FC = () => {
       </h1>
       <p>Odśwież, aby załadować ponownie!</p>
       <div>
-        <Button onClick={reload}>Odśwież</Button>
-        <LogoutButton onClick={logout}>Wyloguj się</LogoutButton>
+        <Button onClick={() => window.location.reload()}>Odśwież</Button>
+        <LogoutButton onClick={() => signOut({})}>Wyloguj się</LogoutButton>
       </div>
     </Wrapper>
   );

@@ -1,18 +1,18 @@
 import React from 'react';
-import { Wrapper, LogoutButton } from './TooSmallScreen.styles';
+import { LogoutButton, Wrapper } from './TooSmallScreen.styles';
 import Button from 'components/atoms/Button/Button';
-import { useUser } from 'hooks/useUser';
+import { useAuth } from '../../../hooks/useAuth';
 
 const TooSmallScreen: React.FC = () => {
-  const reload = () => window.location.reload();
-  const { logout } = useUser();
+  const { signOut } = useAuth();
+
   return (
     <Wrapper>
       <h1>Aby móc korzystać z panelu administratora szkolnego, musisz mieć większy ekran (np. komputer)!</h1>
       <p>Odśwież, aby załadować ponownie!</p>
       <div>
-        <Button onClick={reload}>Odśwież</Button>
-        <LogoutButton onClick={logout}>Wyloguj się</LogoutButton>
+        <Button onClick={() => window.location.reload()}>Odśwież</Button>
+        <LogoutButton onClick={() => signOut({})}>Wyloguj się</LogoutButton>
       </div>
     </Wrapper>
   );
