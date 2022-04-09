@@ -11,6 +11,7 @@ import { useNotification } from './useNotification';
 
 interface AuthContextTypes {
   currentUser: authUser | null;
+  updateAttributes: ({ attributes }: { attributes: { [key: string]: string | number } }) => Promise<Response>;
   resetPassword: ({ username }: { username: string }) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
   resetPasswordSubmit: ({ username, password, code }: { username: string; code: string; password: string }) => Promise<Response>;
   signIn: ({ username, password }: { username: string; password: string }) => Promise<Response>;
@@ -22,6 +23,9 @@ const requiredUserAttributes = ['custom:isConfigured', 'birthdate'];
 
 const AuthContext = createContext<AuthContextTypes>({
   currentUser: null,
+  updateAttributes: () => {
+    throw new Error('updateAttributes is not implemented');
+  },
   resetPassword: () => {
     throw new Error('useResetPassword is not implemented');
   },
@@ -132,7 +136,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  const authSwitch = ({ payload: { event, data } }: { payload: { event: string; data: any } }) => {
+  const authSwitch = async ({ payload: { event, data } }: { payload: { event: string; data: any } }) => {
+    console.log('Wywołałem event: ', event);
     switch (event) {
       case 'signIn':
         // Build user object from Cognito User object
@@ -155,7 +160,7 @@ export const AuthProvider: React.FC = ({ children }) => {
               level: 3
             });
             // Sign out the user
-            Auth.signOut({ global: true });
+            await Auth.signOut({ global: true });
           }
         } else navigate(loginRoute);
         break;
@@ -177,12 +182,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // --- END SWITCHES ---
 
-  // --- HUB LISTENERS ---
-
-  Hub.listen('auth', authSwitch);
-
-  // --- END HUB LISTENERS ---
-
   // --- USE EFFECTS ---
 
   useEffect(() => {
@@ -192,6 +191,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       const user = await getCurrentUser();
       setCurrentUser(user);
     })();
+    // Initialize listeners
+    Hub.listen('auth', authSwitch);
     // Cleanup the listeners
     return () => Hub.remove('auth', authSwitch);
   }, []);
@@ -244,6 +245,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   // This method is used to sign in the user
   const signIn = withAsyncResponseHandler<{ username: string; password: string }>(
     async ({ username, password }) => {
+      console.log('Wywołuję!');
       const user = await Auth.signIn({
         username,
         password
@@ -277,6 +279,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   );
 
+  const updateAttributes = withAsyncResponseHandler<{ attributes: { [key: string]: string | number } }>(
+    async ({ attributes }) => {
+      if (!currentUser) throw new Error('User is not signed in');
+      const res = await Auth.updateUserAttributes(currentUser, attributes);
+      console.log(res);
+    },
+    {
+      success: 'Pomyślnie zaktualizowano dane użytkownika',
+      errors: 'Nie udało się zaktualizować danych użytkownika'
+    }
+  );
+
   // This method checks does user has permission to access the route (by his role name)
   const checkDoesRoleHasPermission = (entitledRole: string | string[], actualRole: string) => {
     if (actualRole === roles.authenticated) return true;
@@ -290,6 +304,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const values = {
     currentUser,
+    updateAttributes,
     resetPassword,
     resetPasswordSubmit,
     signIn,
