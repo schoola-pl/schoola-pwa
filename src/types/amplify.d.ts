@@ -8,6 +8,8 @@ declare module 'aws-amplify' {
     attributes: {
       name: string;
       given_name: string;
+      email?: string;
+      phone_number: string;
       family_name: string;
       birthdate: string;
       'custom:isConfigured': string;
@@ -26,6 +28,8 @@ declare module 'aws-amplify' {
     updateUserAttributes(user: authUser, attributes: { [key: string]: string | number }): Promise<any>;
     forgotPassword(username: string): Promise<{ CodeDeliveryDetails: { AttributeName: string; DeliveryMedium: string; Destination: string } }>;
     forgotPasswordSubmit(username: string, code: string, password: string): Promise<any>;
+    verifyCurrentUserAttribute(attr: string): Promise<any>;
+    verifyCurrentUserAttributeSubmit(attr: string, code: string): Promise<any>;
   };
 
   export const Hub: {
