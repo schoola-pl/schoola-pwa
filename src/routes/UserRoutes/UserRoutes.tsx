@@ -7,20 +7,19 @@ import Feed from 'views/User/Feed/Feed';
 import Settings from 'views/User/Settings/Settings';
 import Error404 from 'views/Error404/Error404';
 import Profile from 'views/User/Profile/Profile';
-import { useSelector } from 'react-redux';
-import { storeRoot } from 'store';
 import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 import CommentSection from 'views/User/CommentSection/CommentSection';
 import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
+import { useAuth } from '../../hooks/useAuth';
 
 const UserRoutes = () => {
-  const user = useSelector((state: storeRoot) => state.user);
+  const { currentUser } = useAuth();
 
   return window.innerWidth > 550 ? (
     <TooBigScreen />
   ) : (
     <>
-      {user && !user.confirmed ? (
+      {currentUser && currentUser.attributes['custom:isConfigured'] === 'no' ? (
         <FirstLoginTemplate />
       ) : (
         <UserTemplate>
