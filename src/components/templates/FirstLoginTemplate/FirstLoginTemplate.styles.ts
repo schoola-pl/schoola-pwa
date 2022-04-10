@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 9999999999;
+  z-index: 99;
   background-color: ${({ theme }) => theme.colors.accentBrown};
   height: 100vh;
   display: flex;
