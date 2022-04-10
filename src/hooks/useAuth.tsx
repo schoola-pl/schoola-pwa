@@ -14,6 +14,8 @@ interface AuthContextTypes {
   updateAttributes: ({ attributes }: { attributes: { [key: string]: string | number } }) => Promise<Response>;
   resetPassword: ({ username }: { username: string }) => Promise<Response<{ delivered_by: { name: string; value: string } }>>;
   resetPasswordSubmit: ({ username, password, code }: { username: string; code: string; password: string }) => Promise<Response>;
+  verifyAttribute: ({ attribute }: { attribute: 'email' | 'phone_number' }) => Promise<Response>;
+  verifyAttributeSubmit: ({ attribute, code }: { attribute: 'email' | 'phone_number'; code: string }) => Promise<Response>;
   signIn: ({ username, password }: { username: string; password: string }) => Promise<Response>;
   signOut: ({ global }: { global?: boolean }) => Promise<Response>;
   checkDoesRoleHasPermission: (entitledRole: string | string[], actualRole: string) => boolean;
@@ -31,6 +33,12 @@ const AuthContext = createContext<AuthContextTypes>({
   },
   resetPasswordSubmit: () => {
     throw new Error('useResetPasswordSubmit is not implemented');
+  },
+  verifyAttribute: () => {
+    throw new Error('useVerifyAttribute is not implemented');
+  },
+  verifyAttributeSubmit: () => {
+    throw new Error('useVerifyAttributeSubmit is not implemented');
   },
   signIn: () => {
     throw new Error('AuthContext.signIn is not implemented');
@@ -298,6 +306,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   );
 
+  // This method is used to update user attributes
   const updateAttributes = withAsyncResponseHandler<{ attributes: { [key: string]: string | number } }>(
     async ({ attributes }) => {
       // Check if the user is signed in
@@ -324,11 +333,42 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
+  // It sends a code required for attribute verify
+  const verifyAttribute = withAsyncResponseHandler<{ attribute: 'email' | 'phone_number' }>(
+    async ({ attribute }) => {
+      await Auth.verifyCurrentUserAttribute(attribute);
+    },
+    {
+      success: 'Pomyślnie wysłano kod weryfikacyjny!',
+      errors: {
+        UserNotFoundException: 'Nie znaleziono użytkownika!',
+        InvalidParameterException: 'Podany użytkownik jest źle skonfigurowany!'
+      }
+    }
+  );
+
+  // It verifies attribute with the code
+  const verifyAttributeSubmit = withAsyncResponseHandler<{ attribute: 'email' | 'phone_number'; code: string }>(
+    async ({ attribute, code }) => {
+      await Auth.verifyCurrentUserAttributeSubmit(attribute, code);
+    },
+    {
+      success: 'Pomyślnie zweryfikowano atrybut!',
+      errors: {
+        UserNotFoundException: 'Nie znaleziono użytkownika!',
+        InvalidParameterException: 'Podany użytkownik jest źle skonfigurowany!',
+        CodeMismatchException: 'Kod jest nieprawidłowy!'
+      }
+    }
+  );
+
   const values = {
     currentUser,
     updateAttributes,
     resetPassword,
     resetPasswordSubmit,
+    verifyAttribute,
+    verifyAttributeSubmit,
     signIn,
     signOut,
     checkDoesRoleHasPermission
