@@ -45,7 +45,7 @@ export const LawLabel = styled(Label)`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 export const Statute = styled.a`
-  text-decoration: none;
+  text-decoration: underline;
 
   &::after {
     content: 'regulamin';
@@ -53,7 +53,7 @@ export const Statute = styled.a`
   }
 `;
 export const PrivacyPolicy = styled.a`
-  text-decoration: none;
+  text-decoration: underline;
 
   &::after {
     content: 'politykę prywatności';
