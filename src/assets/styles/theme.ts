@@ -15,7 +15,8 @@ export const theme = {
     accentGrey: '#807970',
     darkBrown: '#918E81',
     selectedItemGrey: '#CCCFDC',
-    selectedItemBorderGrey: '#C5C5CF'
+    selectedItemBorderGrey: '#C5C5CF',
+    lightPurple: '#f7f8fa'
   },
   fontSize: {
     xxs: '1rem',

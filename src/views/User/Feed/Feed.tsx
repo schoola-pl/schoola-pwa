@@ -20,7 +20,17 @@ const Feed = () => {
     baseBody<{
       message: string;
       createdAt: string;
-      author: { data: { attributes: authUser } };
+      author: {
+        data: {
+          id: string;
+          attributes: {
+            first_name: string;
+            last_name: string;
+            avatar: string;
+            TextClassName: string;
+          };
+        };
+      };
       comments: { data: { id: number; attributes: { message: string; author: { data: { attributes: authUser } }; createdAt: string } }[] };
       likes: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
     }>[]
@@ -40,7 +50,17 @@ const Feed = () => {
       multiResponse<{
         message: string;
         createdAt: string;
-        author: { data: { attributes: authUser } };
+        author: {
+          data: {
+            id: string;
+            attributes: {
+              first_name: string;
+              last_name: string;
+              avatar: string;
+              TextClassName: string;
+            };
+          };
+        };
         comments: { data: { id: number; attributes: { message: string; author: { data: { attributes: authUser } }; createdAt: string } }[] };
         likes: oneResponse<{ likes: number; userIds: { id: number; userId: string }[] }>;
       }>
@@ -119,7 +139,7 @@ const Feed = () => {
                 key={id}
                 isSpotted={false}
                 isComment={false}
-                postOwner={author.data.attributes}
+                postOwner={{ id: author.data.id, ...author.data.attributes }}
                 date={createdAt}
                 content={message}
                 comments={comments.data.length}
@@ -135,7 +155,7 @@ const Feed = () => {
               key={id}
               isSpotted={false}
               isComment={false}
-              postOwner={author.data.attributes}
+              postOwner={{ id: author.data.id, ...author.data.attributes }}
               date={createdAt}
               content={message}
               comments={comments.data.length}

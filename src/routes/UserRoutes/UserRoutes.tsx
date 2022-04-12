@@ -6,12 +6,14 @@ import Spotted from 'views/User/Spotted/Spotted';
 import Feed from 'views/User/Feed/Feed';
 import Settings from 'views/User/Settings/Settings';
 import Error404 from 'views/Error404/Error404';
-import Profile from 'views/User/Profile/Profile';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import FirstLoginTemplate from 'components/templates/FirstLoginTemplate/FirstLoginTemplate';
 import CommentSection from 'views/User/CommentSection/CommentSection';
 import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
+import Search from 'views/User/Search/Search';
+import SearchProfileView from 'views/User/SearchProfileView/SearchProfileView';
+import Profile from '../../views/User/Profile/Profile';
 
 const UserRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -25,8 +27,9 @@ const UserRoutes = () => {
       ) : (
         <UserTemplate>
           <Routes>
-            <Route path="/" element={<Navigate to="profile" />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Navigate to="profile/me" />} />
+            <Route path="/profile/me" element={<Profile />} />
+            <Route path="/profiles/:userId" element={<SearchProfileView />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/spotted" element={<Spotted />} />
             <Route path="/spotted/comments" element={<Navigate to="/student/spotted" />} />
@@ -35,6 +38,7 @@ const UserRoutes = () => {
             <Route path="/feed/comments" element={<Navigate to="/student/spotted" />} />
             <Route path="/feed/comments/:commentsId" element={<CommentSection />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/search" element={<Search />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </UserTemplate>
