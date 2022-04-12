@@ -3,6 +3,10 @@
   "video": false,
   "env": {
     "API_URL": "https://schoola-strapi.herokuapp.com/api",
-    "APP_NAME": "Schoola"
+    "APP_NAME": "Schoola",
+    "PROFILE_USER_LOGIN": "test_user",
+    "PROFILE_USER_PASSWORD": "Cypress123!",
+    "PROFILE_ADMIN_LOGIN": "test_admin",
+    "PROFILE_ADMIN_PASSWORD": "Cypress123!"
   }
 }

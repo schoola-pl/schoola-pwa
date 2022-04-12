@@ -13,7 +13,7 @@ const PsychoList: React.FC<props> = ({ handleChangePsycho }) => {
   });
 
   return (
-    <select onChange={handleChangePsycho}>
+    <select onChange={handleChangePsycho} data-testid="psycho-select">
       <option value="" selected disabled hidden>
         {psychos.isLoading ? 'Pobieram dane...' : psychos.data && psychos.data.length > 0 ? 'Wybierz psychologa' : 'Brak psychologów!'}
       </option>

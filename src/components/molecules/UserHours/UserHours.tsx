@@ -57,7 +57,7 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
             return (
               <Hour key={hour} isActive={activeHour === hour}>
                 {hour}
-                <button onClick={() => setActiveHour(hour)} />
+                <button data-testid={`appointment-hour-${hour}`} onClick={() => setActiveHour(hour)} />
               </Hour>
             );
           }
@@ -66,10 +66,16 @@ const UserHours: React.FC<props> = ({ setActiveHour, date, psychoId, activeHour 
     });
     const preHours = hours.filter((hour) => hour !== undefined);
     const preparedHours = preHours[0]?.filter((obj) => obj !== undefined) || [];
-    return preparedHours.length > 0 ? hours : <Info style={{ width: '100%', textAlign: 'center', gridColumn: '1 / 3' }}>Psycholog nieobecny</Info>;
+    return preparedHours.length > 0 ? (
+      hours
+    ) : (
+      <Info style={{ width: '100%', textAlign: 'center', gridColumn: '1 / 3' }} data-testid="appointment-paragraph">
+        Psycholog nieobecny
+      </Info>
+    );
   };
 
-  return <HoursWrapper>{psycho.isLoading || meetingsForDay.isLoading ? 'Sprawdzam...' : printHours()}</HoursWrapper>;
+  return <HoursWrapper data-testid="appointment-hours">{psycho.isLoading || meetingsForDay.isLoading ? 'Sprawdzam...' : printHours()}</HoursWrapper>;
 };
 
 export default UserHours;

@@ -53,18 +53,19 @@ const FeedInput: React.FC<props> = ({ resetFeed }) => {
   };
 
   return (
-    <InputWrapper onSubmit={handleSubmit(handleAddPost)}>
+    <InputWrapper data-testid="feed-wrapper" onSubmit={handleSubmit(handleAddPost)}>
       <StyledPicture>
         <ProfilePicture>
           <img src={image} alt={`${user?.first_name}'s image`} />
         </ProfilePicture>
       </StyledPicture>
       <StyledInput
+        data-testid="feed-input"
         type="text"
         placeholder={getRandomSequence(Math.ceil(Math.random() * 4), user?.first_name)}
         {...register('message', { required: true })}
       />
-      {!isLoading ? <SendMessageButton icon={SendIcon} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
+      {!isLoading ? <SendMessageButton data-testid="feed-send" icon={SendIcon} /> : <Loader fitContent bgColor="white" size="35px 35px" />}
     </InputWrapper>
   );
 };

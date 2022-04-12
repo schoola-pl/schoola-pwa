@@ -80,7 +80,7 @@ const CommentSection = () => {
     };
 
   return (
-    <SectionWrapper>
+    <SectionWrapper data-testid="comments-section">
       <Post
         key={id}
         qId={parseInt(commentsId || '0')}

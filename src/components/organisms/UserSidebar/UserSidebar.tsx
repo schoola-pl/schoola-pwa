@@ -9,13 +9,13 @@ const UserSidebar = () => {
   return (
     <Sidebar>
       <ul>
-        <StyledListItem name="Feed" to="/student/feed">
+        <StyledListItem data-testid="feed" name="Feed" to="/student/feed">
           <StyledSidebarLink icon={FeedIcon} />
         </StyledListItem>
-        <StyledListItem name="Spotted" to="/student/spotted">
+        <StyledListItem data-testid="spotted" name="Spotted" to="/student/spotted">
           <StyledSidebarLink icon={SpottedIcon} />
         </StyledListItem>
-        <StyledListItem name="Wizyta" to="/student/appointment">
+        <StyledListItem data-testid="appointment" name="Wizyta" to="/student/appointment">
           <StyledSidebarLink icon={AppointmentIcon} />
         </StyledListItem>
         <StyledListItem name="Profil" to="/student/profile/me">

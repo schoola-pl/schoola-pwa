@@ -13,14 +13,14 @@ const TopBar = () => {
 
   return (
     <Wrapper>
-      <Logo as={Link} to="/student/feed">
+      <Logo data-testid="logo" as={Link} to="/student/feed">
         schoola
       </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <SearchLink icon={SearchIcon} as={Link} to="/student/search" isProfile={isProfile} isComments={isComments} />
         <NotificationList />
-        <SettingsLink isProfile={isProfile} style={{ margin: 0 }} as={Link} to="/student/settings" icon={SettingsIcon} />
+        <SettingsLink isProfile={isProfile} style={{ margin: 0 }} data-testid="settings" as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );
