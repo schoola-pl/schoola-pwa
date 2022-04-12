@@ -3,15 +3,15 @@
 
 const token = 'jwt';
 
-describe('Auth JWT | Schoola App', () => {
+describe(`Auth JWT | ${Cypress.env('APP_NAME')}`, () => {
   beforeEach(() => {
     cy.intercept(`${Cypress.env('API_URL')}/auth/local`).as('login');
     cy.intercept(`${Cypress.env('API_URL')}/users/me`).as('get-me');
     cy.visit('/');
     localStorage.removeItem(token);
     assert.isNull(localStorage.getItem(token));
-    cy.findByPlaceholderText(/login/i).type('test_admin');
-    cy.findByPlaceholderText(/hasło/i).type('Admin123!');
+    cy.findByPlaceholderText(/login/i).type(Cypress.env('PROFILE_ADMIN_LOGIN'));
+    cy.findByPlaceholderText(/hasło/i).type(Cypress.env('PROFILE_ADMIN_PASSWORD'));
     cy.get('button').first().click();
   });
 

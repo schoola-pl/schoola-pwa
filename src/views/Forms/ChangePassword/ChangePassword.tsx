@@ -55,6 +55,7 @@ const ChangePassword: React.FC<props> = ({ isRestore }) => {
           <Label htmlFor="currentPassword">Nowe hasło</Label>
           <StyledInput
             type="password"
+            id="currentPassword"
             error={isSame || errors.newPassword}
             {...register('newPassword', {
               required: true,
@@ -62,7 +63,7 @@ const ChangePassword: React.FC<props> = ({ isRestore }) => {
             })}
           />
           <Label htmlFor="newPassword">Powtórz nowe hasło</Label>
-          <StyledInput type="password" {...register('newPasswordVerify', { required: true })} />
+          <StyledInput id="newPassword" type="password" {...register('newPasswordVerify', { required: true })} />
         </PasswordForm>
         <SubmitButton isDisabled={isLoading || !pass1Field || !pass2Field}>
           {!isLoading && !isSuccess ? (

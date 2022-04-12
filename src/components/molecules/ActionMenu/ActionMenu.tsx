@@ -16,9 +16,13 @@ const ActionMenu: React.FC<Props> = ({ isOpened, isComment, isLoading, ...rest }
   return (
     <Wrapper isComment={isComment} isOpened={isOpened}>
       {user?.TextRole === 'Moderator' ? (
-        <ActionButton {...rest}>{!isLoading ? 'Usuń' : 'Usuwanie...'}</ActionButton>
+        <ActionButton data-testid={`post-menu-delete`} {...rest}>
+          {!isLoading ? 'Usuń' : 'Usuwanie...'}
+        </ActionButton>
       ) : (
-        <ActionButton {...rest}>{!isLoading ? 'Zgłoś' : 'Zgłaszanie...'}</ActionButton>
+        <ActionButton data-testid={`post-menu-dispatch`} {...rest}>
+          {!isLoading ? 'Zgłoś' : 'Zgłaszanie...'}
+        </ActionButton>
       )}
     </Wrapper>
   );

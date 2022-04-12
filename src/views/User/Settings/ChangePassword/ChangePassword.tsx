@@ -53,11 +53,12 @@ const ChangePassword = () => {
       <form onSubmit={handleSubmit(handleChangePassword)}>
         <InputWrapper>
           <label htmlFor="old-pass">Obecne hasło</label>
-          <input type="password" id="old-pass" {...register('oldPass', { required: true })} />
+          <input data-testid="settings-pass-input-current" type="password" id="old-pass" {...register('oldPass', { required: true })} />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="new-pass">Nowe hasło</label>
           <input
+            data-testid="settings-pass-input-new"
             type="password"
             id="new-pass"
             {...register('newPass', {
@@ -68,9 +69,9 @@ const ChangePassword = () => {
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="new-pass-verify">Potwierdź nowe hasło</label>
-          <input type="password" id="new-pass-verify" {...register('confirmPass', { required: true })} />
+          <input data-testid="settings-pass-input-conf-new" type="password" id="new-pass-verify" {...register('confirmPass', { required: true })} />
         </InputWrapper>
-        <SubmitButton isDisabled={!oldPass || !newPass || !confirmPass}>
+        <SubmitButton isDisabled={!oldPass || !newPass || !confirmPass} data-testid="settings-pass-btn">
           {!isLoading ? (
             'Zmień'
           ) : (

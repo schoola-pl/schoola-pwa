@@ -10,7 +10,9 @@ const Settings = () => {
       <ChangeEmail />
       <ChangePassword />
       <LogoutButton onClick={logout}>Wyloguj się</LogoutButton>
-      <a href="mailto:schoolacontact@gmail.com">Zgłoś problem</a>
+      <a data-testid="support-link" href="mailto:schoolacontact@gmail.com">
+        Zgłoś problem
+      </a>
     </PageWrapper>
   );
 };
