@@ -40,6 +40,7 @@ export const StyledInput = styled.input<{ isVisible?: boolean }>`
 
 export const SettingsLink = styled(SidebarLink)<{ isProfile?: boolean }>`
   display: ${({ isProfile }) => (isProfile ? 'block' : 'none')};
+  padding: 2.3rem;
 `;
 
 export const SearchLink = styled(SidebarLink)<{ isComments?: boolean; isProfile?: boolean }>`
@@ -63,14 +64,20 @@ export const SearchLink = styled(SidebarLink)<{ isComments?: boolean; isProfile?
 //   }
 // `;
 
-export const InnerWrapper = styled.div`
+export const InnerWrapper = styled.div<{ isProfile?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 6rem;
+  margin-left: ${({ isProfile }) => (isProfile ? '3rem' : '6rem')};
 `;
 
 export const GoBack = styled(SidebarLink)<{ isComments?: boolean }>`
   display: ${({ isComments }) => (isComments ? 'flex' : 'none')};
   margin: 0;
+`;
+
+export const EditLink = styled(SidebarLink)<{ isProfile?: boolean }>`
+  display: ${({ isProfile }) => (isProfile ? 'block' : 'none')};
+  margin: 0;
+  padding: 2.5rem;
 `;
