@@ -20,7 +20,7 @@ const TopBar = () => {
       <InnerWrapper isProfile={isProfile}>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
         <SearchLink icon={SearchIcon} as={Link} to="/student/search" isProfile={isProfile} isComments={isComments} />
-        <EditLink icon={BlackEditIcon} isProfile={isProfile} />
+        <EditLink icon={BlackEditIcon} as={Link} to="/student/profile/edit" isProfile={isProfile} />
         <NotificationList />
         <SettingsLink isProfile={isProfile} style={{ margin: 0 }} data-testid="settings" as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
