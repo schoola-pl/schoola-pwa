@@ -8,7 +8,8 @@ import BlackEditIcon from 'assets/icons/BlackEditIcon.svg';
 
 const TopBar = () => {
   const url = window.location.pathname;
-  const isComments = url.includes('/comments') || url.includes('/search') || url.includes('/settings') || url.includes('/profiles');
+  const isComments =
+    url.includes('/comments') || url.includes('/search') || url.includes('/settings') || url.includes('/profiles') || url.includes('/edit');
   const isProfile = url.includes('/profile/me');
   const navigate = useNavigate();
 
