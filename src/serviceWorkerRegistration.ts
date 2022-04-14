@@ -12,6 +12,19 @@
 
 import { toast } from 'react-toastify';
 
+function urlBase64ToUint8Array(base64String: string) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -102,6 +115,27 @@ function registerValidSW(swUrl: string, config?: Config) {
           }
         };
       };
+
+      // Register push manager
+      const subscription = registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY || '')
+      });
+
+      if (!localStorage.getItem('notification_sub')) {
+        localStorage.setItem('notification_sub', JSON.stringify(subscription));
+      } else {
+        // Send subscription to server
+        fetch('http://notify.schoola.pl/api/v1/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(subscription)
+        }).then(() => {
+          console.log('Subscribed push notifications');
+        });
+      }
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
