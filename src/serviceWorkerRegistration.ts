@@ -126,7 +126,7 @@ function registerValidSW(swUrl: string, config?: Config) {
         localStorage.setItem('notification_sub', JSON.stringify(subscription));
       } else {
         // Send subscription to server
-        fetch('http://notify.schoola.pl/api/v1/subscribe', {
+        fetch('https://notify.schoola.pl/api/v1/subscribe', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
