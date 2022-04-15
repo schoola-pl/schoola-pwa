@@ -117,25 +117,26 @@ function registerValidSW(swUrl: string, config?: Config) {
       };
 
       // Register push manager
-      const subscription = registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY || '')
-      });
-
-      if (!localStorage.getItem('notification_sub')) {
-        localStorage.setItem('notification_sub', JSON.stringify(subscription));
-      } else {
-        // Send subscription to server
-        fetch('https://notify.schoola.pl/api/v1/subscribe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(subscription)
-        }).then(() => {
-          console.log('Subscribed push notifications');
+      registration.pushManager
+        .subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY || '')
+        })
+        .then((subscription) => {
+          if (!localStorage.getItem('notification_sub')) {
+            localStorage.setItem('notification_sub', JSON.stringify(subscription));
+            // Send subscription to server
+            fetch('https://notify.schoola.pl/api/v1/subscribe', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(subscription)
+            }).then(() => {
+              console.log('Subscribed push notifications');
+            });
+          }
         });
-      }
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
