@@ -5,6 +5,7 @@ import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
 import { Link } from 'react-router-dom';
+import IconDiv from 'components/atoms/IconDiv/IconDiv';
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -78,7 +79,7 @@ const LinkWrapper = styled.div`
   text-decoration: none;
   color: black;
   background-color: white;
-  font-size: ${({ theme }) => theme.fontSize.s};
+  font-size: 1.48rem;
   height: 6rem;
   width: 90%;
   margin-bottom: 2rem;
