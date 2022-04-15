@@ -6,29 +6,17 @@ import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
 
 export const PageWrapper = styled.div`
-  //   transform: translateY(-10%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  h1 {
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+  }
 `;
 
-// const ProfilePicture = styled.div`
-//   width: 10rem;
-//   height: 10rem;
-//   border-radius: 10rem;
-//   border: none;
-//   overflow: hidden;
-
-//   img {
-//     min-width: 100%;
-//     background-color: white;
-//     height: 100%;
-//     object-fit: cover;
-//   }
-// `;
-
-export const StyledPicture = styled.div`
+export const ProfilePictureWrapper = styled.div`
   height: 10rem;
   width: 10rem;
   display: flex;
@@ -43,9 +31,9 @@ export const StyledPicture = styled.div`
   }
 `;
 
-export const Wrapper = styled.div`
-  width: 90%;
-  height: 90%;
+export const ImageWrapper = styled.div`
+  width: 9rem;
+  height: 9rem;
   border-radius: inherit;
   border: none;
   overflow: hidden;
@@ -59,6 +47,21 @@ export const Wrapper = styled.div`
     background-color: white;
     height: 100%;
     object-fit: cover;
+  }
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    visibility: hidden;
+  }
+
+  label {
+    font-size: ${({ theme }) => theme.fontSize.xs};
+    color: ${({ theme }) => theme.colors.accentBlue};
   }
 `;
 
@@ -78,16 +81,19 @@ const EditProfile = () => {
   //   );
   return (
     <PageWrapper>
-      <StyledPicture>
-        <Wrapper>
-          <img
-            src="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
-            alt="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
-          />
-        </Wrapper>
-      </StyledPicture>
-      <input type="file" />
-      <h1>EditProfile</h1>
+      <InfoWrapper>
+        <ProfilePictureWrapper>
+          <ImageWrapper>
+            <img
+              src="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
+              alt="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
+            />
+          </ImageWrapper>
+        </ProfilePictureWrapper>
+        <h1>Tomasz Jarosławski</h1>
+        <label htmlFor="files">Zmień zdjęcie profilowe</label>
+        <input id="files" type="file" />
+      </InfoWrapper>
     </PageWrapper>
   );
 };
