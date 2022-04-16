@@ -69,7 +69,7 @@ export const LinksWrapper = styled.div`
   width: 100%;
 `;
 
-export const LinkWrapper = styled.div`
+export const LinkWrapper = styled.div<{ useToggle?: boolean }>`
   text-decoration: none;
   color: black;
   background-color: white;
@@ -79,12 +79,12 @@ export const LinkWrapper = styled.div`
   margin-bottom: 2rem;
   border-radius: 1.5rem;
   display: grid;
-  grid-template-columns: 20% 70% 10%;
+  grid-template-columns: ${({ useToggle }) => (useToggle ? '20% 60% 10%' : '20% 70% 10%')};
   align-items: center;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
 
   &::after {
-    content: '>';
+    content: '${({ useToggle }) => (useToggle ? null : '>')}';
   }
 `;
 
