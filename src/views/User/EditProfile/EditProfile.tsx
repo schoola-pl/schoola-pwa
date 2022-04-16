@@ -33,7 +33,6 @@ const EditProfile = () => {
     }
   };
 
-  console.log(notifications);
   return (
     <PageWrapper>
       <InfoWrapper>
