@@ -79,7 +79,8 @@ self.addEventListener('push', (ev) => {
   const options = {
     body: data.body,
     icon: 'https://app.schoola.pl/favicons/favicon-96x96.png',
-    badge: 'https://app.schoola.pl/favicons/favicon-96x96.png'
+    badge: 'https://app.schoola.pl/favicons/badge.png',
+    vibrate: [100, 50, 100]
   };
 
   ev.waitUntil(self.registration.showNotification(title, options));
