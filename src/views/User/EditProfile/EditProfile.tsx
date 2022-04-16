@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
@@ -111,29 +111,25 @@ const StyledIconDiv = styled(IconDiv)`
 const EditProfile = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
-  const { findInterested } = useUser();
   const [image, setImage] = useState('');
-  const interesteds = useGetInterestedsQuery({});
-  //   const socials = useGetSocialsQuery(
-  //     {
-  //       userId: customUser?.TextSocials || user?.TextSocials || null
-  //     },
-  //     {
-  //       refetchOnMountOrArgChange: true
-  //     }
-  //   );
+  useEffect(() => {
+    (async () => {
+      const avatar = await getAvatarById(user?.avatar);
+      setImage(avatar);
+    })();
+  }, [user]);
+
   return (
     <PageWrapper>
       <InfoWrapper>
         <ProfilePictureWrapper>
           <ImageWrapper>
-            <img
-              src="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
-              alt="https://cdn.galleries.smcloud.net/t/galleries/gf-S4wc-WrGJ-zerP_dwayne-johnson-the-rock-664x442-nocrop.jpg"
-            />
+            <img src={image} alt="user" />
           </ImageWrapper>
         </ProfilePictureWrapper>
-        <h1>Tomasz Jarosławski</h1>
+        <h1>
+          {user?.first_name} {user?.last_name}
+        </h1>
         <label htmlFor="files">Zmień zdjęcie profilowe</label>
         <input id="files" type="file" />
       </InfoWrapper>
