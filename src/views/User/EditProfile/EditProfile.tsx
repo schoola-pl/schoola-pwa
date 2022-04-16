@@ -5,7 +5,11 @@ import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
 import { Link } from 'react-router-dom';
+import KeyIcon from 'assets/icons/KeyIcon.svg';
 import IconDiv from 'components/atoms/IconDiv/IconDiv';
+import NotificationIcon from 'assets/icons/NotificationIcon.svg';
+import LinkIcon from 'assets/icons/LinkIcon.svg';
+import PersonEditInterests from 'assets/icons/PersonEditInterests.svg';
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -89,17 +93,19 @@ const LinkWrapper = styled.div`
   align-items: center;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
 
-  div {
-    margin-left: 0.5rem;
-    background-color: ${({ theme }) => theme.colors.lightPurple};
-    height: 4.75rem;
-    width: 4.75rem;
-    border-radius: 1.5rem;
-  }
-
   &::after {
     content: '>';
   }
+`;
+
+const StyledIconDiv = styled(IconDiv)`
+  margin-left: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.lightPurple};
+  height: 4.75rem;
+  width: 4.75rem;
+  border-radius: 1.5rem;
+  background-size: 70%;
+  position: relative;
 `;
 
 const EditProfile = () => {
@@ -133,20 +139,20 @@ const EditProfile = () => {
       </InfoWrapper>
       <LinksWrapper>
         <LinkWrapper as={Link} to="/student/profile/edit/interests">
-          <div></div>
-          Edytuj zainteresowania
+          <StyledIconDiv icon={PersonEditInterests} />
+          <p>Edytuj zainteresowania</p>
         </LinkWrapper>
         <LinkWrapper as={Link} to="/student/profile/edit/social-links">
-          <div></div>
-          Edytuj linki społecznościowe
+          <StyledIconDiv icon={LinkIcon} />
+          <p>Edytuj linki społecznościowe</p>
         </LinkWrapper>
         <LinkWrapper as={Link} to="/student/settings">
-          <div></div>
-          Zmień hasło i e-mail
+          <StyledIconDiv icon={KeyIcon} />
+          <p>Zmień hasło i e-mail</p>
         </LinkWrapper>
         <LinkWrapper as={Link} to="/student/settings">
-          <div></div>
-          Zarządzaj powiadomieniami
+          <StyledIconDiv icon={NotificationIcon} />
+          <p>Zarządzaj powiadomieniami</p>
         </LinkWrapper>
       </LinksWrapper>
     </PageWrapper>
