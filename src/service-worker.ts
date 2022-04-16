@@ -78,8 +78,8 @@ self.addEventListener('push', (ev) => {
   const title = data.title;
   const options = {
     body: data.body,
-    icon: '/favicons/icon-96x96.png',
-    badge: '/favicons/icon-96x96.png'
+    icon: 'https://app.schoola.pl/favicons/favicon-96x96.png',
+    badge: 'https://app.schoola.pl/favicons/favicon-96x96.png'
   };
 
   ev.waitUntil(self.registration.showNotification(title, options));
