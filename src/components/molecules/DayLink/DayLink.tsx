@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux';
 
 interface props {
   name: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
+  currentWeek: number;
 }
 
-const DayLink: React.FC<props> = ({ name }) => {
+const DayLink: React.FC<props> = ({ name, currentWeek }) => {
   const user = useSelector((state: storeRoot) => state.user);
   const count = useGetMeetingsCountQuery({
     pId: user?.id || null,
-    date: getDayOfWeek(name)
+    date: getDayOfWeek(name, { customWeek: currentWeek })
   });
 
   return (

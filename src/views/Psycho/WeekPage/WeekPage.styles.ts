@@ -19,12 +19,22 @@ export const Week = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-bottom: 2rem;
+  font-size: 1.7rem;
 
-  & > p {
-    font-size: 1.7rem;
-    margin: 0;
+  .arrows {
+    font-size: 2rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    color: #ccc;
+  }
+
+  .active {
+    color: #000;
+    border: 2px solid #000;
   }
 `;
 
