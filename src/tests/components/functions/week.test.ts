@@ -26,9 +26,9 @@ describe('Functions > Week', () => {
     expect(translateDayToEnglish('invalid')).toBe('unknown');
   });
   it('Should get ISODate of the specified day of the week', () => {
-    const result = getDayOfWeek('thursday', new Date('2022-03-14'));
+    const result = getDayOfWeek('thursday', { customDate: new Date('2022-03-14') });
     expect(result).toBe('2022-03-17');
-    const resultV2 = getDayOfWeek('monday', new Date('2022-03-16'));
+    const resultV2 = getDayOfWeek('monday', { customDate: new Date('2022-03-16') });
     expect(resultV2).toBe('2022-03-14');
   });
 });
