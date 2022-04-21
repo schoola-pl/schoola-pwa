@@ -50,11 +50,11 @@ const EditProfile = () => {
       <LinksWrapper>
         <LinkWrapper as={Link} to="/student/profile/edit/interests">
           <StyledIconDiv icon={PersonEditInterests} />
-          <p>Edytuj zainteresowania</p>
+          <p>Zainteresowania</p>
         </LinkWrapper>
         <LinkWrapper as={Link} to="/student/profile/edit/social-links">
           <StyledIconDiv icon={LinkIcon} />
-          <p>Edytuj linki społecznościowe</p>
+          <p>Linki społecznościowe</p>
         </LinkWrapper>
         <LinkWrapper as={Link} to="/student/settings">
           <StyledIconDiv icon={KeyIcon} />

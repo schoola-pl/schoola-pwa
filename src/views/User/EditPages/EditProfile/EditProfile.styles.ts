@@ -83,6 +83,10 @@ export const LinkWrapper = styled.div<{ useToggle?: boolean }>`
   align-items: center;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
 
+  p {
+    margin-left: 0.5rem;
+  }
+
   &::after {
     content: '${({ useToggle }) => (useToggle ? null : '>')}';
   }
