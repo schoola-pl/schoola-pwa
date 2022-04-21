@@ -17,11 +17,12 @@ export const Wrapper = styled(Link)`
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
+    margin-right: 0.5rem;
+    font-size: 1.9rem;
   }
 
   p {
-    display: flex;
-    padding-right: 3rem;
+    text-align: justify;
     display: flex;
     align-items: center;
     font-size: ${({ theme }) => theme.fontSize.xs};

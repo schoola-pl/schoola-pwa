@@ -49,3 +49,7 @@ export const WeekWrapper = styled.div`
   text-align: center;
   margin-left: 1rem;
 `;
+
+export const WeekButton = styled.div`
+  border: none;
+`;

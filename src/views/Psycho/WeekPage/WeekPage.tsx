@@ -1,4 +1,4 @@
-import { MeetingWrapper, PageWrapper, Week, WeekWrapper } from './WeekPage.styles';
+import { MeetingWrapper, PageWrapper, Week, WeekWrapper, WeekButton } from './WeekPage.styles';
 import DayLink from 'components/molecules/DayLink/DayLink';
 import ReloadWidget from 'components/atoms/ReloadWidget/ReloadWidget';
 import { useState } from 'react';
@@ -15,18 +15,21 @@ const WeekPage = () => {
     <>
       <PageWrapper>
         <Week>
-          <div onClick={() => setWeek((prev) => (prev !== 0 ? --prev : prev))} className={`arrows ${week !== 0 ? 'active' : ''}`}>
+          <WeekButton onClick={() => setWeek((prev) => (prev !== 0 ? --prev : prev))} className={`arrows ${week !== 0 ? 'active' : ''}`}>
             &lt;
-          </div>
+          </WeekButton>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p>Aktualny tydzień</p>
+            {/* <p>Aktualny tydzień</p> */}
             <WeekWrapper>
               {weekStart} - {weekEnd}
             </WeekWrapper>
           </div>
-          <div onClick={() => setWeek((prev) => (prev !== futureWeeks ? ++prev : prev))} className={`arrows ${week !== futureWeeks ? 'active' : ''}`}>
+          <WeekButton
+            onClick={() => setWeek((prev) => (prev !== futureWeeks ? ++prev : prev))}
+            className={`arrows ${week !== futureWeeks ? 'active' : ''}`}
+          >
             &gt;
-          </div>
+          </WeekButton>
         </Week>
         <MeetingWrapper>
           <DayLink name="monday" currentWeek={week} />
