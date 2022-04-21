@@ -19,12 +19,13 @@ export const Week = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-bottom: 2rem;
+  font-size: 1.7rem;
 
-  & > p {
-    font-size: 1.7rem;
-    margin: 0;
+  .active {
+    color: grey;
+    border: 2px solid ${({ theme }) => theme.colors.selectedItemGrey};
   }
 `;
 
@@ -38,4 +39,17 @@ export const WeekWrapper = styled.div`
   justify-content: center;
   text-align: center;
   margin-left: 1rem;
+`;
+
+export const WeekButton = styled.div`
+  border: none;
+  background-color: white;
+  color: grey;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: ${({ theme }) => theme.innerStyles.box};
 `;

@@ -5,11 +5,6 @@ interface Props {
   isOpen: boolean;
 }
 
-export const StyledSidebarLink = styled(SidebarLink)`
-  margin: 1rem;
-  padding: 2rem;
-`;
-
 interface accountType {
   accountType: string;
 }
@@ -18,7 +13,7 @@ export const Wrapper = styled.div<accountType>`
   display: ${({ accountType }) => (accountType === 'spottedAdmin' ? 'block' : 'none')};
 `;
 
-export const NotificationButton = styled(StyledSidebarLink)`
+export const NotificationButton = styled(SidebarLink)`
   margin: 0;
 `;
 

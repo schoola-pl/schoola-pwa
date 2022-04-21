@@ -1,13 +1,14 @@
-import { GoBack, InnerWrapper, Logo, Wrapper } from './TopBar.styles';
+import { GoBack, SearchLink, InnerWrapper, Logo, Wrapper, SettingsLink } from './TopBar.styles';
 import SettingsIcon from 'assets/icons/SettingsIcon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import NotificationList from 'components/organisms/NotificationList/NotificationList';
 import BackIcon from 'assets/icons/UserSidebarIcons/BackIcon.svg';
-import SidebarLink from 'components/atoms/SidebarLink/SidebarLink';
+import SearchIcon from 'assets/icons/SearchIcon.svg';
 
 const TopBar = () => {
   const url = window.location.pathname;
-  const isComments = url.includes('/comments');
+  const isComments = url.includes('/comments') || url.includes('/search') || url.includes('/settings') || url.includes('/profiles');
+  const isProfile = url.includes('/profile/me');
   const navigate = useNavigate();
 
   return (
@@ -17,8 +18,9 @@ const TopBar = () => {
       </Logo>
       <InnerWrapper>
         <GoBack icon={BackIcon} isComments={isComments} onClick={() => navigate(-1)} />
+        <SearchLink icon={SearchIcon} as={Link} to="/student/search" isProfile={isProfile} isComments={isComments} />
         <NotificationList />
-        <SidebarLink style={{ margin: 0 }} as={Link} data-testid="settings" to="/student/settings" icon={SettingsIcon} />
+        <SettingsLink isProfile={isProfile} style={{ margin: 0 }} data-testid="settings" as={Link} to="/student/settings" icon={SettingsIcon} />
       </InnerWrapper>
     </Wrapper>
   );

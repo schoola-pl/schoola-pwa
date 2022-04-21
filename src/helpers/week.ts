@@ -45,7 +45,10 @@ export const translateDayToEnglish = (day: 'poniedziałek' | 'wtorek' | 'środa'
 };
 
 const ISOpattern = 'yyyy-MM-dd';
-export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday', date?: Date) => {
+export const getDayOfWeek = (
+  day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday',
+  options?: { customWeek?: number; customDate?: Date; customPattern?: string }
+) => {
   const days: { [key: string]: 0 | 1 | 2 | 3 | 4 | 5 | 6 } = {
     monday: 1,
     tuesday: 2,
@@ -53,11 +56,21 @@ export const getDayOfWeek = (day: 'monday' | 'tuesday' | 'wednesday' | 'thursday
     thursday: 4,
     friday: 5
   };
-  const start = startOfWeek(date || new Date(), { weekStartsOn: 1 });
-  const end = endOfWeek(date || new Date(), { weekStartsOn: 1 });
+  let start: Date;
+  let end: Date;
+  if (options?.customWeek) {
+    const bufferDate = options?.customDate || new Date();
+    const bufferDay = bufferDate.getDate();
+    const preparedWeek = new Date(bufferDate.setDate(bufferDay + options?.customWeek * 7)).toISOString();
+    start = startOfWeek(new Date(preparedWeek), { weekStartsOn: 1 });
+    end = endOfWeek(new Date(preparedWeek), { weekStartsOn: 1 });
+  } else {
+    start = startOfWeek(options?.customDate || new Date(), { weekStartsOn: 1 });
+    end = endOfWeek(options?.customDate || new Date(), { weekStartsOn: 1 });
+  }
   const result = eachDayOfInterval({
     start,
     end
   });
-  return format(result[days[day] - 1], ISOpattern);
+  return format(result[days[day] - 1], options?.customPattern || ISOpattern);
 };

@@ -24,7 +24,9 @@ export const SpottedAPI = createApi({
       multiResponse<{
         message: string;
         createdAt: string;
-        comments: { data: { id: number; attributes: { message: string; author: { data: { attributes: authUser } }; createdAt: string } }[] };
+        comments: {
+          data: { id: number; attributes: { message: string; author: { data: { id: string; attributes: authUser } }; createdAt: string } }[];
+        };
         likes: { data: { id: number; attributes: { likes: number; userIds: { id: number; userId: string }[] } } };
       }>,
       { spottedId: strapiRequestType; schoolId: strapiRequestType }

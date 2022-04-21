@@ -24,7 +24,7 @@ export const InterestWrapper = styled.div`
 
 export const Interest = styled.div`
   height: 4.2rem;
-  width: 9.5rem;
+  width: 10rem;
   padding: 1.2rem;
   background-color: white;
   border-radius: 4rem;

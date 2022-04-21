@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
+import { Form, InputWrapper, StyledButton, StyledInput, StyledLink, Wrapper } from './Login.styles';
 import AuthCard from 'components/molecules/AuthCard/AuthCard';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from 'store';
@@ -11,11 +11,13 @@ import ErrorParagraph from '../../../components/atoms/ErrorParagraph/ErrorParagr
 import { getPathForRole, getRoleFromLocalStorage } from 'helpers/roles';
 import Loader from 'components/atoms/Loader/Loader';
 import Logo from 'components/atoms/Logo/Logo';
+import usePasswordToggle from 'hooks/usePasswordToggle';
 
 const Login: React.FC = () => {
   const [loginProtocol, { isLoading, isSuccess, isError, data }] = useLoginMutation();
   const { unlockRoutes } = useRoutesControl();
   const navigate = useNavigate();
+  const { inputType, icon } = usePasswordToggle();
 
   const { register, handleSubmit, watch } = useForm();
   const loginInput = watch('login');
@@ -60,15 +62,18 @@ const Login: React.FC = () => {
               minLength: 2
             })}
           />
-          <StyledInput
-            type="password"
-            placeholder="Hasło"
-            data-cy="login-password"
-            {...register('password', {
-              required: true,
-              minLength: 6
-            })}
-          />
+          <InputWrapper>
+            <input
+              type={inputType}
+              placeholder="Hasło"
+              data-cy="login-password"
+              {...register('password', {
+                required: true,
+                minLength: 6
+              })}
+            />
+            {icon}
+          </InputWrapper>
           <StyledButton isDisabled={!loginInput || !passwordInput} type="submit" data-cy="login-button">
             {!isLoading ? (
               'Zaloguj się'

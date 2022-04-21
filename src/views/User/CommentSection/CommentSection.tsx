@@ -100,6 +100,7 @@ const CommentSection = () => {
           return (
             <Comment
               key={id}
+              uId={author.data.id}
               cId={id}
               isSpotted={isSpotted}
               profilePicture={author.data.attributes.avatar}
