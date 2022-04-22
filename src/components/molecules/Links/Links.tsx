@@ -38,7 +38,7 @@ const getIconForPlatform = (platform: string) => {
 
 const Links: React.FC<Props> = ({ socials }) => (
   <LinkWrapper>
-    <LinksHeading>Linki</LinksHeading>
+    <LinksHeading>Linki społecznościowe</LinksHeading>
     <SocialMediaWrapper data-testid="profile-links">
       {socials.map((social) => (
         <SocialMediaLink target="_blank" rel="noopener noreferrer" key={social.id} href={social.url} icon={getIconForPlatform(social.platform)} />

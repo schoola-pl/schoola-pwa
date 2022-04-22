@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin: 0 auto;
   flex-direction: column;
+  width: min(100%, 400px);
 `;
 
 export const Grid = styled.div`
