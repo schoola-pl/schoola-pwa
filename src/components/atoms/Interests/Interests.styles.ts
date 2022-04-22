@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const InterestHeading = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
-  padding-left: 2.5rem;
 `;
 
 export const InterestSectionWrapper = styled.div`
@@ -14,7 +13,7 @@ export const InterestSectionWrapper = styled.div`
 
 export const InterestWrapper = styled.div`
   padding: 1rem;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -24,10 +23,10 @@ export const InterestWrapper = styled.div`
 
 export const Interest = styled.div`
   height: 4.2rem;
-  width: 10rem;
-  padding: 1.2rem;
+  width: fit-content;
+  padding: 1rem 2rem;
   background-color: white;
-  border-radius: 4rem;
+  border-radius: 3rem;
   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
   display: flex;
   align-items: center;
@@ -36,7 +35,6 @@ export const Interest = styled.div`
 
   @media (min-width: 390px) {
     height: 5.5rem;
-    width: 11rem;
     font-size: 1.1rem;
   }
 `;

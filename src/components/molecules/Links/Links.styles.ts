@@ -39,6 +39,5 @@ export const SocialMediaWrapper = styled.div`
 `;
 
 export const LinksHeading = styled.h1`
-  padding-left: 2.5rem;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;

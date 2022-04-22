@@ -5,6 +5,8 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem 1.2rem 1.5rem;
+  position: relative;
+  z-index: 100;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -26,6 +28,7 @@ export const ContentWrapper = styled.div`
 
 export const UserInfoWrapper = styled.div`
   overflow: hidden;
+  position: relative;
   display: grid;
   grid-template-rows: 1fr auto;
   border-radius: 2rem;
@@ -41,4 +44,8 @@ export const UserInfoWrapper = styled.div`
 export const Picture = styled.img`
   min-height: 100%;
   min-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
