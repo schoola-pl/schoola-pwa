@@ -24,20 +24,42 @@ export const SearchInputWrapper = styled.div`
   input {
     outline: none;
     border: none;
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 0.5rem 1rem;
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+
+    &::-ms-clear {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
   }
 `;
 
 export const ResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 100%;
+  padding-inline: 1.8rem;
 
   p {
-    text-align: center;
     font-size: ${({ theme }) => theme.fontSize.xs};
   }
 `;
 
 export const StyledIconDiv = styled(IconDiv)`
-  margin-right: 0rem;
+  margin-right: 0;
 `;

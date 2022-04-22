@@ -3,38 +3,31 @@ import styled from 'styled-components';
 export const StudentResultWrapper = styled.div`
   background-color: white;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
-  height: 7.5rem;
+  width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 2rem;
-  display: grid;
-  grid-template-columns: 20% 55% 50%;
   white-space: nowrap;
-  align-items: center;
   text-decoration: none;
-
-  &::after {
-    color: black;
-    content: '>';
-    font-size: 2rem;
-    margin-left: 4rem;
-  }
+  display: grid;
+  grid-template-columns: 20% 50% 30%;
+  align-items: center;
+  justify-items: center;
+  padding: 1rem;
 
   h1 {
-    margin: 0.35rem;
     color: black;
-    padding: 1rem;
     text-transform: uppercase;
     font-weight: ${({ theme }) => theme.fontWeight.medium};
-    border-right: 3px solid ${({ theme }) => theme.colors.accentBlue};
   }
 `;
 
 export const InfoWrapper = styled.div`
+  position: relative;
+  border-left: 2px solid ${({ theme }) => theme.colors.accentBlue};
+  width: 100%;
+  padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  margin-left: 0.5rem;
 
   h1 {
     margin: 0;
@@ -47,6 +40,8 @@ export const InfoWrapper = styled.div`
 
   p {
     color: grey;
-    margin: 0;
+    margin: -2px 0 0;
+    text-align: left;
+    padding: 0;
   }
 `;
