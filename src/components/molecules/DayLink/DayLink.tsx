@@ -18,7 +18,7 @@ const DayLink: React.FC<props> = ({ name, currentWeek }) => {
   });
 
   return (
-    <Wrapper to={`/psycho/week/${name}`}>
+    <Wrapper to={`/psycho/week/${name}${currentWeek > 0 ? `-${currentWeek}` : ''}`}>
       <h1>{upperFirstLetter(translateDayToPolish(name))}</h1>
       <p>
         liczba spotkań - <strong>{count.isLoading ? '-' : count.data}</strong>
