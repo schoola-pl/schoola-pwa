@@ -39,7 +39,7 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
       if (!isConnected && subscription) {
         localStorage.setItem('notification_connected', 'true');
         axios.post('https://notify.schoola.pl/api/v1/connect', {
-          subscription,
+          subscription: JSON.parse(subscription),
           userId: user.id
         });
       }
