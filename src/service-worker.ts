@@ -73,4 +73,17 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('push', (ev) => {
+  const data = ev.data?.json();
+  const title = data.title;
+  const options = {
+    body: data.body,
+    icon: 'https://app.schoola.pl/favicons/favicon-96x96.png',
+    badge: 'https://app.schoola.pl/favicons/badge.png',
+    vibrate: [100, 50, 100]
+  };
+
+  ev.waitUntil(self.registration.showNotification(title, options));
+});
+
 // Any other custom service worker logic can go here.

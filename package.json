@@ -23,7 +23,6 @@
     "lodash": "^4.17.21",
     "mjml": "^4.12.0",
     "nanoid": "^3.2.0",
-    "node-forge": "^1.2.1",
     "paginatejson": "^1.0.3",
     "react": "^17.0.2",
     "react-calendar": "^3.7.0",
@@ -34,7 +33,6 @@
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
     "redux": "^4.1.2",
     "styled-components": "^5.3.3",
@@ -84,6 +82,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "react-scripts": "^5.0.0"
   }
 }
