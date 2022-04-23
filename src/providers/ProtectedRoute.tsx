@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useRoutesControl } from 'hooks/useRoutesControl';
 import { useAppLoading } from 'hooks/useAppLoading';
+import axios from 'axios';
 
 interface props {
   Element: React.FC;
@@ -17,6 +18,16 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
 
   useEffect(() => {
     (async () => {
+      // Connect notification with user
+      const subscription = localStorage.getItem('notification_sub');
+      const isConnected = localStorage.getItem('notification_connected');
+      if (!isConnected && subscription) {
+        localStorage.setItem('notification_connected', 'true');
+        axios.post('https://notify.schoola.pl/api/v1/connect', {
+          subscription,
+          userId: user?.id
+        });
+      }
       // Checks is user logged in
       setAppLoading(true);
       if (await checkUser()) {
