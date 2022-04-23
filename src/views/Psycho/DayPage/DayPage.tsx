@@ -7,11 +7,13 @@ import { storeRoot, useGetMeetingsForDayQuery } from 'store';
 import Meeting from 'components/molecules/Meeting/Meeting';
 import React from 'react';
 import Info from 'components/atoms/Info/Info';
+import { format } from 'date-fns';
 
 const DayPage = () => {
   const { dayName } = useParams();
-  const preparedDayName = dayName as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
-  const dayISO = getDayOfWeek(preparedDayName);
+  const weekParameter = dayName?.split('-')[1];
+  const preparedDayName = dayName?.split('-')[0] as 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
+  const dayISO = getDayOfWeek(preparedDayName, { customWeek: parseInt(weekParameter || '0') });
   const dayPolish = upperFirstLetter(translateDayToPolish(preparedDayName || 'monday'));
   const user = useSelector((state: storeRoot) => state.user);
   const meetings = useGetMeetingsForDayQuery({
@@ -23,7 +25,9 @@ const DayPage = () => {
     <PageWrapper>
       <Header>
         <p>Spotkania na dzień: </p>
-        <h3>{dayPolish}</h3>
+        <h3>
+          {dayPolish} {weekParameter && `(${format(new Date(dayISO), 'dd.MM')})`}
+        </h3>
       </Header>
       <MeetingWrapper>
         {meetings.isLoading || !meetings.data ? (
