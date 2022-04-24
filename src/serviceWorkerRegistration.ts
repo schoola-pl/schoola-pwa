@@ -127,7 +127,6 @@ function registerValidSW(swUrl: string, config?: Config) {
             })
             .then((subscription) => {
               if (!localStorage.getItem('notification_sub')) {
-                localStorage.setItem('notification_sub', JSON.stringify(subscription));
                 // Send subscription to server
                 fetch('https://notify.schoola.pl/api/v1/subscribe', {
                   method: 'POST',
@@ -137,6 +136,7 @@ function registerValidSW(swUrl: string, config?: Config) {
                   body: JSON.stringify(subscription)
                 }).then(() => {
                   console.log('Subscribed push notifications');
+                  localStorage.setItem('notification_sub', JSON.stringify(subscription));
                 });
               }
             });

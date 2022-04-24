@@ -37,11 +37,16 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
       const subscription = localStorage.getItem('notification_sub');
       const isConnected = localStorage.getItem('notification_connected');
       if (!isConnected && subscription) {
-        localStorage.setItem('notification_connected', 'true');
-        axios.post('https://notify.schoola.pl/api/v1/connect', {
-          subscription: JSON.parse(subscription),
-          userId: user.id
-        });
+        axios
+          .post('https://notify.schoola.pl/api/v1/connect', {
+            subscription: JSON.parse(subscription),
+            userId: user.id
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              localStorage.setItem('notification_connected', 'true');
+            }
+          });
       }
       // Checks is user blocked
       if (!user.blocked) {
