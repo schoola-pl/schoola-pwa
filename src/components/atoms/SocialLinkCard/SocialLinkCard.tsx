@@ -71,11 +71,25 @@ const SocialMediaLink = styled.a<{ icon: string }>`
   }
 `;
 
+const SocialPlatformHeading = styled.a`
+  margin: 1.5rem 0 1.5rem 1rem;
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  color: black;
+  text-decoration: none;
+`;
+
 const SocialLinkCard: React.FC<Props> = ({ social }) => {
   const [isEdit, setEdition] = useState(false);
   return (
     <li>
-      {isEdit === true ? <input placeholder={`podaj link do ${social.platform}`} /> : <h1>{social.platform}</h1>}
+      {isEdit === true ? (
+        <input placeholder={`podaj link do ${social.platform}`} />
+      ) : (
+        <SocialPlatformHeading href={social.url} target="_blank" rel="noopener noreferrer">
+          {social.platform}
+        </SocialPlatformHeading>
+      )}
       <IconsWrapper>
         <StyledIconDiv as="button" onClick={() => setEdition(!isEdit)} icon={BlueEditIcon} />
         <SocialMediaLink target="_blank" rel="noopener noreferrer" key={social.id} href={social.url} icon={getIconForPlatform(social.platform)} />
