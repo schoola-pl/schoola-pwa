@@ -7,7 +7,7 @@ export const Heading = styled.h1`
 export const LinksList = styled.ul`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 110%;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.medium};
@@ -19,4 +19,19 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const InfoWrapper = styled.div`
+  width: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  button {
+    border: none;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    color: white;
+    background-color: ${({ theme }) => theme.colors.accentBlue};
+  }
 `;
