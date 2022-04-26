@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SocialPlatformHeading, IconsWrapper, StyledIconDiv, SocialMediaLink } from './SocialLinkCard.styles';
+import { SocialPlatformHeading, LittleCard, StyledInput, IconsWrapper, StyledIconDiv, SocialMediaLink } from './SocialLinkCard.styles';
 import BlueEditIcon from 'assets/icons/BlueEditIcon.svg';
 import FacebookIcon from 'assets/icons/SocialMediaIcons/FacebookIcon.svg';
 import InstagramIcon from 'assets/icons/SocialMediaIcons/InstagramIcon.svg';
@@ -44,9 +44,9 @@ interface Props {
 const SocialLinkCard: React.FC<Props> = ({ social }) => {
   const [isEdit, setEdition] = useState(false);
   return (
-    <li>
+    <LittleCard>
       {isEdit === true ? (
-        <input placeholder={`podaj link do ${social.platform}`} />
+        <StyledInput placeholder={`podaj link do ${social.platform}`} />
       ) : (
         <SocialPlatformHeading href={social.url} target="_blank" rel="noopener noreferrer">
           {social.platform}
@@ -56,7 +56,7 @@ const SocialLinkCard: React.FC<Props> = ({ social }) => {
         <StyledIconDiv as="button" onClick={() => setEdition(!isEdit)} icon={BlueEditIcon} />
         <SocialMediaLink target="_blank" rel="noopener noreferrer" key={social.id} href={social.url} icon={getIconForPlatform(social.platform)} />
       </IconsWrapper>
-    </li>
+    </LittleCard>
   );
 };
 

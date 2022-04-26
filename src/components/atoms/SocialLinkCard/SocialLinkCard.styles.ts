@@ -37,3 +37,21 @@ export const SocialPlatformHeading = styled.a`
   color: black;
   text-decoration: none;
 `;
+
+export const StyledInput = styled.input`
+  margin: 2.1rem 0 2.1rem 1rem;
+  width: 75%;
+  border: none;
+  outline: none;
+`;
+
+export const LittleCard = styled.li`
+  border-radius: 1rem;
+  box-shadow: ${({ theme }) => theme.innerStyles.box};
+  background-color: white;
+  width: 90%;
+  display: grid;
+  position: relative;
+  grid-template-columns: 80% 30%;
+  align-items: center;
+`;
