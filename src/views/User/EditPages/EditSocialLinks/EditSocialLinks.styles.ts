@@ -4,10 +4,10 @@ export const Heading = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
-export const LinksList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 110%;
+export const LinksList = styled.div`
+  margin-top: 2rem;
+  position: relative;
+  width: 95%;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.medium};
@@ -22,7 +22,7 @@ export const PageWrapper = styled.div`
 `;
 
 export const InfoWrapper = styled.div`
-  width: 85%;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: space-around;

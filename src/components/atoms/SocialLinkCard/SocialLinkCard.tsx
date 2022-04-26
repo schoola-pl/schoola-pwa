@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import { SocialPlatformHeading, LittleCard, StyledInput, IconsWrapper, StyledIconDiv, SocialMediaLink } from './SocialLinkCard.styles';
-import BlueEditIcon from 'assets/icons/BlueEditIcon.svg';
+import {
+  SocialPlatformHeading,
+  DeleteButton,
+  EditButton,
+  LittleCard,
+  StyledInput,
+  IconsWrapper,
+  PlatformInfo,
+  SocialMediaLink
+} from './SocialLinkCard.styles';
 import FacebookIcon from 'assets/icons/SocialMediaIcons/FacebookIcon.svg';
 import InstagramIcon from 'assets/icons/SocialMediaIcons/InstagramIcon.svg';
 import BlogIcon from 'assets/icons/SocialMediaIcons/BlogIcon.svg';
@@ -9,6 +17,8 @@ import SpotifyIcon from 'assets/icons/SocialMediaIcons/SpotifyIcon.svg';
 import TikTokIcon from 'assets/icons/SocialMediaIcons/TikTokIcon.svg';
 import WebsiteIcon from 'assets/icons/SocialMediaIcons/WebsiteIcon.svg';
 import TwitterIcon from 'assets/icons/SocialMediaIcons/TwitterIcon.svg';
+import DeleteIcon from '../../../assets/icons/DeleteIcon.svg';
+import EditIcon from '../../../assets/icons/EditIcon.png';
 
 const getIconForPlatform = (platform: string) => {
   switch (platform) {
@@ -48,13 +58,16 @@ const SocialLinkCard: React.FC<Props> = ({ social }) => {
       {isEdit === true ? (
         <StyledInput placeholder={`podaj link do ${social.platform}`} />
       ) : (
-        <SocialPlatformHeading href={social.url} target="_blank" rel="noopener noreferrer">
-          {social.platform}
-        </SocialPlatformHeading>
+        <PlatformInfo>
+          <SocialMediaLink target="_blank" rel="noopener noreferrer" key={social.id} href={social.url} icon={getIconForPlatform(social.platform)} />
+          <SocialPlatformHeading href={social.url} target="_blank" rel="noopener noreferrer">
+            {social.platform}
+          </SocialPlatformHeading>
+        </PlatformInfo>
       )}
       <IconsWrapper>
-        <StyledIconDiv as="button" onClick={() => setEdition(!isEdit)} icon={BlueEditIcon} />
-        <SocialMediaLink target="_blank" rel="noopener noreferrer" key={social.id} href={social.url} icon={getIconForPlatform(social.platform)} />
+        <EditButton onClick={() => setEdition(!isEdit)} icon={EditIcon} />
+        <DeleteButton icon={DeleteIcon} />
       </IconsWrapper>
     </LittleCard>
   );

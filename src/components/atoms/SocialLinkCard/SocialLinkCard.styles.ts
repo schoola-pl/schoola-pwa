@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import IconDiv from 'components/atoms/IconDiv/IconDiv';
+import ActionBox from 'components/atoms/ActionBox/ActionBox.styles';
 
 export const IconsWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin-left: auto;
+`;
+
+export const PlatformInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
 `;
 
 export const StyledIconDiv = styled(IconDiv)`
@@ -13,8 +20,8 @@ export const StyledIconDiv = styled(IconDiv)`
 `;
 
 export const SocialMediaLink = styled.a<{ icon: string }>`
-  height: 4rem;
-  width: 4rem;
+  min-height: 4.25rem;
+  min-width: 4.25rem;
   background-image: url(${({ icon }) => icon});
   background-repeat: no-repeat;
   background-color: transparent;
@@ -23,11 +30,6 @@ export const SocialMediaLink = styled.a<{ icon: string }>`
   cursor: pointer;
   border: none;
   display: block;
-
-  @media (min-width: 400px) {
-    height: 5rem;
-    width: 5rem;
-  }
 `;
 
 export const SocialPlatformHeading = styled.a`
@@ -45,13 +47,26 @@ export const StyledInput = styled.input`
   outline: none;
 `;
 
-export const LittleCard = styled.li`
+export const LittleCard = styled.div`
   border-radius: 1rem;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
   background-color: white;
-  width: 90%;
+  width: 100%;
   display: grid;
   position: relative;
-  grid-template-columns: 80% 30%;
+  grid-template-columns: 50% 50%;
   align-items: center;
+  margin-bottom: 0rem;
+`;
+
+export const DeleteButton = styled(ActionBox)`
+  height: 4.25rem;
+  width: 4.25rem;
+  background-color: ${({ theme }) => theme.colors.lightRed};
+`;
+
+export const EditButton = styled(ActionBox)`
+  height: 4.25rem;
+  width: 4.25rem;
+  background-color: ${({ theme }) => theme.colors.veryLightGreen};
 `;
