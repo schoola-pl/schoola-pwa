@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import Select from 'components/atoms/Select/Select';
+
 export const Heading = styled.h1<{ small?: boolean }>`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
 
@@ -41,4 +43,33 @@ export const InfoWrapper = styled.div`
     color: white;
     background-color: ${({ theme }) => theme.colors.accentBlue};
   }
+`;
+
+export const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    width: 80%;
+  }
+
+  div > button {
+    margin-left: 0.5rem;
+  }
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 80%;
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 100%;
+  margin-bottom: 1.5rem;
 `;

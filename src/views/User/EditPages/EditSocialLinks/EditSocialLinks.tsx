@@ -1,42 +1,11 @@
-import styled from 'styled-components';
-import { PageWrapper, Heading, LinksList, InfoWrapper } from './EditSocialLinks.styles';
+import { PageWrapper, StyledSelect, StyledForm, ModalWrapper, Heading, LinksList, InfoWrapper } from './EditSocialLinks.styles';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetSocialsQuery } from 'store';
 import SocialLinkCard from 'components/atoms/SocialLinkCard/SocialLinkCard';
 import { useModal } from 'hooks/useModal';
+import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
 import { options } from 'views/User/FirstLoginPages/LinksPage/options';
-import Input from 'components/atoms/Input/Input';
-import Select from 'components/atoms/Select/Select';
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  div {
-    display: flex;
-    align-items: center;
-    width: 80%;
-  }
-
-  div > button {
-    margin-left: 0.5rem;
-  }
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-  width: 80%;
-`;
-
-const StyledSelect = styled(Select)`
-  width: 100%;
-  margin-bottom: 1.5rem;
-`;
 
 const EditSocialLinks = () => {
   const user = useSelector((state: storeRoot) => state.user);
