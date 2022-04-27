@@ -84,9 +84,7 @@ const EditSocialLinks = () => {
           ))}
         </>
       ) : (
-        <h1>
-          brak linków społecznościowych - <button>dodaj</button>
-        </h1>
+        <Heading small>brak linków społecznościowych</Heading>
       )}
     </PageWrapper>
   );

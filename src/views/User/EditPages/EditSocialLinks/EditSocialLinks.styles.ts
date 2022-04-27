@@ -1,7 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Heading = styled.h1`
+export const Heading = styled.h1<{ small?: boolean }>`
   font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+  ${({ small }) =>
+    small &&
+    css`
+      font-weight: ${({ theme }) => theme.fontWeight.regular};
+      font-size: ${({ theme }) => theme.fontSize.s};
+    `}
 `;
 
 export const LinksList = styled.div`
