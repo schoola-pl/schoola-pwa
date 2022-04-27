@@ -5,7 +5,7 @@ export const Heading = styled.h1`
 `;
 
 export const LinksList = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   position: relative;
   width: 95%;
 

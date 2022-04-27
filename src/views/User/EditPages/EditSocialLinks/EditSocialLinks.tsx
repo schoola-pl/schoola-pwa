@@ -1,8 +1,15 @@
+import styled from 'styled-components';
 import { PageWrapper, Heading, LinksList, InfoWrapper } from './EditSocialLinks.styles';
 import { useSelector } from 'react-redux';
 import { storeRoot, useGetSocialsQuery } from 'store';
 import SocialLinkCard from 'components/atoms/SocialLinkCard/SocialLinkCard';
 import { useModal } from 'hooks/useModal';
+import Button from 'components/atoms/Button/Button';
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const EditSocialLinks = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -18,9 +25,9 @@ const EditSocialLinks = () => {
         <button
           onClick={() =>
             openModal(
-              <div>
-                <div>lolek</div> <button onClick={closeModal}>zamknij</button>{' '}
-              </div>,
+              <ModalWrapper>
+                <div>lolek</div> <Button onClick={closeModal}>zamknij</Button>
+              </ModalWrapper>,
               'dodaj nowy link społ'
             )
           }

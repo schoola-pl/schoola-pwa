@@ -34,7 +34,7 @@ export const SocialMediaLink = styled.a<{ icon: string }>`
 
 export const SocialPlatformHeading = styled.a`
   margin: 1.5rem 0 1.5rem 1rem;
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: 1.9rem;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   color: black;
   text-decoration: none;
