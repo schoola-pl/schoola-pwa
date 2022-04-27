@@ -6,6 +6,7 @@ import SocialLinkCard from 'components/atoms/SocialLinkCard/SocialLinkCard';
 import { useModal } from 'hooks/useModal';
 import Button from 'components/atoms/Button/Button';
 import { options } from 'views/User/FirstLoginPages/LinksPage/options';
+import Input from 'components/atoms/Input/Input';
 import Select from 'components/atoms/Select/Select';
 
 const ModalWrapper = styled.div`
@@ -16,6 +17,7 @@ const ModalWrapper = styled.div`
   div {
     display: flex;
     align-items: center;
+    width: 80%;
   }
 
   div > button {
@@ -23,16 +25,18 @@ const ModalWrapper = styled.div`
   }
 `;
 
-const StyledForm = styled.form``;
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 80%;
+`;
 
-// const Select = styled.select`
-//   border-radius: 1rem;
-//   border: none;
-//   box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.09);
-//   margin-right: 1rem;
-//   background-color: white;
-//   height: 4.25rem;
-// `;
+const StyledSelect = styled(Select)`
+  width: 100%;
+  margin-bottom: 1.5rem;
+`;
 
 const EditSocialLinks = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -50,11 +54,12 @@ const EditSocialLinks = () => {
             openModal(
               <ModalWrapper>
                 <StyledForm>
-                  <Select>
+                  <StyledSelect>
                     {options.map((option) => (
                       <option value={option.name}>{option.label}</option>
                     ))}
-                  </Select>
+                  </StyledSelect>
+                  <Input type="url" placeholder="Podaj link do platformy" />
                 </StyledForm>
                 <div>
                   <Button>Dodaj</Button>

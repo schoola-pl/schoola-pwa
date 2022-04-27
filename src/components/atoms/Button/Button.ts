@@ -61,6 +61,10 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
     isRed &&
     css`
       background-color: ${({ theme }) => theme.colors.accentRed};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.lightRed};
+      }
     `}
 `;
 
