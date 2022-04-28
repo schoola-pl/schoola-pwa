@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       localStorage.setItem(
         'role',
         JSON.stringify({
-          prev: getRoleFromLocalStorage('prev'),
+          prev: getRoleFromLocalStorage(),
           current: data.user.TextRole
         })
       );
