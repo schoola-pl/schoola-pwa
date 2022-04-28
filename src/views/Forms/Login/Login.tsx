@@ -26,14 +26,20 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (getJWT()) {
       const lsRole = getRoleFromLocalStorage();
-      if (lsRole) {
+      if (lsRole && typeof lsRole === 'string') {
         navigate(getPathForRole(lsRole));
       } else {
         navigate(dashboardRoute.replaceAll('*', ''));
       }
     } else if (isSuccess && data) {
       unlockRoutes(data.jwt, data.user, getPathForRole(data.user.TextRole));
-      localStorage.setItem('role', data.user.TextRole);
+      localStorage.setItem(
+        'role',
+        JSON.stringify({
+          prev: getRoleFromLocalStorage('prev'),
+          current: data.user.TextRole
+        })
+      );
     }
     // eslint-disable-next-line
   }, [data]);

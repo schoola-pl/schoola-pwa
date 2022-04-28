@@ -32,4 +32,13 @@ export const getRoleFromText = (textRole: string) => {
   }
 };
 
-export const getRoleFromLocalStorage = () => localStorage.getItem('role');
+export const getRoleFromLocalStorage = (mode: 'prev' | 'current' | 'object' = 'current'): string | { prev: string; current: string } => {
+  try {
+    const result = JSON.parse(localStorage.getItem('role') || '');
+    if (mode === 'object') return result as { prev: string; current: string };
+    return result[mode];
+  } catch (e) {
+    localStorage.removeItem('role');
+    return 'none';
+  }
+};

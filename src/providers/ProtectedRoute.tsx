@@ -4,6 +4,7 @@ import { storeRoot } from 'store';
 import { useRoutesControl } from 'hooks/useRoutesControl';
 import { useAppLoading } from 'hooks/useAppLoading';
 import axios from 'axios';
+import { getRoleFromLocalStorage } from '../helpers/roles';
 
 interface props {
   Element: React.FC;
@@ -34,6 +35,8 @@ const ProtectedRoute: React.FC<props> = ({ Element, role }) => {
     // Checks is user object exists
     if (user && isAuthenticated) {
       // Connect notification with user
+      const lsRole = getRoleFromLocalStorage('object') as { prev: string; current: string };
+      if (lsRole.prev !== lsRole.current) localStorage.removeItem('notification_connected');
       const subscription = localStorage.getItem('notification_sub');
       const isConnected = localStorage.getItem('notification_connected');
       if (!isConnected && subscription) {
