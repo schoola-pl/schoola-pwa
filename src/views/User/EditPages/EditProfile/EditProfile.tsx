@@ -1,5 +1,5 @@
-import { PageWrapper, LinksWrapper, InfoWrapper, ProfilePictureWrapper, ImageWrapper, LinkWrapper, StyledIconDiv } from './EditProfile.styles';
-import { useState, useEffect } from 'react';
+import { ImageWrapper, InfoWrapper, LinksWrapper, LinkWrapper, PageWrapper, ProfilePictureWrapper, StyledIconDiv } from './EditProfile.styles';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
@@ -14,7 +14,15 @@ const EditProfile = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
   const [image, setImage] = useState('');
-  const [notifications, setNotifications] = useState(false);
+  const [isNotified, setIsNotified] = useState(false);
+
+  useEffect(() => {
+    if (Notification.permission === 'granted' && localStorage.getItem('notification_sub')) {
+      setIsNotified(true);
+    } else {
+      setIsNotified(false);
+    }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -23,13 +31,16 @@ const EditProfile = () => {
     })();
   }, [user]);
 
-  const handleNotifications = () => {
-    Notification.requestPermission();
-
-    if (Notification.permission === 'granted') {
-      setNotifications(true);
+  const handleNotifications = (e: any) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          setIsNotified(true);
+        }
+      });
     } else {
-      setNotifications(false);
+      alert('Aby wyłączyć powiadomienia, musisz wejść w ustawienia przeglądarki!');
     }
   };
 
@@ -63,7 +74,7 @@ const EditProfile = () => {
         <LinkWrapper useToggle={true}>
           <StyledIconDiv icon={NotificationIcon} />
           <p>Powiadomienia</p>
-          <ToggleSwitch onChange={handleNotifications} />
+          <ToggleSwitch onChange={handleNotifications} initial={isNotified} />
         </LinkWrapper>
       </LinksWrapper>
     </PageWrapper>

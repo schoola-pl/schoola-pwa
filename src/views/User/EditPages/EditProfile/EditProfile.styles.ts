@@ -50,6 +50,11 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 1rem 0 0;
+  }
 
   input {
     visibility: hidden;
@@ -58,6 +63,7 @@ export const InfoWrapper = styled.div`
   label {
     font-size: ${({ theme }) => theme.fontSize.xs};
     color: ${({ theme }) => theme.colors.accentBlue};
+    text-decoration: underline;
   }
 `;
 
@@ -70,29 +76,37 @@ export const LinksWrapper = styled.div`
 `;
 
 export const LinkWrapper = styled.div<{ useToggle?: boolean }>`
+  position: relative;
   text-decoration: none;
   color: black;
   background-color: white;
   font-size: 1.48rem;
   height: 6rem;
-  width: 90%;
+  width: 100%;
   margin-bottom: 2rem;
   border-radius: 1.5rem;
   display: grid;
-  grid-template-columns: ${({ useToggle }) => (useToggle ? '20% 60% 10%' : '20% 70% 10%')};
+  grid-template-columns: ${({ useToggle }) => (useToggle ? '65px 170px 1fr' : '65px 170px 1fr')};
   align-items: center;
+  justify-content: center;
   box-shadow: ${({ theme }) => theme.innerStyles.box};
 
-  p {
-    margin-left: 0.5rem;
+  label {
+    margin-left: auto;
+    margin-right: 2rem;
   }
 
   &::after {
     content: '${({ useToggle }) => (useToggle ? null : '>')}';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
 export const StyledIconDiv = styled(IconDiv)`
+  display: block;
   margin-left: 1.5rem;
   background-color: ${({ theme }) => theme.colors.lightPurple};
   height: 4.75rem;
