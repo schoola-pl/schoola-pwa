@@ -314,7 +314,7 @@ export const UserProvider: React.FC = ({ children }) => {
       const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
       const newSocials = [...socials, { platform, url }];
       updateSocials({
-        userId: user.TextSocials,
+        socialsId: user.TextSocials,
         data: newSocials
       });
     }
@@ -326,7 +326,7 @@ export const UserProvider: React.FC = ({ children }) => {
       const socials = currentSocials?.map(({ platform, url }) => ({ platform, url })) || userSocials.data || [];
       const newSocials = socials.filter((item) => item.platform !== platform && item.url !== url);
       updateSocials({
-        userId: user.TextSocials,
+        socialsId: user.TextSocials,
         data: newSocials
       });
     }

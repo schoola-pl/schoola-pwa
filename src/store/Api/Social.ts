@@ -7,6 +7,7 @@ export const SocialsAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_BASE_URL
   }),
+  tagTypes: ['getSocials'],
   endpoints: (builder) => ({
     getSocials: builder.query<{ id: number; platform: string; url: string }[], { userId: strapiRequestType }>({
       transformResponse: (response: { data: { id: number; attributes: { socials: { id: number; platform: string; url: string }[] } } }) => {
@@ -15,6 +16,7 @@ export const SocialsAPI = createApi({
         const { socials } = attributes;
         return socials;
       },
+      providesTags: ['getSocials'],
       query: (args) => ({
         url: `/socials/${args.userId}?populate=*&fields[0]=id`,
         headers: {
@@ -38,10 +40,11 @@ export const SocialsAPI = createApi({
     }),
     updateSocial: builder.mutation<
       { data: { id: number; attributes: { socials: { id: number; platform: string; url: string }[] } } },
-      { userId: strapiRequestType; data: unknown }
+      { socialsId: strapiRequestType; data: unknown }
     >({
+      invalidatesTags: ['getSocials'],
       query: (body) => ({
-        url: `/socials/${body.userId}`,
+        url: `/socials/${body.socialsId}`,
         method: 'PUT',
         body: {
           data: {
