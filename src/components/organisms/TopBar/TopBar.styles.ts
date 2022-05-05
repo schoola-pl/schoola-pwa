@@ -7,6 +7,7 @@ export const Logo = styled.h1`
   text-decoration: none;
   color: black;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+
   &::after {
     content: '.';
     font-size: ${({ theme }) => theme.fontSize.l};
@@ -23,8 +24,7 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
   align-items: center;
-  padding-top: 1rem;
-  padding: 1.5rem;
+  padding: 1rem 2.5rem 1.5rem;
 `;
 
 export const StyledInput = styled.input<{ isVisible?: boolean }>`
@@ -66,18 +66,11 @@ export const SearchLink = styled(SidebarLink)<{ isComments?: boolean; isProfile?
 
 export const InnerWrapper = styled.div<{ isProfile?: boolean }>`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  margin-left: ${({ isProfile }) => (isProfile ? '3rem' : '6rem')};
 `;
 
 export const GoBack = styled(SidebarLink)<{ isComments?: boolean }>`
   display: ${({ isComments }) => (isComments ? 'flex' : 'none')};
   margin: 0;
-`;
-
-export const EditLink = styled(SidebarLink)<{ isProfile?: boolean }>`
-  display: ${({ isProfile }) => (isProfile ? 'block' : 'none')};
-  margin: 0;
-  padding: 2.5rem;
 `;

@@ -5,13 +5,12 @@ import ActionBox from 'components/atoms/ActionBox/ActionBox.styles';
 export const IconsWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  justify-content: flex-end;
 `;
 
 export const PlatformInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 1rem;
 `;
 
 export const StyledIconDiv = styled(IconDiv)`
@@ -41,9 +40,9 @@ export const SocialPlatformHeading = styled.a`
 `;
 
 export const StyledInput = styled.input`
-  margin: 2.1rem 0 2.1rem 1rem;
-  width: 75%;
+  width: 100%;
   border: none;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.lightGrey};
   outline: none;
 `;
 
@@ -54,9 +53,17 @@ export const LittleCard = styled.div`
   width: 100%;
   display: grid;
   position: relative;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 65% 35%;
   align-items: center;
-  margin-bottom: 0rem;
+  margin-bottom: 0;
+
+  & > div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1.5rem;
+    font-size: 1.15rem;
+  }
 `;
 
 export const DeleteButton = styled(ActionBox)`

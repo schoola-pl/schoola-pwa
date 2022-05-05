@@ -14,9 +14,9 @@ export const Heading = styled.h1<{ small?: boolean }>`
 `;
 
 export const LinksList = styled.div`
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   position: relative;
-  width: 95%;
+  width: 100%;
 
   h1 {
     font-weight: ${({ theme }) => theme.fontWeight.medium};
@@ -31,7 +31,6 @@ export const PageWrapper = styled.div`
 `;
 
 export const InfoWrapper = styled.div`
-  width: 95%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -40,6 +39,7 @@ export const InfoWrapper = styled.div`
     border: none;
     padding: 1.5rem;
     border-radius: 1rem;
+    margin-left: 1rem;
     color: white;
     background-color: ${({ theme }) => theme.colors.accentBlue};
   }
@@ -53,6 +53,7 @@ export const ModalWrapper = styled.div`
   div {
     display: flex;
     align-items: center;
+    gap: 4px;
     width: 80%;
   }
 
