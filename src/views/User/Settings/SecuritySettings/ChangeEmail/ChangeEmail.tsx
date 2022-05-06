@@ -1,4 +1,4 @@
-import { InputWrapper, SubmitButton, Wrapper } from '../Settings.styles';
+import { InputWrapper, SubmitButton, Wrapper } from '../SecuritySettings.styles';
 import { storeRoot } from 'store';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';

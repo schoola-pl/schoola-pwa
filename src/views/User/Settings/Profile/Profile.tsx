@@ -10,7 +10,7 @@ import NotificationIcon from 'assets/icons/NotificationIcon.svg';
 import LinkIcon from 'assets/icons/LinkIcon.svg';
 import PersonEditInterests from 'assets/icons/PersonEditInterests.svg';
 
-const EditProfile = () => {
+const Settings = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const { getAvatarById } = useAvatar();
   const [image, setImage] = useState('');
@@ -59,15 +59,15 @@ const EditProfile = () => {
         <input id="files" type="file" />
       </InfoWrapper>
       <LinksWrapper>
-        <LinkWrapper as={Link} to="/student/profile/edit/interests">
+        <LinkWrapper as={Link} to="interests">
           <StyledIconDiv icon={PersonEditInterests} />
           <p>Zainteresowania</p>
         </LinkWrapper>
-        <LinkWrapper as={Link} to="/student/profile/edit/social-links">
+        <LinkWrapper as={Link} to="social-links">
           <StyledIconDiv icon={LinkIcon} />
           <p>Linki społecznościowe</p>
         </LinkWrapper>
-        <LinkWrapper as={Link} to="/student/settings">
+        <LinkWrapper as={Link} to="security">
           <StyledIconDiv icon={KeyIcon} />
           <p>Zmień hasło i e-mail</p>
         </LinkWrapper>
@@ -81,4 +81,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default Settings;
