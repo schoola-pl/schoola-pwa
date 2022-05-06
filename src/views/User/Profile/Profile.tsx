@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { storeRoot, useGetInterestedsQuery, useGetSocialsQuery } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
 import { useUser } from 'hooks/useUser';
-import NoLinks from 'components/atoms/NoLinks/NoLinks';
 import { authUser } from '../../../types/auth';
 
 interface props {
@@ -55,7 +54,7 @@ const Profile: React.FC<props> = ({ customUser }) => {
       </Grid>
       <div>
         <Interests interests={findInterested(customUser?.TextInteresteds.split(';') || user.TextInteresteds.split(';'), interesteds.data)} />
-        {socials.data && socials.data?.length > 0 ? <Links socials={socials.data} /> : <NoLinks />}
+        {socials.data && <Links socials={socials.data} />}
       </div>
     </Wrapper>
   );
