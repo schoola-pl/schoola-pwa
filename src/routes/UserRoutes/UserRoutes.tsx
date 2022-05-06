@@ -13,7 +13,8 @@ import CommentSection from 'views/User/CommentSection/CommentSection';
 import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
 import Search from 'views/User/Search/Search';
 import SearchProfileView from 'views/User/SearchProfileView/SearchProfileView';
-import Profile from 'views/User/Settings/Profile/Profile';
+import ProfileSettings from 'views/User/Settings/Profile/Profile';
+import Profile from 'views/User/Profile/Profile';
 import SocialLinks from 'views/User/Settings/SocialLinks/SocialLinks';
 import Interests from 'views/User/Settings/Interests/Interests';
 
@@ -40,7 +41,7 @@ const UserRoutes = () => {
             <Route path="/feed/comments" element={<Navigate to="/student/spotted" />} />
             <Route path="/feed/comments/:commentsId" element={<CommentSection />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/profile/settings" element={<Profile />} />
+            <Route path="/profile/settings" element={<ProfileSettings />} />
             <Route path="/profile/settings/social-links" element={<SocialLinks />} />
             <Route path="/profile/settings/interests" element={<Interests />} />
             <Route path="/profile/settings/security" element={<SecuritySettings />} />
