@@ -69,7 +69,7 @@ const Settings = () => {
         </LinkWrapper>
         <LinkWrapper as={Link} to="security">
           <StyledIconDiv icon={KeyIcon} />
-          <p>Zmień hasło i e-mail</p>
+          <p>Bezpieczeństwo</p>
         </LinkWrapper>
         <LinkWrapper useToggle={true}>
           <StyledIconDiv icon={NotificationIcon} />
