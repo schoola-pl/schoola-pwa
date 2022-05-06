@@ -1,4 +1,4 @@
-import { ImageWrapper, InfoWrapper, LinksWrapper, LinkWrapper, PageWrapper, ProfilePictureWrapper, StyledIconDiv } from './EditProfile.styles';
+import { ImageWrapper, InfoWrapper, LinksWrapper, LinkWrapper, PageWrapper, ProfilePictureWrapper, StyledIconDiv } from './Profile.styles';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
