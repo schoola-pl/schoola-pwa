@@ -53,12 +53,12 @@ export const ModalWrapper = styled.div`
   div {
     display: flex;
     align-items: center;
-    gap: 4px;
-    width: 80%;
-  }
+    margin-top: 1.2rem;
+    width: 100%;
 
-  div > button {
-    margin-left: 0.5rem;
+    button:last-child {
+      margin-left: 0.5rem;
+    }
   }
 `;
 
@@ -68,6 +68,10 @@ export const StyledForm = styled.form`
   align-items: center;
   margin-bottom: 2rem;
   width: 80%;
+
+  input {
+    margin: 0.5rem 0;
+  }
 `;
 
 export const StyledSelect = styled(Select)`
