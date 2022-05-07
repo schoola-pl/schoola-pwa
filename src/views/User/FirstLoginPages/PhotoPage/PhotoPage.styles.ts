@@ -1,4 +1,3 @@
-import { theme } from 'assets/styles/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -38,7 +37,7 @@ export const StyledInput = styled.input`
 
   ::file-selector-button {
     height: 100%;
-    color: black;
+    color: white;
     padding: 1rem;
     border: none;
     border-radius: 2rem;

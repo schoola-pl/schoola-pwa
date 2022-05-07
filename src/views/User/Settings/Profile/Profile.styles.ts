@@ -50,20 +50,17 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 
   h1 {
     margin: 1rem 0 0;
   }
 
-  input {
-    visibility: hidden;
-  }
-
-  label {
+  p.info {
     font-size: ${({ theme }) => theme.fontSize.xs};
     color: ${({ theme }) => theme.colors.accentBlue};
     text-decoration: underline;
+    margin: 0;
   }
 `;
 
@@ -114,4 +111,22 @@ export const StyledIconDiv = styled(IconDiv)`
   border-radius: 1.5rem;
   background-size: 70%;
   position: relative;
+`;
+
+export const EditImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  input {
+    width: 100%;
+  }
+
+  & > div {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
 `;

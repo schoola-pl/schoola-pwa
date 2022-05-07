@@ -1,5 +1,14 @@
-import { ImageWrapper, InfoWrapper, LinksWrapper, LinkWrapper, PageWrapper, ProfilePictureWrapper, StyledIconDiv } from './Profile.styles';
-import { useEffect, useState } from 'react';
+import {
+  EditImageWrapper,
+  ImageWrapper,
+  InfoWrapper,
+  LinksWrapper,
+  LinkWrapper,
+  PageWrapper,
+  ProfilePictureWrapper,
+  StyledIconDiv
+} from './Profile.styles';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { storeRoot } from 'store';
 import { useAvatar } from 'hooks/useAvatar';
@@ -9,12 +18,18 @@ import KeyIcon from 'assets/icons/KeyIcon.svg';
 import NotificationIcon from 'assets/icons/NotificationIcon.svg';
 import LinkIcon from 'assets/icons/LinkIcon.svg';
 import PersonEditInterests from 'assets/icons/PersonEditInterests.svg';
+import { StyledInput } from '../../FirstLoginPages/PhotoPage/PhotoPage.styles';
+import Button from 'components/atoms/Button/Button';
+import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 
 const Settings = () => {
   const user = useSelector((state: storeRoot) => state.user);
-  const { getAvatarById } = useAvatar();
-  const [image, setImage] = useState('');
+  const { saveAvatar, getAvatarById, uploadProgress } = useAvatar();
   const [isNotified, setIsNotified] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [image, setImage] = useState('');
+  const [newImage, setNewImage] = useState<FormData | null>(null);
+  const [isEditingImage, setIsEditingImage] = useState(false);
 
   useEffect(() => {
     if (Notification.permission === 'granted' && localStorage.getItem('notification_sub')) {
@@ -44,6 +59,32 @@ const Settings = () => {
     }
   };
 
+  const getPhotoFromForm = (event: any) => {
+    setNewImage(null);
+    setError(null);
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (!target || !files || !user) return setError('Nie udało się pobrać zdjęcia!');
+    if (files && /^.+\.(jpg|png|webp|jpeg)$/i.test(files[0].name)) {
+      const fd = new FormData();
+      fd.append('files', files[0], `avatar-${user.username}-${user.id}`);
+      console.log(fd);
+      setNewImage(fd);
+    } else {
+      setNewImage(null);
+      setError('Dozwolone rozszerzenia: jpg, png, webp, jpeg!');
+    }
+  };
+
+  const handleChangePhoto = async () => {
+    if (newImage) {
+      setError(null);
+      await saveAvatar(newImage);
+      setIsEditingImage(false);
+      setNewImage(null);
+    } else setError('Najpierw wybierz zdjęcie!');
+  };
+
   return (
     <PageWrapper>
       <InfoWrapper>
@@ -55,8 +96,30 @@ const Settings = () => {
         <h1>
           {user?.first_name} {user?.last_name}
         </h1>
-        <label htmlFor="files">Zmień zdjęcie profilowe</label>
-        <input id="files" type="file" />
+        {!isEditingImage ? (
+          <p className="info" onClick={() => setIsEditingImage(true)}>
+            Zmień zdjęcie profilowe
+          </p>
+        ) : (
+          <div>
+            {uploadProgress && newImage ? (
+              <p className="info" style={{ textDecoration: 'none' }}>
+                Zmienianie zdjęcia... {uploadProgress}%
+              </p>
+            ) : (
+              <EditImageWrapper>
+                <StyledInput type="file" onChange={getPhotoFromForm} accept=".jpg,.jpeg,.png,.webp" />
+                <div>
+                  <Button onClick={handleChangePhoto}>Potwierdź</Button>
+                  <Button isRed onClick={() => setIsEditingImage(false)}>
+                    Anuluj
+                  </Button>
+                </div>
+                {error && <ErrorParagraph style={{ marginTop: '1rem', marginBottom: '0' }}>{error}</ErrorParagraph>}
+              </EditImageWrapper>
+            )}
+          </div>
+        )}
       </InfoWrapper>
       <LinksWrapper>
         <LinkWrapper as={Link} to="interests">
