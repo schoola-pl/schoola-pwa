@@ -1,9 +1,9 @@
-import { LogoutButton, PageWrapper } from './Settings.styles';
-import ChangePassword from 'views/User/Settings/ChangePassword/ChangePassword';
-import ChangeEmail from 'views/User/Settings/ChangeEmail/ChangeEmail';
+import { LogoutButton, PageWrapper } from './SecuritySettings.styles';
+import ChangePassword from 'views/User/Settings/SecuritySettings/ChangePassword/ChangePassword';
+import ChangeEmail from 'views/User/Settings/SecuritySettings/ChangeEmail/ChangeEmail';
 import { useUser } from 'hooks/useUser';
 
-const Settings = () => {
+const SecuritySettings = () => {
   const { logout } = useUser();
   return (
     <PageWrapper>
@@ -16,4 +16,4 @@ const Settings = () => {
     </PageWrapper>
   );
 };
-export default Settings;
+export default SecuritySettings;

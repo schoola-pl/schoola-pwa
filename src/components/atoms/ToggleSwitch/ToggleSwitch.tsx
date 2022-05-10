@@ -1,13 +1,13 @@
 import React from 'react';
-import { InputWrapper, Input, Slider } from './ToggleSwitch.styles';
+import { Input, InputWrapper, Slider } from './ToggleSwitch.styles';
 
-const ToggleSwitch: React.FC<{ onChange: any }> = ({ onChange }) => {
+const ToggleSwitch: React.FC<{ onChange: any; initial?: boolean }> = ({ onChange, initial }) => {
   return (
     <InputWrapper>
-      <Input type="checkbox" onChange={onChange} />
+      <Input type="checkbox" onChange={onChange} checked={initial || false} />
       <Slider />
     </InputWrapper>
   );
 };
 
-export default ToggleSwitch;
+export default React.memo(ToggleSwitch);

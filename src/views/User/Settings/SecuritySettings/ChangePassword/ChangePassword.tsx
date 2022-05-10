@@ -1,4 +1,4 @@
-import { InputWrapper, SubmitButton, Wrapper } from '../Settings.styles';
+import { InputWrapper, SubmitButton, Wrapper } from '../SecuritySettings.styles';
 import { useForm } from 'react-hook-form';
 import ErrorParagraph from 'components/atoms/ErrorParagraph/ErrorParagraph';
 import { useUser } from 'hooks/useUser';

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?: boolean }>`
+const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?: boolean; isRed?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,12 +49,23 @@ const Button = styled.button<{ isIcon?: boolean; isDisabled?: boolean; isDanger?
   width: fit-content;
   padding: 1.3rem;
   border-radius: 15px;
-  
+
   * {
   width: 20px;
   height: 20px;
   }
-`}
+
+  `}
+
+  ${({ isRed }) =>
+    isRed &&
+    css`
+      background-color: ${({ theme }) => theme.colors.accentRed};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.lightRed};
+      }
+    `}
 `;
 
 export default Button;
