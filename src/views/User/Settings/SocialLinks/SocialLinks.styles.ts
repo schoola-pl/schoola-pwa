@@ -78,3 +78,26 @@ export const StyledSelect = styled(Select)`
   width: 100%;
   margin-bottom: 1.5rem;
 `;
+
+export const InterestedCard = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
+
+  &:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+
+  button {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5rem 1.3rem;
+    border-radius: 5px;
+  }
+`;
