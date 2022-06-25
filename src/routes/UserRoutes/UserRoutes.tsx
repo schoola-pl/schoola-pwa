@@ -14,6 +14,9 @@ import TooBigScreen from 'components/organisms/TooBigScreen/TooBigScreen';
 import Search from 'views/User/Search/Search';
 import SearchProfileView from 'views/User/SearchProfileView/SearchProfileView';
 import Profile from '../../views/User/Profile/Profile';
+import EditProfile from 'views/User/EditPages/EditProfile/EditProfile';
+import EditSocialLinks from 'views/User/EditPages/EditSocialLinks/EditSocialLinks';
+import EditInterests from 'views/User/EditPages/EditInterests/EditInterests';
 
 const UserRoutes = () => {
   const user = useSelector((state: storeRoot) => state.user);
@@ -40,6 +43,9 @@ const UserRoutes = () => {
             <Route path="/settings" element={<Settings />} />
             <Route path="/search" element={<Search />} />
             <Route path="*" element={<Error404 />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/profile/edit/social-links" element={<EditSocialLinks />} />
+            <Route path="/profile/edit/interests" element={<EditInterests />} />
           </Routes>
         </UserTemplate>
       )}
