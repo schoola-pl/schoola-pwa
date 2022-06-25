@@ -13,11 +13,13 @@ const Heading = styled.h1`
 const EditInterests = () => {
   const user = useSelector((state: storeRoot) => state.user);
   const { findInterested } = useUser();
-  const interesteds = useGetInterestedsQuery({});
+  const interests = useGetInterestedsQuery({});
 
   return (
     <div>
       <Heading>Twoje zainteresowania</Heading>
+
+      {/* {Array.isArray(interests) ? interests.map((interest) => <div>{findInterested(user.TextInteresteds.split(';'), interesteds.data);}</div>) : <div>{interests.name}</div>} */}
     </div>
   );
 };
